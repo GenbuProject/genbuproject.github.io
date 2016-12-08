@@ -10,7 +10,7 @@
 		<Script Type = "Text/JavaScript" Language = "Text/JavaScript">
 			var GitBase = new GitAPI(atob("ZWM0Yjg4MWUwZDVhZmJmNzAyNzkyYzM4NGIwODIzN2M1MDdjYjM4OQ=="));
 			
-			function LoadTree (UserName, RepoName, Dir) {
+			function LoadDirContent (UserName, RepoName, Dir) {
 				with (GitBase) {
 					Repo.RepoURL = UserName + "/" + RepoName;
 					
