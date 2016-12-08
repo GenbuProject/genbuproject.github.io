@@ -62,7 +62,7 @@ var Util = {
 
 var Net = {
 	LoginWithGoogle: function () {
-		location.href = "https://accounts.google.com/o/oauth2/v2/auth?redirect_uri=https://genbuproject.github.io/Genbu-Project-Official-Site/Content/RhythmTapRide/Content/Uploader/&scope=https://www.googleapis.com/auth/plus.login+https://www.googleapis.com/auth/plus.me+https://www.googleapis.com/auth/userinfo.email&response_type=code&client_id=" + ID + "&key=AIzaSyDdyecB-0e1qMwYDd46w4p5Iki-TVf3_HM&access_type=offline&approval_prompt=force";
+		location.href = "https://accounts.google.com/o/oauth2/v2/auth?redirect_uri=https://genbuproject.github.io/Content/RhythmTapRide/Content/Uploader/&scope=https://www.googleapis.com/auth/plus.login+https://www.googleapis.com/auth/plus.me+https://www.googleapis.com/auth/userinfo.email&response_type=code&client_id=" + ID + "&key=AIzaSyDdyecB-0e1qMwYDd46w4p5Iki-TVf3_HM&access_type=offline&approval_prompt=force";
 	},
 	
 	GetSongList: function (OnLoad) {
@@ -158,7 +158,7 @@ function Init() {
 		Util.CreateDialog("Googleにログインして下さい", "Rhythm Tap Ride(RTR)のアップローダーをご利用頂くため<Br>Googleにログインして下さい。", "<Button OnClick = 'Net.LoginWithGoogle();'>Sign in with Google+</Button><Button OnClick = 'Util.DismissDialog();'>キャンセル</Button>");
 	} else {
 		var TokenGetter = new XMLHttpRequest();
-			TokenGetter.open("POST", "https://www.googleapis.com/oauth2/v4/token?client_id=" + ID + "&client_secret=" + SecretID + "&redirect_uri=https://genbuproject.github.io/Genbu-Project-Official-Site/Content/RhythmTapRide/Content/Uploader/&access_type=offline&grant_type=authorization_code&code=" + Query.CODE, false);
+			TokenGetter.open("POST", "https://www.googleapis.com/oauth2/v4/token?client_id=" + ID + "&client_secret=" + SecretID + "&redirect_uri=https://genbuproject.github.io/Content/RhythmTapRide/Content/Uploader/&access_type=offline&grant_type=authorization_code&code=" + Query.CODE, false);
 			
 			TokenGetter.onload = function () {
 				Token = JSON.parse(TokenGetter.response).access_token;
