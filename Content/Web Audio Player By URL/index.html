@@ -1,0 +1,23 @@
+<!DocType HTML>
+
+<HTML>
+	<Head>
+		<Meta Charset = "UTF-8" />
+		<Title>Web Audio Player By URL</Title>
+		
+		<Script Src = "Script/WebAudioPlayer.js"></Script>
+		<Link Rel = "StyleSheet" Href = "Css/WebAudioPlayer.css" />
+		
+		<Script Type = "Text/JavaScript">
+			function VersionUpdate() {
+				var Header = document.getElementById("Version");
+					Header.innerHTML = "現在のWeb Audio Player By URLのバージョンは" + "<Span Style = 'Color: LightBlue'>" + Version + "</Span>です"
+			}
+		</Script>
+	</Head>
+	
+	<Body OnLoad = "Play(); VersionUpdate();">
+		<Header ID = "Version">
+		</Header>
+	</Body>
+</HTML>

@@ -1,0 +1,57 @@
+<!DocType HTML>
+
+<HTML>
+	<Head>
+		<Meta Charset = "UTF-8">
+		<Title>Genbu Project Official Site == TipSetting Creator with Wolf RPG Editor</Title>
+		
+		<Script Src = "Script/TipSetting Creator with Wolf RPG Editor.js"></Script>
+		
+		<Script>
+			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+			})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+			
+			ga('create', 'UA-82835508-1', 'auto');
+			ga('require', 'linkid', 'linkid.js');
+			ga('send', 'pageview');
+		</Script>
+		
+		<Script>
+			function Init() {
+				document.getElementById("TipPicker").addEventListener("change", function (Event) {
+					Load(Event.target.files[0]);
+				});
+				
+				document.getElementById("MapPicker").addEventListener("change", function (Event) {
+					TipIDCreate(Event.target.files[0]);
+				});
+				
+				document.getElementById("TileSettingPicker").addEventListener("change", function (Event) {
+					TileSettingCreate(Event.target.files[0]);
+				});
+			}
+		</Script>
+	</Head>
+	
+	<Body Style = 'Color: #EEE; Font: 14px/2 "メイリオ", Meiryo, Osaka; BackGround: URL("https://genbuproject.github.io/Genbu-Project-Official-Site/Too%20Many%20Tags/Back.jpg");' OnLoad = 'Init();'>
+		<P>
+			<Canvas ID = "TipCanvas" Style = "Border: Thin Solid Black;"></Canvas><Br>
+			チップ画像：<Input ID = "TipPicker" Type = "File"></Input>
+		</P>
+		
+		<P>
+			マップデータ(*.mps)：<Input ID = "MapPicker" Type = "File"></Input><Br>
+			タイル設定データ(*.tile)：<Input ID = "TileSettingPicker" Type = "File"></Input>
+		</P>
+		
+		<H3>チップID</H3>
+		<Pre ID = "Result-TipIDCreator" Style = "Color: Black; BackGround: LightGray; Border: Thin Solid Orange; Border-Radius: 2.5px">
+		</Pre>
+		
+		<H3>タイル設定</H3>
+		<Pre ID = "Result-TileSettingCreator" Style = "Color: Black; BackGround: LightGray; Border: Thin Solid Orange; Border-Radius: 2.5px">
+		</Pre>
+	</Body>
+</HTML>

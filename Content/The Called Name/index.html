@@ -1,0 +1,357 @@
+<!DocType HTML>
+
+<HTML>
+	<Head>
+		<Meta Charset = "UTF-8">
+		<Title>Genbu Project Official Site == The Called Name</Title>
+		
+		<Script Src = "https://genbuproject.github.io/RPG-Helper/Release/RPG Helper Release 1.4.js"></Script>
+		<Link Rel = "StyleSheet" HREF = "https://genbuproject.github.io/RPG-Helper/Release/RPG Helper Release 1.4.css">
+		
+		<Script Src = "Script/JsDecoder.js"></Script>
+		<Script Src = "Script/JsColorizer.js"></Script>
+		<Script Src = "Script/JSConsole For All Devices v1.0.js"></Script>
+		<Script Src = "Script/The Called Name.js"></Script>
+		
+		<Script Src = "https://code.jquery.com/jquery-3.1.1.js"></Script>
+		
+		<Script>
+			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+			})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+			
+			ga('create', 'UA-82835508-1', 'auto');
+			ga('require', 'linkid', 'linkid.js');
+			ga('send', 'pageview');
+		</Script>
+		
+		<Script Name = "Params For JSConsole" Type = "Text/JavaScript">
+			window.ConsoleID = "Console";
+		</Script>
+		
+		<Script Type = "Text/JavaScript">
+			function KeySet() {
+				document.getElementById("Code").addEventListener("keydown", function (Event) {
+					switch (Event.keyCode) {
+						case 9:
+			        		Event.preventDefault();
+			        		
+			        		var Pos = document.getElementById("Code").selectionStart;
+			        		
+			       			document.getElementById("Code").value = document.getElementById("Code").value.substr(0, document.getElementById("Code").selectionStart) + "\t" + document.getElementById("Code").value.substr(document.getElementById("Code").selectionStart, document.getElementById("Code").value.length);
+			        		document.getElementById("Code").setSelectionRange(Pos + 1, Pos + 1);
+			        		
+			        		break;
+		    		}
+				});
+			}
+			
+			function Formater() {
+				var Code = document.getElementById("Code").value;
+				
+				var Decoder = new JsDecoder();
+					Decoder.s = Code;
+					Code = Decoder.decode();
+					
+				var Colorizer = new JsColorizer();
+					Colorizer.s = Code;
+					Code = Colorizer.colorize();
+					
+				document.getElementById("FormatedCode").innerHTML = Code;
+				
+				if (document.getElementById("FormatedCode").innerHTML == "") {
+					document.getElementById("FormatedCode").style.display = "None";
+				} else {
+					document.getElementById("FormatedCode").style.display = "Block";
+				}
+			}
+			
+			Date.prototype.getToday = function (SplitWord) {
+				var Day = new Date().toLocaleDateString().split("/");
+				var Dates = [Day[0], Day[1], Day[2]];
+				
+				if (Dates[1].length == 1) Dates[1] = "0" + Day[1];
+				if (Dates[2].length == 1) Dates[2] = "0" + Day[2];
+				
+				return Dates[0] + SplitWord + Dates[1] + SplitWord + Dates[2];
+			}
+		</Script>
+		
+		<Script Name = "Calc-Object" Type = "Text/JavaScript">
+			var Calc = Object.create(null);
+				Calc.TypeID = {
+					Character: 0x0001,
+					Monster: 0x0002
+				}
+				
+				Calc.GetGenericATKDamage = function (TypeID, CharacterOrMonsterID) {
+					if (TypeID === Calc.TypeID.Character) return Resource.UserData.Character[CharacterOrMonsterID].ATK + Math.floor(Math.random() * 5 + 1);
+					if (TypeID === Calc.TypeID.Monster) return Resource.SystemData.Monster[CharacterOrMonsterID].ATK + Math.floor(Math.random() * 5 + 1);
+				}
+				
+				Calc.GetGenericMAGDamage = function (TypeID, CharacterOrMonsterID, UsingMagicID) {
+					for (var i = 0; i < Resource.SystemData.Magic.length; i++) {
+						if (Resource.SystemData.Magic[i].ID == UsingMagicID) {
+							if (TypeID === Calc.TypeID.Character) return (Resource.UserData.Character[CharacterOrMonsterID].MAG + Math.floor(Math.random() * 5 + 1)) * Resource.SystemData.Magic[i].GenericDamage;
+							if (TypeID === Calc.TypeID.Monster) return (Resource.SystemData.Monster[CharacterOrMonsterID].MAG + Math.floor(Math.random() * 5 + 1)) * Resource.SystemData.Magic[i].GenericDamage;
+						}
+					}
+				}
+				
+				Calc.GetFinalATKDamage = function (AttackerData, VictimData) {
+					if (AttackerData[0] === Calc.TypeID.Character) {
+						var Attacker = Resource.UserData.Character[AttackerData[1]];
+						
+						if (VictimData[0] === Calc.TypeID.Character) {
+							var Victim = Resource.UserData.Character[VictimData[1]];
+						} else if (VictimData[0] === Calc.TypeID.Monster) {
+							var Victim = Resource.SystemData.Monster[VictimData[1]];
+						}
+					} else if (AttackerData[0] === Calc.TypeID.Monster) {
+						var Attacker = Resource.SystemData.Monster[AttackerData[1]];
+						
+						if (VictimData[0] === Calc.TypeID.Character) {
+							var Victim = Resource.UserData.Character[VictimData[1]];
+						} else if (VictimData[0] === Calc.TypeID.Monster) {
+							var Victim = Resource.SystemData.Monster[VictimData[1]];
+						}
+					}
+					
+					if (Attacker.ATK > Victim.DEF) {
+						return Math.round(Calc.GetGenericATKDamage(AttackerData[0], AttackerData[1]) * (1 + 0.1 * (Attacker.ATK - Victim.DEF)));
+					} else if (Attacker.ATK < Victim.DEF) {
+						return Math.round(Calc.GetGenericATKDamage(AttackerData[0], AttackerData[1]) * (1 - 0.01 * (Victim.DEF - Attacker.ATK)));
+					} else {
+						return Math.round(Calc.GetGenericATKDamage(AttackerData[0], AttackerData[1]));
+					}
+				}
+				
+				Calc.GetFinalMAGDamage = function (AttackerData, VictimData, UsingMagicID) {
+					if (AttackerData[0] === Calc.TypeID.Character) {
+						var Attacker = Resource.UserData.Character[AttackerData[1]];
+						
+						if (VictimData[0] === Calc.TypeID.Character) {
+							var Victim = Resource.UserData.Character[VictimData[1]];
+						} else if (VictimData[0] === Calc.TypeID.Monster) {
+							var Victim = Resource.SystemData.Monster[VictimData[1]];
+						}
+					} else if (AttackerData[0] === Calc.TypeID.Monster) {
+						var Attacker = Resource.SystemData.Monster[AttackerData[1]];
+						
+						if (VictimData[0] === Calc.TypeID.Character) {
+							var Victim = Resource.UserData.Character[VictimData[1]];
+						} else if (VictimData[0] === Calc.TypeID.Monster) {
+							var Victim = Resource.SystemData.Monster[VictimData[1]];
+						}
+					}
+					
+					if (Attacker.MAG > Victim.DEF) {
+						return Math.round(Calc.GetGenericMAGDamage(AttackerData[0], AttackerData[1], UsingMagicID) * (1 + 0.1 * (Attacker.MAG - Victim.DEF)));
+					} else if (Attacker.MAG < Victim.DEF) {
+						return Math.round(Calc.GetGenericMAGDamage(AttackerData[0], AttackerData[1], UsingMagicID) * (1 - 0.01 * (Victim.DEF - Attacker.MAG)));
+					} else {
+						return Math.round(Calc.GetGenericMAGDamage(AttackerData[0], AttackerData[1], UsingMagicID));
+					}
+				}
+		</Script>
+		
+		<Script Name = "Fight-Object" Type = "Text/JavaScript">
+			var Fight = {
+				MonsterParty: [],
+				MonsterCvs: [],
+				MonsterAI: [],
+				GetEXP: 0,
+				
+				Init: function (GroupID, BGMID, BackImgPath, OnVictoryFuc) {
+					R.THIS.Effect.BlackOut(2.5, 0, function () {
+						R.THIS.Map.Hide();
+						R.THIS.Character.Hide();
+						
+						R.THIS.GamePad.Disable();
+						
+						document.getElementById("RPGHelper-Main").style.background = "URL('BackGround/" + BackImgPath + "')";
+						
+						R.THIS.Sound.PlaySE(101);
+						R.THIS.Sound.PlayBGM(BGMID);
+						
+						var MonsterTable = document.createElement("Table");
+							MonsterTable.id = "MonsterTable";
+							MonsterTable.setAttribute("Align", "Center");
+							MonsterTable.border = "0";
+							
+							MonsterTable.style.position = "Relative";
+							MonsterTable.style.top = "20%";
+							
+							MonsterTable.insertRow(-1);
+							
+						document.getElementById("RPGHelper-Main").appendChild(MonsterTable);
+						
+						for (var i = 0; i < Resource.SystemData.Group[GroupID].length; i++) {
+							var MonsterTableD = document.createElement("TD");
+								MonsterTable.rows[0].appendChild(MonsterTableD);
+								
+							Fight.MonsterParty[i] = $.extend(true, {}, Resource.SystemData.Monster[Resource.SystemData.Group[GroupID][i]]);
+							
+							Fight.MonsterCvs[i] = document.createElement("Canvas");
+								Fight.MonsterCvs[i].id = "Monster" + i;
+								
+							MonsterTableD.appendChild(Fight.MonsterCvs[i]);
+							
+							Fight.MonsterParty[i] = Fight.MonsterParty[i];
+							
+							var AIReader = new XMLHttpRequest();
+								AIReader.open("GET", Fight.MonsterParty[i].AI, false);
+								AIReader.send(null);
+								
+							Fight.MonsterAI[i] = eval(AIReader.responseText);
+							
+							var Graphic = new Image();
+								Graphic.src = "MonsterGraphic/" + Fight.MonsterParty[i].MonsterGraphic;
+								
+								Graphic.onload = (function (i) {
+									return function () {
+										Fight.MonsterCvs[i].width = document.getElementById("RPGHelper-Main").style.width.split("px")[0] / 5;
+										Fight.MonsterCvs[i].height = document.getElementById("RPGHelper-Main").style.height.split("px")[0] / 5;
+										
+										Fight.MonsterCvs[i].getContext("2d").drawImage(Graphic, 0, 0, Graphic.width, Graphic.height, 0, 0, document.getElementById("RPGHelper-Main").style.width.split("px")[0] / 5, document.getElementById("RPGHelper-Main").style.height.split("px")[0] / 5);
+									}
+								})(i);
+						}
+						
+						Fight.Show.call(R.THIS, GroupID, OnVictoryFuc);
+					});
+				},
+				
+				Show: function (GroupID, OnVictoryFuc) {
+					var Sound = this.Sound,
+						Effect = this.Effect,
+						Menu = this.Menu,
+						MsgBox = this.MsgBox;
+						
+					var StatusPane = Menu.MenuPanel(["05", "^6"]);
+						Menu.MenuMsgBox(StatusPane, ["00", "41"], R.COLOR.WHITE, "HP：" + Resource.UserData.Character[0].HP);
+						Menu.MenuMsgBox(StatusPane, ["40", "81"], R.COLOR.WHITE, "MP：" + Resource.UserData.Character[0].MP);
+						Menu.MenuMsgBox(StatusPane, ["80", "91"], R.COLOR.WHITE, ""); //ステータス異常アイコン
+						Menu.MenuMsgBox(StatusPane, ["80", "^1"], R.COLOR.WHITE, ""); //ステータス異常アイコン
+						
+					var BattlePane = Menu.MenuPanel(["06", "3^"]);
+						Menu.MenuItem(BattlePane, ["00", "31"], R.COLOR.WHITE, "攻撃", function () {
+							var SelectPane = Menu.MenuPanel(["36", "^^"]);
+							
+							for (var i = 0; i < Fight.MonsterParty.length; i++) {
+								var MonsterSelect = Menu.MenuItem(SelectPane, ["0" + i.toString(), "7" + (i + 1).toString()], R.COLOR.WHITE, Fight.MonsterParty[i].Name, (function (i) {
+									return function () {
+										Fight.MonsterCvs[i].className = "";
+										
+										BattlePane.parentElement.removeChild(BattlePane);
+										SelectPane.parentElement.removeChild(SelectPane);
+										StatusPane.parentElement.removeChild(StatusPane);
+										
+										Sound.PlaySE(102);
+										
+										var Damage = Calc.GetFinalATKDamage([Calc.TypeID.Character, 0], [Calc.TypeID.Monster, Resource.SystemData.Group[GroupID][i]]);
+										Fight.MonsterParty[i].HP > Damage ? Fight.MonsterParty[i].HP -= Damage : Fight.MonsterParty[i].HP = 0;
+										
+										MsgBox.call(R.THIS, R.POS.BOTTOM, R.SPEED.NORMAL, R.COLOR.WHITE, Resource.UserData.Character[0].Name + "の攻撃！\n" + Resource.UserData.Character[0].Name + "は" + Resource.SystemData.Monster[Resource.SystemData.Group[GroupID][i]].Name + "に" + Damage + "のダメージを与えた！", "", function () {
+											if (Fight.MonsterParty[i].HP != 0) {
+												for (var n = 0; n < Fight.MonsterAI.length; n++) {
+													Fight.MonsterAI[n](function () {
+														if (Resource.UserData.Character[0].HP != 0) {
+															Fight.Show.call(R.THIS, GroupID, OnVictoryFuc);
+														} else {
+															MsgBox.call(R.THIS, R.POS.BOTTOM, R.SPEED.SLOW, R.COLOR.RED, Resource.UserData.Character[0].Name + "は力尽きた......", "", function () {
+																Effect.BlackOut(2, 0, function () {
+																	MsgBox.call(R.THIS, R.POS.BOTTOM, 100, R.COLOR.WHITE, "GAME OVER", "", function () {
+																		Main();
+																	});
+																});
+															});
+														}
+													});
+												}
+											} else {
+												Fight.MonsterParty.splice(i, 1);
+												
+												Fight.MonsterCvs[i].parentElement.removeChild(Fight.MonsterCvs[i]);
+												Fight.MonsterCvs.splice(i, 1);
+												
+												SelectPane.children[i].parentElement.removeChild(SelectPane.children[i]);
+												
+												Fight.GetEXP += Resource.SystemData.Monster[Resource.SystemData.Group[GroupID][i]].EXP;
+												
+												MsgBox.call(R.THIS, R.POS.BOTTOM, R.SPEED.NORMAL, R.COLOR.WHITE, Resource.SystemData.Monster[Resource.SystemData.Group[GroupID][i]].Name + "は倒れた！", "", function () {
+													if (Fight.MonsterParty.length > 0) {
+														Fight.Show.call(R.THIS, GroupID, OnVictoryFuc, OnLoseFuc);
+													} else {
+														document.getElementById("MonsterTable").parentElement.removeChild(document.getElementById("MonsterTable"));
+														Resource.UserData.Character[0].EXP += Fight.GetEXP;
+														
+														MsgBox.call(R.THIS, R.POS.BOTTOM, R.SPEED.NORMAL, R.COLOR.WHITE, "全ての敵を倒した！", "", function () {
+															MsgBox.call(R.THIS, R.POS.BOTTOM, R.SPEED.NORMAL, R.COLOR.WHITE, Resource.UserData.Character[0].Name + "は" + Fight.GetEXP + "EXPを獲得！", "", function () {
+																Fight.MonsterParty = [];
+																Fight.MonsterCvs = [];
+																Fight.GetExp = 0;
+																
+																OnVictoryFuc();
+															});
+														});
+													}
+												});
+											}
+										});
+									}
+								})(i));
+								
+								MonsterSelect.id = "MonsterSelect" + i;
+								
+								MonsterSelect.onmouseover = (function (i) {
+									return function () {
+										Fight.MonsterCvs[i].className = "TheCalledName-MonsterArea";
+									}
+								})(i);
+								
+								MonsterSelect.onmouseout = (function (i) {
+									return function () {
+										Fight.MonsterCvs[i].className = "";
+									}
+								})(i);
+							}
+						});
+						
+						Menu.MenuItem(BattlePane, ["01", "32"], R.COLOR.WHITE, "魔法", function () {
+							
+						});
+						
+						Menu.MenuItem(BattlePane, ["02", "33"], R.COLOR.WHITE, "アイテム", function () {
+							
+						});
+						
+						Menu.MenuItem(BattlePane, ["03", "34"], R.COLOR.WHITE, "逃走", function () {
+							
+						});
+				}
+			}
+		</Script>
+		
+		<Style>
+			.TheCalledName-MonsterArea {
+				Border: 5px Groove LightBlue;
+				Border-Radius: 5px 5px 5px 5px;
+			}
+		</Style>
+	</Head>
+	
+	<Body Style = 'Color: #EEE; Font: 14px/2 "メイリオ", Meiryo, Osaka; BackGround: URL("Image/Back.jpg");' OnLoad = "(function () {Main();}).Debug(true); KeySet();">
+		<Div ID = "RPGHelper-Main" Width = "512" Height = "512"></Div>
+		<IFrame Src = "Controller.html" SandBox = "allow-same-origin allow-forms allow-scripts" Width = "350" Height = "150" FrameBorder = "0" Seamless = "Seamless" Style = "Position: Relative; Top: -256px; Left: 550px;">お使いのブラウザではコントローラーを表示できません。</IFrame>
+		
+		<P>
+			<TextArea ID = "Code" Wrap = "Off" Style = "Width: 100%; Height: 250px" OnKeyDown = "Formater();" OnKeyPress = "Formater();" OnKeyUp = "Formater();"></TextArea>
+			<Pre ID = "FormatedCode" Style = "Width: 100%; Color: MenuText; BackGround: Menu; Border: Thin Solid OrangeRed; Border-Radius: 5px; Line-Height: 1.5; Display: None;"></Pre><Br>
+			<Div ID = "Console" Style = "Width: 100%; Color: Gray; BackGround: LightGray; Border: Thin Solid DarkOrange; Border-Radius: 5px;"></Div>
+		</P>
+		
+		<Button OnClick = 'eval("(function () {" + document.getElementById("Code").value + "}).Debug();");'>コード実行</Button>
+	</Body>
+</HTML>

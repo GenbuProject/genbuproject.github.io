@@ -1,0 +1,31 @@
+/*/
+ *============================================================
+ *【Too Many Tags Release 1.0】(Last Updated:2016/03/30 [Wed])
+ *	Copyright (C) 2016 Genbu Hase All Rights Reversed.
+ *============================================================
+/*/
+ContentTitle {
+	Color: Yellow;
+	Font-Size: Large;
+	Font-Weight: Bold;
+}
+
+Bold {
+    Color: DarkOrange;
+    BackGround: Green;
+    Font-Weight: Bold;
+    Border: Solid Thin LightGreen;
+    Border-Radius: 50px;
+}
+
+File, Folder {
+	BackGround: Linear-Gradient(LightGray, Gray);
+}
+
+#OverView Div {
+	Border: Thin Solid Cyan;
+}
+
+#Detail Div {
+	Border: Thin Solid Yellow;
+}

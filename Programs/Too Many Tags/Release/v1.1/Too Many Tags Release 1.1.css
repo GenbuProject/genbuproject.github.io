@@ -1,0 +1,46 @@
+/*/
+ *============================================================
+ *【Too Many Tags Release 1.1】(Last Updated:2016/03/31 [Thu])
+ *	Copyright (C) 2016 Genbu Hase All Rights Reversed.
+ *============================================================
+/*/
+Bold {
+	Color: DarkOrange;
+	BackGround: Green;
+	Font-Weight: Bold;
+	Border: Solid Thin LightGreen;
+	Border-Radius: 50px;
+}
+
+Collapsible Div {
+	Position: Relative;
+	Left: 20px;
+	Border: Thin Solid LightGray;
+}
+
+ContentTitle {
+	Color: Yellow;
+	Font-Size: Large;
+	Font-Weight: Bold;
+}
+
+File, Folder {
+	BackGround: Linear-Gradient(LightGray, Gray);
+}
+
+File > Img, Folder > Img {
+	Vertical-Align: Middle;
+	Width: Auto;
+}
+
+#OverView > Div {
+	Border: Thin Solid Cyan;
+}
+
+#Detail > Div {
+	Border: Thin Solid Yellow;
+}
+
+.userarea Img {
+	Width: Auto;
+}

@@ -1,0 +1,79 @@
+<!DocType HTML>
+
+<HTML>
+	<Head>
+		<Meta Charset = "UTF-8">
+		<Title>Genbu Project Official Site == The Called Name's Controller</Title>
+		
+		<Script Name = "Controller-Object" Type = "Text/JavaScript">
+			function OnPressUp() {
+				Event = document.createEvent("Event");
+					Event.initEvent("keydown", true, true);
+					Event.keyCode = 38;
+					
+				window.parent.document.dispatchEvent(Event);
+			}
+			
+			function OnPressDown() {
+				Event = document.createEvent("Event");
+					Event.initEvent("keydown", true, true);
+					Event.keyCode = 40;
+					
+				window.parent.document.dispatchEvent(Event);
+			}
+			
+			function OnPressLeft() {
+				Event = document.createEvent("Event");
+					Event.initEvent("keydown", true, true);
+					Event.keyCode = 37;
+					
+				window.parent.document.dispatchEvent(Event);
+			}
+			
+			function OnPressRight() {
+				Event = document.createEvent("Event");
+					Event.initEvent("keydown", true, true);
+					Event.keyCode = 39;
+					
+				window.parent.document.dispatchEvent(Event);
+			}
+			
+			function OnPressZ() {
+				Event = document.createEvent("Event");
+					Event.initEvent("keydown", true, true);
+					Event.keyCode = 90;
+					
+				window.parent.document.dispatchEvent(Event);
+			}
+			
+			function OnPressX() {
+				Event = document.createEvent("Event");
+					Event.initEvent("keydown", true, true);
+					Event.keyCode = 88;
+					
+				window.parent.document.dispatchEvent(Event);
+			}
+		</Script>
+	</Head>
+	
+	<Body Style = 'Color: #EEE; Font: 14px/2 "メイリオ", Meiryo, Osaka; BackGround: URL("Image/Back.jpg");'>
+		<Img Src = "Image/Controller/Button-Z.png" UseMap = "#Z"></Img>
+		<Img Src = "Image/Controller/Button-X.png" UseMap = "#X"></Img>
+		<Img Src = "Image/Controller/Arrow.png" UseMap = "#Arrow"></Img>
+		
+		<Map Name = "Arrow">
+			<Area Shape = "Rect" Coords = "40, 0, 60, 16" Href = "JavaScript:void(0)" OnClick = "OnPressUp();">
+			<Area Shape = "Rect" Coords = "40, 84, 60, 100" Href = "JavaScript:void(0)" OnClick = "OnPressDown();">
+			<Area Shape = "Rect" Coords = "0, 40, 16, 60" Href = "JavaScript:void(0)" OnClick = "OnPressLeft();">
+			<Area Shape = "Rect" Coords = "84, 40, 100, 60" Href = "JavaScript:void(0)" OnClick = "OnPressRight();">
+		</Map>
+		
+		<Map Name = "Z">
+			<Area Shape = "Circle" Coords = "50, 50, 50" Href = "JavaScript:void(0)" OnClick = "OnPressZ();">
+		</Map>
+		
+		<Map Name = "X">
+			<Area Shape = "Circle" Coords = "50, 50, 50" Href = "JavaScript:void(0)" OnClick = "OnPressX();">
+		</Map>
+	</Body>
+</HTML>

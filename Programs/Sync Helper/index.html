@@ -1,0 +1,97 @@
+<!DocType HTML>
+
+<HTML>
+	<Head>
+		<Meta Charset = "UTF-8" />
+		<Title>Sync Helper TestDoc</Title>
+		
+		<Script Src = "Sync Helper v1.0.js"></Script>
+		
+		<Script Type = "Text/JavaScript" Language = "Text/JavaScript">
+			var GitBase = new GitAPI(atob("ZWM0Yjg4MWUwZDVhZmJmNzAyNzkyYzM4NGIwODIzN2M1MDdjYjM4OQ=="));
+			
+			function LoadTree (UserName, RepoName, Dir) {
+				with (GitBase) {
+					Repo.RepoURL = UserName + "/" + RepoName;
+					
+					var DB = document.getElementById("DB"),
+						FileList = Repo.File.Get(Dir);
+						
+					console.log(FileList);
+					
+					for (var i = 0; i < FileList.length; i++) {
+						let Row = DB.insertRow(-1);
+							Row.insertCell(-1);
+							Row.children[0].textContent = FileList[i].name;
+							
+							Row.insertCell(-1);
+							Row.children[1].textContent = FileList[i].size;
+					}
+				}
+			}
+		</Script>
+		
+		<Style>
+			Body {
+				Display: Flex;
+				Font-Family: "メイリオ", "Meiryo UI";
+			}
+			
+			#TreePanel {
+				Width: 40%;
+				
+				Border: Thin Solid Gray;
+			}
+			
+			#TreePanel > Div {
+				Padding: 5px;
+			}
+			
+			#SearchPanel {
+				Display: Flex;
+			}
+			
+			#ContentPanel {
+				Width: 100%;
+				
+				Border: Thin Solid Gray;
+			}
+			
+			Table {
+				Border: Thin Solid #B6B6B6;
+				Border-Collapse: Collapse;
+			}
+			
+			Th, Td {
+				Padding: 2.5px;
+			}
+			
+			Th {
+				BackGround: #EEEEEE;
+			}
+			
+			Td {
+				BackGround: #FFFFFF;
+			}
+		</Style>
+	</Head>
+	
+	<Body OnLoad = "LoadTree('GenbuHase', 'GUI-Helper-Official-Repository', 'Release');">
+		<Div ID = "TreePanel">
+			<Div ID = "SearchPanel">
+				<Input ID = "UserName" Type = "Search" Style = "Width: 30%;" />
+				<Input ID = "RepoName" Type = "Search" Style = "Width: 70%; Flex: 1;" />
+				
+				<Button OnClick = "LoadTree('" + document.getElementById("UserName").value + "', '" + document.getElementById("RepoName").value + "', '" + null + "');">検索</Button>
+			</Div>
+		</Div>
+		
+		<Div ID = "ContentPanel">
+			<Table ID = "DB" Border = "1">
+				<Tr>
+					<Th>ファイル名</Th><Th>ファイルサイズ</Th>
+				</Tr>
+			</Table>
+		</Div>
+	</Body>
+</HTML>

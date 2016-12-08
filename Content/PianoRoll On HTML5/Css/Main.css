@@ -1,0 +1,48 @@
+HTML {
+	Height: 100%;
+}
+
+Body, #Piano {
+	Height: 95%;
+}
+
+#White, #Black {
+	Display: Flex;
+	List-Style: None;
+	
+	Height: 50%;
+	Margin: 0;
+	Padding: 0;
+	
+	Text-Align: Center;
+	Word-Wrap: Break-Word;
+}
+
+#White > LI, #Black > LI {
+	
+}
+
+#White {
+	
+}
+
+#White > LI {
+	Width: 16px;
+	
+	Border: 2px Outset LightGray;
+	BackGround: White;
+}
+
+#Black {
+	
+}
+
+#Black > LI {
+	Position: Relative;
+	Top: 100%;
+	
+	Width: 6px;
+	Height: 50%;
+	Border: 2px Outset #010101;
+	BackGround: Black;
+}

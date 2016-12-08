@@ -1,0 +1,403 @@
+{
+	"Key": {
+		"Decide": 90,
+		"Cancel": 88,
+		
+		"Up": 38,
+		"Down": 40,
+		"Left": 37,
+		"Right": 39
+	},
+	
+	"BackGround": {
+		"Title": "Title.png",
+		"Dialog": "Back.jpg"
+	},
+	
+	"Audio": {
+		"BGM": {
+			"The Called Name.wav": {
+				"ID": 1,
+				"Volume": 1
+			},
+			
+			"The Called Name - Serious.wav": {
+				"ID": 2,
+				"Volume": 1
+			},
+			
+			"The Called Name - Strange.wav": {
+				"ID": 3,
+				"Volume": 1
+			},
+			
+			"Sadness.wav": {
+				"ID": 4,
+				"Volume": 1
+			},
+			
+			"Comical.wav": {
+				"ID": 5,
+				"Volume": 1
+			},
+			
+			"Elum Village.wav": {
+				"ID": 11,
+				"Volume": 1
+			},
+			
+			"Prospering Elum Village.wav": {
+				"ID": 12,
+				"Volume": 1
+			},
+			
+			"Elum Forest.wav": {
+				"ID": 13,
+				"Volume": 1
+			},
+			
+			"Birds.wav": {
+				"ID": 51,
+				"Volume": 1
+			},
+			
+			"Siren.wav": {
+				"ID": 52,
+				"Volume": 1
+			},
+			
+			"Battle 1.wav": {
+				"ID": 101,
+				"Volume": 1
+			},
+			
+			"Battle 2.wav": {
+				"ID": 102,
+				"Volume": 1
+			},
+			
+			"Boss Battle 1.wav": {
+				"ID": 103,
+				"Volume": 1
+			},
+			
+			"Boss Battle(Elum Forest).wav": {
+				"ID": 104,
+				"Volume": 1
+			}
+		},
+		
+		"SE": {
+			"Mystery.wav": {
+				"ID": 1,
+				"Volume": 1
+			},
+			
+			"Crow.wav": {
+				"ID": 2,
+				"Volume": 1
+			},
+			
+			"Encount.wav": {
+				"ID": 101,
+				"Volume": 1
+			},
+			
+			"Attack - Blow.wav": {
+				"ID": 102,
+				"Volume": 1
+			},
+			
+			"Attack - Slash.wav": {
+				"ID": 103,
+				"Volume": 1
+			},
+			
+			"Attack - Fire.wav": {
+				"ID": 104,
+				"Volume": 1
+			},
+			
+			"Attack - Water.wav": {
+				"ID": 105,
+				"Volume": 1
+			},
+			
+			"Attack - Wind.wav": {
+				"ID": 106,
+				"Volume": 1
+			},
+			
+			"Attack - Shock.wav": {
+				"ID": 107,
+				"Volume": 1
+			},
+			
+			"Attack - Mechanic.wav": {
+				"ID": 108,
+				"Volume": 1
+			},
+			
+			"Escape.wav": {
+				"ID": 109,
+				"Volume": 1
+			},
+			
+			"MainCharacter - Damage1.wav": {
+				"ID": 110,
+				"Volume": 1
+			}
+		},
+		
+		"Util": {
+			"Click": "SE/Click.wav"
+		}
+	},
+	
+	"Tile": [
+		"Town.png",
+		"World.png"
+	],
+	
+	"Map": [
+		{
+			"MapFile": "エルム村.map",
+			"MapName": "エルム村",
+			
+			"TileID": 0
+		},
+		
+		{
+			"MapFile": "エルム村 - 蔵書庫.map",
+			"MapName": "蔵書庫",
+			
+			"TileID": 0
+		},
+		
+		{
+			"MapFile": "エルム村(勇者探し).map",
+			"MapName": "エルム村",
+			
+			"TileID": 0
+		},
+		
+		{
+			"MapFile": "エルム森/0005.map",
+			"MapName": "エルム森",
+			
+			"TileID": 0
+		},
+		
+		{
+			"MapFile": "エルム森/0009.map",
+			"MapName": "エルム森",
+			
+			"TileID": 0
+		},
+		
+		{
+			"MapFile": "エルム森/0010.map",
+			"MapName": "エルム森",
+			
+			"TileID": 0
+		},
+		
+		{
+			"MapFile": "エルム森/0014 - Before.map",
+			"MapName": "エルム森",
+			
+			"TileID": 0
+		},
+		
+		{
+			"MapFile": "エルム森/0014 - After.map",
+			"MapName": "エルム森",
+			
+			"TileID": 0
+		}
+	],
+	
+	"Item": {
+		"ハーブ": {
+			"ID": 1,
+			"Explain": "良い香りのハーブ。HPを50回復する。"
+		}
+	},
+	
+	"Magic": [
+		{
+			"ID": 1,
+			"Name": "ファイア",
+			"Type": "Fire",
+			
+			"GenericDamage": 3,
+			"UseMP": 2,
+			"DamageRange": 1
+		},
+		
+		{
+			"ID": 2,
+			"Name": "ファイラ",
+			"Type": "Fire",
+			
+			"GenericDamage": 5,
+			"UseMP": 3,
+			"DamageRange": 1
+		},
+		
+		{
+			"ID": 3,
+			"Name": "ファイガ",
+			"Type": "Fire",
+			
+			"GenericDamage": 8,
+			"UseMP": 5,
+			"DamageRange": 1
+		},
+		
+		{
+			"ID": 4,
+			"Name": "サマファイア",
+			"Type": "Fire",
+			
+			"GenericDamage": 2,
+			"UseMP": 3,
+			"DamageRange": "All"
+		},
+		
+		{
+			"ID": 5,
+			"Name": "サマファイラ",
+			"Type": "Fire",
+			
+			"GenericDamage": 4,
+			"UseMP": 7,
+			"DamageRange": "All"
+		},
+		
+		{
+			"ID": 6,
+			"Name": "サマファイガ",
+			"Type": "Fire",
+			
+			"GenericDamage": 7,
+			"UseMP": 12,
+			"DamageRange": "All"
+		},
+		
+		{
+			"ID": 101,
+			"Name": "IP開示",
+			"Type": "Other",
+			
+			"GenericDamage": 2,
+			"UseMP": 2,
+			"DamageRange": 1
+		}
+	],
+	
+	"Monster": [
+		{
+			"Name": "ゴブリン(赤)",
+			"MonsterGraphic": "Goblin(Red).png",
+			
+			"HP": 25,
+			"MP": 0,
+			"ATK": 2,
+			"DEF": 1,
+			"MAG": 1,
+			"SPD": 2,
+			"LUK": 3,
+			
+			"EXP": 2
+		},
+		
+		{
+			"Name": "ゴブリン(青)",
+			"MonsterGraphic": "Goblin(Blue).png",
+			
+			"HP": 32,
+			"MP": 0,
+			"ATK": 6,
+			"DEF": 4,
+			"MAG": 4,
+			"SPD": 2,
+			"LUK": 4,
+			
+			"EXP": 6
+		},
+		
+		{
+			"Name": "ゴブリン(緑)",
+			"MonsterGraphic": "Goblin(Green).png",
+			
+			"HP": 65,
+			"MP": 0,
+			"ATK": 13,
+			"DEF": 6,
+			"MAG": 5,
+			"SPD": 4,
+			"LUK": 4,
+			
+			"EXP": 15
+		},
+		
+		{
+			"Name": "エンリコ",
+			"MonsterGraphic": "Enlico.png",
+			
+			"HP": 30,
+			"MP": 0,
+			"ATK": 3,
+			"DEF": 2,
+			"MAG": 0,
+			"SPD": 1,
+			"LUK": 2,
+			
+			"EXP": 20,
+			
+			"AI": "MonsterAI/Enlico.js"
+		},
+		
+		{
+			"Name": "弁護士唐澤貴洋弁護士",
+			"MonsterGraphic": "Karasawa.png",
+			
+			"HP": 50,
+			"MP": 12,
+			"ATK": 2,
+			"DEF": 1,
+			"MAG": 2,
+			"SPD": 2,
+			"LUK": 5,
+			
+			"EXP": 25,
+			
+			"AI": "MonsterAI/Karasawa.js"
+		}
+	],
+	
+	"Group": [
+		[0, 0, 0],
+		[1, 1, 1],
+		[2, 2, 2],
+		[3],
+		[4]
+	],
+	
+	"Weapon": {
+		"ブロードソード": {
+			"Type": "Sword",
+			
+			"Param": {
+				"ATK": 6,
+				"DEF": 0,
+				"MAG": 0,
+				"SPD": 0,
+				"LUK": 0,
+				
+				"Explain": "普通の剣。"
+			}
+		}
+	}
+}

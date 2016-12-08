@@ -1,0 +1,55 @@
+CACHE MANIFEST
+#最終更新日：2016/09/02[Fri]
+####################################################################################################
+NETWORK:
+index.html
+SystemData.Json
+####################################################################################################
+https://genbuproject.github.io/RPG-Helper/Release/RPG Helper Release 1.3.js
+https://genbuproject.github.io/RPG-Helper/Release/RPG Helper Release 1.3.css
+Script/The Called Name.js
+####################################################################################################
+Audio/The Called Name.wav
+Audio/The Called Name - Serious.wav
+Audio/The Called Name - Strange.wav
+Audio/Sadness.wav
+####################################################################################################
+Audio/Battle 1.wav
+Audio/Battle 2.wav
+Audio/Boss Battle 1.wav
+Audio/Event Battle.wav
+####################################################################################################
+Audio/Elum Village.wav
+Audio/Prospering Elum Village.wav
+####################################################################################################
+Audio/Birds.wav
+Audio/Siren.wav
+Audio/null.wav
+####################################################################################################
+Audio/SE/Click.wav
+Audio/SE/Crow.wav
+Audio/SE/Mystery.wav
+####################################################################################################
+CharacterFace/MainCharacter - Normal.png
+CharacterFace/MainCharacter - Smile.png
+CharacterFace/MainCharacter - Laugh.png
+CharacterFace/MainCharacter - Angry.png
+CharacterFace/MainCharacter - Surprised.png
+####################################################################################################
+CharacterTip/MainCharacter.png
+####################################################################################################
+Image/Back.jpg
+Image/Title.png
+####################################################################################################
+Map/エルム村.map
+Map/エルム村(勇者探し).map
+Map/エルム村 - 蔵書庫.map
+Map/エルム森.map
+####################################################################################################
+MonsterGraphic/Goblin(Red).png
+MonsterGraphic/Goblin(Blue).png
+MonsterGraphic/Goblin(Green).png
+####################################################################################################
+Tile/Town.png
+Tile/Town.TileSetting
+Tile/World.png

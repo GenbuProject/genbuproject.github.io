@@ -1,0 +1,147 @@
+/*フォント設定開始*/
+@Font-Face {
+	Font-Family: "Hall Fetica";
+	Src: URL("https://genbuproject.github.io/Genbu-Project-Official-Site/Fonts/Hall Fetica/Hall Fetica.ttf");
+}
+
+HTML, Select, Option, Button, Input, Textarea {
+	Font-Family: "Hall Fetica", "メイリオ";
+}
+/*フォント設定終了*/
+
+
+
+/*主要スタイル設定開始*/
+HTML, Body {
+	Height: 100%;
+}
+
+Select {
+	BackGround: LightBlue;
+	
+	Border: 2.5px Double DarkGreen;
+	Border-Radius: 10px;
+}
+
+Button {
+	Border: 2.5px Outset ActiveBorder;
+	Border-Radius: 10px;
+}
+/*主要スタイル設定終了*/
+
+
+
+/*トーン系設定開始*/
+#Screen {
+	Display: Flex;
+	Height: 50%;
+	
+	Border: 5px Ridge DarkOrchid;
+}
+
+#TapArea {
+	Display: Flex;
+	Flex-Direction: Column;
+	
+	Width: 5%;
+	Height: 100%;
+	
+	Margin: -5px;
+	Border: 5px Ridge DarkOrchid;
+}
+
+#TapArea > Div {
+	Height: 25%;
+	
+	Margin: -5px -5px 0 -5px;
+	Border: 5px Ridge DarkOrchid;
+	
+	Text-Align: Center;
+	
+	User-Select: None;
+	-Ms-User-Select: None;
+	-Moz-User-Select: None;
+	-Webkit-User-Select: None;
+}
+
+#TapArea > Div:Hover {
+	BackGround: Brown;
+}
+
+#ToneArea {
+	Display: Flex;
+	Width: 95%;
+	Height: 100%;
+	
+	Position: Relative;
+	Left: 5px;
+	
+	Border: 5px Ridge DarkOrchid;
+	Margin: -5px;
+}
+
+#DeadLine {
+	Width: 5%;
+	Height: 100%;
+	
+	Border-Right: 2px Solid #CCCCCC;
+}
+
+#Stream {
+	Width: 95%;
+	Height: 100%;
+}
+
+#Stream > Div {
+	Display: Flex;
+	Height: 25%;
+	
+	Align-Items: Center;
+}
+
+UTone, DTone, LTone, RTone {
+	Position: Relative;
+	
+	BackGround: #EEEEEE;
+	
+	Transform: Rotate(45deg);
+	Transform-Origin: Left Center;
+}
+/*トーン系設定終了*/
+
+
+
+/*楽曲情報スタイル設定開始*/
+#SongInfo {
+	Width: 100%;
+}
+
+#CoverImage {
+	Width: 128px;
+	Margin-Bottom: -4px;
+}
+/*楽曲情報スタイル設定終了*/
+
+
+
+/*メッセージスタイル設定開始*/
+.Message {
+	Display: Block;
+	Margin: Auto;
+	
+	Font-Size: 72pt;
+	Text-Align: Center;
+	
+	Animation: Fades 1.5s Linear 0s Infinite Alternate;
+}
+
+@KeyFrames Fades{
+	0% {
+		Color: Transparent;
+	}
+	
+	100% {
+		Color: LightGray;
+	}
+}
+/*メッセージスタイル設定終了*/
