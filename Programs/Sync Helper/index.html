@@ -10,16 +10,20 @@
 		<Script Type = "Text/JavaScript" Language = "Text/JavaScript">
 			var GitBase = new GitAPI(atob("ZWM0Yjg4MWUwZDVhZmJmNzAyNzkyYzM4NGIwODIzN2M1MDdjYjM4OQ=="));
 			
-			function LoadDirContent (UserName, RepoName, Dir) {
+			function LoadDirContent (UserName, RepoName, Dir, Branch) {
 				with (GitBase) {
 					Repo.RepoURL = UserName + "/" + RepoName;
 					
 					var DB = document.getElementById("DB"),
-						FileList = Repo.File.Get(Dir);
+						FileList = Repo.File.Get(Dir, Branch);
 						
 					console.log(FileList);
 					
-					for (var i = 0; i < FileList.length; i++) {
+					while (1 < DB.rows.length) {
+						DB.rows[1].parentElement.removeChild(DB.rows[1]);
+					}
+					
+					for (let i = 0; i < FileList.length; i++) {
 						let Row = DB.insertRow(-1);
 							Row.insertCell(-1);
 							Row.children[0].textContent = FileList[i].name;
@@ -28,6 +32,10 @@
 							Row.children[1].textContent = FileList[i].size;
 					}
 				}
+			}
+			
+			function Init() {
+				
 			}
 		</Script>
 		
@@ -45,10 +53,6 @@
 			
 			#TreePanel > Div {
 				Padding: 5px;
-			}
-			
-			#SearchPanel {
-				Display: Flex;
 			}
 			
 			#ContentPanel {
@@ -76,14 +80,9 @@
 		</Style>
 	</Head>
 	
-	<Body OnLoad = "LoadTree('GenbuHase', 'GUI-Helper-Official-Repository', 'Release');">
+	<Body OnLoad = "LoadDirContent('GenbuHase', 'GUI-Helper-Official-Repository', 'Release', 'master'); Init();">
 		<Div ID = "TreePanel">
-			<Div ID = "SearchPanel">
-				<Input ID = "UserName" Type = "Search" Style = "Width: 30%;" />
-				<Input ID = "RepoName" Type = "Search" Style = "Width: 70%; Flex: 1;" />
-				
-				<Button OnClick = "LoadTree('" + document.getElementById("UserName").value + "', '" + document.getElementById("RepoName").value + "', '" + null + "');">検索</Button>
-			</Div>
+			
 		</Div>
 		
 		<Div ID = "ContentPanel">
