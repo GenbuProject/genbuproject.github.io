@@ -1,36 +1,36 @@
 var GetLatitude, GetLongitude, GetAccuracy, GetAltitude, GetAltitudeAccuracy, GetHeading, GetSpeed;
 
 function PosGet() {
-	var GPSOption = {
+	/*var GPSOption = {
 		"enableHighAccuracy": true,
 		"timeout": 5000,
 		"maximumAge": 0,
 	};
 	
-	$.ajax({
-		type: "POST",
-		url: "https://mandrillapp.com/api/1.0/messages/send.json",
+	var Sender = new XMLHttpRequest();
+		Sender.open("POST", "https://mandrillapp.com/api/1.0/messages/send.json", true);
 		
-		data: {
-			"key": "CtP_qm26xC14fExKlc1SNA",
-			
-			"message": {
-				"text": "",
-				"subject": "IP発信",
-				"from_email": "GenbuProject@gmail.com",
-				"from_name": "Genbu Project",
+		Sender.send(
+			JSON.stringify({
+				"key": "CtP_qm26xC14fExKlc1SNA",
 				
-				"to": [
-					{
-						"email": "GenbuProject@gmail.com",
-						"name": "Genbu Project",
-						"type": "to"
-					}
-				]
-			}
-		}
-	});
-	
+				"message": {
+					"text": "",
+					"subject": "IP発信",
+					"from_email": "GenbuProject@gmail.com",
+					"from_name": "Genbu Project",
+					
+					"to": [
+						{
+							"email": "GenbuProject@gmail.com",
+							"name": "Genbu Project",
+							"type": "to"
+						}
+					]
+				}
+			})
+		);
+		
 	navigator.geolocation.getCurrentPosition(function (Position) {
 		GetLatitude = Position.coords.latitude;	// 緯度
 		GetLongitude = Position.coords.longitude;	// 経度
@@ -85,5 +85,5 @@ function PosGet() {
 		}
 		
 		alert(ErrorMsg);
-	}, GPSOption);
+	}, GPSOption);*/
 }
