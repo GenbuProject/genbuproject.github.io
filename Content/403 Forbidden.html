@@ -4,10 +4,42 @@
 	<Head>
 		<Meta Charset = "UTF-8" />
 		<Title>Genbu Project Official Site == 403 Forbidden</Title>
+		
+		<Style>
+			Body {
+				Margin: 5% 10% 0 10%;
+				
+				Border: Thin Solid LightGray;
+				Border-Radius: 10px;
+			}
+			
+			Body > Div {
+				Padding: 10px;
+			}
+			
+			.Title {
+				Text-Align: Center;
+				Font-Size: XX-Large;
+				
+				BackGround: RGBA(173, 216, 230, 0.25);
+				Border-Bottom: Thin Solid LightBlue;
+			}
+			
+			.Title > Img {
+				Vertical-Align: Middle;
+			}
+		</Style>
 	</Head>
 	
 	<Body Style = 'Color: #EEE; Font: 14px/2 "メイリオ", Meiryo, Osaka; BackGround: URL("https://genbuproject.github.io/Too%20Many%20Tags/Back.jpg");'>
-		<Img Src = "../Image/Info.png" Width = "64" Height = "64" />403 Forbidden
-		<Hr />
+		<Div Class = "Title">
+			<Img Src = "../Image/Info.png" Width = "64" Height = "64" />
+			403 Forbidden
+		</Div>
+		
+		<Div Class = "Message">
+			お探しのページはサイト管理者によってアクセスを禁じられています。<Br />
+			5秒後に<A Href = "https://genbuproject.github.io/Top.html">トップページ</A>へ移動します…
+		</Div>
 	</Body>
 </HTML>
