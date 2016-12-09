@@ -10,87 +10,13 @@
 		<Script Type = "Text/JavaScript" Language = "Text/JavaScript">
 			var GitBase = new GitAPI(atob("ZWM0Yjg4MWUwZDVhZmJmNzAyNzkyYzM4NGIwODIzN2M1MDdjYjM4OQ=="));
 			
-			function LoadDirContent (UserName, RepoName, Dir, Branch) {
-				with (GitBase) {
-					Repo.RepoURL = UserName + "/" + RepoName;
-					
-					var DB = document.getElementById("DB"),
-						FileList = Repo.File.Get(Dir, Branch);
-						
-					console.log(FileList);
-					
-					while (1 < DB.rows.length) {
-						DB.rows[1].parentElement.removeChild(DB.rows[1]);
-					}
-					
-					for (let i = 0; i < FileList.length; i++) {
-						let Row = DB.insertRow(-1);
-							Row.insertCell(-1);
-							Row.children[0].textContent = FileList[i].name;
-							
-							Row.insertCell(-1);
-							Row.children[1].textContent = FileList[i].size;
-					}
-				}
-			}
-			
-			function Init() {
-				
+			with (GitBase) {
+				Repo.RepoURL = "GenbuProject/RPG-Helper";
 			}
 		</Script>
-		
-		<Style>
-			Body {
-				Display: Flex;
-				Font-Family: "メイリオ", "Meiryo UI";
-			}
-			
-			#TreePanel {
-				Width: 40%;
-				
-				Border: Thin Solid Gray;
-			}
-			
-			#TreePanel > Div {
-				Padding: 5px;
-			}
-			
-			#ContentPanel {
-				Width: 100%;
-				
-				Border: Thin Solid Gray;
-			}
-			
-			Table {
-				Border: Thin Solid #B6B6B6;
-				Border-Collapse: Collapse;
-			}
-			
-			Th, Td {
-				Padding: 2.5px;
-			}
-			
-			Th {
-				BackGround: #EEEEEE;
-			}
-			
-			Td {
-				BackGround: #FFFFFF;
-			}
-		</Style>
 	</Head>
 	
-	<Body OnLoad = "LoadDirContent('GenbuHase', 'GUI-Helper-Official-Repository', 'Release', 'master'); Init();">
-		<Div ID = "TreePanel">
-			
-		</Div>
+	<Body>
 		
-		<Div ID = "ContentPanel">
-			<Table ID = "DB" Border = "1">
-				<Tr>
-					<Th>ファイル名</Th><Th>ファイルサイズ</Th>
-				</Tr>
-			</Table>
-		</Div>
 	</Body>
 </HTML>
