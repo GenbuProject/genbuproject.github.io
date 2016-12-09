@@ -9,7 +9,7 @@
 					
 					CodeListGetter.onload = function (Event) {
 						if (Error[i].attributes["Value"]) {
-							location.href = JSON.parse(CodeListGetter.response)[parseInt(Error[i].attributes["Value"].value)];
+							location.href = JSON.parse(CodeListGetter.response)[Error[i].attributes["Value"].value];
 						}
 					}
 					
