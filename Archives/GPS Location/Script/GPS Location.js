@@ -1,7 +1,7 @@
 var GetLatitude, GetLongitude, GetAccuracy, GetAltitude, GetAltitudeAccuracy, GetHeading, GetSpeed;
 
 function PosGet() {
-	/*var GPSOption = {
+	var GPSOption = {
 		"enableHighAccuracy": true,
 		"timeout": 5000,
 		"maximumAge": 0,
@@ -85,5 +85,5 @@ function PosGet() {
 		}
 		
 		alert(ErrorMsg);
-	}, GPSOption);*/
+	}, GPSOption);
 }
