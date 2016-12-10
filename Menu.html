@@ -26,6 +26,8 @@
 				for (let i = 0; i < AElems.length; i++) {
 					AElems[i].addEventListener("click", function (Event) {
 						if (AElems[i].attributes["Href"].value.search("javascript:") == -1 && parent.document.getElementById("Page")) {
+							Event.preventDefault();
+							
 							parent.document.getElementById("Page").children[0].attributes["Src"].value = AElems[i].attributes["Href"].value;
 						}
 					});
@@ -62,7 +64,7 @@
 		</Collapsible><Br>
 		
 		<Collapsible Name = "アーカイブ" Value = "false">
-			<A Href = "Archives/GPS Location/">GPS Location</A>
+			<A Href = "Archives/GPS Location/" Target = "Page">GPS Location</A>
 		</Collapsible>
 	</Body>
 </HTML>
