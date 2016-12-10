@@ -41,10 +41,12 @@ File > Img, Folder > Img {
 }
 
 /*Collapsibleタグ*/
-Collapsible Div {
+Collapsible > Div {
 	Position: Relative;
 	Left: 20px;
+	
 	Border: Thin Solid LightGray;
+	Box-Sizing: Border-Box;
 }
 
 Collapsible > .Collapsible-Button {
