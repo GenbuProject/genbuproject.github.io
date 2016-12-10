@@ -116,7 +116,7 @@ function TMTInit() {
 		Collapsible[i].children[2].style.width = (14 * Math.max.apply(this, Memory)) + "px";
 		
 		if (Collapsible[i].attributes["Width"]) {
-			Collapsible[i].children[2].style.width = Collapsible[i].attributes["Width"].value + "px";
+			Collapsible[i].children[2].style.width = Collapsible[i].attributes["Width"].value;
 		}
 	}
 	
