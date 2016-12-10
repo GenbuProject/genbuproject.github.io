@@ -6,7 +6,7 @@
 		<Title>Genbu Project Official Site == メニュー</Title>
 		
 		<Script Src = "Programs/Too Many Tags/Release/v2.0/Too Many Tags Release 2.0.js"></Script>
-		<Link Rel = "StyleSheet" HREF = "Programs/Too Many Tags/Release/v2.0/Too Many Tags Release 2.0.css">
+		<Link Rel = "StyleSheet" Href = "Programs/Too Many Tags/Release/v2.0/Too Many Tags Release 2.0.css">
 		
 		<Script>
 			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -19,6 +19,20 @@
 			ga('send', 'pageview');
 		</Script>
 		
+		<Script>
+			function Init() {
+				var AElems = document.getElementsByTagName("A");
+				
+				for (let i = 0; i < AElems.length; i++) {
+					AElems[i].addEventListener("click", function (Event) {
+						if (AElems[i].attributes["Href"].value.search("javascript:") == -1 && parent.document.getElementById("Page")) {
+							parent.document.getElementById("Page").children[0].attributes["Src"].value = AElems[i].attributes["Href"].value;
+						}
+					});
+				}
+			}
+		</Script>
+		
 		<Style>
 			A {
 				Color: Chartreuse;
@@ -27,25 +41,28 @@
 		</Style>
 	</Head>
 	
-	<Body OnLoad = "TMTInit();" Style = 'Color: #EEE; Font: 14px/2 "メイリオ", Meiryo, Osaka; BackGround: URL("Too%20Many%20Tags/Back.jpg");'>
-		<A HREF = "Top.html" Target = "Page"><H2 Style = "Color: LightGray; Text-Decoration: UnderLine;">メニュー</H2></A>
+	<Body OnLoad = "TMTInit(); Init();" Style = 'Color: #EEE; Font: 14px/2 "メイリオ", Meiryo, Osaka; BackGround: URL("Too%20Many%20Tags/Back.jpg");'>
+		<A Href = "Top.html" Target = "Page"><H2 Style = "Color: LightGray; Text-Decoration: UnderLine;">メニュー</H2></A>
 		
-		<Collapsible Name = "Genbu Projectの著作物" Value = "false" Width = "243">
-			<Span Style = "Display: None;"><A HREF = "Content/GPS Location/" Target = "Page">GPS Location</A><Br></Span>
-			<A HREF = "Content/JavaScript Debuger/" Target = "Page">JavaScript Debuger</A><Br>
-			<A HREF = "Content/PianoRoll On HTML5/" Target = "Page">PianoRoll On HTML5</A><Br>
+		<Collapsible Name = "製品" Value = "false" Width = "80%">
+			<A Href = "Content/JavaScript Debuger/" Target = "Page">JavaScript Debuger</A><Br>
+			<A Href = "Content/PianoRoll On HTML5/" Target = "Page">PianoRoll On HTML5</A><Br>
 			
 			<Collapsible Name = "Rhythm Tap Ride(RTR)" Value = "true" Width = "222">
-				<A HREF = "Content/RhythmTapRide/" Target = "Page">Rhythm Tap Ride(RTR)</A><Br>
-				→ <A HREF = "Content/RhythmTapRide/Content/Uploader/" Target = "Page">楽曲アップローダ</A>
+				<A Href = "Content/RhythmTapRide/" Target = "Page">Rhythm Tap Ride(RTR)</A><Br>
+				→ <A Href = "Content/RhythmTapRide/Content/Uploader/" Target = "Page">楽曲アップローダ</A>
 			</Collapsible><Br>
 			
-			<A HREF = "Content/The Called Name/" Target = "Page">The Called Name</A><Br>
-			<A HREF = "Content/The First Posting/" Target = "Page">The First Posting</A><Br>
-			<A HREF = "Content/TipNumber Viewer For RPG Helper/" Target = "Page">TipNumber Viewer For RPG Helper</A><Br>
-			<A HREF = "Content/TipSetting Creator with Wolf RPG Editor/" Target = "Page" Style = "Font-Size: 12px;">TipSetting Creator with Wolf RPG Editor</A><Br>
-			<A HREF = "Content/ToneLine/" Target = "Page">ToneLine</A><Br>
-			<A HREF = "Content/Kasutera Library/" Target = "Page">珠照語録 生成所</A>
+			<A Href = "Content/The Called Name/" Target = "Page">The Called Name</A><Br>
+			<A Href = "Content/The First Posting/" Target = "Page">The First Posting</A><Br>
+			<A Href = "Content/TipNumber Viewer For RPG Helper/" Target = "Page">TipNumber Viewer For RPG Helper</A><Br>
+			<A Href = "Content/TipSetting Creator with Wolf RPG Editor/" Target = "Page" Style = "Font-Size: 12px;">TipSetting Creator with Wolf RPG Editor</A><Br>
+			<A Href = "Content/ToneLine/" Target = "Page">ToneLine</A><Br>
+			<A Href = "Content/Kasutera Library/" Target = "Page">珠照語録 生成所</A>
+		</Collapsible><Br>
+		
+		<Collapsible Name = "アーカイブ" Value = "false">
+			<A Href = "Archives/GPS Location/" Target = "Page">GPS Location</A>
 		</Collapsible>
 	</Body>
 </HTML>

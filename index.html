@@ -21,14 +21,50 @@
 			ga('require', 'linkid', 'linkid.js');
 			ga('send', 'pageview');
 		</Script>
+		
+		<Style>
+			HTML, Body {
+				Margin: 0;
+				Height: 100%;
+				
+				OverFlow-Y: Hidden;
+			}
+			
+			
+			
+			.FlexWrapper {
+				Display: Flex;
+				Height: 100%;
+			}
+			
+			#Menu {
+				Width: 25%;
+				Border-Right: Thin Solid LightGray;
+			}
+			
+			#Page {
+				Width: 100%;
+				Flex: 1;
+			}
+			
+			#Menu > IFrame, #Page > IFrame {
+				Width: 100%;
+				Height: 100%;
+				
+				Border: 0;
+			}
+		</Style>
 	</Head>
 	
-	<FrameSet Cols = "20%, 80%" Border = "1">
-		<Frame Name = "Menu" Src = "Menu.html" NoreSize>
-		<Frame Name = "Page" Src = "Top.html" NoreSize>
-	</FrameSet>
-	
 	<Body>
-		
+		<Div Class = "FlexWrapper">
+			<Div ID = "Menu">
+				<IFrame Src = "Menu.html" Sandbox = "Allow-Same-Origin Allow-Scripts Allow-Top-Navigation"></IFrame>
+			</Div>
+			
+			<Div ID = "Page">
+				<IFrame Src = "Top.html" Sandbox = "Allow-Same-Origin Allow-Scripts Allow-Top-Navigation"></IFrame>
+			</Div>
+		</Div>
 	</Body>
 </HTML>
