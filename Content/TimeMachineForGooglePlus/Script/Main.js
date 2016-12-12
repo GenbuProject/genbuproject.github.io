@@ -1,3 +1,5 @@
+var Token = "";
+
 const Credential = {
 	ID: "568474095379-pch4uhmtl68rqclov8nfvo76bmkgtpbb.apps.googleusercontent.com",
 	SecretID: atob("dWZ1RkVYUzZvZjRZdjVCbHVpb0wyZW1C"),
@@ -56,6 +58,23 @@ var Util = {
 var Net = {
 	LoginWithGoogle: function () {
 		location.href = "https://accounts.google.com/o/oauth2/v2/auth?redirect_uri=" + Credential.RedirectURL + "&scope=" + Credential.Scope + "&client_id=" + Credential.ID + "&response_type=code&access_type=offline&approval_prompt=force";
+	},
+	
+	IsVaildCalendar: function () {
+		var Getter = new XMLHttpRequest();
+			Getter.open("GET", "https://www.googleapis.com/calendar/v3/users/me/calendarList?access_token=" + Token, false);
+			Getter.send(null);
+			
+		var IsVaild = false;
+		
+		for (let i = 0; i < JSON.parse(Getter.responseText).items.length; i++) {
+			if (JSON.parse(Getter.responseText).items[i].summary == "Time Machine For Google+") {
+				IsVaild = true;
+				break;
+			}
+		}
+		
+		return IsVaild;
 	}
 }
 
@@ -76,6 +95,21 @@ function Init() {
 				}
 				
 				Util.CreateDialog("ログイン成功", "Google+アカウントのログインに成功しました。", "<Button OnClick = 'Util.DismissDialog();'>閉じる</Button>");
+				
+				if (!Net.IsVaildCalendar()) {
+					var CalendarCreator = new XMLHttpRequest();
+						CalendarCreator.open("POST", "https://www.googleapis.com/calendar/v3/calendars", true);
+						
+						CalendarCreator.onload = function () {
+							console.log("Okey");
+						}
+						
+						CalendarCreator.send(
+							JSON.stringify({
+								summary: "Time Machine For Google+"
+							})
+						);
+				}
 			}
 			
 			TokenGetter.send(null);
