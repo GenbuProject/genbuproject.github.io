@@ -56,6 +56,15 @@ var Util = {
 }
 
 var Net = {
+	GRequest: function (Type, URL, IsSync, SendData, Onload) {
+		var Requester = new XMLHttpRequest();
+			Requester.open(Type, URL + "?access_token=" + Token, IsSync);
+			
+			Requester.onload = Onload;
+			
+			Requester.send(SendData);
+	},
+	
 	LoginWithGoogle: function () {
 		location.href = "https://accounts.google.com/o/oauth2/v2/auth?redirect_uri=" + Credential.RedirectURL + "&scope=" + Credential.Scope + "&client_id=" + Credential.ID + "&response_type=code&access_type=offline&approval_prompt=force";
 	},
