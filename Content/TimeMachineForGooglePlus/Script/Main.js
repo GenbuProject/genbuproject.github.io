@@ -77,5 +77,7 @@ function Init() {
 				
 				Util.CreateDialog("ログイン成功", "Google+アカウントのログインに成功しました。", "<Button OnClick = 'Util.DismissDialog();'>閉じる</Button>");
 			}
+			
+			TokenGetter.send(null);
 	}
 }
