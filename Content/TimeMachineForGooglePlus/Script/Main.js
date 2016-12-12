@@ -1,7 +1,7 @@
 const Credential = {
 	ID: "568474095379-pch4uhmtl68rqclov8nfvo76bmkgtpbb.apps.googleusercontent.com",
 	SecretID: atob("dWZ1RkVYUzZvZjRZdjVCbHVpb0wyZW1C"),
-	RedirectURL: "https://genbuproject.github.io/Content/Time Machine For Google%2B/",
+	RedirectURL: "https://genbuproject.github.io/Content/TimeMachineForGooglePlus/",
 	Scope: "https://www.googleapis.com/auth/plus.login+https://www.googleapis.com/auth/plus.me+https://www.googleapis.com/auth/calendar"
 }
 
