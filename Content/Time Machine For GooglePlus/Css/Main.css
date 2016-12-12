@@ -54,18 +54,3 @@
 	Border-Top: Thin Solid Black;
 }
 /*ダイアログ設定終了*/
-
-
-
-/*コンテンツ設定開始*/
-.Back {
-	BackGround: Linear-Gradient(Orange, DarkOrange, DarkRed);
-}
-
-.Title {
-	Margin-Left: 10px;
-	Padding-Left: 5px;
-	
-	Border-Left: 10px Solid Green;
-}
-/*コンテンツ設定完了*/
