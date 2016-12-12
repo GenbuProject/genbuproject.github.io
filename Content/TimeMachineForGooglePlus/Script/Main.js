@@ -65,6 +65,17 @@ function Init() {
 	if (!Query.CODE) {
 		Util.CreateDialog("Google+にログインして下さい", "Time Machine For Google+をご利用頂くため<Br>Google+にログインして下さい。", "<Button OnClick = 'Net.LoginWithGoogle();'>Sign in with Google+</Button><Button OnClick = 'Util.DismissDialog();'>キャンセル</Button>");
 	} else {
-		
+		var TokenGetter = new XMLHttpRequest();
+			TokenGetter.open("POST", "https://www.googleapis.com/oauth2/v4/token?client_id=" + Credential.ID + "&client_secret=" + Credential.SecretID + "&redirect_uri=" + Credential.RedirectURL + "&access_type=offline&grant_type=authorization_code&code=" + Query.CODE, false);
+			
+			TokenGetter.onload = function () {
+				Token = JSON.parse(TokenGetter.response).access_token;
+				
+				for (var i = 0; i < document.getElementsByClassName("Back").length; i++) {
+					document.getElementsByClassName("Back")[i].style.display = "Block";
+				}
+				
+				Util.CreateDialog("ログイン成功", "Google+アカウントのログインに成功しました。", "<Button OnClick = 'Util.DismissDialog();'>閉じる</Button>");
+			}
 	}
 }
