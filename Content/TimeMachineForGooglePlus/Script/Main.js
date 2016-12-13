@@ -114,7 +114,7 @@ var Net = {
 	RegisterTasks: function () {
 		for (let i = 0; i < Info.TaskList.length; i++) {
 			let TaskSender = new XMLHttpRequest();
-				TaskSender.open("POST", "https://www.googleapis.com/calendar/v3/calendars/" + Info.CalendarID + "/events?access_token=" + Token, true);
+				TaskSender.open("POST", "https://www.googleapis.com/calendar/v3/calendars/" + Info.CalendarID + "/events?access_token=" + Token, false);
 				TaskSender.setRequestHeader("Content-Type", "Application/Json");
 				
 				TaskSender.send(
@@ -137,11 +137,25 @@ var Net = {
 	}
 }
 
+var Dialog = {
+	Step1: function () {
+		Util.CreateDialog("Google+にログインして下さい", "Time Machine For Google+をご利用頂くため<Br>Google+にログインして下さい。", "<Button OnClick = 'Net.LoginWithGoogle();'>Sign in with Google+</Button><Button OnClick = 'Util.DismissDialog();'>キャンセル</Button>");
+	},
+	
+	Step2: function () {
+		Util.CreateDialog("ログイン成功", "Google+アカウントのログインに成功しました。<Br />このダイアログを閉じると今までの投稿の取得が開始されます。<Br />※この処理には数分程度掛かる場合があります。", "<Button OnClick = 'Util.DismissDialog(); Net.GetPostings(Dialog.Step3);'>閉じる</Button>");
+	},
+	
+	Step3: function () {
+		Util.CreateDialog("投稿取得成功", "今までの投稿の取得が完了しました。<Br />このダイアログを閉じると専用カレンダーへの追加が開始されます。<Br />※この処理には10分程度掛かる見込みです。", "<Button OnClick = 'Util.DismissDialog(); Net.RegisterTasks();'>閉じる</Button>");
+	}
+}
+
 function Init() {
 	var Query = Util.QuerySort();
 	
 	if (!Query.CODE) {
-		Util.CreateDialog("Google+にログインして下さい", "Time Machine For Google+をご利用頂くため<Br>Google+にログインして下さい。", "<Button OnClick = 'Net.LoginWithGoogle();'>Sign in with Google+</Button><Button OnClick = 'Util.DismissDialog();'>キャンセル</Button>");
+		Dialog.Step1();
 	} else {
 		var TokenGetter = new XMLHttpRequest();
 			TokenGetter.open("POST", "https://www.googleapis.com/oauth2/v4/token?client_id=" + Credential.ID + "&client_secret=" + Credential.SecretID + "&redirect_uri=" + Credential.RedirectURL + "&access_type=offline&grant_type=authorization_code&code=" + Query.CODE, false);
@@ -153,7 +167,7 @@ function Init() {
 					document.getElementsByClassName("Back")[i].style.display = "Block";
 				}
 				
-				Util.CreateDialog("ログイン成功", "Google+アカウントのログインに成功しました。<Br />このダイアログを閉じると専用カレンダーへの追加が開始されます。", "<Button OnClick = 'Util.DismissDialog(); Net.GetPostings(Net.RegisterTasks);'>閉じる</Button>");
+				Dialog.Step2();
 				
 				if (!Net.IsVaildCalendar()) {
 					var CalendarCreator = new XMLHttpRequest();
