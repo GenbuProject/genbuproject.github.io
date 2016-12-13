@@ -7,6 +7,10 @@ const Credential = {
 	Scope: "https://www.googleapis.com/auth/plus.login+https://www.googleapis.com/auth/plus.me+https://www.googleapis.com/auth/calendar"
 }
 
+var Info = {
+	TaskList: []
+}
+
 var Util = {
 	CreateDialog: function (Title, Content, FooterContent) {
 		var DialogBack = document.createElement("Div");
@@ -111,7 +115,23 @@ function Init() {
 						CalendarCreator.setRequestHeader("Content-Type", "Application/Json");
 						
 						CalendarCreator.onload = function (Event) {
-							console.log("Okey");
+							console.log("お使いのGoogleカレンダーに新たにTime Machine For Google+を追加しました。");
+							
+							var PageToken = "";
+							
+							while (PageToken != undefined) {
+								let TaskListGetter = new XMLHttpRequest();
+									TaskListGetter.open("GET", "https://www.googleapis.com/plus/v1/people/me/activities/public?maxResults=100" + (PageToken != "" ? "&pageToken=" + PageToken : "") + "&access_token=" + Token, true);
+									
+									TaskListGetter.onload = function () {
+										PageToken = JSON.parse(TaskListGetter.responseText).nextPageToken;
+										Info.TaskList = Info.TaskList.concat(JSON.parse(TaskListGetter.responseText).items);
+									}
+									
+									TaskList.send(null);
+							}
+							
+							console.log("TaskListの取得に成功しました。");
 						}
 						
 						CalendarCreator.send(
