@@ -111,29 +111,83 @@ var Net = {
 		OnLoad();
 	},
 	
-	RegisterTasks: function () {
-		for (let i = 0; i < Info.TaskList.length; i++) {
-			let TaskSender = new XMLHttpRequest();
-				TaskSender.open("POST", "https://www.googleapis.com/calendar/v3/calendars/" + Info.CalendarID + "/events?access_token=" + Token, false);
-				TaskSender.setRequestHeader("Content-Type", "Application/Json");
-				
-				TaskSender.send(
-					JSON.stringify({
-						summary: "Posting On <" + Info.TaskList[i].access.description + ">",
-						description: Info.TaskList[i].object.content,
-						
-						start: {
-							dateTime: Info.TaskList[i].published
-						},
-						
-						end: {
-							dateTime: Info.TaskList[i].published
-						}
-					})
-				);
+	GetCheckPoint: function () {
+		var CheckPointObj = {
+			IsVaild: false,
+			Time: ""
 		}
 		
-		console.log("タスクの追加が完了しました。");
+		let CheckPointGetter = new XMLHttpRequest();
+			CheckPointGetter.open("GET", "https://www.googleapis.com/calendar/v3/calendars/" + Info.CalendarID + "/events?access_token=" + Token, false);
+			
+		for (let i = 0; i < JSON.parse(CheckPointGetter.responseText).items.length; i++) {
+			if (JSON.parse(CheckPointGetter.responseText).items[i].summary == "<Time Machine For Google+> CheckPoint") {
+				CheckPointObj.IsVaild = true
+				CheckPointObj.Time = JSON.parse(CheckPointGetter.responseText).items[i].start.dateTime;
+				
+				break;
+			}
+		}
+		
+		return CheckPointObj;
+	},
+	
+	RegisterTasks: function () {
+		var CheckPoint = Net.GetCheckPoint();
+		var PostNumber = 0;
+		
+		if (CheckPoint.IsVaild) {
+			for (let i = 0; i <= Info.TaskList.length; i++) {
+				if (Info.TaskList[i].published == CheckPoint.Time) {
+					PostNumber = i;
+					
+					break;
+				}
+			}
+		}
+		
+		for (let i = 0; i <= Info.TaskList.length - PostNumber; i++) {
+			if (i != Info.TaskList.length) {
+				let TaskSender = new XMLHttpRequest();
+					TaskSender.open("POST", "https://www.googleapis.com/calendar/v3/calendars/" + Info.CalendarID + "/events?access_token=" + Token, false);
+					TaskSender.setRequestHeader("Content-Type", "Application/Json");
+					
+					TaskSender.send(
+						JSON.stringify({
+							summary: "Posting On <" + Info.TaskList[i].access.description + ">",
+							description: Info.TaskList[i].object.content,
+							
+							start: {
+								dateTime: Info.TaskList[i].published
+							},
+							
+							end: {
+								dateTime: Info.TaskList[i].published
+							}
+						})
+					);
+			} else {
+				let CheckPointSender = new XMLHttpRequest();
+					CheckPointSender.open("POST", "https://www.googleapis.com/calendar/v3/calendars/" + Info.CalendarID + "/events?access_token=" + Token, false);
+					CheckPointSender.setRequestHeader("Content-Type", "Application/Json");
+					
+					CheckPointSender.send(
+						JSON.stringify({
+							summary: "<Time Machine For Google+> CheckPoint",
+							
+							start: {
+								dateTime: Info.TaskList[0].published
+							},
+							
+							end: {
+								dateTime: Info.TaskList[0].published
+							}
+						})
+					);
+			}
+		}
+		
+		alert("タスクの追加が完了しました。お疲れ様でした。");
 	}
 }
 
@@ -176,7 +230,7 @@ function Init() {
 						
 						CalendarCreator.onload = function (Event) {
 							Info.CalendarID = JSON.parse(CalendarCreator.responseText).id;
-							console.log("お使いのGoogleカレンダーに新たにTime Machine For Google+を追加しました。");
+							alert("お使いのGoogleカレンダーに新たにTime Machine For Google+を追加しました。");
 						}
 						
 						CalendarCreator.send(
