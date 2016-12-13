@@ -108,8 +108,9 @@ function Init() {
 				if (!Net.IsVaildCalendar()) {
 					var CalendarCreator = new XMLHttpRequest();
 						CalendarCreator.open("POST", "https://www.googleapis.com/calendar/v3/calendars?access_token=" + Token, true);
+						CalendarCreator.setRequestHeader("Content-Type", "Application/Json");
 						
-						CalendarCreator.onload = function () {
+						CalendarCreator.onload = function (Event) {
 							console.log("Okey");
 						}
 						
