@@ -146,7 +146,7 @@ var Net = {
 			}
 		}
 		
-		for (let i = 0; i <= Info.TaskList.length - PostNumber; i++) {
+		for (let i = 0; i <= (PostNumber != 0 ? PostNumber : Info.TaskList.length); i++) {
 			if (i != Info.TaskList.length) {
 				let TaskSender = new XMLHttpRequest();
 					TaskSender.open("POST", "https://www.googleapis.com/calendar/v3/calendars/" + Info.CalendarID + "/events?access_token=" + Token, false);
