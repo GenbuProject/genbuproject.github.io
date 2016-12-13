@@ -116,22 +116,6 @@ function Init() {
 						
 						CalendarCreator.onload = function (Event) {
 							console.log("お使いのGoogleカレンダーに新たにTime Machine For Google+を追加しました。");
-							
-							var PageToken = "";
-							
-							while (PageToken != undefined) {
-								let TaskListGetter = new XMLHttpRequest();
-									TaskListGetter.open("GET", "https://www.googleapis.com/plus/v1/people/me/activities/public?maxResults=100" + (PageToken != "" ? "&pageToken=" + PageToken : "") + "&access_token=" + Token, false);
-									
-									TaskListGetter.onload = function () {
-										PageToken = JSON.parse(TaskListGetter.responseText).nextPageToken;
-										Info.TaskList = Info.TaskList.concat(JSON.parse(TaskListGetter.responseText).items);
-									}
-									
-									TaskListGetter.send(null);
-							}
-							
-							console.log("Info.TaskListの生成に成功しました。");
 						}
 						
 						CalendarCreator.send(
@@ -140,6 +124,22 @@ function Init() {
 							})
 						);
 				}
+				
+				var PageToken = "";
+				
+				while (PageToken != undefined) {
+					let TaskListGetter = new XMLHttpRequest();
+						TaskListGetter.open("GET", "https://www.googleapis.com/plus/v1/people/me/activities/public?maxResults=100" + (PageToken != "" ? "&pageToken=" + PageToken : "") + "&access_token=" + Token, false);
+						
+						TaskListGetter.onload = function () {
+							PageToken = JSON.parse(TaskListGetter.responseText).nextPageToken;
+							Info.TaskList = Info.TaskList.concat(JSON.parse(TaskListGetter.responseText).items);
+						}
+						
+						TaskListGetter.send(null);
+				}
+				
+				console.log("Info.TaskListの生成に成功しました。");
 			}
 			
 			TokenGetter.send(null);
