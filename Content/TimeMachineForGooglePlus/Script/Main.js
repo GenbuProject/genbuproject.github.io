@@ -120,16 +120,20 @@ var Net = {
 		let CheckPointGetter = new XMLHttpRequest();
 			CheckPointGetter.open("GET", "https://www.googleapis.com/calendar/v3/calendars/" + Info.CalendarID + "/events?access_token=" + Token, false);
 			
-		for (let i = 0; i < JSON.parse(CheckPointGetter.responseText).items.length; i++) {
-			if (JSON.parse(CheckPointGetter.responseText).items[i].summary == "<Time Machine For Google+> CheckPoint") {
-				CheckPointObj.IsVaild = true
-				CheckPointObj.Time = JSON.parse(CheckPointGetter.responseText).items[i].start.dateTime;
+			CheckPointGetter.onload = function () {
+				for (let i = 0; i < JSON.parse(CheckPointGetter.responseText).items.length; i++) {
+					if (JSON.parse(CheckPointGetter.responseText).items[i].summary == "<Time Machine For Google+> CheckPoint") {
+						CheckPointObj.IsVaild = true
+						CheckPointObj.Time = JSON.parse(CheckPointGetter.responseText).items[i].start.dateTime;
+						
+						break;
+					}
+				}
 				
-				break;
+				return CheckPointObj;
 			}
-		}
-		
-		return CheckPointObj;
+			
+			CheckPointGetter.send(null);
 	},
 	
 	RegisterTasks: function () {
