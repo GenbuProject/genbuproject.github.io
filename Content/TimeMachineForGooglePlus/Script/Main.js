@@ -115,6 +115,7 @@ var Net = {
 		for (let i = 0; i < Info.TaskList.length; i++) {
 			let TaskSender = new XMLHttpRequest();
 				TaskSender.open("POST", "https://www.googleapis.com/calendar/v3/calendars/" + Info.CalendarID + "/events?access_token=" + Token, true);
+				TaskSender.setRequestHeader("Content-Type", "Application/Json");
 				
 				TaskSender.send(
 					JSON.stringify({
