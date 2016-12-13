@@ -1,0 +1,49 @@
+@Font-Face {
+	Font-Family: "Hall Fetica";
+	Src: URL("https://genbuproject.github.io/Fonts/Hall Fetica/Hall Fetica.ttf");
+}
+
+* {
+	Color: #6C6D8D;
+	
+	Font-Family: "Hall Fetica", "Meiryo";
+	Font-Size: XX-Large;
+	
+	Box-Sizing: Border-Box;
+}
+
+
+
+VOEZTabPanel, VOEZTab {
+	Border: 3px Solid #6C6D8D;
+}
+
+VOEZTabPanel {
+	Display: Flex;
+	Transform: Rotate(45deg);
+	Transform-Origin: 0% 100%;
+}
+
+VOEZTab {
+	Display: Flex;
+	Width: 100%;
+	
+	Text-Align: Center;
+	Align-Items: Center;
+	Justify-Content: Center;
+}
+
+VOEZTab > Img {
+	Transform: Rotate(-45deg);
+}
+
+
+
+#SettingPane {
+	Position: Fixed;
+	Top: 0;
+	Left: 0;
+	
+	Width: 350px;
+	Height: 350px;
+}
