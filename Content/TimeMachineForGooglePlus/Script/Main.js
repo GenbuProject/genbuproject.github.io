@@ -111,7 +111,7 @@ function Init() {
 				
 				if (!Net.IsVaildCalendar()) {
 					var CalendarCreator = new XMLHttpRequest();
-						CalendarCreator.open("POST", "https://www.googleapis.com/calendar/v3/calendars?access_token=" + Token, false);
+						CalendarCreator.open("POST", "https://www.googleapis.com/calendar/v3/calendars?access_token=" + Token, true);
 						CalendarCreator.setRequestHeader("Content-Type", "Application/Json");
 						
 						CalendarCreator.onload = function (Event) {
@@ -121,7 +121,7 @@ function Init() {
 							
 							while (PageToken != undefined) {
 								let TaskListGetter = new XMLHttpRequest();
-									TaskListGetter.open("GET", "https://www.googleapis.com/plus/v1/people/me/activities/public?maxResults=100" + (PageToken != "" ? "&pageToken=" + PageToken : "") + "&access_token=" + Token, true);
+									TaskListGetter.open("GET", "https://www.googleapis.com/plus/v1/people/me/activities/public?maxResults=100" + (PageToken != "" ? "&pageToken=" + PageToken : "") + "&access_token=" + Token, false);
 									
 									TaskListGetter.onload = function () {
 										PageToken = JSON.parse(TaskListGetter.responseText).nextPageToken;
