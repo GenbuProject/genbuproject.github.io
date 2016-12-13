@@ -128,10 +128,10 @@ function Init() {
 										Info.TaskList = Info.TaskList.concat(JSON.parse(TaskListGetter.responseText).items);
 									}
 									
-									TaskList.send(null);
+									TaskListGetter.send(null);
 							}
 							
-							console.log("TaskListの取得に成功しました。");
+							console.log("Info.TaskListの生成に成功しました。");
 						}
 						
 						CalendarCreator.send(
