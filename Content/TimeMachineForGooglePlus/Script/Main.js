@@ -8,6 +8,7 @@ const Credential = {
 }
 
 var Info = {
+	CalendarID: "",
 	TaskList: []
 }
 
@@ -83,6 +84,8 @@ var Net = {
 		for (let i = 0; i < JSON.parse(Getter.responseText).items.length; i++) {
 			if (JSON.parse(Getter.responseText).items[i].summary == "Time Machine For Google+") {
 				IsVaild = true;
+				Info.CalendarID = JSON.parse(Getter.responseText).items[i].id;
+				
 				break;
 			}
 		}
@@ -131,6 +134,7 @@ function Init() {
 						CalendarCreator.setRequestHeader("Content-Type", "Application/Json");
 						
 						CalendarCreator.onload = function (Event) {
+							Info.CalendarID = JSON.parse(CalendarCreator.responseText).id;
 							console.log("お使いのGoogleカレンダーに新たにTime Machine For Google+を追加しました。");
 						}
 						
