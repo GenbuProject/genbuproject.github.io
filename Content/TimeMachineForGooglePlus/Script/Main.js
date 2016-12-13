@@ -93,7 +93,7 @@ var Net = {
 		return IsVaild;
 	},
 	
-	GetPostings: function () {
+	GetPostings: function (OnLoad) {
 		var PageToken = "";
 		
 		while (PageToken != undefined) {
@@ -107,6 +107,32 @@ var Net = {
 				
 				TaskListGetter.send(null);
 		}
+		
+		OnLoad();
+	},
+	
+	RegisterTasks: function () {
+		for (let i = 0; i < Info.TaskList.length; i++) {
+			let TaskSender = new XMLHttpRequest();
+				TaskSender.open("POST", "https://www.googleapis.com/calendar/v3/calendars/" + Info.CalendarID + "/events?access_token=" + Token, true);
+				
+				TaskSender.send(
+					JSON.stringify({
+						summary: "Posting On <" + Info.TaskList[i].access.description + ">",
+						description: Info.TaskList[i].object.content,
+						
+						start: {
+							dateTime: Info.TaskList[i].published
+						},
+						
+						end: {
+							dateTime: Info.TaskList[i].published
+						}
+					})
+				);
+		}
+		
+		console.log("タスクの追加が完了しました。");
 	}
 }
 
@@ -126,7 +152,7 @@ function Init() {
 					document.getElementsByClassName("Back")[i].style.display = "Block";
 				}
 				
-				Util.CreateDialog("ログイン成功", "Google+アカウントのログインに成功しました。<Br />このダイアログを閉じると専用カレンダーへの追加が開始されます。", "<Button OnClick = 'Util.DismissDialog(); Net.GetPostings();'>閉じる</Button>");
+				Util.CreateDialog("ログイン成功", "Google+アカウントのログインに成功しました。<Br />このダイアログを閉じると専用カレンダーへの追加が開始されます。", "<Button OnClick = 'Util.DismissDialog(); Net.GetPostings(Net.RegisterTasks);'>閉じる</Button>");
 				
 				if (!Net.IsVaildCalendar()) {
 					var CalendarCreator = new XMLHttpRequest();
