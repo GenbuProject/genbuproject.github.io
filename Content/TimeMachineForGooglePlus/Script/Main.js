@@ -142,7 +142,7 @@ var Net = {
 		
 		if (CheckPoint.IsVaild) {
 			for (let i = 0; i <= Info.TaskList.length; i++) {
-				if (Info.TaskList[i].published == CheckPoint.Time) {
+				if (Info.TaskList[i].published.split(".")[Info.TaskList[i].published.split(".").length - 1] == CheckPoint.Time) {
 					PostNumber = i;
 					
 					break;
