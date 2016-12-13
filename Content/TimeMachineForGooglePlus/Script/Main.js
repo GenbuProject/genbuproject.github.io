@@ -126,6 +126,10 @@ var Net = {
 						CheckPointObj.IsVaild = true
 						CheckPointObj.Time = JSON.parse(CheckPointGetter.responseText).items[i].start.dateTime;
 						
+						var CheckPointDeleter = new XMLHttpRequest();
+							CheckPointDeleter.open("DELETE", "https://www.googleapis.com/calendar/v3/calendars/" + Info.CalendarID + "/events/" + JSON.parse(CheckPointGetter.responseText).items[i].id + "?access_token=" + Token, true);
+							CheckPointDeleter.send(null);
+							
 						break;
 					}
 				}
