@@ -129,11 +129,11 @@ var Net = {
 						break;
 					}
 				}
-				
-				return CheckPointObj;
 			}
 			
 			CheckPointGetter.send(null);
+			
+			return CheckPointObj;
 	},
 	
 	RegisterTasks: function () {
