@@ -151,22 +151,22 @@ var Net = {
 		}
 		
 		for (let i = 0; i <= (PostNumber != 0 ? PostNumber : Info.TaskList.length); i++) {
-			if (i != Info.TaskList.length) {
+			if (i != 0) {
 				let TaskSender = new XMLHttpRequest();
 					TaskSender.open("POST", "https://www.googleapis.com/calendar/v3/calendars/" + Info.CalendarID + "/events?access_token=" + Token, false);
 					TaskSender.setRequestHeader("Content-Type", "Application/Json");
 					
 					TaskSender.send(
 						JSON.stringify({
-							summary: "Posting On <" + Info.TaskList[i].access.description + ">",
-							description: Info.TaskList[i].object.content,
+							summary: "Posting On <" + Info.TaskList[i - 1].access.description + ">",
+							description: Info.TaskList[i - 1].object.content,
 							
 							start: {
-								dateTime: Info.TaskList[i].published
+								dateTime: Info.TaskList[i - 1].published
 							},
 							
 							end: {
-								dateTime: Info.TaskList[i].published
+								dateTime: Info.TaskList[i - 1].published
 							}
 						})
 					);
