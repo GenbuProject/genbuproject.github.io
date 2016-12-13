@@ -88,6 +88,22 @@ var Net = {
 		}
 		
 		return IsVaild;
+	},
+	
+	GetPostings: function () {
+		var PageToken = "";
+		
+		while (PageToken != undefined) {
+			let TaskListGetter = new XMLHttpRequest();
+				TaskListGetter.open("GET", "https://www.googleapis.com/plus/v1/people/me/activities/public?maxResults=100" + (PageToken != "" ? "&pageToken=" + PageToken : "") + "&access_token=" + Token, false);
+				
+				TaskListGetter.onload = function () {
+					PageToken = JSON.parse(TaskListGetter.responseText).nextPageToken;
+					Info.TaskList = Info.TaskList.concat(JSON.parse(TaskListGetter.responseText).items);
+				}
+				
+				TaskListGetter.send(null);
+		}
 	}
 }
 
@@ -107,7 +123,7 @@ function Init() {
 					document.getElementsByClassName("Back")[i].style.display = "Block";
 				}
 				
-				Util.CreateDialog("ログイン成功", "Google+アカウントのログインに成功しました。", "<Button OnClick = 'Util.DismissDialog();'>閉じる</Button>");
+				Util.CreateDialog("ログイン成功", "Google+アカウントのログインに成功しました。<Br />このダイアログを閉じると専用カレンダーへの追加が開始されます。", "<Button OnClick = 'Util.DismissDialog(); Net.GetPostings();'>閉じる</Button>");
 				
 				if (!Net.IsVaildCalendar()) {
 					var CalendarCreator = new XMLHttpRequest();
@@ -124,22 +140,6 @@ function Init() {
 							})
 						);
 				}
-				
-				var PageToken = "";
-				
-				while (PageToken != undefined) {
-					let TaskListGetter = new XMLHttpRequest();
-						TaskListGetter.open("GET", "https://www.googleapis.com/plus/v1/people/me/activities/public?maxResults=100" + (PageToken != "" ? "&pageToken=" + PageToken : "") + "&access_token=" + Token, false);
-						
-						TaskListGetter.onload = function () {
-							PageToken = JSON.parse(TaskListGetter.responseText).nextPageToken;
-							Info.TaskList = Info.TaskList.concat(JSON.parse(TaskListGetter.responseText).items);
-						}
-						
-						TaskListGetter.send(null);
-				}
-				
-				console.log("Info.TaskListの生成に成功しました。");
 			}
 			
 			TokenGetter.send(null);
