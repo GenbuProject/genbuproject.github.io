@@ -1,0 +1,107 @@
+@Font-Face {
+	Font-Family: "Hall Fetica";
+	Src: URL("https://genbuproject.github.io/Fonts/Hall Fetica/Hall Fetica.ttf");
+}
+
+* {
+	Color: #6C6D8D;
+	
+	Font-Family: "Hall Fetica", "Meiryo";
+	Font-Size: XX-Large;
+	
+	Box-Sizing: Border-Box;
+}
+
+
+
+VOEZTabPanel {
+	Display: Inline-Flex;
+	Flex-Direction: Column;
+	
+	Transform: Rotate(45deg);
+	Transform-Origin: 0% 100%;
+}
+
+VOEZTabRow {
+	Display: Inline-Flex;
+}
+
+VOEZTab {
+	Display: Flex;
+	Flex: 1;
+	
+	Margin: 0 -3px -3px 0;
+	
+	Border: 3px Solid #6C6D8D;
+}
+
+VOEZTab.Top > VOEZTabContent {
+	Align-Items: Flex-Start;
+}
+
+VOEZTab.Bottom > VOEZTabContent {
+	Align-Items: Flex-End;
+}
+
+VOEZTab.Left > VOEZTabContent {
+	Justify-Content: Flex-Start;
+}
+
+VOEZTab.Hidden {
+	Border: None;
+	Margin: 0 3px 3px 0;
+}
+
+VOEZTabContent {
+	Display: Flex;
+	Width: 100%;
+	
+	Transform: Rotate(-45deg);
+	
+	Text-Align: Center;
+	Align-Items: Center;
+	Justify-Content: Center;
+}
+
+VOEZTabContent > Img {
+	Width: 100%;
+	Transform: Rotate(45deg);
+}
+
+VOEZText {
+	Font-Family: "Meiryo";
+}
+
+
+
+.SettingPane {
+	Position: Relative;
+	Top: -135px;
+	Left: -6%;
+}
+
+.SettingTab {
+	Width: 200px;
+	Height: 200px;
+}
+
+.InfoPane {
+	Position: Relative;
+	Top: 0;
+	Left: -2.5%;
+}
+
+.InfoTab {
+	
+}
+
+.ActionPane {
+	Position: Relative;
+	Top: -1300px;
+	Left: 0%;
+}
+
+.ActionTab {
+	Width: 750px;
+	Height: 750px;
+}
