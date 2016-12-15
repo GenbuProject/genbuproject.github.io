@@ -1,6 +1,6 @@
 /*/
  *============================================================
- *【Too Many Tags Release 2.0】(Last Updated:2016/11/12 [Sat])
+ *【Too Many Tags v2.0】(Last Updated:2016/12/15 [Thu])
  *	Copyright (C) 2016 Genbu Hase All Rights Reversed.
  *============================================================
 /*/
@@ -16,28 +16,28 @@ function TMTInit() {
 	for (let i = 0; i < File.length; i++) {
 		switch (File[i].attributes["Type"].value.toLowerCase()) {
 			case "text":
-				File[i].innerHTML = '<Img Src = "../../Images/File/File-Text.Svg" Width = "' + WIDTH + '" Width = "' + WIDTH + '" Height = "' + HEIGHT + '">' + ' ' + File[i].innerHTML;
+				File[i].innerHTML = '<Img Src = "https://genbuproject.github.io/Programs/Too Many Tags/Images/File/File-Text.Svg" Width = "' + WIDTH + '" Width = "' + WIDTH + '" Height = "' + HEIGHT + '">' + ' ' + File[i].innerHTML;
 				break;
 				
 			case "image":
-				File[i].innerHTML = '<Img Src = "../../Images/File/File-Image.Svg" Width = "' + WIDTH + '" Height = "' + HEIGHT + '">' + ' ' + File[i].innerHTML;
+				File[i].innerHTML = '<Img Src = "https://genbuproject.github.io/Programs/Too Many Tags/Images/File/File-Image.Svg" Width = "' + WIDTH + '" Height = "' + HEIGHT + '">' + ' ' + File[i].innerHTML;
 				break;
 				
 			case "music":
-				File[i].innerHTML = '<Img Src = "../../Images/File/File-Music.Svg" Width = "' + WIDTH + '" Height = "' + HEIGHT + '">' + ' ' + File[i].innerHTML;
+				File[i].innerHTML = '<Img Src = "https://genbuproject.github.io/Programs/Too Many Tags/Images/File/File-Music.Svg" Width = "' + WIDTH + '" Height = "' + HEIGHT + '">' + ' ' + File[i].innerHTML;
 				break;
 				
 			case "video":
-				File[i].innerHTML = '<Img Src = "../../Images/File/File-Video.Svg" Width = "' + WIDTH + '" Height = "' + HEIGHT + '">' + ' ' + File[i].innerHTML;
+				File[i].innerHTML = '<Img Src = "https://genbuproject.github.io/Programs/Too Many Tags/Images/File/File-Video.Svg" Width = "' + WIDTH + '" Height = "' + HEIGHT + '">' + ' ' + File[i].innerHTML;
 				break;
 				
 			case "zip":
-				File[i].innerHTML = '<Img Src = "../../Images/File/File-Zip.Svg" Width = "' + WIDTH + '" Height = "' + HEIGHT + '">' + ' ' + File[i].innerHTML;
+				File[i].innerHTML = '<Img Src = "https://genbuproject.github.io/Programs/Too Many Tags/Images/File/File-Zip.Svg" Width = "' + WIDTH + '" Height = "' + HEIGHT + '">' + ' ' + File[i].innerHTML;
 				break;
 				
 			case "other":
 			default:
-				File[i].innerHTML = '<Img Src = "../../Images/File/File-Other.Svg" Width = "' + WIDTH + '" Height = "' + HEIGHT + '">' + ' ' + File[i].innerHTML;
+				File[i].innerHTML = '<Img Src = "https://genbuproject.github.io/Programs/Too Many Tags/Images/File/File-Other.Svg" Width = "' + WIDTH + '" Height = "' + HEIGHT + '">' + ' ' + File[i].innerHTML;
 				break;
 		}
 	}
@@ -46,16 +46,16 @@ function TMTInit() {
 		if (Folder[i].attributes["Type"] != undefined) {
 			switch (Folder[i].attributes["Type"].value.toLowerCase()) {
 				case "drive":
-					Folder[i].innerHTML = '<Img Src = "../../Images/Folder/Folder-Drive.Svg" Width = "' + WIDTH + '" Height = "' + HEIGHT + '">' + ' ' + Folder[i].innerHTML;
+					Folder[i].innerHTML = '<Img Src = "https://genbuproject.github.io/Programs/Too Many Tags/Images/Folder/Folder-Drive.Svg" Width = "' + WIDTH + '" Height = "' + HEIGHT + '">' + ' ' + Folder[i].innerHTML;
 					break;
 					
 				case "directory":
 				default:
-					Folder[i].innerHTML = '<Img Src = "../../Images/Folder/Folder-Normal.Svg" Width = "' + WIDTH + '" Height = "' + HEIGHT + '">' + ' ' + Folder[i].innerHTML;
+					Folder[i].innerHTML = '<Img Src = "https://genbuproject.github.io/Programs/Too Many Tags/Images/Folder/Folder-Normal.Svg" Width = "' + WIDTH + '" Height = "' + HEIGHT + '">' + ' ' + Folder[i].innerHTML;
 					break;
 			}
 		} else {
-			Folder[i].innerHTML = '<Img Src = "../../Images/Folder/Folder-Normal.Svg" Width = "' + WIDTH + '" Height = "' + HEIGHT + '">' + ' ' + Folder[i].innerHTML;
+			Folder[i].innerHTML = '<Img Src = "https://genbuproject.github.io/Programs/Too Many Tags/Images/Folder/Folder-Normal.Svg" Width = "' + WIDTH + '" Height = "' + HEIGHT + '">' + ' ' + Folder[i].innerHTML;
 		}
 	}
 	

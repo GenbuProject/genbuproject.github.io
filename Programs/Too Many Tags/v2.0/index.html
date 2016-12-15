@@ -2,10 +2,7 @@
 
 <HTML>
 	<Head>
-		<Title>Too Many Tags Release 1.0 ～Example Pages～</Title>
-		
-		<Script Type = "Text/JavaScript" SRC = "Too Many Tags Release 1.0.js"></Script>
-		<Link Rel = "StyleSheet" HREF = "Too Many Tags Release 1.0.css">
+		<Title>Too Many Tags v2.0 ～Example Pages～</Title>
 		
 		<Script>
 			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -17,10 +14,13 @@
 			ga('require', 'linkid', 'linkid.js');
 			ga('send', 'pageview');
 		</Script>
+		
+		<Script Type = "Text/JavaScript" Src = "Too Many Tags v2.0.js"></Script>
+		<Link Rel = "StyleSheet" Href = "Too Many Tags v2.0.css">
 	</Head>
 	
-	<Body OnLoad = "TagSetting();" Style = 'Color: #EEE; Font: 14px/2 "メイリオ", Meiryo, "ＭＳ Ｐゴシック", Osaka, "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro"; BackGround: URL("https://genbuproject.github.io/Too%20Many%20Tags/Back.jpg") Repeat Scroll;'>
-		<Span>このページは<A HREF = "http://uploader.mcpe.jp/">MinecraftPE ForumUploader</A>での使用を目的として構成されています。</Span><br><br>
+	<Body OnLoad = "TMTInit();" Style = 'Color: #EEE; Font: 14px/2 "メイリオ", Meiryo, "ＭＳ Ｐゴシック", Osaka, "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro"; BackGround: URL("https://genbuproject.github.io/Images/Back.jpg") Repeat Scroll;'>
+		<Span>このページは<A Href = "http://uploader.mcpe.jp/">MinecraftPE ForumUploader</A>での使用を目的として構成されています。</Span><Br><Br>
 		
 		<Div ID = "OverView">
 			<ContentTitle>概要</ContentTitle>
@@ -41,13 +41,24 @@
 			</Div>
 		</Div>
 		
-		<br>
+		<Br>
 		
 		<Div ID = "Detail">
 			<ContentTitle>詳細</ContentTitle>
 			
 			<Div>
-				詳細の内容
+				詳細の内容<Br><Br>
+				
+				<Collapsible Name = "コード" Value = "false">
+					折り畳みの中<Br>
+					We are Genbu Project!
+				</Collapsible><br>
+				
+				<Collapsible Name = "折りたたむかい？" Value = "false" Width = "350">
+					開いたね(´・ω・`)
+				</Collapsible><Br><Br>
+				
+				<Copyright Auther = "Genbu Hase" Year = "2015-2016" />
 			</Div>
 		</Div>
 	</Body>

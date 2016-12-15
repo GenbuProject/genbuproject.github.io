@@ -2,10 +2,11 @@
 
 <HTML>
 	<Head>
-		<Title>Too Many Tags Release 1.1 ～Example Pages～</Title>
+		<Title>Too Many Tags v1.3 ～Example Pages～</Title>
 		
-		<Script Type = "Text/JavaScript" SRC = "Too Many Tags Release 1.1.js"></Script>
-		<Link Rel = "StyleSheet" HREF = "Too Many Tags Release 1.1.css">
+		<Script>
+			const PRECOLLWIDTH = ["350px"];
+		</Script>
 		
 		<Script>
 			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -17,10 +18,15 @@
 			ga('require', 'linkid', 'linkid.js');
 			ga('send', 'pageview');
 		</Script>
+		
+		<Script Type = "Text/JavaScript" Src = "Too Many Tags v1.3.js"></Script>
+		<Link Rel = "StyleSheet" Href = "Too Many Tags v1.3.css">
+		
+		<Script Type = "Text/JavaScript" Src = "https://code.jquery.com/jquery-1.12.2.js"></Script>
 	</Head>
 	
-	<Body OnLoad = "TagSetting();" Style = 'Color: #EEE; Font: 14px/2 "メイリオ", Meiryo, "ＭＳ Ｐゴシック", Osaka, "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro"; BackGround: URL("https://genbuproject.github.io/Too%20Many%20Tags/Back.jpg") Repeat Scroll;'>
-		<Span>このページは<A HREF = "http://uploader.mcpe.jp/">MinecraftPE ForumUploader</A>での使用を目的として構成されています。</Span><br><br>
+	<Body OnLoad = "TagSetting(); Set_PreCollWidth();" Style = 'Color: #EEE; Font: 14px/2 "メイリオ", Meiryo, "ＭＳ Ｐゴシック", Osaka, "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro"; BackGround: URL("https://genbuproject.github.io/Images/Back.jpg") Repeat Scroll;'>
+		<Span>このページは<A Href = "http://uploader.mcpe.jp/">MinecraftPE ForumUploader</A>での使用を目的として構成されています。</Span><Br><Br>
 		
 		<Div ID = "OverView">
 			<ContentTitle>概要</ContentTitle>
@@ -41,20 +47,28 @@
 			</Div>
 		</Div>
 		
-		<br>
+		<Br>
 		
 		<Div ID = "Detail">
 			<ContentTitle>詳細</ContentTitle>
 			
 			<Div>
-				詳細の内容<br><br>
+				詳細の内容<Br><Br>
 				
 				<Collapsible Title = "コード" Value = "false">
 					<Div>
-						折り畳みの中<br>
+						折り畳みの中<Br>
 						We are Genbu Project!
 					</Div>
-				</Collapsible>
+				</Collapsible><br>
+				
+				<Collapsible Class = "PreColl" Title = "折りたたむかい？" Value = "false">
+					<Div>
+						開いたね(´・ω・`)
+					</Div>
+				</Collapsible><Br><Br>
+				
+				<Copyright Auther = "Genbu Hase" Year = "2015-2016">
 			</Div>
 		</Div>
 	</Body>
