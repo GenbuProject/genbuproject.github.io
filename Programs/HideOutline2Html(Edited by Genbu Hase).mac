@@ -1,0 +1,122 @@
+//秀丸アウトライン to Html マクロ Ver0.2
+//
+// 行頭.を<h1>タグ、..を<h2>タグ、同様に<h6>タグまでの変換
+// 一般文は<p>タグでくくり、内部の改行は<br/>に変換します。
+//
+//	by 神楽坂らせん with GenbuHase 20161215
+
+$t = "秀丸アウトライン to Html マクロ実行中！";
+title $t;
+
+//init
+$fn = leftstr(basename2, strlen(basename2) - strlen(filetype));
+//message $fn;
+
+setcompatiblemode 0x0F;	//おまじない
+
+begingroupundo;		// アンドゥ用指定
+
+
+//空行を削除
+title $t + " :空行削除中！";
+replaceall "^\\n", "", regular, nocasesense, nohilight;
+
+//標準文
+title $t + " :標準文処理中！";
+gofiletop;
+
+while (true) {
+	searchdown "^[^\\.(.*)]", regular, nocasesense, nohilight;
+	if (!result) break;
+	
+	golinetop; // 行末へ
+	insert "\t\t";
+}
+
+//H6タグ
+title $t + " :H6タグ処理中！";
+replaceall "^\\.\\.\\.\\.\\.\\.(.*)\\n", "\t\t<h6>\\1</h6>\\n", regular, nocasesense, nohilight;
+
+//H5タグ
+title $t + " :H5タグ処理中！";
+replaceall "^\\.\\.\\.\\.\\.(.*)\\n", "\t\t<h5>\\1</h5>\\n", regular, nocasesense, nohilight;
+
+//H4タグ
+title $t + " :H4タグ処理中！";
+replaceall "^\\.\\.\\.\\.(.*)\\n", "\t\t<h4>\\1</h4>\\n", regular, nocasesense, nohilight;
+
+//H3タグ
+title $t + " :H3タグ処理中！";
+replaceall "^\\.\\.\\.(.*)\\n", "\t\t<h3>\\1</h3>\\n", regular, nocasesense, nohilight;
+
+//H2タグ
+title $t + " :H2タグ処理中！";
+replaceall "^\\.\\.(.*)\\n", "\t\t<h2>\\1</h2>\\n", regular, nocasesense, nohilight;
+
+//H1タグ
+title $t + " :H1タグ処理中！";
+replaceall "^\\.(.*)\\n", "\t\t<h1>\\1</h1>\\n", regular, nocasesense, nohilight;
+
+
+//ファイル先頭へ
+gofiletop;
+
+//html宣言等
+insert "<!DocType HTML>";
+insert "\n\n";
+insert "<html>\n";
+insert "\t<head>\n";
+insert "\t\t<meta http-equiv=\"Content-Type\" content=\"text/html\" charset=\"UTF-8\" />\n";
+insert "\t\t<title>" + $fn + "</title>\n";
+insert "\t</head>";
+insert "\n\t\n";
+insert "\t<body>\n";
+
+//ファイル末尾へ
+gofileend;
+
+//html宣言等
+insert "\t</body>\n";
+insert "</html>";
+
+//Pタグと内部改行処理
+title $t + " :Pタグと内部改行処理中！";
+
+while (true) {
+	//hタグ末尾＋次の行の頭に<がない場所を探す
+	searchdown "/h[1-6]>\\n[^<]", regular, nocasesense, hilight;
+	if (!result)  break;
+	golineend; // 行末へ
+	right; // 次の行の頭へ
+	
+	insert "\t\t<p>\n";	// pタグスタート
+	
+	beginsel; //選択開始 ～段落選択
+	searchdown "^\\t\\t<", regular, nocasesense, hilight;
+	//if (!result)  beep;
+	
+	// 段落内の改行を<br/>化
+	begingroupundo;
+	replaceall "\\n", "<br/>\\n\t\t", regular, nocasesense, inselect, nohilight;
+	//if (!result)  beep;
+	endgroupundo 1;
+	
+	insert "\t\t</p>\n";	// pタグエンド
+}
+
+endgroupundo 1;	//アンドゥ終了
+
+title $t + " :変換終了 UTF-8形式で保存してください";
+
+
+$res = input("変換終了しました。\n下記のファイル名で保存してよろしいですか？", $fn + ".html");
+
+#r = result;
+
+if (#r == true) {
+	saveas $res, utf8;
+	message "UTF-8形式で保存しました";
+}
+
+title 0;
+endmacro;
