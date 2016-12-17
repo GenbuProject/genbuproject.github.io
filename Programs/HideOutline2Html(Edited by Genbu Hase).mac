@@ -1,9 +1,9 @@
-//秀丸アウトライン to Html マクロ Ver0.2
+//秀丸アウトライン to Html マクロ Ver0.3
 //
 // 行頭.を<h1>タグ、..を<h2>タグ、同様に<h6>タグまでの変換
-// 一般文は<p>タグでくくり、内部の改行は<br/>に変換します。
+// 一般文は<p>タグでくくり、内部の改行は<br />に変換します。
 //
-//	by 神楽坂らせん with プログラマーGenboo(Genbu Hase) 20161216
+//	by 神楽坂らせん with プログラマーGenboo(Genbu Hase) <2016-12-17>
 
 $t = "秀丸アウトライン to Html マクロ実行中！";
 title $t;
@@ -35,27 +35,27 @@ while (true) {
 
 //H6タグ
 title $t + " :H6タグ処理中！";
-replaceall "^\\t*\\.\\.\\.\\.\\.\\.(.*)\\n", "\t\t<h6>\\1</h6>\\n", regular, nocasesense, hilight;
+replaceall "^\\t*\\.\\.\\.\\.\\.\\.(.*)\\n", "\t\t<h6>\\1</h6>\n", regular, nocasesense, hilight;
 
 //H5タグ
 title $t + " :H5タグ処理中！";
-replaceall "^\\t*\\.\\.\\.\\.\\.(.*)\\n", "\t\t<h5>\\1</h5>\\n", regular, nocasesense, hilight;
+replaceall "^\\t*\\.\\.\\.\\.\\.(.*)\\n", "\t\t<h5>\\1</h5>\n", regular, nocasesense, hilight;
 
 //H4タグ
 title $t + " :H4タグ処理中！";
-replaceall "^\\t*\\.\\.\\.\\.(.*)\\n", "\t\t<h4>\\1</h4>\\n", regular, nocasesense, hilight;
+replaceall "^\\t*\\.\\.\\.\\.(.*)\\n", "\t\t<h4>\\1</h4>\n", regular, nocasesense, hilight;
 
 //H3タグ
 title $t + " :H3タグ処理中！";
-replaceall "^\\t*\\.\\.\\.(.*)\\n", "\t\t<h3>\\1</h3>\\n", regular, nocasesense, hilight;
+replaceall "^\\t*\\.\\.\\.(.*)\\n", "\t\t<h3>\\1</h3>\n", regular, nocasesense, hilight;
 
 //H2タグ
 title $t + " :H2タグ処理中！";
-replaceall "^\\t*\\.\\.(.*)\\n", "\t\t<h2>\\1</h2>\\n", regular, nocasesense, hilight;
+replaceall "^\\t*\\.\\.(.*)\\n", "\t\t<h2>\\1</h2>\n", regular, nocasesense, hilight;
 
 //H1タグ
 title $t + " :H1タグ処理中！";
-replaceall "^\\t*\\.(.*)\\n", "\t\t<h1>\\1</h1>\\n", regular, nocasesense, hilight;
+replaceall "^\\t*\\.(.*)\\n", "\t\t<h1>\\1</h1>\n", regular, nocasesense, hilight;
 
 
 //ファイル先頭へ
@@ -88,7 +88,7 @@ title $t + " :Pタグと内部改行処理中！";
 
 while (true) {
 	//hタグ末尾＋次の行の頭に<がない場所を探す
-	searchdown "/h[1-6]>\\n\\t*[^<]", regular, nocasesense, hilight;
+	searchdown "/h[1-6]>\\n\\t\\t[^<]", regular, nocasesense, hilight;
 	if (!result)  break;
 	golineend; // 行末へ
 	right; // 次の行の頭へ
@@ -101,7 +101,7 @@ while (true) {
 	
 	// 段落内の改行を<br/>化
 	begingroupundo;
-	replaceall "\\n", "<br/>\\n\t", regular, nocasesense, inselect, hilight;
+	replaceall "\\n", "<br />\n\t", regular, nocasesense, inselect, hilight;
 	//if (!result)  beep;
 	endgroupundo 1;
 	
