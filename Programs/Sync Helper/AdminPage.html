@@ -17,6 +17,17 @@
 	</Head>
 	
 	<Body>
-		<Input ID = "RepoURL" Type = "TextBox" PlaceHolder = ":RepoURL" />
+		<Select ID = "MethodType">
+			<Option Value = "Repo RepoURL">Repo.RepoURL</Option>
+			<Option Value = "Repo File Get">Repo.File.Get</Option>
+			<Option Value = "Repo File Create">Repo.File.Create</Option>
+			<Option Value = "Repo File Delete">Repo.File.Delete</Option>
+			<Option Value = "Repo File Write">Repo.File.Write</Option>
+			<Option Value = "Repo File Read">Repo.File.Read</Option>
+			<Option Value = "Repo File Download">Repo.File.Download</Option>
+			<Option Value = "Repo File IsVaild">Repo.File.IsVaild</Option>
+		</Select>
+		
+		<Input Class = "Value" Type = "TextBox" PlaceHolder = ":" />
 	</Body>
 </HTML>
