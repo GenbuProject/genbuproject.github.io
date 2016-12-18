@@ -1,0 +1,22 @@
+<!DocType HTML>
+
+<HTML>
+	<Head>
+		<Meta Charset = "UTF-8" />
+		<Title>Sync Helper TestDoc</Title>
+		
+		<Script Src = "Sync Helper v1.0.js"></Script>
+		
+		<Script Type = "Text/JavaScript" Language = "Text/JavaScript">
+			var GitBase = new GitAPI(atob("ZWM0Yjg4MWUwZDVhZmJmNzAyNzkyYzM4NGIwODIzN2M1MDdjYjM4OQ=="));
+			
+			with (GitBase) {
+				Repo.RepoURL = "GenbuProject/genbuproject.github.io";
+			}
+		</Script>
+	</Head>
+	
+	<Body>
+		<Input ID = "RepoURL" Type = "TextBox" PlaceHolder = ":RepoURL" />
+	</Body>
+</HTML>
