@@ -14,6 +14,13 @@
 				Repo.RepoURL = "GenbuProject/genbuproject.github.io";
 			}
 		</Script>
+		
+		<Style>
+			#Form {
+				Display: Flex;
+				Flex-Direction: Column;
+			}
+		</Style>
 	</Head>
 	
 	<Body>
@@ -28,6 +35,8 @@
 			<Option Value = "Repo File IsVaild">Repo.File.IsVaild</Option>
 		</Select>
 		
-		<Input Class = "Value" Type = "TextBox" PlaceHolder = ":" />
+		<Div ID = "Form">
+			<Input Class = "Value" Type = "TextBox" PlaceHolder = ":" />
+		</Div>
 	</Body>
 </HTML>
