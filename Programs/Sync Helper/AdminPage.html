@@ -15,6 +15,32 @@
 			}
 		</Script>
 		
+		<Script Type = "Text/JavaScript" Language = "Text/JavaScript" Defer>
+			window.DOM = function (Str) {
+				let Memory = null;
+				
+				switch (Str.substr(0, 1)) {
+					case "#":
+						Memory = document.getElementById(Str.substr(1));
+						break;
+						
+					case ".":
+						Memory = document.getElementsByClassName(Str.substr(1));
+						break;
+						
+					default:
+						Memory = document.getElementsByName(Str.substr(1));
+						break;
+				}
+				
+				return Memory;
+			}
+			
+			DOM("#MethodType").addEventListener("change", function () {
+				console.log(DOM("#MethodType"));
+			});
+		</Script>
+		
 		<Style>
 			#Form {
 				Display: Flex;
