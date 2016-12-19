@@ -25,18 +25,17 @@
 	
 	<Body>
 		<Select ID = "MethodType">
-			<Option Value = "Repo RepoURL">Repo.RepoURL</Option>
-			<Option Value = "Repo File Get">Repo.File.Get</Option>
-			<Option Value = "Repo File Create">Repo.File.Create</Option>
-			<Option Value = "Repo File Delete">Repo.File.Delete</Option>
-			<Option Value = "Repo File Write">Repo.File.Write</Option>
-			<Option Value = "Repo File Read">Repo.File.Read</Option>
-			<Option Value = "Repo File Download">Repo.File.Download</Option>
-			<Option Value = "Repo File IsVaild">Repo.File.IsVaild</Option>
+			<Option Value = "Repo RepoURL 1[RepoURL]">Repo.RepoURL</Option>
+			<Option Value = "Repo File Get 2[Path,Branch]">Repo.File.Get</Option>
+			<Option Value = "Repo File Create 3[Path,Branch,Message]">Repo.File.Create</Option>
+			<Option Value = "Repo File Delete 3[Path,Branch,Message]">Repo.File.Delete</Option>
+			<Option Value = "Repo File Write 4[Path,Content,Branch,Message]">Repo.File.Write</Option>
+			<Option Value = "Repo File Read 2[Path,Branch]">Repo.File.Read</Option>
+			<Option Value = "Repo File Download 2[Path,Branch]">Repo.File.Download</Option>
+			<Option Value = "Repo File IsVaild 2[Path,Branch]">Repo.File.IsVaild</Option>
 		</Select>
 		
 		<Div ID = "Form">
-			<Input Class = "Value" Type = "TextBox" PlaceHolder = ":" />
 		</Div>
 	</Body>
 	
@@ -53,8 +52,12 @@
 					Memory = document.getElementsByClassName(Str.substr(1));
 					break;
 
-				default:
+				case "*":
 					Memory = document.getElementsByName(Str.substr(1));
+					break;
+					
+				default:
+					Memory = document.createElement(Str);
 					break;
 			}
 
@@ -62,7 +65,28 @@
 		}
 
 		DOM("#MethodType").addEventListener("change", function () {
-			console.log(DOM("#MethodType"));
+			for (let i = 0; i < DOM("#Form").children.length; i++) {
+				DOM("#Form").removeChild(DOM("#Form").children[i]);
+			}
+			
+			switch (this.value.split(" ")[0].split("[")[0]) {
+				case "Repo":
+					switch (this.value.split(" ")[1].split("[")[0]) {
+						case "RepoURL":
+							for (let i = 0; i < this.value.split(" ")[this.value.split(" ").length - 1] + 0; i++) {
+								var Input = DOM("Input");
+									Input.className = "Value";
+									Input.type = "TextBox";
+									Input.placeholder = ":" + this.value.split(" ")[1].split("[")[1].split("]")[0];
+									
+								DOM("#Form").appendChild(Input);
+							}
+							
+							break;
+					}
+					
+					break;
+			}
 		});
 	</Script>
 </HTML>
