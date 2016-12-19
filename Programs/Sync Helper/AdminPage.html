@@ -73,11 +73,11 @@
 				case "Repo":
 					switch (this.value.split(" ")[1].split("[")[0]) {
 						case "RepoURL":
-							for (let i = 0; i < this.value.split(" ")[this.value.split(" ").length - 1].split("[")[0] + 0; i++) {
+							for (let i = 0; i < (this.value.split(" ")[this.value.split(" ").length - 1].split("[")[0]) + 0; i++) {
 								var Input = DOM("Input");
 									Input.className = "Value";
 									Input.type = "TextBox";
-									Input.placeholder = ":" + this.value.split(" ")[1].split("[")[1].split("]")[0];
+									Input.placeholder = ":" + this.value.split(" ")[2].split("[")[1].split("]")[0];
 									
 								DOM("#Form").appendChild(Input);
 							}
