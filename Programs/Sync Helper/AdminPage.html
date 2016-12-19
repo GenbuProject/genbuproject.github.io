@@ -69,7 +69,7 @@
 		}
 
 		DOM("#MethodType").addEventListener("change", function () {
-			for (let i = 0; i <= DOM("#Form").children.length; i++) {
+			for (let i = 0; i < DOM("#Form").children.length; i++) {
 				DOM("#Form").removeChild(DOM("#Form").children[0]);
 			}
 			
