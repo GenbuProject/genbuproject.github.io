@@ -87,7 +87,7 @@
 		});
 		
 		DOM("#Accept").addEventListener("click", function () {
-			var Func = DOM("#MethodType").value.replace(" ", ".");
+			var Func = DOM("#MethodType").value.replace(/ /g, ".");
 				Func.split(".")[Func.split(".").length - 1] = Func.split(".")[Func.split(".").length - 1].split("[")[0];
 				
 			var Args = [];
