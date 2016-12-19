@@ -85,5 +85,18 @@
 				DOM("#Form").insertBefore(Input, DOM("#Accept"));
 			}
 		});
+		
+		DOM("#Accept").addEventListener("click", function () {
+			var Func = DOM("#MethodType").value.replace(" ", ".");
+				Func.split(".")[Func.split(".").length - 1] = Func.split(".")[Func.split(".").length - 1].split("[")[0];
+				
+			var Args = [];
+			
+			for (let i = 0; i < DOM(".Value").length; i++) {
+				Args.push(DOM(".Value")[i].value);
+			}
+			
+			eval(Func + ".apply(this, Args)");
+		});
 	</Script>
 </HTML>
