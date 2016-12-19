@@ -25,14 +25,14 @@
 	
 	<Body>
 		<Select ID = "MethodType">
-			<Option Value = "Repo RepoURL 1[RepoURL]">Repo.RepoURL</Option>
-			<Option Value = "Repo File Get 2[Path,Branch]">Repo.File.Get</Option>
-			<Option Value = "Repo File Create 3[Path,Branch,Message]">Repo.File.Create</Option>
-			<Option Value = "Repo File Delete 3[Path,Branch,Message]">Repo.File.Delete</Option>
-			<Option Value = "Repo File Write 4[Path,Content,Branch,Message]">Repo.File.Write</Option>
-			<Option Value = "Repo File Read 2[Path,Branch]">Repo.File.Read</Option>
-			<Option Value = "Repo File Download 2[Path,Branch]">Repo.File.Download</Option>
-			<Option Value = "Repo File IsVaild 2[Path,Branch]">Repo.File.IsVaild</Option>
+			<Option Value = "Repo RepoURL 1[RepoURL">Repo.RepoURL</Option>
+			<Option Value = "Repo File Get 2[Path,Branch">Repo.File.Get</Option>
+			<Option Value = "Repo File Create 3[Path,Branch,Message">Repo.File.Create</Option>
+			<Option Value = "Repo File Delete 3[Path,Branch,Message">Repo.File.Delete</Option>
+			<Option Value = "Repo File Write 4[Path,Content,Branch,Message">Repo.File.Write</Option>
+			<Option Value = "Repo File Read 2[Path,Branch">Repo.File.Read</Option>
+			<Option Value = "Repo File Download 2[Path,Branch">Repo.File.Download</Option>
+			<Option Value = "Repo File IsVaild 2[Path,Branch">Repo.File.IsVaild</Option>
 		</Select>
 		
 		<Div ID = "Form">
@@ -56,6 +56,10 @@
 					Memory = document.getElementsByName(Str.substr(1));
 					break;
 					
+				case ":":
+					Memory = document.getElementsByTagName(Str.substr(1));
+					break;
+					
 				default:
 					Memory = document.createElement(Str);
 					break;
@@ -66,23 +70,38 @@
 
 		DOM("#MethodType").addEventListener("change", function () {
 			for (let i = 0; i < DOM("#Form").children.length; i++) {
-				DOM("#Form").removeChild(DOM("#Form").children[i]);
+				DOM("#Form").removeChild(DOM("#Form").children[0]);
 			}
 			
 			switch (this.value.split(" ")[0].split("[")[0]) {
 				case "Repo":
 					switch (this.value.split(" ")[1].split("[")[0]) {
 						case "RepoURL":
-							for (let i = 0; i < (this.value.split(" ")[this.value.split(" ").length - 1].split("[")[0]) + 0; i++) {
+							for (let i = 0; i < parseInt(this.value.split(" ")[this.value.split(" ").length - 1].split("[")[0]); i++) {
 								var Input = DOM("Input");
 									Input.className = "Value";
 									Input.type = "TextBox";
-									Input.placeholder = ":" + this.value.split(" ")[2].split("[")[1].split("]")[0];
+									Input.placeholder = ":" + this.value.split(" ")[this.value.split(" ").length - 1].split("[")[1];
 									
 								DOM("#Form").appendChild(Input);
 							}
 							
 							break;
+							
+						case "File":
+							switch (this.value.split(" ")[2].split("[")[0]) {
+								case "Get":
+									for (let i = 0; i < parseInt(this.value.split(" ")[this.value.split(" ").length - 1].split("[")[0]); i++) {
+										var Input = DOM("Input");
+											Input.className = "Value";
+											Input.type = "TextBox";
+											Input.placeholder = ":" + this.value.split(" ")[this.value.split(" ").length - 1].split("[")[1];
+
+										DOM("#Form").appendChild(Input);
+									}
+									
+									break;
+							}
 					}
 					
 					break;
