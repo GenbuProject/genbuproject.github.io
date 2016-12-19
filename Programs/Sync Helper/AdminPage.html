@@ -19,6 +19,8 @@
 			#Form {
 				Display: Flex;
 				Flex-Direction: Column;
+				
+				Width: 25%;
 			}
 		</Style>
 	</Head>
@@ -36,6 +38,7 @@
 		</Select>
 		
 		<Div ID = "Form">
+			<Button ID = "Accept">実行</Button>
 		</Div>
 	</Body>
 	
@@ -69,7 +72,7 @@
 		}
 
 		DOM("#MethodType").addEventListener("change", function () {
-			for (let i = 0; i < DOM("#Form").children.length; i++) {
+			while (DOM("#Form").children.length > 1) {
 				DOM("#Form").removeChild(DOM("#Form").children[0]);
 			}
 			
@@ -79,7 +82,7 @@
 					Input.type = "TextBox";
 					Input.placeholder = ":" + this.value.split(" ")[this.value.split(" ").length - 1].split("[")[1].split(",")[i];
 
-				DOM("#Form").appendChild(Input);
+				DOM("#Form").insertBefore(Input, DOM("#Accept"));
 			}
 		});
 	</Script>
