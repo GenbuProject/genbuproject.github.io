@@ -1,4 +1,5 @@
 {
 	"403.10": "https://genbuproject.github.io/Content/ErrorFile/403 Forbidden/403.10 Not Running.html",
-	"403.12": "https://genbuproject.github.io/Content/ErrorFile/403 Forbidden/403.12 For Only Admin.html"
+	"403.11": "https://genbuproject.github.io/Content/ErrorFile/403 Forbidden/403.11 For Admins.html",
+	"403.12": "https://genbuproject.github.io/Content/ErrorFile/403 Forbidden/403.12 Archived Doc.html"
 }
