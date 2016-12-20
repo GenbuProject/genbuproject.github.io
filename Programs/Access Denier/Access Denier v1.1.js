@@ -24,7 +24,7 @@
 							if (Error[i].attributes["ID"] && Error[i].attributes["Password"]) {
 								let Querys = location.querySort();
 								
-								if (Querys.ID != Error[i].attributes["ID"].value && Querys.PASSWORD != Error[i].attributes["Password"].value) {
+								if (Querys.ID != Error[i].attributes["ID"].value || Querys.PASSWORD != Error[i].attributes["Password"].value) {
 									location.href = JSON.parse(CodeListGetter.response)[Error[i].attributes["Value"].value];
 								}
 							} else {
