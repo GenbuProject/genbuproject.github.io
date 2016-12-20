@@ -87,16 +87,14 @@
 		});
 		
 		DOM("#Accept").addEventListener("click", function () {
-			var Func = DOM("#MethodType").value.replace(/ /g, ".");
-				Func.split(".")[Func.split(".").length - 1] = Func.split(".")[Func.split(".").length - 1].split("[")[0];
-				
 			var Args = [];
 			
 			for (let i = 0; i < DOM(".Value").length; i++) {
 				Args.push(DOM(".Value")[i].value);
 			}
 			
-			eval(Func + ".apply(this, Args)");
+			
+			eval("console.log(GitBase." + DOM("#MethodType").selectedOptions[0].textContent + ".apply(this, Args))");
 		});
 	</Script>
 </HTML>
