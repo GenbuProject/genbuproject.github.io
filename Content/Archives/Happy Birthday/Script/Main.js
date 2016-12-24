@@ -100,12 +100,18 @@ function Init() {
 			if (Obj.length > 0) {
 				for (let i = 0; i < Obj.length; i++) {
 					if (Obj[i].object == Present) {
+						new Audio("Audio/Cracker.mp3").play();
+						
 						let Message = new THREE.Mesh(new THREE.TextGeometry("HAPPY BIRTHDAY, Mom!!!", {
 							font: Font,
-							curveSegments: 4,
-							size: 10.5,
-							height: 10
+							
+							size: 8,
+							height: 2,
+							curveSegments: 4
 						}), new THREE.MeshLambertMaterial({color: 0x00FF00}));
+							Message.rotation.set(0, Math.PI, 0);
+							Message.position.set(50, 20, 50);
+							
 							Scene.add(Message);
 					}
 				}
