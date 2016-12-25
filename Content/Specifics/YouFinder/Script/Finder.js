@@ -4,7 +4,14 @@ let Info = {
 	RedirectURL: "https://genbuproject.github.io/Content/Specifics/YouFinder/",
 	Scope: "https://www.googleapis.com/auth/plus.login+https://www.googleapis.com/auth/plus.me",
 	
-	Token: ""
+	Token: "",
+	
+	Datas: {
+		Name: "",
+		URL: "",
+		Birthday: "",
+		Language: ""
+	}
 }
 
 let Util = {
@@ -93,7 +100,19 @@ function Init() {
 		Dialogs.Step2();
 		
 		Net.RequestToken(function () {
-			
+			let UserDataGetter = new XMLHttpRequest();
+				UserDataGetter.open("GET", "https://www.googleapis.com/plus/v1/people/me?access_token=" + Info.Token, true);
+				
+				UserDataGetter.onload = function (Event) {
+					let Res = JSON.parse(UserDataGetter.responseText);
+					
+					Info.Datas.Name = Res.displayName,
+						Info.Datas.URL = Res.url,
+						Info.Datas.Birthday = Res.birthday,
+						Info.Datas.Language = Res.language;
+				}
+				
+				UserDataGetter.send(null);
 		});
 	}
 }
