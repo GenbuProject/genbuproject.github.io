@@ -1,3 +1,10 @@
+let Info = {
+	ClientID: "",
+	SecretID: "",
+	
+	Token: ""
+}
+
 let Util = {
 	CreateDialog: function (Title, Content, FooterContent) {
 		let DialogBack = document.createElement("Div");
@@ -43,5 +50,31 @@ let Util = {
 		}
 		
 		return Querys;
+	}
+}
+
+let Net = {
+	LoginWithGoogle: function () {
+		location.href = "https://accounts.google.com/o/oauth2/v2/auth?redirect_uri=https://genbuproject.github.io/Content/RhythmTapRide/Content/Uploader/&scope=https://www.googleapis.com/auth/plus.login+https://www.googleapis.com/auth/plus.me+https://www.googleapis.com/auth/userinfo.email&response_type=code&client_id=" + ID + "&access_type=offline&approval_prompt=force";
+	}
+}
+
+let Dialogs = {
+	Step1: function () {
+		Util.CreateDialog("Googleアカウントにログインしてください", "アクセスするにはGoogleアカウントにログインする必要があります。", "<Button OnClick = 'Net.LoginWithGoogle();'>Sign in</Button><Button OnClick = 'Util.DismissDialog();'>キャンセル</Button>");
+	},
+	
+	Step2: function () {
+		Util.CreateDialog("ログイン成功", "Googleアカウントのログインに成功しました。", "<Button OnClick = 'Util.DismissDialog();'>閉じる</Button>");
+	}
+}
+
+function Init() {
+	var Querys = Util.QuerySort();
+	
+	if (!Querys.CODE) {
+		Dialogs.Step1();
+	} else {
+		Dialogs.Step2();
 	}
 }
