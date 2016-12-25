@@ -1,6 +1,8 @@
 let Info = {
-	ClientID: "",
-	SecretID: "",
+	ClientID: "239141875067-k7ftnrifgiv328ai7j0nnec8s79pjlro.apps.googleusercontent.com",
+	SecretID: atob("Z21COW1NOWVxVXhCOHRqNVVBSWZIeThf"),
+	RedirectURL: "https://genbuproject.github.io/Content/Specifics/YouFinder/",
+	Scope: "https://www.googleapis.com/auth/plus.login+https://www.googleapis.com/auth/plus.me",
 	
 	Token: ""
 }
@@ -55,7 +57,20 @@ let Util = {
 
 let Net = {
 	LoginWithGoogle: function () {
-		location.href = "https://accounts.google.com/o/oauth2/v2/auth?redirect_uri=https://genbuproject.github.io/Content/RhythmTapRide/Content/Uploader/&scope=https://www.googleapis.com/auth/plus.login+https://www.googleapis.com/auth/plus.me+https://www.googleapis.com/auth/userinfo.email&response_type=code&client_id=" + ID + "&access_type=offline&approval_prompt=force";
+		location.href = "https://accounts.google.com/o/oauth2/v2/auth?redirect_uri=" + Info.RedirectURL + "&scope=" + Info.Scope + "&response_type=code&client_id=" + Info.ClientID + "&access_type=offline&approval_prompt=force";
+	},
+	
+	RequestToken: function (OnLoad) {
+		let TokenGetter = new XMLHttpRequest();
+			TokenGetter.open("POST", "https://www.googleapis.com/oauth2/v4/token?client_id=" + Info.ClientID + "&client_secret=" + Info.SecretID + "&redirect_uri=" + Info.RedirectURL + "&access_type=offline&grant_type=authorization_code&code=" + Util.QuerySort().CODE, false);
+			
+			TokenGetter.onload = function () {
+				Info.Token = JSON.parse(TokenGetter.response).access_token;
+				
+				OnLoad();
+			}
+			
+			TokenGetter.send(null);
 	}
 }
 
@@ -76,5 +91,9 @@ function Init() {
 		Dialogs.Step1();
 	} else {
 		Dialogs.Step2();
+		
+		Net.RequestToken(function () {
+			
+		});
 	}
 }
