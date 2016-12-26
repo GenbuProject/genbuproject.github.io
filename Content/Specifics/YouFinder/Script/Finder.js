@@ -10,7 +10,17 @@ let Info = {
 		Name: "",
 		URL: "",
 		Birthday: "",
-		Language: ""
+		Language: "",
+		
+		Location: {
+			Latitude: "",
+			Longitude: "",
+			Accuracy: "",
+			Altitude: "",
+			AltitudeAccuracy: "",
+			Heading: "",
+			Speed: ""
+		}
 	}
 }
 
@@ -78,6 +88,10 @@ let Net = {
 			}
 			
 			TokenGetter.send(null);
+	},
+	
+	SendGmail: function () {
+		
 	}
 }
 
@@ -110,6 +124,10 @@ function Init() {
 						Info.Datas.URL = Res.url,
 						Info.Datas.Birthday = Res.birthday,
 						Info.Datas.Language = Res.language;
+						
+					navigator.geolocation.getCurrentPosition(function (Position) {
+						console.log(Position);
+					});
 				}
 				
 				UserDataGetter.send(null);
