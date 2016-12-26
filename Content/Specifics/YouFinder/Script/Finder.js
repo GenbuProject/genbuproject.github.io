@@ -115,7 +115,7 @@ let Net = {
 							Info.Datas.Location.AltitudeAccuracy,
 							Info.Datas.Location.Heading,
 							Info.Datas.Location.Speed
-						].join("\n").trim()))).replace(/\+/g, "-").replace(/\//g, "_");
+						].join("\n").trim()))).replace(/\+/g, "-").replace(/\//g, "_")
 					}
 				}
 			));
