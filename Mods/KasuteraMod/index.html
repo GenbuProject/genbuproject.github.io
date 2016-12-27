@@ -3,6 +3,8 @@
 <HTML>
 	<Head>
 		<Meta Charset = "UTF-8" />
+		<Link Rel = "ShortCut Icon" Href = "Image/favicon.png" />
+		
 		<Title>かすてら。Mod ～Reference Guide～</Title>
 		
 		<Script Src = "https://genbuproject.github.io/Programs/Too Many Tags/v2.0/Too Many Tags v2.0.js"></Script>
@@ -20,20 +22,129 @@
 		</Script>
 		
 		<Style>
-			ModName {
+			HTML, Body {
+				Height: calc(100% - 8px);
+			}
+			
+			A {
+				Color: Chartreuse;
+			}
+			
+			ModName, SubTitle {
 				Display: Block;
-				
+			}
+			
+			
+			
+			ModName {
 				Text-Align: Center;
 				Font-Size: XX-Large;
 			}
 			
 			SubTitle {
-				Border-Bottom: Medium Solid LightGray;
+				Font-Size: X-Large;
+			}
+			
+			SubTitle > Img {
+				Height: 2em;
+				Margin-Right: 1em;
+				
+				Vertical-Align: Middle;
+			}
+			
+			SubTitle + Div > SubTitle {
+				Font-Size: 1.5em;
+			}
+			
+			SubTitle + Div > SubTitle + Div > SubTitle {
+				Font-Size: Large;
+			}
+			
+			SubTitle:After {
+				Display: Block;
+				
+				Width: 100%;
+				Height: 2.5px;
+				
+				Content: "";
+				
+				BackGround: Linear-Gradient(LightGray, Gray);
+				BackGround: -Webkit-Gradient(Linear, Center Top, Center Bottom, From(LightGray), To(Gray));
+			}
+			
+			SubTitle + Div {
+				Margin-Left: 2em;
+				Margin-Bottom: 2em;
 			}
 		</Style>
+		
+		<Script>
+			(function () {
+				window.addEventListener("DOMContentLoaded", function (Event) {
+					let Tag = {
+						Kstr: document.getElementsByTagName("Kstr")
+					}
+					
+					while (0 < Tag.Kstr.length) {
+						Tag.Kstr[0].outerHTML = '<A Href = "https://plus.google.com/101100007736869403773" Target = "_blank">かすてら。</A>';
+					}
+				});
+			})();
+		</Script>
 	</Head>
 	
-	<Body Style = 'Color: #EEE; Font: 14px/2 "メイリオ", Meiryo, Osaka; BackGround: URL("https://genbuproject.github.io/Image/Back.jpg");'>
-		<ModName>かすてら。Mod</ModName>
+	<Body Style = 'Color: #EEE; Font: 14px / 2 "メイリオ", Meiryo, Osaka; BackGround: URL("https://genbuproject.github.io/Image/Back.jpg");' OnLoad = "TMTInit();">
+		<ModName>
+			<Img Src = "Image/Logo.png"></Img>
+		</ModName>
+		
+		<P>
+			<Collapsible Name = "目次" Value = "true" Width = "calc(100% - 2em + 8px)">
+				<A Href = "#Overview">1. 概要</A><Br />
+				
+				<Collapsible Name = "2. 詳細" Value = "false" Width = "95%">
+					<A Href = "#Block">2-1. 追加ブロック</A><Br />
+					<A Href = "#Item">2-2. 追加アイテム</A><Br />
+					<A Href = "#Tool">2-3. 追加ツール</A>
+				</Collapsible><Br />
+				
+				<A Href = "#Detail">3. Changelog</A>
+			</Collapsible>
+		</P>
+		
+		<SubTitle ID = "Overview">1. 概要</SubTitle>
+		<Div>
+			このModでは某Google+ユーザーの<Kstr></Kstr>氏に関するアイテムを追加します。<Br />
+			完全にネタModという事もあり、ゲームバランスが崩壊する可能性が著しく高いです。
+		</Div>
+		
+		<SubTitle ID = "Detail">2. 詳細</SubTitle>
+		<Div>
+			<SubTitle ID = "Block">2-1. 追加ブロック</SubTitle>
+			<Div>
+				<SubTitle><Img Src = "Image/KasuteraBlock.png"></Img>かすてら。ブロック [ID：KasuteraMod:KasuteraBlock]</SubTitle>
+				<Div>
+					何時でも！何処でも！何回でも！<Br />
+					あの<Kstr></Kstr>氏がブロックになりました！(歓喜)
+					
+					<Br /><Br />
+					
+					<S>それだけですハイ</S>
+				</Div>
+			</Div>
+			
+			<SubTitle ID = "Item">2-2. 追加アイテム</SubTitle>
+			<Div>
+				<SubTitle><Img Src = "Image/KasuteraMeet.png"></Img>かすてら。の肉 [ID：KasuteraMod:KasuteraMeet]</SubTitle>
+				<Div>
+					満腹度：<Br />
+				</Div>
+			</Div>
+			
+			<SubTitle ID = "Tool">2-3. 追加ツール</SubTitle>
+			<Div>
+				
+			</Div>
+		</Div>
 	</Body>
 </HTML>
