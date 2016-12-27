@@ -76,17 +76,45 @@
 				Margin-Left: 2em;
 				Margin-Bottom: 2em;
 			}
+			
+			
+			.Hungry, .Life {
+				Height: 2em;
+				Vertical-Align: Middle;
+			}
 		</Style>
 		
 		<Script>
 			(function () {
 				window.addEventListener("DOMContentLoaded", function (Event) {
 					let Tag = {
-						Kstr: document.getElementsByTagName("Kstr")
+						Kstr: document.getElementsByTagName("Kstr"),
+						Life: document.getElementsByTagName("Life"),
+						Hungry: document.getElementsByTagName("Hungry")
 					}
 					
 					while (0 < Tag.Kstr.length) {
 						Tag.Kstr[0].outerHTML = '<A Href = "https://plus.google.com/101100007736869403773" Target = "_blank">かすてら。</A>';
+					}
+					
+					while (0 < Tag.Life.length) {
+						let Memory = "";
+						
+						for (let i = 0; i < Tag.Life[0].attributes["Value"].value; i++) {
+							Memory += (Tag.Life[0].attributes["Type"].value == "+" ? '<Img Class = "Life" Src = "Image/Icons/Life-Full.png"></Img>' : Tag.Life[0].attributes["Type"].value == "-" ? '<Img Class = "Life" Src = "Image/Icons/Life-Empty.png"></Img>' : Tag.Life[0].attributes["Type"].value == "Half" ? '<Img Class = "Life" Src = "Image/Icons/Life-Half.png"></Img>' : '<Img Class = "Life" Src = "Image/Icons/Life-Full.png"></Img>');
+						}
+						
+						Tag.Life[0].outerHTML = Memory;
+					}
+					
+					while (0 < Tag.Hungry.length) {
+						let Memory = "";
+						
+						for (let i = 0; i < Tag.Hungry[0].attributes["Value"].value; i++) {
+							Memory += (Tag.Hungry[0].attributes["Type"].value == "+" ? '<Img Class = "Hungry" Src = "Image/Icons/Hungry-Full.png"></Img>' : Tag.Hungry[0].attributes["Type"].value == "-" ? '<Img Class = "Hungry" Src = "Image/Icons/Hungry-Empty.png"></Img>' : Tag.Hungry[0].attributes["Type"].value == "Half" ? '<Img Class = "Hungry" Src = "Image/Icons/Hungry-Half.png"></Img>' : '<Img Class = "Hungry" Src = "Image/Icons/Hungry-Full.png"></Img>');
+						}
+						
+						Tag.Hungry[0].outerHTML = Memory;
 					}
 				});
 			})();
@@ -105,7 +133,10 @@
 				<Collapsible Name = "2. 詳細" Value = "false" Width = "95%">
 					<A Href = "#Block">2-1. 追加ブロック</A><Br />
 					<A Href = "#Item">2-2. 追加アイテム</A><Br />
-					<A Href = "#Tool">2-3. 追加ツール</A>
+					<A Href = "#Tool">2-3. 追加ツール</A><Br />
+					<A Href = "#Entity">2-4. 追加エンティティ</A><Br />
+					<A Href = "#Tab">2-5. 追加タブ</A><Br />
+					<A Href = "#Recipe">2-6. 追加レシピ</A>
 				</Collapsible><Br />
 				
 				<A Href = "#Detail">3. Changelog</A>
@@ -135,15 +166,59 @@
 			
 			<SubTitle ID = "Item">2-2. 追加アイテム</SubTitle>
 			<Div>
-				<SubTitle><Img Src = "Image/KasuteraMeet.png"></Img>かすてら。の肉 [ID：KasuteraMod:KasuteraMeet]</SubTitle>
+				<SubTitle><Img Src = "Image/KasuteraMeet.png"></Img>かすてら。の肉(食料 / 素材) [ID：KasuteraMod:KasuteraMeet]</SubTitle>
 				<Div>
-					満腹度：<Br />
+					満腹度：<Hungry Type = "+" Value = "2"></Hungry><Br />
+					
+					<Collapsible Name = "特殊効果" Value = "false">
+						弱体化Ⅱ(確率70%)<Br />
+						採掘速度低下Ⅱ(確率70%)<Br />
+						移動速度低下Ⅱ(確率70%)
+					</Collapsible>
 				</Div>
 			</Div>
 			
 			<SubTitle ID = "Tool">2-3. 追加ツール</SubTitle>
 			<Div>
+				<SubTitle><Img Src = "Image/KasuteraSword.png"></Img>かすてら。ソード [ID：KasuteraMod:KasuteraSword]</SubTitle>
+				<Div>
+					耐久度：500<Br />
+					ダメージ：<Life Type = "-" Value = "6"></Life><Br />
+					
+					<Collapsible Name = "特殊効果" Value = "false">
+						右クリック時に矢に変異する<Br />
+						→25本の矢を発射(消費本数1本)<Br />
+					</Collapsible>
+				</Div>
 				
+				<SubTitle><Img Src = "Image/KasuteraCarTicket.png"></Img>かすてら。カーの乗車券 [ID：KasuteraMod:KasuteraCarTicket]</SubTitle>
+				<Div>
+					特殊効果：右クリック時にかすてら。カーを召喚
+				</Div>
+			</Div>
+			
+			<SubTitle ID = "Entity">2-4. 追加エンティティ</SubTitle>
+			<Div>
+				<SubTitle><Img Src = "Image/Kasutera.png"></Img>かすてら。 [ID：KasuteraMod.Kasutera]</SubTitle>
+				<Div>
+					HP：<Life Type = "+" Value = "20"></Life><Br />
+					出現バイオーム：全バイオーム<Br />
+					特殊効果：発狂する(白目)
+				</Div>
+				
+				<SubTitle><Img Src = "Image/KasuteraCar.png"></Img>かすてら。カー [ID：KasuteraMod.KasuteraCar]</SubTitle>
+				<Div>
+					<Kstr></Kstr>の模様が描かれたトロッコ。<Br />
+					特に深い意味は無い。
+				</Div>
+			</Div>
+			
+			<SubTitle ID = "CreativeTab">2-5. 追加タブ</SubTitle>
+			<Div>
+				<SubTitle><Img Src = "Image/KasuteraMod.png"></Img>かすてら。Mod</SubTitle>
+				<Div>
+					かすてら。Modで追加されるアイテムは全てここに格納されています。
+				</Div>
 			</Div>
 		</Div>
 	</Body>
