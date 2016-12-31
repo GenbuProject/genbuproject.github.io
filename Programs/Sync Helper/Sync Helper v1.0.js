@@ -98,7 +98,7 @@ var GitAPI = function (Token) {
 					ContentGetter.open("GET", JSON.parse(FileGetter.responseText).git_url + "?access_token=" + Gitthis.Token, false);
 					ContentGetter.send(null);
 					
-				return atob(JSON.parse(ContentGetter.responseText).content);
+				return decodeURIComponent(escape(atob(JSON.parse(ContentGetter.responseText).content)));
 			},
 			
 			Download: function (Path, Branch) {
