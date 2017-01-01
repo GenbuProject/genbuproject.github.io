@@ -220,5 +220,11 @@
 		"Content": "cssとjavascriptは動かない。\n<button>等の物は使える",
 		"Commentator": "局長",
 		"Date": "Sun Jan  1 14:27:33 2017"
+	},
+	{
+		"Title": "html test",
+		"Content": "onClickを試す\n<button onClick = 'alert('test')'>押すとalert?</button>",
+		"Commentator": "局長",
+		"Date": "Sun Jan  1 14:28:57 2017"
 	}
 ]
