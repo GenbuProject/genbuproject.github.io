@@ -91,7 +91,7 @@ const Util = {
 		}
 		
 		for (let i = 0; i < R.Comments.length; i++) {
-			let Comment = new CommentDiv(new CTitle(R.Comments[i].Title), new CContent(R.Comments[i].Content.replace(/\n/g, "<Br />")), new CCommentator(R.Comments[i].Commentator), new CDate(R.Comments[i].Date));
+			let Comment = new CommentDiv(new CTitle(R.Comments[i].Title), new CContent(R.Comments[i].Content.replace(/\n/g, "<Br />")), new CCommentator(R.Comments[i].Commentator == "$Owner" ? "こ↑こ↓のオーナー" : R.Comments[i].Commentator), new CDate(R.Comments[i].Date));
 			Elem.appendChild(Comment);
 		}
 	}
@@ -102,7 +102,7 @@ function Init() {
 		if (document.getElementById("Name").value == "" || document.getElementById("Content").value == "") {
 			alert("入力必須項目が入力されていません。");
 		} else {
-			Util.Send(document.getElementById("Title").value, document.getElementById("Content").value, document.getElementById("Name").value == "$Owner" ? "こ↑こ↓のオーナー" : document.getElementById("Name").value, new Date().toLocaleString());
+			Util.Send(document.getElementById("Title").value, document.getElementById("Content").value, document.getElementById("Name").value, new Date().toLocaleString());
 			
 			document.getElementsByClassName("BackFog")[0].style.display = "None";
 			document.getElementById("Form").children[1].style.display = "None";
