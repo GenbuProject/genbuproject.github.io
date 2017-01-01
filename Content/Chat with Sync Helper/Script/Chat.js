@@ -58,7 +58,7 @@ const Util = {
 			GitBase.Repo.File.Create("Content/Chat with Sync Helper/Comments.Json");
 			
 			setTimeout(function () {
-				GitBase.Repo.File.Write("Content/Chat with Sync Helper/Comments.Json", "[]");
+				GitBase.Repo.File.Write("Content/Chat with Sync Helper/Comments.Json", "master", "[]");
 				console.log("Created.");
 			}, 5000);
 			
@@ -76,7 +76,7 @@ const Util = {
 			Date: Date
 		});
 		
-		GitBase.Repo.File.Write("Content/Chat with Sync Helper/Comments.Json", JSON.stringify(R.Comments, null, "\t"));
+		GitBase.Repo.File.Write("Content/Chat with Sync Helper/Comments.Json", "master", JSON.stringify(R.Comments, null, "\t"));
 		
 		return R.Comments;
 	},
@@ -103,6 +103,8 @@ function Init() {
 		
 		document.getElementsByClassName("BackFog")[0].style.display = "None";
 		document.getElementById("Form").children[1].style.display = "None";
+		
+		alert("コメントを投稿しました。")
 	});
 	
 	document.getElementById("FormBtn").addEventListener("click", function () {
