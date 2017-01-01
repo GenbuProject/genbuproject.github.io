@@ -102,7 +102,7 @@ function Init() {
 		if (document.getElementById("Name").value == "" || document.getElementById("Content").value == "") {
 			alert("入力必須項目が入力されていません。");
 		} else {
-			Util.Send(document.getElementById("Title").value, document.getElementById("Content").value, document.getElementById("Name").value, new Date().toLocaleString());
+			Util.Send(document.getElementById("Title").value, document.getElementById("Content").value, document.getElementById("Name").value == "$Owner" ? "こ↑こ↓のオーナー" : document.getElementById("Name").value, new Date().toLocaleString());
 			
 			document.getElementsByClassName("BackFog")[0].style.display = "None";
 			document.getElementById("Form").children[1].style.display = "None";

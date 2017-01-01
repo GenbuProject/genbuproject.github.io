@@ -2,7 +2,7 @@
 	{
 		"Title": "1. テストだゾ^～",
 		"Content": "やったねたえちゃん！",
-		"Commentator": "プログラなーいGenboo",
+		"Commentator": "$Owner",
 		"Date": "2017/1/1 11:15:07"
 	},
 	{
@@ -20,13 +20,13 @@
 	{
 		"Title": "4. えぇ…(困惑)",
 		"Content": "おはよォ！(半ギレ) 寝てねぇよクソが",
-		"Commentator": "ただのプログラマー",
+		"Commentator": "$Owner",
 		"Date": "2017/1/1 12:04:18"
 	},
 	{
 		"Title": "5. やったぜ。",
 		"Content": "とりま出来たー！！！",
-		"Commentator": "プログラなーいGenboo(自称)",
+		"Commentator": "$Owner",
 		"Date": "2017/1/1 12:13:39"
 	},
 	{
@@ -38,7 +38,7 @@
 	{
 		"Title": "7. タグテスト",
 		"Content": "<A Href = \"https://www.google.co.jp/\">Test</A>",
-		"Commentator": "プログラなーいGenboo(自称)",
+		"Commentator": "$Owner",
 		"Date": "2017/1/1 12:18:23"
 	},
 	{
@@ -55,14 +55,14 @@
 	},
 	{
 		"Title": "8. タグテスト",
-		"Content": "<A Href = \"https://plus.google.com/106666684430101995501\" Title = \"プログラなーいGenboo(自称)\"><Img Src = \"https://lh3.googleusercontent.com/-YmSg3V069TE/AAAAAAAAAAI/AAAAAAAAI3s/dHZ2LeAPaW4/s36-p-k-rw-no/photo.jpg\" /></A>\n\n<S>やったぜ。(歓喜)</S>",
-		"Commentator": "プログラなーいGenboo(自称)",
+		"Content": "<A Href = \"https://plus.google.com/106666684430101995501\" Title = \"プログラなーいGenboo(自称)\"><Img Src = \"https://lh3.googleusercontent.com/-YmSg3V069TE/AAAAAAAAAAI/AAAAAAAAI3s/dHZ2LeAPaW4/s36-p-k-rw-no/photo.jpg\" /></A>\n<S>やったぜ。(歓喜)</S>",
+		"Commentator": "$Owner",
 		"Date": "2017/1/1 12:23:40"
 	},
 	{
 		"Title": "",
 		"Content": "草",
-		"Commentator": "プログラなーいGenboo(自称)",
+		"Commentator": "$Owner",
 		"Date": "2017/1/1 12:25:06"
 	},
 	{
@@ -74,7 +74,7 @@
 	{
 		"Title": "",
 		"Content": ">> えーおーじー\nありがと🍆！",
-		"Commentator": "プログラなーいGenboo(自称)",
+		"Commentator": "$Owner",
 		"Date": "2017/1/1 12:31:08"
 	},
 	{
@@ -86,7 +86,7 @@
 	{
 		"Title": "",
 		"Content": ">> 勿論偽名\n出てるゾ^～",
-		"Commentator": "プログラなーいGenboo(自称)",
+		"Commentator": "$Owner",
 		"Date": "2017/1/1 12:34:38"
 	},
 	{
@@ -98,13 +98,13 @@
 	{
 		"Title": "",
 		"Content": ">> 挨拶星人\nこんちゃ|ω・｀)ﾉ",
-		"Commentator": "プログラなーいGenboo(自称)",
+		"Commentator": "$Owner",
 		"Date": "2017/1/1 12:45:47"
 	},
 	{
 		"Title": "《重要》",
 		"Content": "一回コメント消しても良かですか？",
-		"Commentator": "プログラなーいGenboo(自称)",
+		"Commentator": "$Owner",
 		"Date": "2017/1/1 12:54:00"
 	},
 	{
@@ -140,7 +140,7 @@
 	{
 		"Title": "",
 		"Content": ">> 機械さん\nなるほど(´・ω・`)\n作ってきます(^^ゞ",
-		"Commentator": "こ↑こ↓のオーナー",
+		"Commentator": "$Owner",
 		"Date": "2017/1/1 13:14:23"
 	},
 	{
@@ -152,19 +152,19 @@
 	{
 		"Title": ">> 暁月和哉",
 		"Content": "あけおめです！",
-		"Commentator": "こ↑こ↓のオーナー",
+		"Commentator": "$Owner",
 		"Date": "2017/1/1 13:33:53"
 	},
 	{
 		"Title": "《不定期な定期》",
 		"Content": "ここの使い勝手はどうですかね…\nもし良ければお聞かせ頂きたいです(´・ω・`)",
-		"Commentator": "こ↑こ↓のオーナー",
+		"Commentator": "$Owner",
 		"Date": "2017/1/1 13:40:59"
 	},
 	{
 		"Title": "ToDo",
 		"Content": "・自動スクロール\n・汎用性の向上\n・画像や音声などの埋め込み﻿",
-		"Commentator": "こ↑こ↓のオーナー",
+		"Commentator": "$Owner",
 		"Date": "2017/1/1 13:43:23"
 	},
 	{
@@ -278,7 +278,7 @@
 	{
 		"Title": "HTMLについて",
 		"Content": "一応コメの内容の部分だけはinnerHTMLで代入してるんでタグ使えますよ(´・ω・`)",
-		"Commentator": "こ↑こ↓のオーナー",
+		"Commentator": "$Owner",
 		"Date": "2017/1/1 15:06:50"
 	},
 	{
@@ -288,21 +288,15 @@
 		"Date": "2017/1/1 15:09:46"
 	},
 	{
-		"Title": "Jsのテスト1",
-		"Content": "<Script>\nconsole.log(\"Test\");\n<Script>",
-		"Commentator": "こ↑こ↓のオーナー",
-		"Date": "2017/1/1 15:10:21"
-	},
-	{
 		"Title": "",
 		"Content": "Scriptタグ入れると凄い事になるな...",
-		"Commentator": "",
+		"Commentator": "$Owner",
 		"Date": "2017/1/1 15:14:40"
 	},
 	{
 		"Title": "",
 		"Content": "<button onclick = \"alert('test');\">alert</button>",
-		"Commentator": "",
+		"Commentator": "$Owner",
 		"Date": "2017/1/1 15:20:03"
 	}
 ]
