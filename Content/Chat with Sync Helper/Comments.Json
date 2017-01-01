@@ -238,5 +238,11 @@
 		"Content": "やっぱjsとcss無理ッス(´・ω・｀)﻿\n次はphpを試す\n出力はecho \"test\"\n<?php echo \"test\" ?>",
 		"Commentator": "局長",
 		"Date": "Sun Jan  1 14:34:45 2017"
+	},
+	{
+		"Title": "html test",
+		"Content": "次はcanvasを試す \n\n\n<head>\n    <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />\n    <meta http-equiv=\"Content-Language\" content=\"ja\" />\n    <meta http-equiv=\"Content-Style-Type\" content=\"text/css\" />\n    <meta http-equiv=\"Content-Script-Type\" content=\"text/javascript\" />\n    <title>Canvas</title>\n    <!--[if IE]><script type=\"text/javascript\" src=\"excanvas.js\"></script><![endif]-->\n  </head>\n  <body>\n    <h1>Canvas</h1>\n    <canvas id=\"canvassample\" width=\"140\" height=\"140\"></canvas>\n\n<script>onload = function() {\n  draw();\n};\nfunction draw() {\n  /* canvas要素のノードオブジェクト */\n  var canvas = document.getElementById('canvassample');\n  /* canvas要素の存在チェックとCanvas未対応ブラウザの対処 */\n  if ( ! canvas || ! canvas.getContext ) {\n    return false;\n  }\n  /* 2Dコンテキスト */\n  var ctx = canvas.getContext('2d');\n  /* 四角を描く */\n  ctx.beginPath();\n  ctx.moveTo(20, 20);\n  ctx.lineTo(120, 20);\n  ctx.lineTo(120, 120);\n  ctx.lineTo(20, 120);\n  ctx.closePath();\n  ctx.stroke();\n}</script>\n  </body>",
+		"Commentator": "局長",
+		"Date": "Sun Jan  1 14:38:07 2017"
 	}
 ]
