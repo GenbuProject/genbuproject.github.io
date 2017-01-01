@@ -91,7 +91,7 @@ const Util = {
 		}
 		
 		for (let i = 0; i < R.Comments.length; i++) {
-			let Comment = new CommentDiv(new CTitle(R.Comments[i].Title), new CContent(R.Comments[i].Content), new CCommentator(R.Comments[i].Commentator), new CDate(R.Comments[i].Date));
+			let Comment = new CommentDiv(new CTitle(R.Comments[i].Title), new CContent(R.Comments[i].Content.replace(/\n/g, "<Br />")), new CCommentator(R.Comments[i].Commentator), new CDate(R.Comments[i].Date));
 			Elem.appendChild(Comment);
 		}
 	}
