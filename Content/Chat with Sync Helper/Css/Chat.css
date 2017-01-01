@@ -58,3 +58,43 @@ CCommentator {
 CDate {
 	Color: Gray;
 }
+
+#Form {
+	Position: Fixed;
+	Top: 0;
+	Right: 0;
+	
+	Display: Flex;
+	Flex-Direction: Row-Reverse;
+	
+	Z-Index: 1;
+}
+
+#Form > #FormBtn {
+	Height: 2em;
+	
+	BackGround: Crimson;
+	Border: Medium Groove Crimson;
+}
+
+#Form > #FormBtn + Div {
+	Display: Inline-Flex;
+	Flex-Direction: Column;
+	
+	Padding: 1em;
+	
+	BackGround: White;
+}
+
+.BackFog {
+	Position: Fixed;
+	Top: 0;
+	Left: 0;
+	
+	Width: 100%;
+	Height: 100%;
+	Z-Index: 0;
+	
+	BackGround: Black;
+	Opacity: 0.5;
+}

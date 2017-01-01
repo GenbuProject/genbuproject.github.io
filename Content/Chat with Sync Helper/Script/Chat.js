@@ -98,6 +98,25 @@ const Util = {
 }
 
 function Init() {
+	document.getElementById("Accept").addEventListener("click", function () {
+		Util.Send(document.getElementById("Title").value, document.getElementById("Content").value, document.getElementById("Name").value, new Date().toLocaleString());
+		
+		document.getElementsByClassName("BackFog")[0].style.display = "None";
+		document.getElementById("Form").children[1].style.display = "None";
+	});
+	
+	document.getElementById("FormBtn").addEventListener("click", function () {
+		document.getElementById("Form").children[1].style.display == "none" ? (function () {
+			document.getElementsByClassName("BackFog")[0].style.display = "Block";
+			document.getElementById("Form").children[1].style.display = "Flex";
+		})() : document.getElementById("Form").children[1].style.display == "flex" ? (function () {
+			document.getElementsByClassName("BackFog")[0].style.display = "None";
+			document.getElementById("Form").children[1].style.display = "None";
+		})() : (function () {
+			
+		})();
+	});
+	
 	setInterval(function () {
 		Util.Reload();
 	}, 30000);
