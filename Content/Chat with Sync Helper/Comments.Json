@@ -298,5 +298,11 @@
 		"Content": "<button onclick = \"alert('test');\">alert</button>",
 		"Commentator": "$Owner",
 		"Date": "2017/1/1 15:20:03"
+	},
+	{
+		"Title": "fuck",
+		"Content": "<button onClick=\"a()\"></button>\n<script>\nfunction a(){\nalert('(ΦωΦ)ﾌﾌﾌ…');\n}\n</script>",
+		"Commentator": "局長",
+		"Date": "Sun Jan  1 15:34:33 2017"
 	}
 ]
