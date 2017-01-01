@@ -1,0 +1,51 @@
+Body {
+	Color: #EEE;
+	Font: 14px / 2 "メイリオ", Meiryo, Osaka;
+	
+	BackGround: URL("https://genbuproject.github.io/Image/Back.jpg");
+}
+
+
+
+#Form {
+	Position: Fixed;
+	Top: 0;
+	Right: 0;
+	
+	Width: 90%;
+	
+	Display: Flex;
+	Flex-Direction: Row-Reverse;
+	
+	Z-Index: 1;
+}
+
+#Form > #FormBtn {
+	Height: 2em;
+	
+	BackGround: Crimson;
+	Border: Medium Groove Crimson;
+}
+
+#Form > #FormBtn + Div {
+	Display: Inline-Flex;
+	Flex-Direction: Column;
+	Flex: 1;
+	
+	Padding: 1em;
+	
+	BackGround: White;
+}
+
+.BackFog {
+	Position: Fixed;
+	Top: 0;
+	Left: 0;
+	
+	Width: 100%;
+	Height: 100%;
+	Z-Index: 0;
+	
+	BackGround: Black;
+	Opacity: 0.5;
+}
