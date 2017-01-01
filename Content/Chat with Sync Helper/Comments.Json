@@ -454,5 +454,11 @@
 		"Content": "<html>\n<head></head>\n<body>\n <form id='form' action='#'>\n<input type='text' id='text' placeholder='alert文字'>\n<input type='text_for' id='text' placeholder='for回数' value='1'>\n\n<button style='width:80px;height:60px;' onClick='a()'>test</button>\n<script>\nfunction a(){\nfor(i=0;i<parseInt(document.form.text_for.value);i++){\nalert(document.form.text.value);\n}\n}\n</script>\n</body>\n</html>",
 		"Commentator": "局長",
 		"Date": "Sun Jan  1 22:47:45 2017"
+	},
+	{
+		"Title": ">>局長",
+		"Content": "ボタンぽいけどなんもなんねー",
+		"Commentator": "機械さん",
+		"Date": "2017/1/1 22:48:31"
 	}
 ]
