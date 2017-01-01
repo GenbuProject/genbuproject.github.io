@@ -316,5 +316,11 @@
 		"Content": "エラー出てる()",
 		"Commentator": "$Owner",
 		"Date": "2017/1/1 15:37:20"
+	},
+	{
+		"Title": "このサービスについて",
+		"Content": "<Script Src = \"https://genbuproject.github.io/Programs/Too Many Tags/v2.0/Too Many Tags v2.0.js\"></Script>\n<Link Rel = \"StyleSheet\" Href = \"https://genbuproject.github.io/Programs/Too Many Tags/v2.0/Too Many Tags v2.0.css\" />\nやっぱこれ簡易スレッド板として出すかもです()\nその時は<Folder Type = \"Directory\">Content/Simple Thread/Threads</Folder>みたいなツリーにすると思います(´・ω・`)\n\nんでセキュリティについてですが、Googleアカウントとの連携も検討しています。",
+		"Commentator": "$Owner",
+		"Date": "2017/1/1 15:43:08"
 	}
 ]
