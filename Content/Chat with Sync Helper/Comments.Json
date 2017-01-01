@@ -232,5 +232,11 @@
 		"Content": "style属性を試す\n<button stlye = \"color:red\">色が変わる?</button>",
 		"Commentator": "局長",
 		"Date": "Sun Jan  1 14:30:32 2017"
+	},
+	{
+		"Title": "html test",
+		"Content": "やっぱjsとcss無理ッス(´・ω・｀)﻿\n次はphpを試す\n出力はecho \"test\"\n<?php echo \"test\" ?>",
+		"Commentator": "局長",
+		"Date": "Sun Jan  1 14:34:45 2017"
 	}
 ]
