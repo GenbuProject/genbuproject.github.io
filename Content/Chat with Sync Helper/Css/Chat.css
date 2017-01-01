@@ -64,6 +64,8 @@ CDate {
 	Top: 0;
 	Right: 0;
 	
+	Width: 90%;
+	
 	Display: Flex;
 	Flex-Direction: Row-Reverse;
 	
@@ -80,6 +82,7 @@ CDate {
 #Form > #FormBtn + Div {
 	Display: Inline-Flex;
 	Flex-Direction: Column;
+	Flex: 1;
 	
 	Padding: 1em;
 	
