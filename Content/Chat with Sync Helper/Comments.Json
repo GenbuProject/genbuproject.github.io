@@ -226,5 +226,11 @@
 		"Content": "onClickを試す\n<button onClick = 'alert('test')'>押すとalert?</button>",
 		"Commentator": "局長",
 		"Date": "Sun Jan  1 14:28:57 2017"
+	},
+	{
+		"Title": "html test",
+		"Content": "style属性を試す\n<button stlye = \"color:red\">色が変わる?</button>",
+		"Commentator": "局長",
+		"Date": "Sun Jan  1 14:30:32 2017"
 	}
 ]
