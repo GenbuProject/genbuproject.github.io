@@ -28,7 +28,7 @@ const CTitle = function (Str) {
 
 const CContent = function (Str) {
 	let Elem = document.createElement("CContent");
-		Elem.textContent = Str;
+		Elem.innerHTML = Str;
 		
 	return Elem;
 }
