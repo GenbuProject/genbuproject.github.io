@@ -1,6 +1,6 @@
 let R = {
 	Token: atob("YWIzNWNjODEyNDA0M2FjZmRmZmUxOTZjMGYzM2NlNjg4NzY3N2YyMg=="),
-	Comments: []
+	ThreadsCount: 0
 }
 
 let GitBase = new GitAPI(R.Token);
@@ -15,7 +15,9 @@ const Util = {
 function Init() {
 	let TCount = document.getElementsByTagName("TCount");
 	
+	R.ThreadsCount = Util.GetThreadsCount;
+	
 	for (let i = 0; i < TCount.length; i++) {
-		
+		TCount[i].textContent = R.ThreadsCount();
 	}
 }
