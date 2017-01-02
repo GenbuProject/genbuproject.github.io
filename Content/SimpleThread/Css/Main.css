@@ -1,4 +1,7 @@
 Body {
+	Display: Flex;
+	Flex-Direction: Column;
+	
 	Color: #EEE;
 	Font: 14px / 2 "メイリオ", Meiryo, Osaka;
 	
@@ -7,17 +10,29 @@ Body {
 
 
 
-#Menu {
-	Position: Fixed;
-	Top: 0;
-	Right: 0;
-	
+Body > Div {
 	Display: Flex;
 	Flex-Direction: Row;
 }
 
+#Content {
+	Width: 80%;
+	Flex: 1;
+}
+
+#Menu {
+	Display: Flex;
+	Flex-Direction: Column;
+	Width: 20%;
+}
+
+#Menu > Span:Hover {
+	BackGround: Chocolate;
+	Border: Medium Ridge Crimson;
+}
+
 #Menu > Span {
-	Padding: 0 1em 0 1em;
+	Padding-Left: 1em;
 	
 	BackGround: Crimson;
 	Border: Medium Groove Red;

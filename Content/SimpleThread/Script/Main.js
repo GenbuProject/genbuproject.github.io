@@ -15,9 +15,9 @@ const Util = {
 function Init() {
 	let TCount = document.getElementsByTagName("TCount");
 	
-	R.ThreadsCount = Util.GetThreadsCount();
-	
 	for (let i = 0; i < TCount.length; i++) {
 		TCount[i].textContent = R.ThreadsCount;
 	}
 }
+
+R.ThreadsCount = Util.GetThreadsCount();
