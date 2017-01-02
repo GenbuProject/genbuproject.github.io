@@ -151,7 +151,7 @@
 	},
 	{
 		"Title": "ほら、いすゞのトラックだよ、喜べよ",
-		"Content": "<Audio Src = \"http://www.isuzu.co.jp/movie/museum/song/mp3/cm_chorus.mp3\"></Audio>\nいすゞぅ～のトラックｩｩｩｩｩ↑↑",
+		"Content": "<Audio Src = \"http://www.isuzu.co.jp/movie/museum/song/mp3/cm_chorus.mp3\" Controls></Audio>\nいすゞぅ～のトラックｩｩｩｩｩ↑↑",
 		"Commentator": "$Owner",
 		"Date": "2017/1/2 12:38:27"
 	}
