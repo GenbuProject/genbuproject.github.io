@@ -58,10 +58,41 @@ Body > Div {
 #Menu > Span {
 	Padding-Left: 1em;
 	
-	BackGround: Crimson;
-	Border: Medium Groove Red;
+	BackGround: CadetBlue;
+	Border: Medium Groove Crimson;
 }
 
 #Menu > Span:Hover {
 	Border: Medium Ridge Crimson;
+}
+
+Footer {
+	Position: Fixed;
+	Bottom: 0;
+	Right: 0;
+}
+
+Footer > Span {
+	Padding: 1em;
+	
+	Color: #333333;
+	
+	BackGround: Linear-Gradient(White, WhiteSmoke);
+	Border-Radius: 0.25em;
+}
+
+Footer > Span:Before {
+	Content: "";
+}
+
+#GPlus:Before {
+	Display: Inline-Block;
+	
+	Width: 1em;
+	Height: 1em;
+	
+	Vertical-Align: Middle;
+	
+	BackGround: URL("https://www.google.co.jp/images/branding/product/ico/googleg_lodp.ico");
+	BackGround-Size: Cover;
 }
