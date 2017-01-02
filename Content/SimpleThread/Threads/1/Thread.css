@@ -9,9 +9,9 @@ Body {
 
 
 
-#Comments {
+#Posts {
 	Display: Flex;
-	Flex-Direction: Column-Reverse;
+	Flex-Direction: Column;
 	
 	Padding: 1em;
 	Margin: 8px 10em 8px 10em;
@@ -24,13 +24,13 @@ Body {
 	List-Style: None;
 }
 
-#Comments:Before {
+#Posts:Before {
 	Content: "コメント";
 	
 	Font-Weight: Bold;
 }
 
-#Comments > Li {
+#Posts > Li {
 	Margin: 1em 0 0 0;
 	Padding: 0.5em;
 	
@@ -38,24 +38,24 @@ Body {
 	Border-Radius: 5px;
 }
 
-CTitle {
+PTitle {
 	Display: Block;
 	Border-Bottom: Thin Solid Gray;
 }
 
-CContent {
+PContent {
 	Display: Block;
 }
 
-CCommentator, CDate {
+PActor, PDate {
 	Font-Size: 12px;
 }
 
-CCommentator {
+PActor {
 	Margin-Right: 1em;
 }
 
-CDate {
+PDate {
 	Color: Gray;
 }
 
