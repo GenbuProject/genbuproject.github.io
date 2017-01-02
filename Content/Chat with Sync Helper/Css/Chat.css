@@ -24,7 +24,7 @@ Body {
 	List-Style: None;
 }
 
-#Comments:Before {
+#Comments:After {
 	Content: "コメント";
 	
 	Font-Weight: Bold;
