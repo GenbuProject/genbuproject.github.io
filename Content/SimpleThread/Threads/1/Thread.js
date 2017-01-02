@@ -56,17 +56,17 @@ let GitBase = new GitAPI(R.Token);
 	
 const Util = {
 	Load: function () {
-		if (!GitBase.Repo.File.IsVaild("Content/SimpleThread/Thread/" + R.ThreadID + "/Posts.Json")) {
-			GitBase.Repo.File.Create("Content/SimpleThread/Thread/" + R.ThreadID + "/Posts.Json");
+		if (!GitBase.Repo.File.IsVaild("Content/SimpleThread/Threads/" + R.ThreadID + "/Posts.Json")) {
+			GitBase.Repo.File.Create("Content/SimpleThread/Threads/" + R.ThreadID + "/Posts.Json");
 			
 			setTimeout(function () {
-				GitBase.Repo.File.Write("Content/SimpleThread/Thread/" + R.ThreadID + "/Posts.Json", "master", "[]");
+				GitBase.Repo.File.Write("Content/SimpleThread/Threads/" + R.ThreadID + "/Posts.Json", "master", "[]");
 				console.log("Created.");
 			}, 5000);
 			
 			R.Posts = [];
 		} else {
-			R.Posts = JSON.parse(GitBase.Repo.File.Read("Content/SimpleThread/Thread/" + R.ThreadID + "/Posts.Json"));
+			R.Posts = JSON.parse(GitBase.Repo.File.Read("Content/SimpleThread/Threads/" + R.ThreadID + "/Posts.Json"));
 		}
 	},
 	
@@ -78,7 +78,7 @@ const Util = {
 			Date: Date
 		});
 		
-		GitBase.Repo.File.Write("Content/SimpleThread/Thread/" + R.ThreadID + "/Posts.Json", "master", JSON.stringify(R.Posts, null, "\t"));
+		GitBase.Repo.File.Write("Content/SimpleThread/Threads/" + R.ThreadID + "/Posts.Json", "master", JSON.stringify(R.Posts, null, "\t"));
 		
 		return R.Posts;
 	},
