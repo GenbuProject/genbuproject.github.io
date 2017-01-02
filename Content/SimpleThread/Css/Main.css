@@ -1,6 +1,12 @@
+HTML, Body {
+	Height: 100%;
+}
+
 Body {
 	Display: Flex;
 	Flex-Direction: Column;
+	
+	Margin: 0 1em 0 1em;
 	
 	Color: #EEE;
 	Font: 14px / 2 "メイリオ", Meiryo, Osaka;
@@ -8,27 +14,45 @@ Body {
 	BackGround: URL("https://genbuproject.github.io/Image/Back.jpg");
 }
 
+A {
+	Color: Chartreuse;
+}
 
+
+
+Body > H1 {
+	Margin-Bottom: 0;
+}
 
 Body > Div {
 	Display: Flex;
 	Flex-Direction: Row;
+	Height: 100%;
+	Flex: 1;
 }
 
 #Content {
 	Width: 80%;
+	Height: calc(100% - 1em);
 	Flex: 1;
+	
+	Margin-Top: 1em;
 }
 
 #Menu {
 	Display: Flex;
 	Flex-Direction: Column;
 	Width: 20%;
+	Height: 100%;
+	
+	Padding-Left: 1em;
+	
+	Border-Left: Thin Solid White;
 }
 
-#Menu > Span:Hover {
-	BackGround: Chocolate;
-	Border: Medium Ridge Crimson;
+#Menu > H3 {
+	Font-Size: 1.5em;
+	Margin: 0;
 }
 
 #Menu > Span {
@@ -36,4 +60,8 @@ Body > Div {
 	
 	BackGround: Crimson;
 	Border: Medium Groove Red;
+}
+
+#Menu > Span:Hover {
+	Border: Medium Ridge Crimson;
 }
