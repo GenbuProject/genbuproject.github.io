@@ -58,7 +58,8 @@ let Res = {
 const Net = {
 	Google: {
 		Login: function () {
-			let URL = "";
+			let URL = "https://accounts.google.com/o/oauth2/v2/auth?response_type=code&access_type=offline&approval_prompt=force&client_id=" + Res.Google.ClientID + "&redirect_uri=" + Res.Google.RedirectURL + "&scope=" + Res.Google.Scope;
+			console.log(URL);
 		},
 		
 		Getter: {
