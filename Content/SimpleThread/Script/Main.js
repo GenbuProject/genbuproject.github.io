@@ -92,6 +92,6 @@ function Init() {
 	let Query = location.querySort();
 	
 	if (Query.CODE) {
-		
+		Net.Google.Getter.Token();
 	}
 }
