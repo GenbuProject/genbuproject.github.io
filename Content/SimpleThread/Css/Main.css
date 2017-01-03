@@ -112,6 +112,10 @@ Footer > Button {
 	Border-Radius: 100%;
 }
 
+Footer > Button:Hover {
+	BackGround: Linear-Gradient(WhiteSmoke, White);
+}
+
 Footer > Button:Active {
 	Border: 2px Solid Gray;
 }
