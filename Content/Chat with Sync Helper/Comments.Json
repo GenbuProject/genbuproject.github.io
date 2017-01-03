@@ -208,5 +208,11 @@
 		"Content": "ｽｯ､ｽｹﾞｰ!!Σ(ﾟДﾟ )",
 		"Commentator": "勿論偽名",
 		"Date": "2017/1/3 11:16:01"
+	},
+	{
+		"Title": "(　•´∀•` )ｳﾍﾍ",
+		"Content": "<embed src=\"ファイル名.mid\" type=\"audio/midi\" autostart=\"true\"　\nrepeat=\"false\" width=\"100\" height=\"30\">\n\n<noembed>\n<bgsound src=\"ファイル名.mid\" type=\"audio/midi\" loop=\"false\">\n</noembed>",
+		"Commentator": "MP3,MIDI屋さん",
+		"Date": "2017/1/3 11:51:43"
 	}
 ]
