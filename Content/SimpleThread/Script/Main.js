@@ -39,6 +39,16 @@
 			Connector.send(Data)
 		} : function () {})();
 	}
+	
+	window.location.querySort = function () {
+		var Querys = {};
+		
+		for (var i = 0; i < location.search.substr(1).split("&").length; i++) {
+			Querys[location.search.substr(1).split("&")[i].split("=")[0].toUpperCase()] = location.search.substr(1).split("&")[i].split("=")[1];
+		}
+		
+		return Querys;
+	}
 })();
 
 
@@ -51,7 +61,8 @@ let Res = {
 		RedirectURL: "https://genbuproject.github.io/Content/SimpleThread/",
 		Scope: "https://www.googleapis.com/auth/plus.login+https://www.googleapis.com/auth/plus.me",
 		
-		Token: ""
+		Token: "",
+		Code: ""
 	}
 }
 
@@ -59,10 +70,14 @@ const Net = {
 	Google: {
 		Login: function () {
 			let URL = "https://accounts.google.com/o/oauth2/v2/auth?response_type=code&access_type=offline&approval_prompt=force&client_id=" + Res.Google.ClientID + "&redirect_uri=" + Res.Google.RedirectURL + "&scope=" + Res.Google.Scope;
-			console.log(URL);
+			location.href = URL;
 		},
 		
 		Getter: {
+			Token: function () {
+				DOM.XHR("POST", "https://www.googleapis.com/oauth2/v4/token?access_type=offline&grant_type=authorization_code&client_id=" + Res.Google.ClientID + "&client_secret=" + Res.Google.SecretID + "&redirect_uri=" + Res.Google.RedirectURL + "&code=" + Res.Google.Code, true);
+			},
+			
 			OpenID: function () {
 				DOM.XHR("GET", "https://www.googleapis.com/plus/v1/people/me/openIdConnect?access_token=" + Res.Google.Token, true);
 			}
@@ -74,5 +89,9 @@ let GitBase = new GitAPI(atob("YWIzNWNjODEyNDA0M2FjZmRmZmUxOTZjMGYzM2NlNjg4NzY3N
 	GitBase.Repo.RepoURL = "GenbuProject/genbuproject.github.io";
 	
 function Init() {
+	let Query = location.querySort();
 	
+	if (Query.CODE) {
+		
+	}
 }
