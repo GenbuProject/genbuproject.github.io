@@ -15,9 +15,78 @@
 			ga('require', 'linkid', 'linkid.js');
 			ga('send', 'pageview');
 		</Script>
+		
+		<Script Src = "https://apis.google.com/js/platform.js" Async Defer>
+			{lang: "ja"}
+		</Script>
+		
+		<Style>
+			A {
+				Color: Chartreuse;
+			}
+			
+			
+			
+			SubTitle {
+				Display: Block;
+				Font-Size: X-Large;
+			}
+			
+			SubTitle > Img {
+				Height: 2em;
+				Margin-Right: 1em;
+				
+				Vertical-Align: Middle;
+			}
+			
+			SubTitle + Div > SubTitle {
+				Font-Size: 1.5em;
+			}
+			
+			SubTitle + Div > SubTitle + Div > SubTitle {
+				Font-Size: Large;
+			}
+			
+			SubTitle:After {
+				Display: Block;
+				
+				Width: 100%;
+				Height: 2.5px;
+				
+				Content: "";
+				
+				BackGround: Linear-Gradient(LightGray, Gray);
+				BackGround: -Webkit-Gradient(Linear, Center Top, Center Bottom, From(LightGray), To(Gray));
+			}
+			
+			SubTitle + Div {
+				Margin-Left: 2em;
+				Margin-Bottom: 2em;
+			}
+		</Style>
 	</Head>
 	
 	<Body Style = 'Color: #EEE; Font: 14px/2 "メイリオ", Meiryo, Osaka; BackGround: URL("https://genbuproject.github.io/Image/Back.jpg");'>
-		<H1 Style = "Color: LightGray; Text-Align: Center">Genbu Project Official Site</H1>
+		<H1 Style = "Color: LightGray; Text-Align: Center;">Genbu Project Official Site</H1>
+		
+		Genbu Project Official Siteへようこそ！
+		
+		<Br /><Br />
+		
+		<SubTitle>Genbu Projectとは？</SubTitle>
+		<Div>
+			Genbu Project(以下当チーム)は、Google+の有志の方々により結成されました。<Br />
+			当チームではWebアプリケーションを始めとした様々なサービスを提供しています。
+			
+			<Br /><Br />
+			
+			Google+のアカウントはこちらからどうぞ。<Br />
+			<Div Class = "g-page" Data-ShowTagLine = "false" Data-Height = "24" Data-Href = "https://plus.google.com/+GenbuProjectGithubIO" Data-Rel = "author"></Div>
+		</Div>
+		
+		<SubTitle>所属メンバー</SubTitle>
+		<Div>
+			
+		</Div>
 	</Body>
 </HTML>
