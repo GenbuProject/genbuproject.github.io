@@ -85,8 +85,7 @@ let Res = {
 			"https://www.googleapis.com/auth/drive.appdata"
 		],
 		
-		AccessToken: "",
-		RefreshToken: ""
+		AccessToken: ""
 	}
 }
 
