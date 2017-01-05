@@ -76,7 +76,7 @@ let Res = {
 		ClientID: atob("NjQ2NTI3MzA2ODAzLXFjNzc4MnVoZDg1NTZpb2hpZzc4dDJvdmNuNWd1Y21kLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29t"),
 		SecretID: atob("X0RMUWkyM1o5NDMwRlJHUlhPVlF6SXNj"),
 		
-		RedirectURL: "http://localhost:3141/", //"https://genbuproject.github.io/Content/SimpleThread/",
+		RedirectURL: "https://genbuproject.github.io/Content/SimpleThread/", //"http://localhost:3141/"
 		
 		Scope: [
 			"https://www.googleapis.com/auth/plus.login",
