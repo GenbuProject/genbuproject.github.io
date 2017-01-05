@@ -67,9 +67,13 @@ Body > Div {
 	Font-Size: 1.5em;
 }
 
-#Menu > Div {
+#Menu > Div.SignIn {
 	Display: Flex;
 	Flex-Direction: Column;
+}
+
+#Menu > Div.SignOut {
+	Display: None;
 }
 
 #Menu > Div > Span {
@@ -86,12 +90,24 @@ Body > Div {
 	
 	BackGround: RGBA(128, 0, 128, 0.75);
 }
+
+#Menu > Div.SignIn + Div {
+	Display: None;
+}
+
+#Menu > Div.SignOut + Div {
+	Display: Block;
+}
 /*メニュー定義End*/
 
 
 
 /*フッター定義Start*/
-Footer {
+Footer.SignIn {
+	Display: None;
+}
+
+Footer.SignOut {
 	Position: Fixed;
 	Bottom: 0;
 	Right: 0;
@@ -136,3 +152,16 @@ Footer > Button:Before {
 	BackGround-Size: Cover;
 }
 /*フッター定義End*/
+
+
+
+/*ダイアログ定義Start*/
+#Dialog {
+	Position: Fixed;
+	Top: 0;
+	Left: 0;
+	
+	Flex-Direction: Column;
+	Width: 50%;
+	Height: calc(100% / 3);
+}
