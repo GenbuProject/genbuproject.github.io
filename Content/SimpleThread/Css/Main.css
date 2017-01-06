@@ -4,6 +4,10 @@
 
 
 /*ベース定義Start*/
+* {
+	Box-Sizing: Border-Box;
+}
+
 HTML, Body {
 	Height: 100%;
 }
@@ -36,12 +40,14 @@ Body > Div {
 	Display: Flex;
 	Flex-Direction: Row;
 	Height: 100%;
+	
 	Flex: 1;
 }
 
 #Content {
 	Width: 80%;
 	Height: calc(100% - 1em);
+	
 	Flex: 1;
 	
 	Margin-Top: 1em;
@@ -160,8 +166,50 @@ Footer > Button:Before {
 	Position: Fixed;
 	Top: 0;
 	Left: 0;
+	Z-index: 1;
 	
-	Flex-Direction: Column;
 	Width: 50%;
-	Height: calc(100% / 3);
+	Height: 80%;
+	
+	Border-Radius: 10% 10% 0 0;
+}
+
+#Dialog.Show {
+	Display: Flex;
+	Flex-Direction: Column;
+	
+	BackGround: Linear-Gradient(White, WhiteSmoke);
+}
+
+#Dialog.Hide {
+	Display: None;
+}
+
+#Dialog + Div {
+	Width: 100%;
+	Height: 100%;
+	
+	Position: Fixed;
+	Top: 0;
+	Left: 0;
+	Z-Index: 0;
+	
+	BackGround: Black;
+	Opacity: 0.5;
+}
+
+#Dialog.Show + Div {
+	Display: Block;
+}
+
+#Dialog.Hide + Div {
+	Display: None;
+}
+
+#Dialog > IFrame {
+	Width: 100%;
+	Height: 100%;
+	
+	Border: None;
+	Border-Radius: 10% 10% 0 0;
 }

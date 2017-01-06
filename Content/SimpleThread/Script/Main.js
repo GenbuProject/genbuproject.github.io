@@ -58,6 +58,20 @@
 			Connector.send(Args.Data);
 	}
 	
+	
+	
+	window.DOM.width = window.innerWidth;
+	window.DOM.height = window.innerHeight;
+	
+	
+	
+	window.addEventListener("resize", function (Event) {
+		window.DOM.width = window.innerWidth;
+		window.DOM.height = window.innerHeight;
+	});
+})();
+
+(function () {
 	window.location.querySort = function () {
 		var Querys = {};
 		
@@ -71,7 +85,7 @@
 
 
 
-let Res = {
+window.Res = {
 	Google: {
 		ClientID: atob("NjQ2NTI3MzA2ODAzLXFjNzc4MnVoZDg1NTZpb2hpZzc4dDJvdmNuNWd1Y21kLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29t"),
 		SecretID: atob("X0RMUWkyM1o5NDMwRlJHUlhPVlF6SXNj"),
@@ -89,24 +103,16 @@ let Res = {
 	}
 }
 
-const Net = {
+window.Net = {
 	Google: {
 		Login: function () {
 			let URL = "https://accounts.google.com/o/oauth2/v2/auth?response_type=code&access_type=offline&approval_prompt=force&client_id=" + Res.Google.ClientID + "&redirect_uri=" + Res.Google.RedirectURL + "&scope=" + Res.Google.Scope.join("+");
 			
-			window.open(URL, "_self", "Width=" + document.documentElement.clientWidth / 2 + ", Height=" + document.documentElement.clientHeight / 1.5 + ", Left=" + (document.documentElement.clientWidth - document.documentElement.clientWidth / 2) / 2 + ", Top=" + (document.documentElement.clientHeight - document.documentElement.clientHeight / 1.5) / 2);
+			window.open(URL, "_blank", "Width=" + document.documentElement.clientWidth / 2 + ", Height=" + document.documentElement.clientHeight / 1.5 + ", Left=" + (document.documentElement.clientWidth - document.documentElement.clientWidth / 2) / 2 + ", Top=" + (document.documentElement.clientHeight - document.documentElement.clientHeight / 1.5) / 2);
 		},
 		
-		Getter: {
-			Signed: function () {
-				if (sessionStorage.getItem("AccessToken")) {
-					return true;
-				} else {
-					return false;
-				}
-			},
-			
-			Token: function () {
+		Token: {
+			Init: function () {
 				DOM.XHR({
 					Type: "POST",
 					URL: "https://www.googleapis.com/oauth2/v4/token",
@@ -123,9 +129,8 @@ const Net = {
 					},
 					
 					OnLoad: function (Event) {
-						Res.Google.AccessToken = JSON.parse(Event.target.response).access_token;
-						
-						sessionStorage.setItem("AccessToken", JSON.parse(Event.target.response).access_token);
+						window.opener.Res.Google.AccessToken = JSON.parse(Event.target.response).access_token;
+						window.opener.sessionStorage.setItem("AccessToken", JSON.parse(Event.target.response).access_token);
 						
 						Net.Google.Filer.SaveAppData({
 							Name: "RefreshToken",
@@ -133,6 +138,8 @@ const Net = {
 							
 							Content: JSON.parse(Event.target.response).refresh_token
 						});
+						
+						window.close();
 					}
 				});
 			},
@@ -149,22 +156,6 @@ const Net = {
 						"client_id": Res.Google.ClientID,
 						"client_secret": Res.Google.SecretID,
 						"refresh_token": Net.Google.Filer.GetAppData("RefreshToken")
-					},
-					
-					OnLoad: function (Event) {
-						console.log(Event);
-					}
-				});
-			},
-			
-			OpenID: function () {
-				DOM.XHR({
-					Type: "GET",
-					URL: "https://www.googleapis.com/plus/v1/people/me/openIdConnect",
-					DoesSync: true,
-					
-					Params: {
-						"access_token": Res.Google.AccessToken
 					},
 					
 					OnLoad: function (Event) {
@@ -263,15 +254,34 @@ const Net = {
 					}
 				});
 			}
+		},
+		
+		getSignIn: function () {
+			return sessionStorage.getItem("AccessToken") ? true : false;
 		}
 	}
 }
 
-const Util = {
+window.Util = {
 	Dialog: {
-		Init: function () {
-			
-		}
+		Init: function (WidthPer, HeightPer) {
+			DOM("#Dialog").style.left = (DOM.width / (100 / (100 - WidthPer)) / 2) + "px";
+			DOM("#Dialog").style.top = (DOM.height / (100 / (100 - HeightPer)) / 2) + "px";
+		},
+		
+		Show: function () {
+			DOM("#Dialog").className = "Show";
+		},
+		
+		Dismiss: function () {
+			DOM("#Dialog").className = "Hide";
+			DOM("#Dialog").children[0].src = "";
+		},
+		
+		Jump: function (URL) {
+			Util.Dialog.Show();
+			DOM("#Dialog").children[0].src = URL;
+		},
 	}
 }
 
@@ -279,14 +289,14 @@ let GitBase = new GitAPI(atob("YWIzNWNjODEyNDA0M2FjZmRmZmUxOTZjMGYzM2NlNjg4NzY3N
 	GitBase.Repo.RepoURL = "GenbuProject/genbuproject.github.io";
 	
 function Init() {
-	if (!sessionStorage.getItem("AccessToken")) {
+	if (!Net.Google.getSignIn()) {
 		let Query = location.querySort();
 		
 		if (Query.CODE) {
 			DOM(":Footer")[0].className = "SignIn";
 			DOM("#Menu").children[1].className = "SignIn";
 			
-			Net.Google.Getter.Token();
+			Net.Google.Token.Init();
 		} else {
 			DOM(":Footer")[0].className = "SignOut";
 			DOM("#Menu").children[1].className = "SignOut";
@@ -296,9 +306,11 @@ function Init() {
 		
 		DOM(":Footer")[0].className = "SignIn";
 		DOM("#Menu").children[1].className = "SignIn";
+		
+		setInterval(function () {
+			Net.Google.Token.Refresh();
+		}, 1000 * 60 * 45);
 	}
+	
+	Util.Dialog.Init(50, 80);
 }
-
-setInterval(function () {
-	Net.Google.Getter.Refresh();
-}, 1000 * 60 * 45);
