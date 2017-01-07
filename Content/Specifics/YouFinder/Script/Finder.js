@@ -77,8 +77,8 @@ let Info = {
 	RedirectURL: "https://genbuproject.github.io/Content/Specifics/YouFinder/",
 	
 	Scope: [
-		"https://www.googleapis.com/auth/plus.login”,
-		"https://www.googleapis.com/auth/plus.me”,
+		"https://www.googleapis.com/auth/plus.login",
+		"https://www.googleapis.com/auth/plus.me",
 		"https://mail.google.com/"
 	],
 	
