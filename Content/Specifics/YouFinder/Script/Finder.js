@@ -320,7 +320,7 @@ const Net = {
 			},
 			
 			OnLoad: function (Event) {
-				console.log(JSON.parse(Event.target.response));
+				
 			}
 		});
 	}
