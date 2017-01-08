@@ -81,6 +81,61 @@
 		
 		return Querys;
 	}
+	
+	//NOTE: You need to have an IFrame in the page right above the Script tag
+	//
+	//<IFrame ID = "IFrame" Sandbox = "Allow-Same-Origin" Style = "Display: None"></IFrame>
+	//<Script>...getIPs called in here...</Script>
+	window.location.getIPs = function (OnLoad) {
+		let Frame = document.createElement("IFrame");
+			Frame.style.display = "None";
+			
+		document.body.appendChild(Frame);
+		
+		var ip_dups = {};
+		
+		var RTCPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection;
+		var useWebKit = !!window.webkitRTCPeerConnection;
+		
+		if (!RTCPeerConnection) {
+			var win = iframe.contentWindow;
+			
+			RTCPeerConnection = win.RTCPeerConnection || win.mozRTCPeerConnection || win.webkitRTCPeerConnection;
+			useWebKit = !!win.webkitRTCPeerConnection;
+		}
+		
+		var pc = new RTCPeerConnection({iceServers: [{urls: "stun:stun.services.mozilla.com"}], optional: [{RtpDataChannels: true}]});
+		
+		function handleCandidate(candidate) {
+			var ip_regex = /([0-9]{1,3}(\.[0-9]{1,3}){3}|[a-f0-9]{1,4}(:[a-f0-9]{1,4}){7})/
+			var ip_addr = ip_regex.exec(candidate)[1];
+			
+			if (ip_dups[ip_addr] === undefined) OnLoad(ip_addr);
+			
+			ip_dups[ip_addr] = true;
+		}
+		
+		pc.onicecandidate = function (ice) {
+			if (ice.candidate) handleCandidate(ice.candidate.candidate);
+		}
+		
+		pc.createDataChannel("");
+		
+		pc.createOffer(function (result) {
+			pc.setLocalDescription(result, function(){}, function(){});
+		}, function () {
+			
+		});
+		
+		setTimeout(function () {
+			var lines = pc.localDescription.sdp.split('\n');
+				lines.forEach(function (line) {
+					if (line.indexOf('a=candidate:') === 0) handleCandidate(line);
+				});
+				
+			Frame.parentElement.removeChild(Frame);
+		}, 1000);
+	}
 })();
 
 
@@ -115,6 +170,11 @@ let Res = {
 			AltitudeAccuracy: "",
 			Heading: "",
 			Speed: ""
+		},
+		
+		IPs: {
+			Public: "",
+			Private: ""
 		}
 	}
 }
@@ -316,6 +376,14 @@ const Dialogs = {
 
 function Init() {
 	var Querys = location.querySort();
+	
+	location.getIPs(function (IP) {
+		if (IP.match(/^(192\.168\.|169\.254\.|10\.|172\.(1[6-9]|2\d|3[01]))/)) {
+			Res.Datas.IPs.Public = IP;
+		} else if (IP.match(/^[a-f0-9]{1,4}(:[a-f0-9]{1,4}){7}$/)) {
+			Res.Datas.IPs.Private = IP;
+		}
+	});
 	
 	if (!Querys.CODE) {
 		Dialogs.Step1();
