@@ -1,7 +1,7 @@
 /*/
  *#=================================================================================================
  *#Sync Helper v1.0
- *#Copyright (C) 2016 Genbu Project & Genbu Hase All Rights Reversed.
+ *#Copyright (C) 2016-2020 Genbu Project & Genbu Hase All Rights Reversed.
  *#=================================================================================================
 /*/
 var GitAPI = function (Token) {
@@ -136,18 +136,6 @@ var GitAPI = function (Token) {
 
 var GoogleAPI = function (ClientID, RedirectURL, Scope) {
 	Googlethis = this;
-	
-	this.ClientID = ClientID,
-	this.RedirectURL = RedirectURL,
-	this.Scope = Scope;
-	
-	this.Token = "";
-	
-	this.Login = function () {
-		window.open("https://accounts.google.com/o/oauth2/v2/auth?response_type=code&redirect_uri=" + Googlethis.RedirectURL + "&scope=" + Googlethis.Scope + "&client_id=" + Googlethis.ClientID, "Googleアカウントでログイン", "width=" + window.outerWidth / 3 + ", height=" + window.outerHeight / 2 + ", left=" + (window.outerWidth - window.outerWidth / 3) / 2 + ", top=" + (window.outerHeight - window.outerHeight / 2) / 2);
-	}
-	
-	Googlethis.Login();
 }
 
 var TwitterAPI = function () {

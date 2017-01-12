@@ -1,3 +1,9 @@
+/*/
+ *#######################################################################
+ *Access Denier v1.0
+ *Copyright (C) 2016-2020 Genbu Project & Genbu Hase All Rights Reversed.
+ *#######################################################################
+/*/
 (function () {
 	let Error = document.getElementsByTagName("ErrorCode");
 	
