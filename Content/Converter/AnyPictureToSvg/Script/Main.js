@@ -32,11 +32,11 @@ document.addEventListener("DOMContentLoaded", function () {
 							for (var y = 0; y < Img.naturalHeight; y++) {
 								for (var x = 0; x < Img.naturalWidth * 4; x += 4) {
 									Container.appendChild(Svg.Rect({
-										X: x,
+										X: x / 4,
 										Y: y,
 										
 										Width: 1,
-										Height; 1,
+										Height: 1,
 										
 										Fill: Svg.RGBA(Pixels[y * Img.naturalWidth + x], Pixels[y * Img.naturalWidth + x + 1], Pixels[y * Img.naturalWidth + x + 2], Pixels[y * Img.naturalWidth + x + 3])
 									}));
