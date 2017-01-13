@@ -171,7 +171,7 @@ const DB = {
 			
 		let Filer = document.createElement("Input");
 			Filer.type = "File";
-			Filer.accept = Extention;
+			Filer.accept = Extension;
 			
 			Filer.addEventListener("change", function (Event) {
 				let Reader = new FileReader();

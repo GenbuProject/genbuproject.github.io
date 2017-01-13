@@ -21,12 +21,17 @@ document.addEventListener("DOMContentLoaded", function () {
 			
 			let Reader = new FileReader();
 				Reader.onload = function () {
-					DOM("#Data").value = Reader.result;
-					DOM("#Message").textContent = "こ↑こ↓にファイルをドロップ";
-					
-					DOM("#Data").className = "Show";
-					
-					alert("処理が完了したら、テキストエリアを押してコピーしてください。");
+					let Img = new Image();
+						Img.src = Reader.result;
+						
+						Img.onload = function () {
+							DOM("#Message").textContent = "こ↑こ↓にファイルをドロップ";
+							DOM("#Data").className = "Show";
+							
+							alert("処理が完了しました。");
+						}
+						
+					DOM("#Data").appendChild(Img);
 				}
 				
 				Reader.readAsDataURL(Event.dataTransfer.files[0]);
@@ -39,13 +44,5 @@ document.addEventListener("DOMContentLoaded", function () {
 			
 			DOM("#Message").textContent = "ドロップされたオブジェクトは無効です。";
 		}
-	});
-	
-	DOM("#Data").addEventListener("click", function () {
-		DOM("#Data").select();
-		document.execCommand("copy");
-		
-		DOM("#Data").className = "Hide";
-		DOM("#Data").value = "";
 	});
 });
