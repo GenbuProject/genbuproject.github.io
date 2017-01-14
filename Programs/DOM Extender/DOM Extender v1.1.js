@@ -123,7 +123,7 @@
 	}
 	
 	window.Svg.Rect = function (Args) {
-		let Elem = document.createElement("Rect");
+		let Elem = document.createElementNS("http://www.w3.org/2000/svg", "Rect");
 			Elem.setAttribute("x", Args.X ? Args.X : "0");
 			Elem.setAttribute("y", Args.Y ? Args.Y : "0");
 			
