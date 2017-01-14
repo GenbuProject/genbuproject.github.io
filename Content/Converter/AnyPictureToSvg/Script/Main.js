@@ -25,21 +25,21 @@ document.addEventListener("DOMContentLoaded", function () {
 						Img.src = Reader.result;
 						
 						Img.onload = function (Event) {
-							const Pixels = Img.getImageData().data;
-							
-							let Container = new Svg(Img.naturalWidth, Img.naturalHeight);
-							
-							for (var y = 0; y < Img.naturalHeight; y++) {
-								for (var x = 0; x < Img.naturalWidth * 4; x += 4) {
-									Container.appendChild(Svg.Rect({
-										X: x / 4,
-										Y: y,
-										
-										Width: 1,
-										Height: 1,
-										
-										Fill: Svg.RGBA(Pixels[y * Img.naturalWidth + x], Pixels[y * Img.naturalWidth + x + 1], Pixels[y * Img.naturalWidth + x + 2], Pixels[y * Img.naturalWidth + x + 3])
-									}));
+							let Pixels = Img.getImageData(),
+								Container = new Svg(Pixels.width, Pixels.height);
+								
+							for (let y = 0; y < Pixels.height; y++) {
+								for (let x = 0; x < Pixels.width; x++) {
+									Container.appendChild(
+										new Svg.Rect({
+											Width: 1,
+											Height: 1,
+											
+											X: x,
+											Y: y,
+											Fill: Svg.RGBA(Pixels.data[x * 4 + y * Pixels.width], Pixels.data[x * 4 + y * Pixels.width + 1], Pixels.data[x * 4 + y * Pixels.width + 2], Pixels.data[x * 4 + y * Pixels.width + 3])
+										})
+									);
 								}
 							}
 							

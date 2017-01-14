@@ -112,10 +112,10 @@
 	
 	window.Svg = function (Width, Height) {
 		let Elem = document.createElement("Svg");
-			Elem.width = Width ? Width : "0";
-			Elem.height = Height ? Height : "0";
+			Elem.setAttribute("width", Width ? Width : "0");
+			Elem.setAttribute("height", Height ? Height : "0");
 			
-			Elem.setAttribute("Version", "1.1");
+			Elem.setAttribute("version", "1.1");
 			Elem.setAttribute("xmlns", "http://www.w3.org/2000/svg");
 			
 		return Elem;
@@ -125,6 +125,7 @@
 		let Elem = document.createElement("Rect");
 			Elem.setAttribute("x", Args.X ? Args.X : "0");
 			Elem.setAttribute("y", Args.Y ? Args.Y : "0");
+			
 			Elem.setAttribute("width", Args.Width ? Args.Width : "0");
 			Elem.setAttribute("height", Args.Height ? Args.Height : "0");
 			Elem.setAttribute("fill", Args.Fill ? Args.Fill : "#000000");
