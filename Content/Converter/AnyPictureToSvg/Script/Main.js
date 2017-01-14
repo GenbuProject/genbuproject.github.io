@@ -28,8 +28,8 @@ document.addEventListener("DOMContentLoaded", function () {
 							let Pixels = Img.getImageData(),
 								Container = new Svg(Pixels.width, Pixels.height);
 								
-							for (let y = 0; y < Pixels.height; y++) {
-								for (let x = 0; x < Pixels.width; x++) {
+							for (let y = 0; y <= Pixels.height; y++) {
+								for (let x = 0; x <= Pixels.width; x++) {
 									Container.appendChild(
 										new Svg.Rect({
 											Width: 1,

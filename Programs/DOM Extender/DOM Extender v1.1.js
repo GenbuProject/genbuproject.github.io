@@ -112,11 +112,12 @@
 	
 	window.Svg = function (Width, Height) {
 		let Elem = document.createElement("Svg");
-			Elem.setAttribute("width", Width ? Width : "0");
-			Elem.setAttribute("height", Height ? Height : "0");
-			
 			Elem.setAttribute("version", "1.1");
 			Elem.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+			
+			Elem.setAttribute("width", Width ? Width : "0");
+			Elem.setAttribute("height", Height ? Height : "0");
+			Elem.setAttribute("viewBox", "0 0 " + (Width ? Width : "0") + " " + (Height ? Height : "0"));
 			
 		return Elem;
 	}
