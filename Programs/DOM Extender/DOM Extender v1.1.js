@@ -111,7 +111,7 @@
 	}
 	
 	window.Svg = function (Width, Height) {
-		let Elem = document.createElement("Svg");
+		let Elem = document.createElementNS("http://www.w3.org/2000/svg", "Svg");
 			Elem.setAttribute("version", "1.1");
 			Elem.setAttribute("xmlns", "http://www.w3.org/2000/svg");
 			
