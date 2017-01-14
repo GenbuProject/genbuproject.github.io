@@ -28,8 +28,8 @@ document.addEventListener("DOMContentLoaded", function () {
 							let Pixels = Img.getImageData(),
 								Container = new Svg(Pixels.width, Pixels.height);
 								
-							for (let y = 0; y <= Pixels.height; y++) {
-								for (let x = 0; x <= Pixels.width; x++) {
+							for (let y = 0; y < Pixels.height; y++) {
+								for (let x = 0; x < Pixels.width; x++) {
 									Container.appendChild(
 										new Svg.Rect({
 											Width: 1,
@@ -37,7 +37,7 @@ document.addEventListener("DOMContentLoaded", function () {
 											
 											X: x,
 											Y: y,
-											Fill: Svg.RGBA(Pixels.data[x * 4 + y * Pixels.width], Pixels.data[x * 4 + y * Pixels.width + 1], Pixels.data[x * 4 + y * Pixels.width + 2], Pixels.data[x * 4 + y * Pixels.width + 3])
+											Fill: Svg.RGBA(Pixels.data[(x + y * Pixels.width) * 4], Pixels.data[(x + y * Pixels.width) * 4 + 1], Pixels.data[(x + y * Pixels.width) * 4 + 2], Pixels.data[(x + y * Pixels.width) * 4 + 3])
 										})
 									);
 								}
@@ -48,7 +48,9 @@ document.addEventListener("DOMContentLoaded", function () {
 							DOM("#Data").appendChild(Container);
 							DOM("#Data").className = "Show";
 							
-							alert("処理が完了しました。");
+							DB.Save("Converted.Svg", Container.outerHTML);
+							
+							alert("処理が完了しました。\n変換後のSvgファイルは自動的にダウンロードされます…");
 						}
 				}
 				
