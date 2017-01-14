@@ -111,7 +111,7 @@
 	}
 	
 	window.Svg = function (Width, Height) {
-		let Elem = document.createElementNS("http://www.w3.org/2000/svg", "Svg");
+		let Elem = document.createElementNS("http://www.w3.org/2000/svg", "svg");
 			Elem.setAttribute("version", "1.1");
 			Elem.setAttribute("xmlns", "http://www.w3.org/2000/svg");
 			
@@ -123,7 +123,7 @@
 	}
 	
 	window.Svg.Rect = function (Args) {
-		let Elem = document.createElementNS("http://www.w3.org/2000/svg", "Rect");
+		let Elem = document.createElementNS("http://www.w3.org/2000/svg", "rect");
 			Elem.setAttribute("x", Args.X ? Args.X : "0");
 			Elem.setAttribute("y", Args.Y ? Args.Y : "0");
 			
