@@ -166,6 +166,8 @@
 	}
 	
 	window.Image.prototype.toSvg = function () {
+		this.crossOrigin ? this.crossOrigin = "anonymous" : null;
+		
 		let Pixels = this.getImageData(),
 			Elem = new Svg(Pixels.width, Pixels.height);
 			

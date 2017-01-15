@@ -48,9 +48,10 @@ window.addEventListener("DOMContentLoaded", function () {
 			DOM("#Message").textContent = "同時にドロップ可能なファイルは1つのみです。";
 		} else {
 			Event.dataTransfer.items[0].getAsString(function (Res) {
-				console.log(Res);
+				let FileName = Res.split("/")[Res.split("/").length - 1].replace("." + Res.split(".")[Res.split(".").length - 1], "") + " - Converted.svg";
 				
 				let Img = new Image();
+					Img.crossOrigin = "anonymous";
 					Img.src = Res;
 					
 					Img.onload = function () {
@@ -69,8 +70,6 @@ window.addEventListener("DOMContentLoaded", function () {
 						DB.Save(FileName, Container.outerHTML);
 					}
 			});
-			
-			DOM("#Message").textContent = "ドロップされたオブジェクトは無効です。";
 		}
 	});
 });
