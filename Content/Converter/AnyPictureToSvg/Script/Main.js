@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", function () {
+window.addEventListener("DOMContentLoaded", function () {
 	document.body.addEventListener("dragover", function (Event) {
 		Event.stopPropagation();
 		Event.preventDefault();
@@ -17,6 +17,8 @@ document.addEventListener("DOMContentLoaded", function () {
 		Event.preventDefault();
 		
 		if (Event.dataTransfer.files.length == 1) {
+			let FileName = Event.dataTransfer.files[0].name.replace("." + Event.dataTransfer.files[0].name.split(".")[Event.dataTransfer.files[0].name.split(".").length - 1], "") + " - Converted.svg";
+			
 			DOM("#Message").textContent = "現在処理実行中です…";
 			
 			let Reader = new FileReader();
@@ -25,32 +27,19 @@ document.addEventListener("DOMContentLoaded", function () {
 						Img.src = Reader.result;
 						
 						Img.onload = function (Event) {
-							let Pixels = Img.getImageData(),
-								Container = new Svg(Pixels.width, Pixels.height);
-								
-							for (let y = 0; y < Pixels.height; y++) {
-								for (let x = 0; x < Pixels.width; x++) {
-									Container.appendChild(
-										new Svg.Rect({
-											Width: 1,
-											Height: 1,
-											
-											X: x,
-											Y: y,
-											Fill: Svg.RGBA(Pixels.data[(x + y * Pixels.width) * 4], Pixels.data[(x + y * Pixels.width) * 4 + 1], Pixels.data[(x + y * Pixels.width) * 4 + 2], Pixels.data[(x + y * Pixels.width) * 4 + 3])
-										})
-									);
-								}
-							}
+							let Container = Img.toSvg();
 							
 							DOM("#Message").textContent = "こ↑こ↓にファイルをドロップ";
 							
 							DOM("#Data").appendChild(Container);
 							DOM("#Data").className = "Show";
 							
-							DB.Save("Converted.Svg", Container.outerHTML);
+							alert([
+								"処理が完了しました。",
+								"このダイアログを閉じると、変換後のBase64ファイルは自動的にダウンロードされます。"
+							].join("\n"));
 							
-							alert("処理が完了しました。\n変換後のSvgファイルは自動的にダウンロードされます…");
+							DB.Save(FileName, Container.outerHTML);
 						}
 				}
 				
@@ -60,6 +49,25 @@ document.addEventListener("DOMContentLoaded", function () {
 		} else {
 			Event.dataTransfer.items[0].getAsString(function (Res) {
 				console.log(Res);
+				
+				let Img = new Image();
+					Img.src = Res;
+					
+					Img.onload = function () {
+						let Container = Img.toSvg();
+						
+						DOM("#Message").textContent = "こ↑こ↓にファイルをドロップ";
+						
+						DOM("#Data").appendChild(Container);
+						DOM("#Data").className = "Show";
+						
+						alert([
+							"処理が完了しました。",
+							"このダイアログを閉じると、変換後のBase64ファイルは自動的にダウンロードされます。"
+						].join("\n"));
+						
+						DB.Save(FileName, Container.outerHTML);
+					}
 			});
 			
 			DOM("#Message").textContent = "ドロップされたオブジェクトは無効です。";

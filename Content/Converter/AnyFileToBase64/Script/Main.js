@@ -17,6 +17,8 @@ document.addEventListener("DOMContentLoaded", function () {
 		Event.preventDefault();
 		
 		if (Event.dataTransfer.files.length == 1) {
+			let FileName = Event.dataTransfer.files[0].name.replace("." + Event.dataTransfer.files[0].name.split(".")[Event.dataTransfer.files[0].name.split(".").length - 1], "") + " - Converted.txt";
+			
 			DOM("#Message").textContent = "現在処理実行中です…";
 			
 			let Reader = new FileReader();
@@ -26,7 +28,15 @@ document.addEventListener("DOMContentLoaded", function () {
 					
 					DOM("#Data").className = "Show";
 					
-					alert("処理が完了したら、テキストエリアを押してコピーしてください。");
+					alert([
+						"処理が完了しました。",
+						"このダイアログを閉じると、変換後のBase64ファイルは自動的にダウンロードされます。",
+						"",
+						"もしダウンロードできない場合は、",
+						"右上に表示されるテキストエリアをタップすることでコピーが可能です。"
+					].join("\n"));
+					
+					DB.Save(FileName, Reader.result);
 				}
 				
 				Reader.readAsDataURL(Event.dataTransfer.files[0]);
