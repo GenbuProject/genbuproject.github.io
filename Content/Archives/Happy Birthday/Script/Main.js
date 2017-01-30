@@ -102,7 +102,7 @@ function Init() {
 					if (Obj[i].object == Present) {
 						new Audio("Audio/Cracker.mp3").play();
 						
-						let Message = new THREE.Mesh(new THREE.TextGeometry("HAPPY BIRTHDAY, Mom!!!", {
+						let Message = new THREE.Mesh(new THREE.TextGeometry("HAPPY BIRTHDAY!!!", {
 							font: Font,
 							
 							size: 8,
