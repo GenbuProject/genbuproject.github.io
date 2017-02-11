@@ -1,0 +1,25 @@
+$ConfigFile = directory2 + "\\Multi Replacer.cfg";
+
+if (!existfile($ConfigFile)) {
+	writeinistr $ConfigFile, "Config", "Value1", "";
+	writeinistr $ConfigFile, "Config", "Value2", "";
+	writeinistr $ConfigFile, "Config", "Extensions", "*.txt";
+	writeininum $ConfigFile, "Config", "Recent", 1;
+	
+	message "ƒtƒ@ƒCƒ‹‚ğ¶¬‚µ‚Ü‚µ‚½";
+} else {
+	$Values[0] = getinistr($ConfigFile, "Config", "Value1");
+	$Values[1] = getinistr($ConfigFile, "Config", "Value2");
+	
+	if (getininum($ConfigFile, "Config", "Recent") == 1) {
+		grepreplace $Values[0], $Values[1], getinistr($ConfigFile, "Config", "Extensions"), "", subdir;
+		writeininum $ConfigFile, "Config", "Recent", 2;
+		
+		message "ì‹Æ‚ªŠ®—¹‚µ‚Ü‚µ‚½";
+	} else {
+		grepreplace $Values[1], $Values[0], getinistr($ConfigFile, "Config", "Extensions"), "", subdir;
+		writeininum $ConfigFile, "Config", "Recent", 1;
+		
+		message "ì‹Æ‚ªŠ®—¹‚µ‚Ü‚µ‚½";
+	}
+}
