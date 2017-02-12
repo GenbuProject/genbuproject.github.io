@@ -5,6 +5,13 @@
  *#######################################################################
 /*/
 (function () {
+	let sha = document.createElement("Script");
+		sha.src = "https://caligatio.github.io/jsSHA/sha.js";
+		
+	document.head.appendChild(sha);
+})();
+
+(function () {
 	location.querySort = function () {
 		var Querys = {};
 		
@@ -31,31 +38,31 @@
 								let Querys = location.querySort();
 								
 								if (Error[i].attributes["Type"]) {
-									Error[i].attributes["Type"].value == "HASH" ? (function () {
-										/*let Protector = [];
-											Protector[0] = new jsSHA("TEXT"),
-											Protector[1] = new jsSHA("TEXT");
+									Error[i].attributes["Type"].value == "Hash" ? (function () {
+										let Protector = [];
+											Protector[0] = new jsSHA("SHA-512", "TEXT"),
+											Protector[1] = new jsSHA("SHA-512", "TEXT");
 											
 											Protector[0].update(Querys.ID),
 											Protector[1].update(Querys.PASSWORD);
 											
 										if (Protector[0].getHash("HEX") != Error[i].attributes["ID"].value || Protector[1].getHash("HEX") != Error[i].attributes["Password"].value) {
 											location.href = JSON.parse(CodeListGetter.response)[Error[i].attributes["Value"].value];
-										}*/
+										}
 									})() : Error[i].attributes["Type"].value == "HMAC" ? (function () {
-										/*let Protector = [];
-											Protector[0] = new jsSHA("TEXT"),
-											Protector[1] = new jsSHA("TEXT");
+										let Protector = [];
+											Protector[0] = new jsSHA("SHA-512", "TEXT"),
+											Protector[1] = new jsSHA("SHA-512", "TEXT");
 											
-											Protector[0].setHMACKey(Error[i].attributes["Key"] ? Error[i].attributes["Key"].value : ""),
-											Protector[1].setHMACKey(Error[i].attributes["Key"] ? Error[i].attributes["Key"].value : "");
+											Protector[0].setHMACKey(Error[i].attributes["Key"] ? Error[i].attributes["Key"].value : "", "TEXT"),
+											Protector[1].setHMACKey(Error[i].attributes["Key"] ? Error[i].attributes["Key"].value : "", "TEXT");
 											
 											Protector[0].update(Querys.ID),
 											Protector[1].update(Querys.PASSWORD);
 											
 										if (Protector[0].getHMAC("HEX") != Error[i].attributes["ID"].value || Protector[1].getHMAC("HEX") != Error[i].attributes["Password"].value) {
 											location.href = JSON.parse(CodeListGetter.response)[Error[i].attributes["Value"].value];
-										}*/
+										}
 									})() : (function () {
 										if (Querys.ID != Error[i].attributes["ID"].value || Querys.PASSWORD != Error[i].attributes["Password"].value) {
 											location.href = JSON.parse(CodeListGetter.response)[Error[i].attributes["Value"].value];
