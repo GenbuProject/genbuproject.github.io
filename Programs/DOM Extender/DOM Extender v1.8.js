@@ -122,16 +122,29 @@
 		this.target = {value: null};
 		this.oldValue = 0;
 		this.newValue = 0;
+
+		this.ongetting = function () {};
 	}
 	
 	window.DOM.Watcher.prototype = Object.create(Object.prototype, {
+		setWatchTick: {
+			value: function (Value) {
+				this.watchTick = Value;
+			},
+			
+			writable: false,
+			configurable: false,
+			enumerable: false
+		},
+
 		setTarget: {
 			value: function (Value) {
 				this.target = Value;
 			},
 			
 			writable: false,
-			configurable: false
+			configurable: false,
+			enumerable: false
 		},
 		
 		constructor: {
@@ -139,10 +152,19 @@
 		}
 	});
 	
-	window.DOM.Watcher.ChangeWatcher = function () {
-		DOM.Watcher.call(this);
-		
-		this.onchange = function () {};
+	window.DOM.Watcher.ChangeWatcher = function (Option) {
+		if (!Option) {
+			DOM.Watcher.call(this);
+			
+			this.onchange = function () {};
+			this.ongetting = function () {};
+		} else {
+			DOM.Watcher.call(this);
+
+			this.setTarget(Option.Target ? Option.Target : {value: null});
+			this.onchange = Option.OnChange ? Option.OnChange : function () {};
+			this.ongetting = Option.OnGetting ? Option.OnGetting : function () {};
+		}
 	}
 	
 	window.DOM.Watcher.ChangeWatcher.prototype = Object.create(window.DOM.Watcher.prototype, {
@@ -167,11 +189,14 @@
 		DOM.Watcher.watchers.push(Checker);
 		DOM.Watcher.watchers[DOM.Watcher.watchers.length - 1].watcherID[1] = DOM.Watcher.watchers.length - 1;
 		
+		Checker.watcherID[810] = setInterval(Checker.ongetting ? Checker.ongetting : function () {}, Checker.watchTick);
+		
 		return Checker;
 	}
 	
 	window.DOM.Watcher.removeWatcher = function (Checker) {
 		clearInterval(Checker.watcherID[0]);
+		clearInterval(Checker.watcherID[810]);
 		
 		DOM.Watcher.watchers.slice(Checker.watcherID[1], 1);
 	}
@@ -190,6 +215,70 @@
 		}
 		
 		return Elems;
+	}
+
+	window.DOM.Util.getResultAsFlags = function (Mode, Obj, IgnoredElems) {
+		let Result = (Mode == 0 ? true : false);
+
+		if (Object.isStrictArray(Obj)) {
+			for (let i = 0; i < Obj.length; i++) {
+				IgnoredElems ? (function () {
+					for (let j = 0; j < IgnoredElems.length; j++) {
+						if (i != IgnoredElems[j]) {
+							Mode == 0 ? (function () {
+								if (!Obj[i]) {
+									Result = false;
+								}
+							})() : (function () {
+								if (Obj[i]) {
+									Result = true;
+								}
+							})();
+						}
+					}
+				})() : (function () {
+					Mode == 0 ? (function () {
+						if (!Obj[i]) {
+							Result = false;
+						}
+					})() : (function () {
+						if (Obj[i]) {
+							Result = true;
+						}
+					})();
+				})();
+			}
+		} else if (Object.isStrictObject(Obj)) {
+			for (let Key in Obj) {
+				IgnoredElems ? (function () {
+					for (let j = 0; j < IgnoredElems.length; j++) {
+						if (Key != IgnoredElems[j]) {
+							Mode == 0 ? (function () {
+								if (!Obj[Key]) {
+									Result = false;
+								}
+							})() : (function () {
+								if (Obj[Key]) {
+									Result = true;
+								}
+							})();
+						}
+					}
+				})() : (function () {
+					Mode == 0 ? (function () {
+						if (!Obj[Key]) {
+							Result = false;
+						}
+					})() : (function () {
+						if (Obj[Key]) {
+							Result = true;
+						}
+					})();
+				})();
+			}
+		}
+
+		return Result;
 	}
 	
 	
@@ -366,7 +455,9 @@
 (function () {
 	window.Object.prototype.getClassName = function () {
 		return Object.prototype.toString.call(this).slice(8, -1);
-	}
+	}, Object.defineProperty(window.Object.prototype, "getClassName", {
+		enumerable: false
+	});
 	
 	window.Object.prototype.isStrictObject = function (Obj) {
 		if (Obj !== undefined) {
@@ -374,15 +465,19 @@
 		} else {
 			return (this.getClassName() !== "String" && this.getClassName() !== "Number" && this instanceof Object && !Array.isArray(this));
 		}
-	}
+	}, Object.defineProperty(window.Object.prototype, "isStrictObject", {
+		enumerable: false
+	});
 	
-	window.Array.prototype.isStrictArray = function (Obj) {
+	window.Object.prototype.isStrictArray = function (Obj) {
 		if (Obj !== undefined) {
 			return (Obj.getClassName() !== "String" && Obj.getClassName() !== "Number" && Obj instanceof Array && Array.isArray(Obj));
 		} else {
 			return (this.getClassName() !== "String" && this.getClassName() !== "Number" && this instanceof Array && Array.isArray(this));
 		}
-	}
+	}, Object.defineProperty(window.Object.prototype, "isStrictArray", {
+		enumerable: false
+	});
 	
 	window.Node.prototype.dismiss = function () {
 		this.parentElement.removeChild(this);
