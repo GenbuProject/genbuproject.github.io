@@ -233,6 +233,14 @@
 })();
 
 (function () {
+	window.Canvas = function (Width, Height) {
+		let Elem = document.createElement("Canvas");
+			Elem.width = Width ? Width : "0";
+			Elem.width = Height ? Height : "0";
+
+		return Elem;
+	}
+
 	window.Script = function (Src, Options) {
 		let Elem = document.createElement("Script");
 			Elem.src = Src ? Src : "";
@@ -311,7 +319,7 @@
 			Elem.setAttribute("cx", Args.X ? Args.X : "0");
 			Elem.setAttribute("cy", Args.Y ? Args.Y : "0");
 			Elem.setAttribute("r", Args.Radius ? Args.Radius : "0");
-			
+
 			Elem.setAttribute("fill", Args.Fill ? Args.Fill : "#000000");
 			
 		return Elem;
