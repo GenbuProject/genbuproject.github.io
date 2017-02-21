@@ -305,6 +305,17 @@
 			
 		return Elem;
 	}
+
+	window.Svg.Circle = function (Args) {
+		let Elem = document.createElementNSWithParam("http://www.w3.org/2000/svg", "circle", Args.Params ? Args.Params : {});
+			Elem.setAttribute("cx", Args.X ? Args.X : "0");
+			Elem.setAttribute("cy", Args.Y ? Args.Y : "0");
+			Elem.setAttribute("r", Args.Radius ? Args.Radius : "0");
+			
+			Elem.setAttribute("fill", Args.Fill ? Args.Fill : "#000000");
+			
+		return Elem;
+	}
 	
 	window.Svg.Text = function (Args) {
 		let Elem = document.createElementNSWithParam("http://www.w3.org/2000/svg", "text", Args.Params ? Args.Params : {});
