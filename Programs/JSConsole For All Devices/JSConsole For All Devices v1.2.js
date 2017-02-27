@@ -7,7 +7,7 @@
 (function () {
 	let DOMExtender = (function () {
 		let Elem = document.createElement("Script");
-			Elem.src = "https://genbuproject.github.io/Programs/DOM%20Extender/DOM%20Extender%20v1.6.js";
+			Elem.src = "https://genbuproject.github.io/Programs/DOM%20Extender/DOM%20Extender.js";
 			
 		return Elem;
 	})();
