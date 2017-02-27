@@ -4,12 +4,12 @@
             VGetter.open("GET", "API.Info", false);
             VGetter.send(null);
 
-        return JSON.parse(Event.target.response);
+        return JSON.parse(VGetter.response);
     })();
 
     let SGetter = new XMLHttpRequest();
         SGetter.open("GET", Info.Name + " " + Info.Version + ".js", false);
         SGetter.send(null);
 
-    eval(SGetter.target.response);
+    eval(SGetter.response);
 })();
