@@ -15,23 +15,27 @@ const Chat = function (Args) {
     Args == undefined ? Args = {} : null;
 
     this.root = (function (Parent, Color) {
-        let Elem = document.createElement("Div");
+        let Elem = DOM("Chat");
             Elem.enabled = false;
 
-            Elem.enable = function () {
-                if (!Elem.enabled) {
-                    Elem.enabled = true;
-                    Parent.appendChild(Elem);
-                }
+        Elem.enable = function () {
+            if (!Elem.enabled) {
+                Elem.enabled = true;
+                Parent.appendChild(Elem);
             }
+        }
 
-            Elem.disable = function () {
-                if (Elem.enabled) {
-                    Elem.enabled = false;
-                    Parent.removeChild(Elem);
-                }
+        Elem.disable = function () {
+            if (Elem.enabled) {
+                Elem.enabled = false;
+                Parent.removeChild(Elem);
             }
+        }
 
         return Elem;
-    })(Args.parent ? Args.parent : document.body, Args.color ? Args.color : "LightSeaGreen")
+    })(Args.parent ? Args.parent : document.body, Args.color ? Args.color : "LightSeaGreen");
+
+    this.addChatMessage = function (Message) {
+        let Elem = DOM("ChatMessage");
+    }
 }
