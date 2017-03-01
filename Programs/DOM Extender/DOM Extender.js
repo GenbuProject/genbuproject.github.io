@@ -1,7 +1,7 @@
 (function () {
     let Info = (function () {
         let VGetter = new XMLHttpRequest();
-            VGetter.open("GET", "API.Info", false);
+            VGetter.open("GET", "https://genbuproject.github.io/Programs/DOM Extender/API.Info", false);
             VGetter.send(null);
 
         return JSON.parse(VGetter.response);

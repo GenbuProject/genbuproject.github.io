@@ -516,14 +516,12 @@
 	});
 	
 	window.DOM.Watcher.ChangeWatcher = function (Option) {
-		if (!Option) {
-			DOM.Watcher.call(this);
-			
+		DOM.Watcher.call(this);
+
+		if (!Option) {			
 			this.onchange = function () {};
 			this.ongetting = function () {};
 		} else {
-			DOM.Watcher.call(this);
-
 			this.setTarget(Option.Target ? Option.Target : {value: null});
 			this.onchange = Option.OnChange ? Option.OnChange : function () {};
 			this.ongetting = Option.OnGetting ? Option.OnGetting : function () {};
