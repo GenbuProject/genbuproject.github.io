@@ -8,7 +8,7 @@
     })();
 
     let SGetter = new XMLHttpRequest();
-        SGetter.open("GET", Info.Name + " " + Info.Version + ".js", false);
+        SGetter.open("GET", Info.DirURL + Info.Name + " " + Info.Version + ".js", false);
         SGetter.send(null);
 
     eval(SGetter.response);

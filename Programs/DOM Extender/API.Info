@@ -2,5 +2,6 @@
     "Name": "DOM Extender",
     "Version": "v2.0",
     
-    "Author": ["Genbu Project", "Genbu Hase"]
+    "Author": ["Genbu Project", "Genbu Hase"],
+    "DirURL": "https://genbuproject.github.io/Programs/DOM Extender/"
 }
