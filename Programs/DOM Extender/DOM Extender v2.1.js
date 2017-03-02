@@ -206,7 +206,7 @@
 		enumerable: false
 	});
 	
-	window.Node.prototype.append = function (Parent) {
+	window.Node.prototype.appendTo = function (Parent) {
 		(Parent ? Parent : document.body).appendChild(this);
 	}
 
