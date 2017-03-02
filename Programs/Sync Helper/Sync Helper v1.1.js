@@ -27,7 +27,7 @@ const GitAPI = function (Token) {
 						FileCreator.open("PUT", "https://api.github.com/repos/" + Gitthis.Repo.RepoURL + "/contents/" + Path + "?time=" + new Date().getTime() + "&access_token=" + Gitthis.Token, true);
 						
 						FileCreator.onload = function (Event) {
-							console.log("<Sync Helper || Repo.File.Create> it has finished without any problems.");
+							console.log("<Sync Helper || [GitAPI] Repo.File.Create> it has finished without any problems.");
 						}
 						
 						FileCreator.send(
@@ -49,7 +49,7 @@ const GitAPI = function (Token) {
 						FileDeleter.open("DELETE", "https://api.github.com/repos/" + Gitthis.Repo.RepoURL + "/contents/" + Path + "?time=" + new Date().getTime() + "&access_token=" + Gitthis.Token, true);
 						
 						FileDeleter.onload = function (Event) {
-							console.log("<Sync Helper || Repo.File.Delete> it has finished without any problems.");
+							console.log("<Sync Helper || [GitAPI] Repo.File.Delete> it has finished without any problems.");
 						}
 						
 						FileDeleter.send(
@@ -71,7 +71,7 @@ const GitAPI = function (Token) {
 						FileUpdater.open("PUT", "https://api.github.com/repos/" + Gitthis.Repo.RepoURL + "/contents/" + Path + "?time=" + new Date().getTime() + "&access_token=" + Gitthis.Token, true);
 						
 						FileUpdater.onload = function (Event) {
-							console.log("<Sync Helper || Repo.File.Write> it has finished without any problems.");
+							console.log("<Sync Helper || [GitAPI] Repo.File.Write> it has finished without any problems.");
 						}
 						
 						FileUpdater.send(
@@ -132,37 +132,51 @@ const GitAPI = function (Token) {
 			}
 		}
 	}
-}
+};
 
 const GoogleAPI = function (Args) {
 	Googlethis = this;
 
-	Args = DOM.Util.Params(Args, {});
+	Args = DOM.Util.Param(Args, {});
 
 	this.ClientID = DOM.Util.Param(Args.ID, "");
 	this.SecretID = DOM.Util.Param(Args.Key, "");
-	this.RedirectUrl = DOM.Util.Param(Args.Url, "");
+	this.RedirectURL = DOM.Util.Param(Args.Url, "");
 	this.Scope = [];
-	this.DoesRunOnOffline = DOM.Util.Param(Args.OnOffline, false);
+	this.OnOffline = DOM.Util.Param(Args.OnOffline, false);
 	this.Token = DOM.Util.Param(Args.Token, "");
-	
-	this.login = function (Option, DoesOpenOnDialog) {
+
+	this.login = function (Scope) {
+		if (!Scope.isStrictArray()) {
+			return "<Sync Helper || [GoogleAPI] login has finished with some problems.";
+		} else {
+			this.Scope = Scope;
+
+			location.href = "https://accounts.google.com/o/oauth2/v2/auth" + {
+				"client_id": this.ClientID,
+				"redirect_uri": this.RedirectURL,
+				"scope": Scope.join("+"),
+
+				"response_type": "code",
+				"access_type": this.OnOffline ? "offline" : null
+			}.toQueryString();
+		}
+	}
+
+	this.loginOnDialog = function (Scope, Option) {
 		Option = DOM.Util.Param(Option, {
 			Width: DOM.height / 4,
 			Height: DOM.height / 2
 		});
 
-		if (DoesOpenOnDialog) {
-			let Cfg = [];
+		window.open("https://accounts.google.com/o/oauth2/v2/auth?" + {
+			"client_id": this.ClientID,
+			"redirect_uri": this.RedirectURL,
+			"scope": Scope.join("+"),
 
-			for (let i = 0; i < Object.entries(); i++) {
-				Cfg.push(Object.entries(Option).join("="));
-			}
-
-			window.open("https://accounts.google.com/o/oauth2/v2/auth?response_type=code", "LoginTab", Cfg.join(", "));
-		} else {
-			location.href = "https://accounts.google.com/o/oauth2/v2/auth"
-		}
+			"response_type": "code",
+			"access_type": this.OnOffline ? "offline" : null
+		}.toQueryString(), "LoginTab", Option.connect("=", ", "));
 	}
 
 	this.request = function (Args) {
@@ -181,11 +195,11 @@ const GoogleAPI = function (Args) {
 			OnLoad: Args.OnLoad
 		});
 	}
-}
+};
 
 const TwitterAPI = function () {
 	Twitterthis = this;
-}
+};
 
 const DB = {
 	Save: function (FileName, Content) {
@@ -229,7 +243,7 @@ const DB = {
 			
 			Filer.dispatchEvent(Click);
 	}
-}
+};
 
 (function () {
     let Urls = [
