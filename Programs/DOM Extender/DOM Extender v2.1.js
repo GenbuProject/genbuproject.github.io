@@ -235,7 +235,9 @@
 		}
 
 		return "?" + Result.join("&");
-	}
+	}, Object.defineProperty(window.Object.prototype, "toQueryString", {
+		enumerable: false
+	});
 	
 	window.Node.prototype.appendTo = function (Parent) {
 		(Parent ? Parent : document.body).appendChild(this);
