@@ -206,6 +206,10 @@
 		enumerable: false
 	});
 	
+	window.Node.prototype.append = function (Parent) {
+		(Parent ? Parent : document.body).appendChild(this);
+	}
+
 	window.Node.prototype.dismiss = function () {
 		this.parentElement.removeChild(this);
 	}

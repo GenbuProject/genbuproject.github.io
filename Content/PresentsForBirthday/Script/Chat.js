@@ -14,8 +14,8 @@
 const Chat = function (Args) {
     Args = DOM.Util.Param(Args, {});
 
-    this.parent = DOM.Util.Param(Args.parent, document.body);
-    this.themeColor = DOM.Util.Param(Args.themeColor, "LightSeaGreen");
+    this.Parent = DOM.Util.Param(Args.Parent, document.body);
+    this.Theme = DOM.Util.Param(Args.Theme, "LightSeaGreen");
 
     (function () {
         let ChatStyle = new Style();
@@ -32,28 +32,28 @@ const Chat = function (Args) {
             ].join("\n");
 
         document.head.appendChild(ChatStyle);
-    })();
+    }).bind(this)();
 
-    this.root = (function () {
+    this.Root = (function () {
         let Elem = DOM("Chat");
             Elem.enabled = false;
-
-        Elem.enable = function () {
+            
+        Elem.enable = (function () {
             if (!Elem.enabled) {
                 Elem.enabled = true;
-                this.parent.appendChild(Elem);
+                this.Parent.appendChild(Elem);
             }
-        }
+        }).bind(this);
 
-        Elem.disable = function () {
+        Elem.disable = (function () {
             if (Elem.enabled) {
                 Elem.enabled = false;
-                this.parent.removeChild(Elem);
+                Elem.dismiss();
             }
-        }
+        }).bind(this);
 
         return Elem;
-    })();
+    }).bind(this)();
 
     this.addChatMessage = function (Message) {
         let Elem = DOM("ChatMessage");
