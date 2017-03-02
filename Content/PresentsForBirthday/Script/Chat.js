@@ -12,28 +12,48 @@
 })();
 
 const Chat = function (Args) {
-    Args == undefined ? Args = {} : null;
+    Args = DOM.Util.Param(Args, {});
 
-    this.root = (function (Parent, Color) {
+    this.parent = DOM.Util.Param(Args.parent, document.body);
+    this.themeColor = DOM.Util.Param(Args.themeColor, "LightSeaGreen");
+
+    (function () {
+        let ChatStyle = new Style();
+            ChatStyle.textContent = [
+                "Chat {",
+                "   BackGround: LightGray;",
+                "   Border-Radius: 2.5%;",
+                "}",
+                "",
+                "Chat < ChatTitle {",
+                "   Width: 100%;",
+                "   BackGround: " + this.themeColor + ";",
+                "}"
+            ].join("\n");
+
+        document.head.appendChild(ChatStyle);
+    })();
+
+    this.root = (function () {
         let Elem = DOM("Chat");
             Elem.enabled = false;
 
         Elem.enable = function () {
             if (!Elem.enabled) {
                 Elem.enabled = true;
-                Parent.appendChild(Elem);
+                this.parent.appendChild(Elem);
             }
         }
 
         Elem.disable = function () {
             if (Elem.enabled) {
                 Elem.enabled = false;
-                Parent.removeChild(Elem);
+                this.parent.removeChild(Elem);
             }
         }
 
         return Elem;
-    })(Args.parent ? Args.parent : document.body, Args.color ? Args.color : "LightSeaGreen");
+    })();
 
     this.addChatMessage = function (Message) {
         let Elem = DOM("ChatMessage");
