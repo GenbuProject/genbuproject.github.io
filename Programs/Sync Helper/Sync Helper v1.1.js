@@ -144,7 +144,10 @@ const GoogleAPI = function (Args) {
 	this.RedirectURL = DOM.Util.Param(Args.Url, "");
 	this.Scope = [];
 	this.OnOffline = DOM.Util.Param(Args.OnOffline, false);
-	this.Token = DOM.Util.Param(Args.Token, "");
+	this.AccessToken = DOM.Util.Param(Args.AccessToken, "");
+	this.RefreshToken = DOM.Util.Param(Args.RefreshToken, "");
+
+	this.Watchers = [];
 
 	this.login = function (Scope) {
 		if (!Scope.isStrictArray()) {
@@ -179,6 +182,30 @@ const GoogleAPI = function (Args) {
 		}.toQueryString(), "LoginTab", Option.connect("=", ", "));
 	}
 
+	this.requestToken = function () {
+		DOM.XHR({
+			Type: "POST",
+			URL: "https://www.googleapis.com/oauth2/v4/token",
+			DoesSync: true,
+
+			Params: {
+				"client_id": this.ClientID,
+				"client_secret": this.SecretID,
+				"redirect_uri": this.RedirectURL,
+
+				"grant_type": "authorization_code",
+				"access_type": this.OnOffline ? "offline" : null
+			},
+
+			OnLoad: (function (Event) {
+				let Result = JSON.parse(Event.target.response);
+				
+				this.AccessToken = Result["access_token"];
+				this.RefreshToken = Result["refresh_token"];
+			}).bind(this)
+		});
+	}
+
 	this.request = function (Args) {
 		DOM.XHR({
 			Type: Args.Type,
@@ -188,12 +215,30 @@ const GoogleAPI = function (Args) {
 			Headers: Args.Headers,
 
 			Params: (function () {
-				(Args.Params && Args.Params.isStrictObject()) ? Args.Params["access_token"] = this.Token : null;
+				(Args.Params && Args.Params.isStrictObject()) ? Args.Params["access_token"] = this.AccessToken : null;
 				return Args.Params;
 			}).bind(this)(),
 
 			OnLoad: Args.OnLoad
 		});
+	}
+
+	this.Watchers[0] = {}, this.Watchers[0][0] = {
+		value: this.AccessToken
+	}, this.Watchers[0][1] = new DOM.Watcher.ChangeWatcher({
+		Target: this.Watchers[0][0],
+
+		OnGetting: function () {
+			this.Watchers[0][0].value = this.AccessToken;
+		},
+
+		OnChange: function (Checker) {
+			sessionStorage.setItem("GoogleAPI.AccessToken", Checker.newValue);
+		}
+	});
+
+	if (location.querySort()["CODE"] && location.querySort()["PROMPT"] && location.querySort()["SESSION_STATE"]) {
+		this.requestToken();
 	}
 };
 

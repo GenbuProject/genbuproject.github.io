@@ -217,7 +217,9 @@
 		}
 		
 		return Result.join(ParamSeparator);
-	}
+	}, Object.defineProperty(window.Object.prototype, "isStrictArray", {
+		enumerable: false
+	});
 
 	window.Object.prototype.toQueryString = function (Obj) {
 		let Result = [];
