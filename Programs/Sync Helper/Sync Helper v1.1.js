@@ -134,8 +134,53 @@ const GitAPI = function (Token) {
 	}
 }
 
-const GoogleAPI = function (ClientID, RedirectURL, Scope) {
+const GoogleAPI = function (Args) {
 	Googlethis = this;
+
+	Args = DOM.Util.Params(Args, {});
+
+	this.ClientID = DOM.Util.Param(Args.ID, "");
+	this.SecretID = DOM.Util.Param(Args.Key, "");
+	this.RedirectUrl = DOM.Util.Param(Args.Url, "");
+	this.Scope = [];
+	this.DoesRunOnOffline = DOM.Util.Param(Args.OnOffline, false);
+	this.Token = DOM.Util.Param(Args.Token, "");
+	
+	this.login = function (Option, DoesOpenOnDialog) {
+		Option = DOM.Util.Param(Option, {
+			Width: DOM.height / 4,
+			Height: DOM.height / 2
+		});
+
+		if (DoesOpenOnDialog) {
+			let Cfg = [];
+
+			for (let i = 0; i < Object.entries(); i++) {
+				Cfg.push(Object.entries(Option).join("="));
+			}
+
+			window.open("https://accounts.google.com/o/oauth2/v2/auth?response_type=code", "LoginTab", Cfg.join(", "));
+		} else {
+			location.href = "https://accounts.google.com/o/oauth2/v2/auth"
+		}
+	}
+
+	this.request = function (Args) {
+		DOM.XHR({
+			Type: Args.Type,
+			URL: Args.URL, 
+			DoesSync: Args.DoesSync,
+
+			Headers: Args.Headers,
+
+			Params: (function () {
+				(Args.Params && Args.Params.isStrictObject()) ? Args.Params["access_token"] = this.Token : null;
+				return Args.Params;
+			}).bind(this)(),
+
+			OnLoad: Args.OnLoad
+		});
+	}
 }
 
 const TwitterAPI = function () {
@@ -185,3 +230,16 @@ const DB = {
 			Filer.dispatchEvent(Click);
 	}
 }
+
+(function () {
+    let Urls = [
+        "https://genbuproject.github.io/Programs/DOM Extender/DOM Extender.js"
+    ]
+
+    for (let i = 0; i < Urls.length; i++) {
+        let Elem = document.createElement("Script");
+            Elem.src = Urls[i];
+
+        document.head.appendChild(Elem);
+    }
+})();

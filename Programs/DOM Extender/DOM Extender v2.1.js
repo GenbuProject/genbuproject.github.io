@@ -205,6 +205,35 @@
 	}, Object.defineProperty(window.Object.prototype, "isStrictArray", {
 		enumerable: false
 	});
+
+	window.Object.prototype.connect = function (ValueSeparator, ParamSeparator) {
+		ValueSeparator = DOM.Util.Param(ValueSeparator, "=");
+		ParamSeparator = DOM.Util.Param(ParamSeparator, "&");
+
+		let Result = [];
+
+		for (let i = 0; i < Object.entries(this).length; i++) {
+			Result.push(Object.entries(this)[i].join(ValueSeparator));
+		}
+		
+		return Result.join(ParamSeparator);
+	}
+
+	window.Object.prototype.toQueryString = function (Obj) {
+		let Result = [];
+
+		if (Obj !== undefined) {
+			for (let i = 0; i < Object.entries(Obj).length; i++) {
+				Result.push(Object.entries(Obj)[i].join("="));
+			}
+		} else {
+			for (let i = 0; i < Object.entries(this).length; i++) {
+				Result.push(Object.entries(this)[i].join("="));
+			}
+		}
+
+		return "?" + Result.join("&");
+	}
 	
 	window.Node.prototype.appendTo = function (Parent) {
 		(Parent ? Parent : document.body).appendChild(this);
