@@ -202,7 +202,7 @@
 		} else {
 			return (this.getClassName() !== "String" && this.getClassName() !== "Number" && this instanceof Array && Array.isArray(this));
 		}
-	}, Object.defineProperty(window.Object.prototype, "connect", {
+	}, Object.defineProperty(window.Object.prototype, "isStrictArray", {
 		enumerable: false
 	});
 
@@ -217,7 +217,7 @@
 		}
 		
 		return Result.join(ParamSeparator);
-	}, Object.defineProperty(window.Object.prototype, "isStrictArray", {
+	}, Object.defineProperty(window.Object.prototype, "connect", {
 		enumerable: false
 	});
 
