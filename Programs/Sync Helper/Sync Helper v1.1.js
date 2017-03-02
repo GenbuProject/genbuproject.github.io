@@ -164,7 +164,7 @@ const GoogleAPI = function (Args) {
 				"access_type": this.OnOffline ? "offline" : null
 			}.toQueryString();
 		}
-	}
+	};
 
 	this.loginOnDialog = function (Scope, Option) {
 		Option = DOM.Util.Param(Option, {
@@ -180,7 +180,7 @@ const GoogleAPI = function (Args) {
 			"response_type": "code",
 			"access_type": this.OnOffline ? "offline" : null
 		}.toQueryString(), "LoginTab", Option.connect("=", ", "));
-	}
+	};
 
 	this.requestToken = function () {
 		DOM.XHR({
@@ -192,6 +192,7 @@ const GoogleAPI = function (Args) {
 				"client_id": this.ClientID,
 				"client_secret": this.SecretID,
 				"redirect_uri": this.RedirectURL,
+				"code": location.querySort().CODE,
 
 				"grant_type": "authorization_code",
 				"access_type": this.OnOffline ? "offline" : null
@@ -204,7 +205,7 @@ const GoogleAPI = function (Args) {
 				this.RefreshToken = Result["refresh_token"];
 			}).bind(this)
 		});
-	}
+	};
 
 	this.request = function (Args) {
 		DOM.XHR({
@@ -221,21 +222,42 @@ const GoogleAPI = function (Args) {
 
 			OnLoad: Args.OnLoad
 		});
-	}
+	};
 
-	this.Watchers[0] = {}, this.Watchers[0][0] = {
-		value: this.AccessToken
-	}, this.Watchers[0][1] = new DOM.Watcher.ChangeWatcher({
-		Target: this.Watchers[0][0],
+	(function () {
+		this.Watchers[0] = {}, this.Watchers[0][0] = {
+			value: this.AccessToken
+		}, this.Watchers[0][1] = new DOM.Watcher.ChangeWatcher({
+			Target: this.Watchers[0][0],
 
-		OnGetting: function () {
-			this.Watchers[0][0].value = this.AccessToken;
-		},
+			OnGetting: (function () {
+				this.Watchers[0][0].value = this.AccessToken;
+			}).bind(this),
 
-		OnChange: function (Checker) {
-			sessionStorage.setItem("GoogleAPI.AccessToken", Checker.newValue);
-		}
-	});
+			OnChange: function (Checker) {
+				sessionStorage.setItem("GoogleAPI.AccessToken", Checker.newValue);
+			}
+		});
+
+		this.Watchers[1] = {}, this.Watchers[1][0] = {
+			value: this.RefreshToken
+		}, this.Watchers[1][1] = new DOM.Watcher.ChangeWatcher({
+			Target: this.Watchers[1][0],
+
+			OnGetting: (function () {
+				this.Watchers[1][0].value = this.RefreshToken;
+			}).bind(this),
+
+			OnChange: function (Checker) {
+				sessionStorage.setItem("GoogleAPI.RefreshToken", Checker.newValue);
+			}
+		});
+	}).bind(this)();
+
+	DOM.Watcher.addChangeWatcher(this.Watchers[0][1]);
+	DOM.Watcher.addChangeWatcher(this.Watchers[1][1]);
+
+
 
 	if (location.querySort()["CODE"] && location.querySort()["PROMPT"] && location.querySort()["SESSION_STATE"]) {
 		this.requestToken();
