@@ -134,6 +134,8 @@ const GitAPI = function (Token) {
 	}
 };
 
+
+
 const GoogleAPI = function (Args) {
 	Googlethis = this;
 
@@ -150,29 +152,33 @@ const GoogleAPI = function (Args) {
 	this.Watchers = [];
 
 	this.login = function (Scope) {
-		if (!Scope.isStrictArray()) {
-			return "<Sync Helper || [GoogleAPI] login has finished with some problems.";
-		} else {
-			this.Scope = Scope;
+		Scope = DOM.Util.Param(Scope, []);
+		this.Scope = Scope;
 
-			location.href = "https://accounts.google.com/o/oauth2/v2/auth" + {
-				"client_id": this.ClientID,
-				"redirect_uri": this.RedirectURL,
-				"scope": Scope.join("+"),
+		location.href = "https://accounts.google.com/o/oauth2/v2/auth" + {
+			"client_id": this.ClientID,
+			"redirect_uri": this.RedirectURL,
+			"scope": Scope.join("+"),
 
-				"response_type": "code",
-				"access_type": this.OnOffline ? "offline" : null
-			}.toQueryString();
-		}
+			"response_type": "code",
+			"access_type": this.OnOffline ? "offline" : null
+		}.toQueryString();
 	};
 
 	this.loginOnDialog = function (Scope, Option) {
+		Scope = DOM.Util.Param(Scope, []),
+
 		Option = DOM.Util.Param(Option, {
-			Width: DOM.height / 4,
-			Height: DOM.height / 2
+			Width: DOM.width / 3,
+			Height: DOM.height / 1.5
 		});
 
-		window.open("https://accounts.google.com/o/oauth2/v2/auth?" + {
+		Option.Left = DOM.Util.Param(Option.Left, (DOM.width - Option.Width) / 2),
+		Option.Top = DOM.Util.Param(Option.Top, (DOM.height - Option.Height) / 2);
+
+		this.Scope = Scope;
+
+		window.open("https://accounts.google.com/o/oauth2/v2/auth" + {
 			"client_id": this.ClientID,
 			"redirect_uri": this.RedirectURL,
 			"scope": Scope.join("+"),
@@ -201,10 +207,28 @@ const GoogleAPI = function (Args) {
 			OnLoad: (function (Event) {
 				let Result = JSON.parse(Event.target.response);
 				
-				this.AccessToken = Result["access_token"];
-				this.RefreshToken = Result["refresh_token"];
+				localStorage.setItem("GoogleAPI.AccessToken", Result["access_token"]);
+				localStorage.setItem("GoogleAPI.RefreshToken", Result["refresh_token"]);
+
+				this.dismissOAuthView();
 			}).bind(this)
 		});
+	};
+
+	this.dismissOAuthView = function () {
+		if (window.opener) {
+			window.close();
+		} else {
+			location.href = location.origin + location.pathname;
+		}
+	};
+
+	this.clearOAuth = function () {
+		this.AccessToken = "",
+		localStorage.removeItem("GoogleAPI.AccessToken"),
+
+		this.RefreshToken = "",
+		localStorage.removeItem("GoogleAPI.RefreshToken");
 	};
 
 	this.request = function (Args) {
@@ -216,7 +240,9 @@ const GoogleAPI = function (Args) {
 			Headers: Args.Headers,
 
 			Params: (function () {
-				(Args.Params && Args.Params.isStrictObject()) ? Args.Params["access_token"] = this.AccessToken : null;
+				(Args.Params && Args.Params.isStrictObject()) ? null : Args.Params = {};
+				Args.Params["access_token"] = this.AccessToken;
+
 				return Args.Params;
 			}).bind(this)(),
 
@@ -226,30 +252,32 @@ const GoogleAPI = function (Args) {
 
 	(function () {
 		this.Watchers[0] = {}, this.Watchers[0][0] = {
-			value: this.AccessToken
+			value: localStorage.getItem("GoogleAPI.AccessToken")
 		}, this.Watchers[0][1] = new DOM.Watcher.ChangeWatcher({
 			Target: this.Watchers[0][0],
+			Tick: 5000,
 
 			OnGetting: (function () {
-				this.Watchers[0][0].value = this.AccessToken;
+				this.Watchers[0][0].value = localStorage.getItem("GoogleAPI.AccessToken");
 			}).bind(this),
 
 			OnChange: function (Checker) {
-				sessionStorage.setItem("GoogleAPI.AccessToken", Checker.newValue);
+				this.AccessToken = Checker.newValue;
 			}
 		});
 
 		this.Watchers[1] = {}, this.Watchers[1][0] = {
-			value: this.RefreshToken
+			value: localStorage.getItem("GoogleAPI.RefreshToken")
 		}, this.Watchers[1][1] = new DOM.Watcher.ChangeWatcher({
 			Target: this.Watchers[1][0],
+			Tick: 5000,
 
 			OnGetting: (function () {
-				this.Watchers[1][0].value = this.RefreshToken;
+				this.Watchers[1][0].value = localStorage.getItem("GoogleAPI.RefreshToken");
 			}).bind(this),
 
 			OnChange: function (Checker) {
-				sessionStorage.setItem("GoogleAPI.RefreshToken", Checker.newValue);
+				this.RefreshToken = Checker.newValue;
 			}
 		});
 	}).bind(this)();
@@ -261,12 +289,56 @@ const GoogleAPI = function (Args) {
 
 	if (location.querySort()["CODE"] && location.querySort()["PROMPT"] && location.querySort()["SESSION_STATE"]) {
 		this.requestToken();
+	} else if (location.querySort()["ERROR"] && location.querySort()["ERROR"] == "access_denied") {
+		this.dismissOAuthView();
 	}
 };
+
+//Please check the others at https://developers.google.com/identity/protocols/googlescopes
+GoogleAPI.SCOPE = {
+	"CALENDAR": [
+		"https://www.googleapis.com/auth/calendar",
+		"https://www.googleapis.com/auth/calendar.readonly"
+	],
+
+	"DRIVE": [
+		"https://www.googleapis.com/auth/drive",
+		"https://www.googleapis.com/auth/drive.appdata",
+		"https://www.googleapis.com/auth/drive.file",
+		"https://www.googleapis.com/auth/drive.metadata",
+		"https://www.googleapis.com/auth/drive.metadata.readonly",
+		"https://www.googleapis.com/auth/drive.photos.readonly",
+		"https://www.googleapis.com/auth/drive.readonly",
+		"https://www.googleapis.com/auth/drive.scripts"
+	],
+
+	"GMAIL": [
+		"https://mail.google.com/",
+		"https://www.googleapis.com/auth/gmail.compose",
+		"https://www.googleapis.com/auth/gmail.insert",
+		"https://www.googleapis.com/auth/gmail.labels",
+		"https://www.googleapis.com/auth/gmail.metadata",
+		"https://www.googleapis.com/auth/gmail.modify",
+		"https://www.googleapis.com/auth/gmail.readonly",
+		"https://www.googleapis.com/auth/gmail.send",
+		"https://www.googleapis.com/auth/gmail.settings.basic",
+		"https://www.googleapis.com/auth/gmail.settings.sharing"
+	],
+
+	"PLUS": [
+		"https://www.googleapis.com/auth/plus.login",
+		"https://www.googleapis.com/auth/plus.me",
+		"https://www.googleapis.com/auth/userinfo.email",
+		"https://www.googleapis.com/auth/userinfo.profile"
+	]
+};
+
 
 const TwitterAPI = function () {
 	Twitterthis = this;
 };
+
+
 
 const DB = {
 	Save: function (FileName, Content) {
@@ -311,6 +383,8 @@ const DB = {
 			Filer.dispatchEvent(Click);
 	}
 };
+
+
 
 (function () {
     let Urls = [

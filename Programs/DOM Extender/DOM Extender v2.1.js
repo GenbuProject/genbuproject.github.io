@@ -496,6 +496,7 @@
 			this.ongetting = function () {};
 		} else {
 			this.setTarget(Option.Target ? Option.Target : {value: null});
+			this.setWatchTick(Option.Tick ? Option.Tick : 1);
 			this.onchange = Option.OnChange ? Option.OnChange : function () {};
 			this.ongetting = Option.OnGetting ? Option.OnGetting : function () {};
 		}
