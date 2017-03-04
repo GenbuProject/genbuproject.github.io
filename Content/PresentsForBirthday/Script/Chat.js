@@ -11,6 +11,8 @@
     }
 })();
 
+let APIInfo = ["Custom Chat", "v1.0"];
+
 const Chat = function (Args, DoesAppend) {
     Args = DOM.Util.Param(Args, {});
 
@@ -19,9 +21,10 @@ const Chat = function (Args, DoesAppend) {
 
     this.Root = DOM("Chat");
     this.Root.conversationName = DOM.Util.Param(Args.Name, "Unknown");
-    this.Root.Face = null;
+    this.Root.faceUrl = null;
     this.Header = null,
     this.Body = null;
+    this.InputArea = null;
 
     this.Watchers = [];
 
@@ -32,6 +35,7 @@ const Chat = function (Args, DoesAppend) {
             this.enabled = true;
             this.Root.appendTo(this.Parent);
 
+            this.appendStyle();
             this.addChatBase();
         }
     };
@@ -40,100 +44,156 @@ const Chat = function (Args, DoesAppend) {
         if (this.enabled) {
             this.enabled = false;
             this.Root.dismiss();
+
+            this.disableStyle();
+        }
+    };
+
+    this.appendStyle = function () {
+        this.disableStyle();
+
+        let ChatStyle = new Style();
+            ChatStyle.setAttribute("UUID", APIInfo[0] + " " + APIInfo[1] + " - ChatStyle");
+
+            ChatStyle.textContent = [
+                "* {",
+                "   Font: " + 16 * (DOM.height / 640) + "px" + " 'メイリオ', Meiryo, Osaka;",
+                "   Box-Sizing: Border-Box;",
+                "}",
+                "",
+                "Chat {",
+                "   Position: Absolute;",
+                "   Right: 0;",
+                "   Bottom: 0;",
+                "   ",
+                "   Display: Inline-Flex;",
+                "   Flex-Direction: Column;",
+                "   Width: 100%;",
+                "   Height: 100%;",
+                "}",
+                "",
+                "Chat > ChatHeader {",
+                "   Display: Flex;",
+                "   Flex-Direction: Row;",
+                "   Align-Items: Center;",
+                "   Width: 100%;",
+                "   Height: 7.5%;",
+                "   ",
+                "   Color: White;",
+                "   Padding: 1em;",
+                "   ",
+                "   BackGround: " + this.Theme + ";",
+                "   Border-Radius: 1em 1em 0 0;",
+                "}",
+                "",
+                "Chat > ChatHeader.Unread {",
+                "   Border-Bottom: Medium Solid LightGreen;",
+                "}",
+                "",
+                "Chat > ChatBody {",
+                "   Width: 100%;",
+                "   Height: 92.5%;",
+                "   ",
+                "   Padding: 0.5em;",
+                "   ",
+                "   BackGround: #EEEEEE;",
+                "   ",
+                "   Overflow: Auto;",
+                "}",
+                "",
+                "Chat > TextArea {",
+                "   Min-Width: 100%;",
+                "   Max-Width: 100%;",
+                "   Width: 100%;",
+                "   ",
+                "   Min-Height: 10%;",
+                "   Height: 10%;",
+                "}",
+                "",
+                "ChatBody > ChatMessage {",
+                "   Display: Flex;",
+                "   Flex-Direction: Row;",
+                "   Align-Items: Center;",
+                "   ",
+                "   Margin: 0 0 1em 0;",
+                "}",
+                "",
+                "ChatBody > ChatMessage > Img {",
+                "   Width: 2em;",
+                "   Height: 2em;",
+                "   ",
+                "   Margin: 0 0.5em 0 0;",
+                "   ",
+                "   Border-Radius: 100%;",
+                "}",
+                "",
+                "ChatBody > ChatMessage > Div {",
+                "   Padding: 0.5em;",
+                "   ",
+                "   BackGround: White;",
+                "   Border-Radius: 0 0.5em 0 0.5em;",
+                "   ",
+                "   White-Space: Pre;",
+                "}"
+            ].join("\n");
+
+        document.head.appendChild(ChatStyle);
+    };
+
+    this.disableStyle = function () {
+        for (let i = 0; i < DOM(":Style").length; i++) {
+            if (DOM(":Style")[i].attributes["UUID"] == APIInfo[0] + " " + APIInfo[1] + " - ChatStyle") {
+                DOM(":Style")[i].dismiss();
+            }
         }
     };
 
     this.addChatBase = function () {
-        this.Header = DOM("ChatHeader");
-        this.Header.appendTo(this.Root);
+        this.Header = DOM("ChatHeader"), this.Header.appendTo(this.Root);
+        this.Body = DOM("ChatBody"), this.Body.appendTo(this.Root);
 
-        this.Body = DOM("ChatBody");
-        this.Body.appendTo(this.Root);
+        this.InputArea = DOM("TextArea", {
+            Events: {
+                "keydown": (function (Event) {
+                    switch (Event.keyCode) {
+                        case 9:
+			        		Event.preventDefault();
+			        		
+			        		let Pos = Event.target.selectionStart;
+			        		
+			       			Event.target.value = Event.target.value.substr(0, Event.target.selectionStart) + "\t" + Event.target.value.substr(Event.target.selectionStart, Event.target.value.length);
+			        		Event.target.setSelectionRange(Pos + 1, Pos + 1);
+			        		
+			        		break;
+
+                        case 13:
+                            if (!Event.shiftKey) {
+                                Event.preventDefault();
+                                this.addChatMessage(this.InputArea.value);
+
+                                this.InputArea.value = "";
+                            }
+
+                            break;
+                    }
+                }).bind(this)
+            }
+        }), this.InputArea.appendTo(this.Root);
     };
 
     this.addChatMessage = function (Message) {
-        let Root = DOM("ChatMessage");
-        let Face = new Image();
-        let Text = DOM("Div");
+        let Elem = DOM("ChatMessage", {
+            Children: [
+                new Image(),
+                DOM("Div")
+            ]
+        });
 
-        Face.appendTo(Root),
-        Text.appendTo(Root);
-        
-        Text.textContent = Message;
+        Elem.children[0].src = this.Root.faceUrl ? this.Root.faceUrl : "https://lh5.googleusercontent.com/-YmSg3V069TE/AAAAAAAAAAI/AAAAAAAAI3s/dHZ2LeAPaW4/photo.jpg";
+        Elem.children[1].textContent = Message;
+
         Elem.appendTo(this.Body);
     };
-
-    (function () {
-        let IsExists = false;
-
-        for (let i = 0; i < DOM(":Style").length; i++) {
-            if (DOM(":Style")[i].attributes["UUID"] && DOM(":Style")[i].attributes["UUID"].value == "Chat.js - ChatStyle") {
-                IsExists = true;
-                break;
-            }
-        }
-        
-        if (!IsExists) {
-            let ChatStyle = new Style();
-                ChatStyle.setAttribute("UUID", "Chat.js - ChatStyle");
-
-                ChatStyle.textContent = [
-                    "* {",
-                    "   Box-Sizing: Border-Box;",
-                    "}",
-                    "Chat {",
-                    "   Position: Absolute;",
-                    "   Right: 0;",
-                    "   Bottom: 0;",
-                    "   ",
-                    "   Display: Inline-Flex;",
-                    "   Flex-Direction: Column;",
-                    "   Width: 100%;",
-                    "   Height: 100%;",
-                    "}",
-                    "",
-                    "Chat > ChatHeader {",
-                    "   Width: 100%;",
-                    "   Height: 7.5%;",
-                    "   ",
-                    "   Padding: 1em;",
-                    "   ",
-                    "   BackGround: " + this.Theme + ";",
-                    "   Border-Radius: 2em 2em 0 0;",
-                    "}",
-                    "",
-                    "Chat > ChatHeader.Unread {",
-                    "   Border-Bottom: Medium Solid LightGreen;",
-                    "}",
-                    "",
-                    "Chat > ChatBody {",
-                    "   Width: 100%;",
-                    "   Height: 92.5%;",
-                    "   ",
-                    "   BackGround: #EEEEEE;",
-                    "}",
-                    "",
-                    "Chat > ChatMessage {",
-                    "   Display: Inline-Flex;",
-                    "   Flex-Direction: Row;",
-                    "   Align-Items: Center;",
-                    "}",
-                    "",
-                    "Chat > ChatMessage > Img {",
-                    "   Margin: 0 0.5em 0 0;",
-                    "   ",
-                    "   Border-Radius: 100%;",
-                    "}",
-                    "",
-                    "Chat > ChatMessage > Div {",
-                    "   Padding: 0.5em;",
-                    "   BackGround: White;",
-                    "}"
-                ].join("\n");
-
-            document.head.appendChild(ChatStyle);
-        }
-    }).bind(this)();
 
     (function () {
         this.Watchers[0] = {}, this.Watchers[0][0] = {
@@ -143,7 +203,7 @@ const Chat = function (Args, DoesAppend) {
 			Tick: 100,
 
 			OnGetting: (function () {
-				this.Watchers[0][0].value = this.Root.ConversationName;
+				this.Watchers[0][0].value = this.Root.conversationName;
 			}).bind(this),
 
 			OnChange: (function (Checker) {
