@@ -143,6 +143,14 @@
 			})() : (function () {
 				
 			})();
+
+			Params.Children ? (function () {
+				for (let i = 0; i < Params.Children.length; i++) {
+					Elem.appendChild(Params.Children[i]);
+				}
+			})() : (function () {
+				
+			})();
 		}
 		
 		return Elem;
@@ -169,6 +177,14 @@
 			Params.Events ? (function () {
 				for (let EventName in Params.Events) {
 					Elem.addEventListener(EventName, Params.Events[EventName]);
+				}
+			})() : (function () {
+				
+			})();
+
+			Params.Children ? (function () {
+				for (let i = 0; i < Params.Children.length; i++) {
+					Elem.appendChild(Params.Children[i]);
 				}
 			})() : (function () {
 				

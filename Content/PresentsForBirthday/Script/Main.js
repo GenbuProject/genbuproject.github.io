@@ -3,6 +3,8 @@ let GBase = null;
 
 window.addEventListener("load", function () {
     Base = new Chat({
+        Name: "プログラなーいGenboo(自称)",
+        
         Theme: "LightSeaGreen",
         Parent: document.body
     }, true);

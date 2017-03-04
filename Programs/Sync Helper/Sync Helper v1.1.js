@@ -145,7 +145,10 @@ const GoogleAPI = function (Args) {
 	this.SecretID = DOM.Util.Param(Args.Key, "");
 	this.RedirectURL = DOM.Util.Param(Args.Url, "");
 	this.Scope = [];
+
 	this.OnOffline = DOM.Util.Param(Args.OnOffline, false);
+	this.DoesSkipLogin = DOM.Util.Param(Args.DoesSkip, true);
+
 	this.AccessToken = DOM.Util.Param(Args.AccessToken, "");
 	this.RefreshToken = DOM.Util.Param(Args.RefreshToken, "");
 
@@ -153,7 +156,7 @@ const GoogleAPI = function (Args) {
 
 	this.login = function (Scope) {
 		Scope = DOM.Util.Param(Scope, []);
-		this.Scope = Scope;
+		localStorage.setItem("GoogleAPI.Scope", JSON.stringify(Scope));
 
 		location.href = "https://accounts.google.com/o/oauth2/v2/auth" + {
 			"client_id": this.ClientID,
@@ -161,6 +164,7 @@ const GoogleAPI = function (Args) {
 			"scope": Scope.join("+"),
 
 			"response_type": "code",
+			"approval_prompt": this.DoesSkipLogin ? null : "force",
 			"access_type": this.OnOffline ? "offline" : null
 		}.toQueryString();
 	};
@@ -176,7 +180,7 @@ const GoogleAPI = function (Args) {
 		Option.Left = DOM.Util.Param(Option.Left, (DOM.width - Option.Width) / 2),
 		Option.Top = DOM.Util.Param(Option.Top, (DOM.height - Option.Height) / 2);
 
-		this.Scope = Scope;
+		localStorage.setItem("GoogleAPI.Scope", JSON.stringify(Scope));
 
 		window.open("https://accounts.google.com/o/oauth2/v2/auth" + {
 			"client_id": this.ClientID,
@@ -184,6 +188,7 @@ const GoogleAPI = function (Args) {
 			"scope": Scope.join("+"),
 
 			"response_type": "code",
+			"approval_prompt": this.DoesSkipLogin ? null : "force",
 			"access_type": this.OnOffline ? "offline" : null
 		}.toQueryString(), "LoginTab", Option.connect("=", ", "));
 	};
@@ -207,8 +212,8 @@ const GoogleAPI = function (Args) {
 			OnLoad: (function (Event) {
 				let Result = JSON.parse(Event.target.response);
 				
-				localStorage.setItem("GoogleAPI.AccessToken", Result["access_token"]);
-				localStorage.setItem("GoogleAPI.RefreshToken", Result["refresh_token"]);
+				localStorage.setItem("GoogleAPI.AccessToken", Result["access_token"]),
+				localStorage.setItem("GoogleAPI.RefreshToken", Result["refresh_token"] ? Result["refresh_token"] : "");
 
 				this.dismissOAuthView();
 			}).bind(this)
@@ -228,7 +233,10 @@ const GoogleAPI = function (Args) {
 		localStorage.removeItem("GoogleAPI.AccessToken"),
 
 		this.RefreshToken = "",
-		localStorage.removeItem("GoogleAPI.RefreshToken");
+		localStorage.removeItem("GoogleAPI.RefreshToken"),
+		
+		this.Scope = "",
+		localStorage.removeItem("GoogleAPI.Scope");
 	};
 
 	this.request = function (Args) {
@@ -252,40 +260,56 @@ const GoogleAPI = function (Args) {
 
 	(function () {
 		this.Watchers[0] = {}, this.Watchers[0][0] = {
-			value: localStorage.getItem("GoogleAPI.AccessToken")
+			value: null
 		}, this.Watchers[0][1] = new DOM.Watcher.ChangeWatcher({
 			Target: this.Watchers[0][0],
-			Tick: 5000,
+			Tick: 100,
 
 			OnGetting: (function () {
 				this.Watchers[0][0].value = localStorage.getItem("GoogleAPI.AccessToken");
 			}).bind(this),
 
-			OnChange: function (Checker) {
+			OnChange: (function (Checker) {
 				this.AccessToken = Checker.newValue;
-			}
+			}).bind(this)
 		});
 
 		this.Watchers[1] = {}, this.Watchers[1][0] = {
-			value: localStorage.getItem("GoogleAPI.RefreshToken")
+			value: null
 		}, this.Watchers[1][1] = new DOM.Watcher.ChangeWatcher({
 			Target: this.Watchers[1][0],
-			Tick: 5000,
+			Tick: 100,
 
 			OnGetting: (function () {
 				this.Watchers[1][0].value = localStorage.getItem("GoogleAPI.RefreshToken");
 			}).bind(this),
 
-			OnChange: function (Checker) {
+			OnChange: (function (Checker) {
 				this.RefreshToken = Checker.newValue;
-			}
+			}).bind(this)
 		});
+
+		this.Watchers[2] = {}, this.Watchers[2][0] = {
+			value: null
+		}, this.Watchers[2][1] = new DOM.Watcher.ChangeWatcher({
+			Target: this.Watchers[2][0],
+			Tick: 100,
+
+			OnGetting: (function () {
+				this.Watchers[2][0].value = JSON.parse(localStorage.getItem("GoogleAPI.Scope"));
+			}).bind(this),
+
+			OnChange: (function (Checker) {
+				this.Scope = Checker.newValue;
+			}).bind(this)
+		});
+
+
+
+		DOM.Watcher.addChangeWatcher(this.Watchers[0][1]);
+		DOM.Watcher.addChangeWatcher(this.Watchers[1][1]);
+		DOM.Watcher.addChangeWatcher(this.Watchers[2][1]);
 	}).bind(this)();
-
-	DOM.Watcher.addChangeWatcher(this.Watchers[0][1]);
-	DOM.Watcher.addChangeWatcher(this.Watchers[1][1]);
-
-
 
 	if (location.querySort()["CODE"] && location.querySort()["PROMPT"] && location.querySort()["SESSION_STATE"]) {
 		this.requestToken();

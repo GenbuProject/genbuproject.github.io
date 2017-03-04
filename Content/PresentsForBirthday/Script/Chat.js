@@ -17,7 +17,51 @@ const Chat = function (Args, DoesAppend) {
     this.Parent = DOM.Util.Param(Args.Parent, document.body);
     this.Theme = DOM.Util.Param(Args.Theme, "LightSeaGreen");
 
+    this.Root = DOM("Chat");
+    this.Root.conversationName = DOM.Util.Param(Args.Name, "Unknown");
+    this.Root.Face = null;
+    this.Header = null,
+    this.Body = null;
+
+    this.Watchers = [];
+
     this.enabled = false;
+
+    this.enable = function () {
+        if (!this.enabled) {
+            this.enabled = true;
+            this.Root.appendTo(this.Parent);
+
+            this.addChatBase();
+        }
+    };
+    
+    this.disable = function () {
+        if (this.enabled) {
+            this.enabled = false;
+            this.Root.dismiss();
+        }
+    };
+
+    this.addChatBase = function () {
+        this.Header = DOM("ChatHeader");
+        this.Header.appendTo(this.Root);
+
+        this.Body = DOM("ChatBody");
+        this.Body.appendTo(this.Root);
+    };
+
+    this.addChatMessage = function (Message) {
+        let Root = DOM("ChatMessage");
+        let Face = new Image();
+        let Text = DOM("Div");
+
+        Face.appendTo(Root),
+        Text.appendTo(Root);
+        
+        Text.textContent = Message;
+        Elem.appendTo(this.Body);
+    };
 
     (function () {
         let IsExists = false;
@@ -34,35 +78,56 @@ const Chat = function (Args, DoesAppend) {
                 ChatStyle.setAttribute("UUID", "Chat.js - ChatStyle");
 
                 ChatStyle.textContent = [
-                    "@Media Screen and (Min-Width: 0px) {",
-                    "   Chat {",
-                    "       Width: 100%;",
-                    "       Height: 100%;",
-                    "   }",
+                    "* {",
+                    "   Box-Sizing: Border-Box;",
                     "}",
-                    "",
-                    /*"@Media Screen and (Min-Width: 640px) {",
-                    "   Chat {",
-                    "      Width: 30%;",
-                    "      Height: 90%;",
-                    "   }",
-                    "}",
-                    "",*/
                     "Chat {",
                     "   Position: Absolute;",
                     "   Right: 0;",
                     "   Bottom: 0;",
                     "   ",
                     "   Display: Inline-Flex;",
-                    "   ",
-                    "   BackGround: LightGray;",
-                    "   Border-Radius: 2.5%;",
+                    "   Flex-Direction: Column;",
+                    "   Width: 100%;",
+                    "   Height: 100%;",
                     "}",
                     "",
-                    "Chat < ChatTitle {",
+                    "Chat > ChatHeader {",
                     "   Width: 100%;",
+                    "   Height: 7.5%;",
+                    "   ",
+                    "   Padding: 1em;",
                     "   ",
                     "   BackGround: " + this.Theme + ";",
+                    "   Border-Radius: 2em 2em 0 0;",
+                    "}",
+                    "",
+                    "Chat > ChatHeader.Unread {",
+                    "   Border-Bottom: Medium Solid LightGreen;",
+                    "}",
+                    "",
+                    "Chat > ChatBody {",
+                    "   Width: 100%;",
+                    "   Height: 92.5%;",
+                    "   ",
+                    "   BackGround: #EEEEEE;",
+                    "}",
+                    "",
+                    "Chat > ChatMessage {",
+                    "   Display: Inline-Flex;",
+                    "   Flex-Direction: Row;",
+                    "   Align-Items: Center;",
+                    "}",
+                    "",
+                    "Chat > ChatMessage > Img {",
+                    "   Margin: 0 0.5em 0 0;",
+                    "   ",
+                    "   Border-Radius: 100%;",
+                    "}",
+                    "",
+                    "Chat > ChatMessage > Div {",
+                    "   Padding: 0.5em;",
+                    "   BackGround: White;",
                     "}"
                 ].join("\n");
 
@@ -71,60 +136,23 @@ const Chat = function (Args, DoesAppend) {
     }).bind(this)();
 
     (function () {
-        /*screen.orientation.addEventListener("change", (function (Event) {
-            switch (Event.target.type) {
-                case "landscape-primary":
-                    Event.target.angle > 45 ? document.documentElement.style.transform = "Rotate(90deg)" : "Rotate(0deg)";
-                    document.documentElement.style.overflow = "Hidden";
+        this.Watchers[0] = {}, this.Watchers[0][0] = {
+			value: null
+		}, this.Watchers[0][1] = new DOM.Watcher.ChangeWatcher({
+			Target: this.Watchers[0][0],
+			Tick: 100,
 
-                    scrollBy(1000, 1000);
+			OnGetting: (function () {
+				this.Watchers[0][0].value = this.Root.ConversationName;
+			}).bind(this),
 
-                    break;
+			OnChange: (function (Checker) {
+				this.Header.textContent = Checker.newValue;
+			}).bind(this)
+		});
 
-                default:
-                    document.documentElement.style.transform = "Rotate(0deg)";
-                    document.documentElement.style.overflow = "";
-
-                    break;
-            }
-        }).bind(this));*/
-
-        try {
-            screen.orientation.lock("portrait-primary");
-        } catch (Error) {
-            console.log("This device is PC");
-        }
+        DOM.Watcher.addChangeWatcher(this.Watchers[0][1]);
     }).bind(this)();
-
-    this.Root = DOM("Chat");
-
-    this.enable = function () {
-        if (!this.enabled) {
-            this.enabled = true;
-            this.Root.appendTo(this.Parent);
-        }
-    }, Object.defineProperty(this, "enable", {
-        writable: false,
-        configurable: false
-    });
-    
-    this.disable = function () {
-        if (this.enabled) {
-            this.enabled = false;
-            this.Root.dismiss();
-        }
-    }, Object.defineProperty(this, "disable", {
-        writable: false,
-        configurable: false
-    });
-
-    this.addChatMessage = function (Message) {
-        let Elem = DOM("ChatMessage");
-
-    }, Object.defineProperty(this, "addChatMessage", {
-        writable: false,
-        configurable: false
-    });
 
     DoesAppend ? (function () {
         this.enable();
