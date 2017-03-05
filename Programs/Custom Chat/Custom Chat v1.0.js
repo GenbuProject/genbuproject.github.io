@@ -175,9 +175,12 @@ const Chat = function (Args, DoesAppend) {
                         case 13:
                             if (!Event.shiftKey) {
                                 Event.preventDefault();
-                                this.addChatMessage(this.InputArea.value);
 
-                                this.InputArea.value = "";
+                                if (this.InputArea.value) {
+                                    this.addChatMessage(this.InputArea.value);
+
+                                    this.InputArea.value = "";
+                                }
                             }
 
                             break;
