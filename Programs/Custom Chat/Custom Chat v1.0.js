@@ -1,3 +1,9 @@
+/*/
+ *#######################################################################
+ *Custom Chat v1.0
+ *Copyright (C) 2017-2020 Genbu Project & Genbu Hase All Rights Reversed.
+ *#######################################################################
+/*/
 (function () {
     let Urls = [
         "https://genbuproject.github.io/Programs/DOM Extender/DOM Extender.js"
@@ -133,7 +139,7 @@ const Chat = function (Args, DoesAppend) {
                 "   BackGround: White;",
                 "   Border-Radius: 0 0.5em 0 0.5em;",
                 "   ",
-                "   White-Space: Pre;",
+                "   White-Space: Pre-Wrap;",
                 "}"
             ].join("\n");
 

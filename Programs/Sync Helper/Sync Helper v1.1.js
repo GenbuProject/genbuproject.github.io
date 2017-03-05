@@ -1,8 +1,8 @@
 /*/
- *#=================================================================================================
- *#Sync Helper v1.1
- *#Copyright (C) 2016-2020 Genbu Project & Genbu Hase All Rights Reversed.
- *#=================================================================================================
+ *#######################################################################
+ *Sync Helper v1.1
+ *Copyright (C) 2016-2020 Genbu Project & Genbu Hase All Rights Reversed.
+ *#######################################################################
 /*/
 const GitAPI = function (Token) {
 	Gitthis = this;
@@ -235,7 +235,7 @@ const GoogleAPI = function (Args) {
 		this.RefreshToken = "",
 		localStorage.removeItem("GoogleAPI.RefreshToken"),
 		
-		this.Scope = "",
+		this.Scope = [],
 		localStorage.removeItem("GoogleAPI.Scope");
 	};
 
@@ -256,6 +256,26 @@ const GoogleAPI = function (Args) {
 
 			OnLoad: Args.OnLoad
 		});
+	};
+
+	this.getUserInfo = function (Args) {
+		Args = DOM.Util.Param(Args, {});
+		
+		if (this.Scope.includes(GoogleAPI.SCOPE.PLUS[0]) || this.Scope.includes(GoogleAPI.SCOPE.PLUS[1])) {
+			this.request({
+				Type: "GET",
+				URL: "https://www.googleapis.com/plus/v1/people/me",
+				DoesSync: Args.DoesSync,
+				Headers: Args.Headers,
+				Params: Args.Params,
+
+				OnLoad: function (Event) {
+					Args.OnLoad(JSON.parse(Event.target.response));
+				}
+			});
+		} else {
+			return false;
+		}
 	};
 
 	(function () {
