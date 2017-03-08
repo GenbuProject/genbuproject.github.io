@@ -194,7 +194,7 @@
 		return Elem;
 	}
 
-	window.importScript = function (Url) {
+	window.importScript = function (Url, OnLoad) {
 		Url = Url ? Url : "";
 
 		let IsVaild = false;
@@ -205,29 +205,67 @@
 			}
 		}
 
+		let Loaded = false,
+			Watcher = [];
+			
+			Watcher[1] = {
+				value: Loaded
+			}, Watcher[0] = new DOM.Watcher.ChangeWatcher({
+				Target: Watcher[1],
+
+				OnGetting: function () {
+					Watcher[1].value = Loaded;
+				},
+
+				OnChange: function () {
+					DOM.Watcher.removeWatcher(Watcher[0]);
+					OnLoad ? OnLoad() : null;
+				}
+			});
+
+		DOM.Watcher.addChangeWatcher(Watcher[0]);
+		
 		if (!IsVaild) {
 			let Elem = document.createElement("Script");
 				Elem.src = Url;
+
+				Elem.onload = function () {
+					Loaded = true;
+				}
 
 			document.head.appendChild(Elem);
 		}
 	}
 
-	window.importScripts = function (Urls) {
+	window.importScripts = function (Urls, OnLoad) {
 		Urls = Urls ? Urls : [""];
+
+		let Loaded = [false],
+			Timer = setInterval(function () {
+				if (Loaded.every(function (Elem, ID, Parent) {
+					return Elem;
+				})) {
+					clearInterval(Timer);
+					OnLoad ? OnLoad() : null;
+				}
+			}, 1);
 
 		for (let i = 0; i < Urls.length; i++) {
 			let IsVaild = false;
 
 			for (let j = 0; j < document.getElementsByTagName("Script").length; j++) {
-				if (document.getElementsByTagName("Script")[j].src == Url[i]) {
+				if (document.getElementsByTagName("Script")[j].src == Urls[i]) {
 					IsVaild = true;
 				}
 			}
 
 			if (!IsVaild) {
 				let Elem = document.createElement("Script");
-					Elem.src = Url[i];
+					Elem.src = Urls[i];
+
+					Elem.onload = function () {
+						Loaded[i] = true;
+					}
 					
 				document.head.appendChild(Elem);
 			}

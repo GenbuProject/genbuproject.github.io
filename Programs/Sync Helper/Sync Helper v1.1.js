@@ -261,7 +261,7 @@ const GoogleAPI = function (Args) {
 	this.getUserInfo = function (Args) {
 		Args = DOM.Util.Param(Args, {});
 		
-		if (this.Scope.includes(GoogleAPI.SCOPE.PLUS[0]) || this.Scope.includes(GoogleAPI.SCOPE.PLUS[1])) {
+		if (this.AccessToken && (this.Scope.includes(GoogleAPI.SCOPE.PLUS[0]) || this.Scope.includes(GoogleAPI.SCOPE.PLUS[1]))) {
 			this.request({
 				Type: "GET",
 				URL: "https://www.googleapis.com/plus/v1/people/me",
@@ -274,7 +274,7 @@ const GoogleAPI = function (Args) {
 				}
 			});
 		} else {
-			return false;
+			return {};
 		}
 	};
 
@@ -294,7 +294,7 @@ const GoogleAPI = function (Args) {
 			}).bind(this)
 		});
 
-		this.Watchers[1] = {}, this.Watchers[1][0] = {
+		this.Watchers[1] = [], this.Watchers[1][0] = {
 			value: null
 		}, this.Watchers[1][1] = new DOM.Watcher.ChangeWatcher({
 			Target: this.Watchers[1][0],
@@ -309,7 +309,7 @@ const GoogleAPI = function (Args) {
 			}).bind(this)
 		});
 
-		this.Watchers[2] = {}, this.Watchers[2][0] = {
+		this.Watchers[2] = [], this.Watchers[2][0] = {
 			value: null
 		}, this.Watchers[2][1] = new DOM.Watcher.ChangeWatcher({
 			Target: this.Watchers[2][0],
@@ -427,18 +427,3 @@ const DB = {
 			Filer.dispatchEvent(Click);
 	}
 };
-
-
-
-(function () {
-    let Urls = [
-        "https://genbuproject.github.io/Programs/DOM Extender/DOM Extender.js"
-    ]
-
-    for (let i = 0; i < Urls.length; i++) {
-        let Elem = document.createElement("Script");
-            Elem.src = Urls[i];
-
-        document.head.appendChild(Elem);
-    }
-})();
