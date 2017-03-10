@@ -118,82 +118,6 @@
 })();
 
 (function () {
-	window.document.createElementWithParam = function (TagName, Params) {
-		let Elem = document.createElement(TagName);
-		
-		if (Params) {
-			Params.Attributes ? (function () {
-				for (let ParamName in Params.Attributes) {
-					Elem.setAttribute(ParamName, Params.Attributes[ParamName]);
-				}
-			})() : (function () {
-				
-			})();
-			
-			Params.Styles ? (function () {
-				Elem.setAttribute("Style", InlineStyle(Params.Styles));
-			})() : (function () {
-				
-			})();
-			
-			Params.Events ? (function () {
-				for (let EventName in Params.Events) {
-					Elem.addEventListener(EventName, Params.Events[EventName]);
-				}
-			})() : (function () {
-				
-			})();
-
-			Params.Children ? (function () {
-				for (let i = 0; i < Params.Children.length; i++) {
-					Elem.appendChild(Params.Children[i]);
-				}
-			})() : (function () {
-				
-			})();
-		}
-		
-		return Elem;
-	}
-	
-	window.document.createElementNSWithParam = function (NameSpace, TagName, Params) {
-		let Elem = document.createElementNS(NameSpace, TagName);
-		
-		if (Params) {
-			Params.Attributes ? (function () {
-				for (let ParamName in Params.Attributes) {
-					Elem.setAttribute(ParamName, Params.Attributes[ParamName]);
-				}
-			})() : (function () {
-				
-			})();
-			
-			Params.Styles ? (function () {
-				Elem.setAttribute("Style", InlineStyle(Params.Styles));
-			})() : (function () {
-				
-			})();
-			
-			Params.Events ? (function () {
-				for (let EventName in Params.Events) {
-					Elem.addEventListener(EventName, Params.Events[EventName]);
-				}
-			})() : (function () {
-				
-			})();
-
-			Params.Children ? (function () {
-				for (let i = 0; i < Params.Children.length; i++) {
-					Elem.appendChild(Params.Children[i]);
-				}
-			})() : (function () {
-				
-			})();
-		}
-		
-		return Elem;
-	}
-
 	window.importScript = function (Url, OnLoad) {
 		Url = Url ? Url : "";
 
@@ -271,6 +195,94 @@
 			}
 		}
 	}
+
+	window.document.createElementWithParam = function (TagName, Params) {
+		let Elem = document.createElement(TagName);
+		
+		if (Params) {
+			Params.Attributes ? (function () {
+				for (let ParamName in Params.Attributes) {
+					Elem.setAttribute(ParamName, Params.Attributes[ParamName]);
+				}
+			})() : (function () {
+				
+			})();
+			
+			Params.Styles ? (function () {
+				Elem.setAttribute("Style", InlineStyle(Params.Styles));
+			})() : (function () {
+				
+			})();
+			
+			Params.Events ? (function () {
+				for (let EventName in Params.Events) {
+					Elem.addEventListener(EventName, Params.Events[EventName]);
+				}
+			})() : (function () {
+				
+			})();
+
+			Params.Children ? (function () {
+				for (let i = 0; i < Params.Children.length; i++) {
+					Elem.appendChild(Params.Children[i]);
+				}
+			})() : (function () {
+				
+			})();
+		}
+		
+		return Elem;
+	}
+	
+	window.document.createElementNSWithParam = function (NameSpace, TagName, Params) {
+		let Elem = document.createElementNS(NameSpace, TagName);
+		
+		if (Params) {
+			Params.Attributes ? (function () {
+				for (let ParamName in Params.Attributes) {
+					Elem.setAttribute(ParamName, Params.Attributes[ParamName]);
+				}
+			})() : (function () {
+				
+			})();
+			
+			Params.Styles ? (function () {
+				Elem.setAttribute("Style", InlineStyle(Params.Styles));
+			})() : (function () {
+				
+			})();
+			
+			Params.Events ? (function () {
+				for (let EventName in Params.Events) {
+					Elem.addEventListener(EventName, Params.Events[EventName]);
+				}
+			})() : (function () {
+				
+			})();
+
+			Params.Children ? (function () {
+				for (let i = 0; i < Params.Children.length; i++) {
+					Elem.appendChild(Params.Children[i]);
+				}
+			})() : (function () {
+				
+			})();
+		}
+		
+		return Elem;
+	}
+
+	window.Math.random.randomInt = function () {
+		let Result = 0;
+
+		if (arguments.length >= 2) {
+			Result = Math.round(Math.random() * (arguments[1] - arguments[0]) + arguments[0]);
+		} else {
+			Result = Math.round(Math.random() * arguments[0]);
+		}
+
+		return Result;
+	}
 })();
 
 (function () {
@@ -332,21 +344,9 @@
 	}, Object.defineProperty(window.Object.prototype, "toQueryString", {
 		enumerable: false
 	});
-	
-	window.Node.prototype.appendTo = function (Parent) {
-		(Parent ? Parent : document.body).appendChild(this);
-	}
+})();
 
-	window.Node.prototype.dismiss = function () {
-		this.parentElement.removeChild(this);
-	}
-	
-	window.EventTarget.prototype.addEventListeners = function (Events, Listener, UseCapture) {
-		for (let i = 0; i < Events.length; i++) {
-			this.addEventListener(Events[i], Listener, UseCapture ? UseCapture : false);
-		}
-	}
-	
+(function () {
 	window.String.prototype.replaces = function (ReplaceStrs) {
 		let Result = this;
 		
@@ -365,19 +365,27 @@
 
 		return Result.join("");
 	}
+})();
 
-	window.Math.random.randomInt = function () {
-		let Result = 0;
-
-		if (arguments.length >= 2) {
-			Result = Math.round(Math.random() * (arguments[1] - arguments[0]) + arguments[0]);
-		} else {
-			Result = Math.round(Math.random() * arguments[0]);
-		}
-
-		return Result;
+(function () {
+	window.Node.prototype.appendTo = function (Parent) {
+		(Parent ? Parent : document.body).appendChild(this);
 	}
-	
+
+	window.Node.prototype.dismiss = function () {
+		this.parentElement.removeChild(this);
+	}
+})();
+
+(function () {
+	window.EventTarget.prototype.addEventListeners = function (Events, Listener, UseCapture) {
+		for (let i = 0; i < Events.length; i++) {
+			this.addEventListener(Events[i], Listener, UseCapture ? UseCapture : false);
+		}
+	}
+})();
+
+(function () {
 	window.HTMLCollection.prototype.forEach = function (CallBack) {
 		let Elems = [];
 		
@@ -387,17 +395,9 @@
 		
 		Elems.forEach(CallBack);
 	}
-	
-	window.Location.prototype.querySort = function () {
-		var Querys = {};
-		
-		for (var i = 0; i < this.search.substr(1).split("&").length; i++) {
-			Querys[this.search.substr(1).split("&")[i].split("=")[0].toUpperCase()] = this.search.substr(1).split("&")[i].split("=")[1];
-		}
-		
-		return Querys;
-	}
-	
+})();
+
+(function () {
 	window.Image.prototype.getImageData = function () {
 		let Cvs = document.createElement("Canvas");
 			Cvs.width = this.naturalWidth;
@@ -433,6 +433,20 @@
 		return Elem;
 	}
 })();
+
+(function () {
+	window.Location.prototype.querySort = function () {
+		var Querys = {};
+		
+		for (var i = 0; i < this.search.substr(1).split("&").length; i++) {
+			Querys[this.search.substr(1).split("&")[i].split("=")[0].toUpperCase()] = this.search.substr(1).split("&")[i].split("=")[1];
+		}
+		
+		return Querys;
+	}
+})();
+
+
 
 (function () {
 	window.DOM = function (Str) {

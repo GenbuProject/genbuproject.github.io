@@ -1,0 +1,49 @@
+Table.Explorer {
+	Width: 100%;
+
+	Padding: 0.5em;
+
+	Color: Black;
+
+	BackGround: White;
+	Border-Collapse: Collapse;
+}
+
+Table.Explorer TH, Table.Explorer TD {
+	Padding-Left: 0.5em;
+}
+
+Table.Explorer TH {
+	Height: 100%;
+
+	Color: #666;
+	Font-Weight: Normal;
+	Text-Align: Left;
+}
+
+Table.Explorer TH:After {
+	Content: "";
+
+	Display: Block;
+	Width: 1px;
+	Height: 100%;
+	Float: Right;
+
+	BackGround: Linear-Gradient(LightGray, White);
+}
+
+Table.Explorer TR {
+	Cursor: Default;
+}
+
+Table.Explorer TBody TR:Hover, Table.Explorer TBody TR.Selected {
+	Outline: Thin Solid Blue;
+}
+
+Table.Explorer TBody TR:Hover {
+	BackGround: SkyBlue;
+}
+
+Table.Explorer TBody TR.Selected {
+	BackGround: PowderBlue;
+}
