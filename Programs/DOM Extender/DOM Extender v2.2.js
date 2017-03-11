@@ -577,7 +577,7 @@
 				}
 
 				if (IsAPI) {
-					eval(Event.target.response);
+					document.head.appendChild(new Script(Event.target.responseURL));
 				} else {
 					throw new DOM.APIError(Event.target.responseURL);
 				}
