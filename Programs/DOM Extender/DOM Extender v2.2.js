@@ -561,7 +561,28 @@
 	}
 
 	window.DOM.importAPI = function (Url) {
-		DOM.XHR({
+		let Reader = new XMLHttpRequest();
+			Reader.open("GET", DOM.Util.Param(Url, ""), false);
+			Reader.send(null);
+
+		(function () {
+			let IsAPI = false;
+
+			for (let i = 0; i < Reader.response.split("\n").length; i++) {
+				if (Reader.response.split("\n")[i].match("use DOMExtender")) {
+					IsAPI = true;
+					break;
+				}
+			}
+
+			if (IsAPI) {
+				document.head.appendChild(new Script(Reader.responseURL));
+			} else {
+				throw new DOM.APIError(Reader.responseURL);
+			}
+		})();
+
+		/*DOM.XHR({
 			Type: "GET",
 			URL: DOM.Util.Param(Url, ""),
 			DoesSync: false,
@@ -582,7 +603,7 @@
 					throw new DOM.APIError(Event.target.responseURL);
 				}
 			}
-		});
+		});*/
 	}
 	
 
