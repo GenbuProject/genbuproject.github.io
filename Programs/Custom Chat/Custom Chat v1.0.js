@@ -215,4 +215,6 @@ const Chat = function (Args, DoesAppend) {
 	}).bind(this)() : (function () {
 
 	})
-}
+};
+
+"use DOMExtender";

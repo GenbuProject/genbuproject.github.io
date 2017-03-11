@@ -427,3 +427,5 @@ const DB = {
 			Filer.dispatchEvent(Click);
 	}
 };
+
+"use DOMExtender";
