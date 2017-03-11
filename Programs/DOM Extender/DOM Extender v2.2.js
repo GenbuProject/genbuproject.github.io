@@ -126,6 +126,7 @@
 		for (let i = 0; i < document.getElementsByTagName("Script").length; i++) {
 			if (document.getElementsByTagName("Script")[i].src == Url) {
 				IsVaild = true;
+				break;
 			}
 		}
 
@@ -558,7 +559,34 @@
 			
 		return Loc;
 	}
+
+	window.DOM.importAPI = function (Url) {
+		DOM.XHR({
+			Type: "GET",
+			URL: DOM.Util.Param(Url, ""),
+			DoesSync: true,
+
+			OnLoad: function (Event) {
+				let IsAPI = false;
+
+				for (let i = 0; i < Event.target.response.split("\n").length; i++) {
+					if (Event.target.response.split("\n")[i] == "use DOMExtender") {
+						IsAPI = true;
+						break;
+					}
+				}
+
+				if (IsAPI) {
+					eval(Event.target.response);
+				} else {
+					throw new DOM.APIError(Event.target.responseURL);
+				}
+			}
+		});
+	}
 	
+
+
 	window.DOM.Watcher = function () {
 		this.watcherID = [0, 0];
 		this.watchTick = 1;
@@ -608,7 +636,7 @@
 			this.onchange = Option.OnChange ? Option.OnChange : function () {};
 			this.ongetting = Option.OnGetting ? Option.OnGetting : function () {};
 		}
-	}
+	}, window.DOM.Watcher.ChangeWatcher[Symbol.toStringTag] = "ChangeWatcher";
 	
 	window.DOM.Watcher.ChangeWatcher.prototype = Object.create(window.DOM.Watcher.prototype, {
 		constructor: {
@@ -643,6 +671,8 @@
 		
 		DOM.Watcher.watchers.slice(Checker.watcherID[1], 1);
 	}
+
+
 
 	window.DOM.Randomizer = function (Type) {
 		this.TYPE = DOM.Randomizer.TYPE,
@@ -715,6 +745,10 @@
 			writable: false,
 			configurable: false,
 			enumerable: false
+		},
+
+		constructor: {
+			value: DOM.Randomizer
 		}
 	});
 
@@ -723,7 +757,27 @@
 
 		this.type = Symbol.for(this.name),
 		this.charMap = UseChars ? UseChars.removeOverlay().split("") : ["0"];
-	}
+	}, window.DOM.Randomizer.RandomizeType[Symbol.toStringTag] = "RandomizeType";
+
+
+
+	window.DOM.APIError = function (Name) {
+		Error.call(this);
+
+		Name = DOM.Util.Param(Name, "Unknown");
+
+		this.name = this.constructor.name;
+		this.message = Name + " isn't available for DOM Extender || " + Name + "はDOM ExtenderのAPIではありません";
+		Error.captureStackTrace(this, this.constructor);
+	}, window.DOM.APIError[Symbol.toStringTag] = "APIError";
+
+	window.DOM.APIError.prototype = Object.create(Error.prototype, {
+		constructor: {
+			value: DOM.APIError
+		}
+	});
+
+
 	
 	window.DOM.Util = {}, window.DOM.Util[Symbol.toStringTag] = "Util";
 	
@@ -771,7 +825,7 @@
 	}, Object.defineProperty(window.DOM.Randomizer, "TYPE", {
 		writable: false,
 		configurable: false
-	}), window.DOM.Randomizer.TYPE[Symbol.toStringTag] = "GenerateTYPE";
+	}), window.DOM.Randomizer.TYPE[Symbol.toStringTag] = "GenerateType";
 
 	window.DOM.Randomizer.CHARMAP = {
 		LEVEL1: "1234567890".split(""),
