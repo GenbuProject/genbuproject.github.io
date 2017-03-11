@@ -564,7 +564,7 @@
 		DOM.XHR({
 			Type: "GET",
 			URL: DOM.Util.Param(Url, ""),
-			DoesSync: true,
+			DoesSync: false,
 
 			OnLoad: function (Event) {
 				let IsAPI = false;
