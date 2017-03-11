@@ -1,0 +1,37 @@
+SubTitle {
+	Display: Block;
+
+	Font-Size: X-Large;
+}
+
+SubTitle > Img {
+	Height: 2em;
+	Margin-Right: 1em;
+	
+	Vertical-Align: Middle;
+}
+
+SubTitle + Div > SubTitle {
+	Font-Size: 1.5em;
+}
+
+SubTitle + Div > SubTitle + Div > SubTitle {
+	Font-Size: Large;
+}
+
+SubTitle:After {
+	Display: Block;
+	
+	Width: 100%;
+	Height: 2.5px;
+	
+	Content: "";
+	
+	BackGround: Linear-Gradient(LightGray, Gray);
+	BackGround: -Webkit-Gradient(Linear, Center Top, Center Bottom, From(LightGray), To(Gray));
+}
+
+SubTitle + Div {
+	Margin-Left: 2em;
+	Margin-Bottom: 2em;
+}

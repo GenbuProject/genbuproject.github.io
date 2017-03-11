@@ -564,7 +564,7 @@
 		let Reader = new XMLHttpRequest();
 			Reader.open("GET", DOM.Util.Param(Url, ""), false);
 			Reader.send(null);
-
+			
 		(function () {
 			let IsAPI = false;
 
