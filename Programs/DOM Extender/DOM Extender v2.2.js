@@ -766,8 +766,8 @@
 
 		Name = DOM.Util.Param(Name, "Unknown");
 
-		this.name = this.constructor.name;
-		this.message = "<" + Name + "> isn't available for DOM Extender";
+		this.name = "APIError";
+		this.message = Name + " isn't available for DOM Extender";
 		Error.captureStackTrace(this, this.constructor);
 	}, window.DOM.APIError[Symbol.toStringTag] = "APIError";
 
