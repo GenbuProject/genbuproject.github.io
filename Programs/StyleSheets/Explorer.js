@@ -55,11 +55,10 @@ const DB = {
 	}
 };
 
-
-
-setTimeout(function (Event) {
+window["Explorer.js"] = {};
+window["Explorer.js"].init = function () {
 	for (let i = 0; i < document.querySelectorAll("Table.Explorer TBody TR > TD").length; i++) {
-		document.querySelectorAll("Table.Explorer TBody TR > TD")[i].addEventListener("click", function () {
+		document.querySelectorAll("Table.Explorer TBody TR > TD")[i].onclick = function () {
 			document.querySelectorAll("Table.Explorer TBody TR > TD").forEach(function (Elem, Index, Parent) {
 				if (i - (i % document.querySelectorAll("Table.Explorer TBody TR > TD")[Index].parentElement.cells.length) <= Index && Index < i - (i % document.querySelectorAll("Table.Explorer TBody TR > TD")[Index].parentElement.cells.length) + document.querySelectorAll("Table.Explorer TBody TR > TD")[Index].parentElement.cells.length) {
 					
@@ -86,6 +85,10 @@ setTimeout(function (Event) {
 					
 					break;
 			}
-		});
+		}
 	}
-}, 0);
+}
+
+setTimeout(function (Event) {
+	window["Explorer.js"].init();
+}, 500);
