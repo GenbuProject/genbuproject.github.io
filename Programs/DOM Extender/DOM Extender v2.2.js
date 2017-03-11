@@ -570,7 +570,7 @@
 				let IsAPI = false;
 
 				for (let i = 0; i < Event.target.response.split("\n").length; i++) {
-					if (Event.target.response.split("\n")[i] == "use DOMExtender") {
+					if (Event.target.response.split("\n")[i].match("use DOMExtender")) {
 						IsAPI = true;
 						break;
 					}
