@@ -130,32 +130,14 @@
 			}
 		}
 
-		let Loaded = false,
-			Watcher = [];
-			
-			Watcher[1] = {
-				value: Loaded
-			}, Watcher[0] = new DOM.Watcher.ChangeWatcher({
-				Target: Watcher[1],
-
-				OnGetting: function () {
-					Watcher[1].value = Loaded;
-				},
-
-				OnChange: function () {
-					DOM.Watcher.removeWatcher(Watcher[0]);
-					OnLoad ? OnLoad() : null;
-				}
-			});
-
-		DOM.Watcher.addChangeWatcher(Watcher[0]);
-		
 		if (!IsVaild) {
 			let Elem = document.createElement("Script");
 				Elem.src = Url;
 
-				Elem.onload = function () {
-					Loaded = true;
+				Elem.onload = Elem.onreadystatechange = function (Event) {
+					if (!Event.target.readyState || Event.target.readyState == "loaded" || Event.target.readyState == "complete") {
+						OnLoad ? OnLoad() : null;
+					}
 				}
 
 			document.head.appendChild(Elem);
@@ -285,6 +267,8 @@
 		return Result;
 	}
 })();
+
+
 
 (function () {
 	window.Object.prototype.getClassName = function () {
@@ -445,6 +429,12 @@
 		
 		return Querys;
 	}
+
+	window.Location.prototype.isMobile = function () {
+		let Checker = new MobileDetect(window.navigator.userAgent);
+
+		return (Checker.mobile() || Checker.phone() || Checker.tablet()) ? true : false;
+	}
 })();
 
 
@@ -562,7 +552,7 @@
 
 	window.DOM.importAPI = function (Url, OnLoad) {
 		let Reader = new XMLHttpRequest();
-			Reader.open("GET", DOM.Util.Param(Url, ""), false);
+			Reader.open("GET", Url ? Url : "", false);
 			Reader.send(null);
 			
 		(function () {
@@ -579,10 +569,10 @@
 				let Elem = new Script(Reader.responseURL);
 					Elem.onload = Elem.onreadystatechange = function (Event) {
 						if (!Event.target.readyState || Event.target.readyState == "loaded" || Event.target.readyState == "complete") {
-							DOM.Util.Param(OnLoad, function () {})();
+							OnLoad ? OnLoad() : null;
 						}
 					}
-					
+
 				document.head.appendChild(Elem);
 			} else {
 				throw new DOM.APIError(Reader.responseURL);
@@ -862,4 +852,10 @@
 		window.DOM.width = window.innerWidth;
 		window.DOM.height = window.innerHeight;
 	});
+})();
+
+
+
+(function () {
+	DOM.importScript("https://cdnjs.cloudflare.com/ajax/libs/mobile-detect/1.3.5/mobile-detect.min.js");
 })();
