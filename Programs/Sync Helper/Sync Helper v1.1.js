@@ -140,158 +140,35 @@ const GoogleAPI = function (Args) {
 	Googlethis = this;
 
 	Args = DOM.Util.Param(Args, {});
+	
+	var Watchers = [];
 
 	this.ClientID = DOM.Util.Param(Args.ID, "");
 	this.SecretID = DOM.Util.Param(Args.Key, "");
 	this.RedirectURL = DOM.Util.Param(Args.Url, "");
 	this.Scope = [];
-
 	this.OnOffline = DOM.Util.Param(Args.OnOffline, false);
 	this.DoesSkipLogin = DOM.Util.Param(Args.DoesSkip, true);
 
 	this.AccessToken = DOM.Util.Param(Args.AccessToken, "");
 	this.RefreshToken = DOM.Util.Param(Args.RefreshToken, "");
 
-	this.Watchers = [];
-
 	this.DriveAPI = function () {
 		this.AccessToken = DOM.Util.Param(Googlethis.AccessToken, "");
 		this.RefreshToken = DOM.Util.Param(Googlethis.RefreshToken, "");
 	};
 
-	this.login = function (Scope) {
-		Scope = DOM.Util.Param(Scope, []);
-		localStorage.setItem("GoogleAPI.Scope", JSON.stringify(Scope));
 
-		location.href = "https://accounts.google.com/o/oauth2/v2/auth" + {
-			"client_id": this.ClientID,
-			"redirect_uri": this.RedirectURL,
-			"scope": Scope.join("+"),
-
-			"response_type": "code",
-			"approval_prompt": this.DoesSkipLogin ? null : "force",
-			"access_type": this.OnOffline ? "offline" : null
-		}.toQueryString();
-	};
-
-	this.loginOnDialog = function (Scope, Option) {
-		Scope = DOM.Util.Param(Scope, []),
-
-		Option = DOM.Util.Param(Option, {
-			Width: DOM.width / 3,
-			Height: DOM.height / 1.5
-		});
-
-		Option.Left = DOM.Util.Param(Option.Left, (DOM.width - Option.Width) / 2),
-		Option.Top = DOM.Util.Param(Option.Top, (DOM.height - Option.Height) / 2);
-
-		localStorage.setItem("GoogleAPI.Scope", JSON.stringify(Scope));
-
-		window.open("https://accounts.google.com/o/oauth2/v2/auth" + {
-			"client_id": this.ClientID,
-			"redirect_uri": this.RedirectURL,
-			"scope": Scope.join("+"),
-
-			"response_type": "code",
-			"approval_prompt": this.DoesSkipLogin ? null : "force",
-			"access_type": this.OnOffline ? "offline" : null
-		}.toQueryString(), "LoginTab", Option.connect("=", ", "));
-	};
-
-	this.requestToken = function () {
-		DOM.XHR({
-			Type: "POST",
-			URL: "https://www.googleapis.com/oauth2/v4/token",
-			DoesSync: true,
-
-			Params: {
-				"client_id": this.ClientID,
-				"client_secret": this.SecretID,
-				"redirect_uri": this.RedirectURL,
-				"code": location.querySort().CODE,
-
-				"grant_type": "authorization_code",
-				"access_type": this.OnOffline ? "offline" : null
-			},
-
-			OnLoad: (function (Event) {
-				let Result = JSON.parse(Event.target.response);
-				
-				localStorage.setItem("GoogleAPI.AccessToken", Result["access_token"]),
-				localStorage.setItem("GoogleAPI.RefreshToken", Result["refresh_token"] ? Result["refresh_token"] : "");
-
-				this.dismissOAuthView();
-			}).bind(this)
-		});
-	};
-
-	this.dismissOAuthView = function () {
-		if (window.opener) {
-			window.close();
-		} else {
-			location.href = location.origin + location.pathname;
-		}
-	};
-
-	this.clearOAuth = function () {
-		this.AccessToken = "",
-		localStorage.removeItem("GoogleAPI.AccessToken"),
-
-		this.RefreshToken = "",
-		localStorage.removeItem("GoogleAPI.RefreshToken"),
-		
-		this.Scope = [],
-		localStorage.removeItem("GoogleAPI.Scope");
-	};
-
-	this.request = function (Args) {
-		DOM.XHR({
-			Type: Args.Type,
-			URL: Args.URL, 
-			DoesSync: Args.DoesSync,
-
-			Headers: Args.Headers,
-
-			Params: (function () {
-				(Args.Params && Args.Params.isStrictObject()) ? null : Args.Params = {};
-				Args.Params["access_token"] = this.AccessToken;
-
-				return Args.Params;
-			}).bind(this)(),
-
-			OnLoad: Args.OnLoad
-		});
-	};
-
-	this.getUserInfo = function (Args) {
-		Args = DOM.Util.Param(Args, {});
-		
-		if (this.AccessToken && (this.Scope.includes(GoogleAPI.SCOPE.PLUS[0]) || this.Scope.includes(GoogleAPI.SCOPE.PLUS[1]))) {
-			this.request({
-				Type: "GET",
-				URL: "https://www.googleapis.com/plus/v1/people/me",
-				DoesSync: Args.DoesSync,
-				Headers: Args.Headers,
-				Params: Args.Params,
-
-				OnLoad: function (Event) {
-					Args.OnLoad(JSON.parse(Event.target.response));
-				}
-			});
-		} else {
-			return {};
-		}
-	};
 
 	(function () {
-		this.Watchers[0] = {}, this.Watchers[0][0] = {
+		Watchers[0] = [], Watchers[0][0] = {
 			value: null
-		}, this.Watchers[0][1] = new DOM.Watcher.ChangeWatcher({
-			Target: this.Watchers[0][0],
+		}, Watchers[0][1] = new DOM.Watcher.ChangeWatcher({
+			Target: Watchers[0][0],
 			Tick: 100,
 
 			OnGetting: (function () {
-				this.Watchers[0][0].value = localStorage.getItem("GoogleAPI.AccessToken");
+				Watchers[0][0].value = localStorage.getItem("GoogleAPI.AccessToken");
 			}).bind(this),
 
 			OnChange: (function (Checker) {
@@ -299,14 +176,14 @@ const GoogleAPI = function (Args) {
 			}).bind(this)
 		});
 
-		this.Watchers[1] = [], this.Watchers[1][0] = {
+		Watchers[1] = [], Watchers[1][0] = {
 			value: null
-		}, this.Watchers[1][1] = new DOM.Watcher.ChangeWatcher({
-			Target: this.Watchers[1][0],
+		}, Watchers[1][1] = new DOM.Watcher.ChangeWatcher({
+			Target: Watchers[1][0],
 			Tick: 100,
 
 			OnGetting: (function () {
-				this.Watchers[1][0].value = localStorage.getItem("GoogleAPI.RefreshToken");
+				Watchers[1][0].value = localStorage.getItem("GoogleAPI.RefreshToken");
 			}).bind(this),
 
 			OnChange: (function (Checker) {
@@ -314,14 +191,14 @@ const GoogleAPI = function (Args) {
 			}).bind(this)
 		});
 
-		this.Watchers[2] = [], this.Watchers[2][0] = {
+		Watchers[2] = [], Watchers[2][0] = {
 			value: null
-		}, this.Watchers[2][1] = new DOM.Watcher.ChangeWatcher({
-			Target: this.Watchers[2][0],
+		}, Watchers[2][1] = new DOM.Watcher.ChangeWatcher({
+			Target: Watchers[2][0],
 			Tick: 100,
 
 			OnGetting: (function () {
-				this.Watchers[2][0].value = JSON.parse(localStorage.getItem("GoogleAPI.Scope"));
+				Watchers[2][0].value = JSON.parse(localStorage.getItem("GoogleAPI.Scope"));
 			}).bind(this),
 
 			OnChange: (function (Checker) {
@@ -331,9 +208,9 @@ const GoogleAPI = function (Args) {
 
 
 
-		DOM.Watcher.addChangeWatcher(this.Watchers[0][1]);
-		DOM.Watcher.addChangeWatcher(this.Watchers[1][1]);
-		DOM.Watcher.addChangeWatcher(this.Watchers[2][1]);
+		DOM.Watcher.addChangeWatcher(Watchers[0][1]);
+		DOM.Watcher.addChangeWatcher(Watchers[1][1]);
+		DOM.Watcher.addChangeWatcher(Watchers[2][1]);
 	}).bind(this)();
 
 	if (location.querySort()["CODE"] && location.querySort()["PROMPT"] && location.querySort()["SESSION_STATE"]) {
@@ -342,6 +219,174 @@ const GoogleAPI = function (Args) {
 		this.dismissOAuthView();
 	}
 };
+
+GoogleAPI.prototype = Object.create(null, {
+	login: {
+		value: function (Scope) {
+			Scope = DOM.Util.Param(Scope, []);
+			localStorage.setItem("GoogleAPI.Scope", JSON.stringify(Scope));
+
+			location.href = "https://accounts.google.com/o/oauth2/v2/auth" + {
+				"client_id": this.ClientID,
+				"redirect_uri": this.RedirectURL,
+				"scope": Scope.join("+"),
+
+				"response_type": "code",
+				"approval_prompt": this.DoesSkipLogin ? null : "force",
+				"access_type": this.OnOffline ? "offline" : null
+			}.toQueryString();
+		},
+
+		configurable: false,
+		writable: false,
+		enumerable: false
+	},
+
+	loginOnDialog: {
+		value: function (Scope, Option) {
+			Scope = DOM.Util.Param(Scope, []),
+
+			Option = DOM.Util.Param(Option, {
+				Width: DOM.width / 3,
+				Height: DOM.height / 1.5
+			});
+
+			Option.Left = DOM.Util.Param(Option.Left, (DOM.width - Option.Width) / 2),
+			Option.Top = DOM.Util.Param(Option.Top, (DOM.height - Option.Height) / 2);
+
+			localStorage.setItem("GoogleAPI.Scope", JSON.stringify(Scope));
+
+			window.open("https://accounts.google.com/o/oauth2/v2/auth" + {
+				"client_id": this.ClientID,
+				"redirect_uri": this.RedirectURL,
+				"scope": Scope.join("+"),
+
+				"response_type": "code",
+				"approval_prompt": this.DoesSkipLogin ? null : "force",
+				"access_type": this.OnOffline ? "offline" : null
+			}.toQueryString(), "LoginTab", Option.connect("=", ", "));
+		},
+
+		configurable: false,
+		writable: false,
+		enumerable: false
+	},
+
+	requestToken: {
+		value: function () {
+			DOM.XHR({
+				Type: "POST",
+				URL: "https://www.googleapis.com/oauth2/v4/token",
+				DoesSync: true,
+
+				Params: {
+					"client_id": this.ClientID,
+					"client_secret": this.SecretID,
+					"redirect_uri": this.RedirectURL,
+					"code": location.querySort().CODE,
+
+					"grant_type": "authorization_code",
+					"access_type": this.OnOffline ? "offline" : null
+				},
+
+				OnLoad: (function (Event) {
+					let Result = JSON.parse(Event.target.response);
+					
+					localStorage.setItem("GoogleAPI.AccessToken", Result["access_token"]),
+					localStorage.setItem("GoogleAPI.RefreshToken", Result["refresh_token"] ? Result["refresh_token"] : "");
+
+					this.dismissOAuthView();
+				}).bind(this)
+			});
+		},
+
+		configurable: false,
+		writable: false,
+		enumerable: false
+	},
+
+	dismissOAuthView: {
+		value: function () {
+			if (window.opener) {
+				window.close();
+			} else {
+				location.href = location.origin + location.pathname;
+			}
+		},
+
+		configurable: false,
+		writable: false,
+		enumerable: false
+	},
+
+	clearOAuth: {
+		value: function () {
+			this.AccessToken = "",
+			localStorage.removeItem("GoogleAPI.AccessToken"),
+
+			this.RefreshToken = "",
+			localStorage.removeItem("GoogleAPI.RefreshToken"),
+			
+			this.Scope = [],
+			localStorage.removeItem("GoogleAPI.Scope");
+		},
+
+		configurable: false,
+		writable: false,
+		enumerable: false
+	},
+
+	request: {
+		value: function (Args) {
+			DOM.XHR({
+				Type: Args.Type,
+				URL: Args.URL, 
+				DoesSync: Args.DoesSync,
+
+				Headers: Args.Headers,
+
+				Params: (function () {
+					(Args.Params && Args.Params.isStrictObject()) ? null : Args.Params = {};
+					Args.Params["access_token"] = this.AccessToken;
+
+					return Args.Params;
+				}).bind(this)(),
+
+				OnLoad: Args.OnLoad
+			});
+		},
+
+		configurable: false,
+		writable: false,
+		enumerable: false
+	},
+
+	getUserInfo: {
+		value: function (Args) {
+			Args = DOM.Util.Param(Args, {});
+			
+			if (this.AccessToken && (this.Scope.includes(GoogleAPI.SCOPE.PLUS[0]) || this.Scope.includes(GoogleAPI.SCOPE.PLUS[1]))) {
+				this.request({
+					Type: "GET",
+					URL: "https://www.googleapis.com/plus/v1/people/me",
+					DoesSync: Args.DoesSync,
+					Headers: Args.Headers,
+					Params: Args.Params,
+
+					OnLoad: function (Event) {
+						Args.OnLoad(JSON.parse(Event.target.response));
+					}
+				});
+			} else {
+				return {};
+			}
+		},
+
+		configurable: false,
+		writable: false,
+		enumerable: false
+	}
+});
 
 //Please check the others at https://developers.google.com/identity/protocols/googlescopes
 GoogleAPI.SCOPE = {
