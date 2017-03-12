@@ -377,6 +377,10 @@ GoogleAPI.SCOPE = {
 	]
 };
 
+GoogleAPI.DriveAPI = function () {
+	
+};
+
 
 const TwitterAPI = function () {
 	Twitterthis = this;
