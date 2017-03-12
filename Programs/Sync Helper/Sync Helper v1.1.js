@@ -153,10 +153,47 @@ const GoogleAPI = function (Args) {
 	this.AccessToken = DOM.Util.Param(Args.AccessToken, "");
 	this.RefreshToken = DOM.Util.Param(Args.RefreshToken, "");
 
+
+
 	this.DriveAPI = function () {
 		this.AccessToken = DOM.Util.Param(Googlethis.AccessToken, "");
 		this.RefreshToken = DOM.Util.Param(Googlethis.RefreshToken, "");
 	};
+
+	this.DriveAPI.prototype = Object.create(null, {
+		File: {
+			value: {
+				create: function (ContentType, OnLoad) {
+					Googlethis.request({
+						Type: "POST",
+						URL: "https://www.googleapis.com/upload/drive/v3/files",
+						DoesSync: true,
+
+						Headers: {
+							"Content-Type": ContentType ? ContentType : "text/plain"
+						},
+
+						Data: "",
+						OnLoad: OnLoad
+					});
+				},
+
+				delete: function (FileID, OnLoad) {
+					Googlethis.request({
+						Type: "DELETE",
+						URL: "https://www.googleapis.com/upload/drive/v3/files/" + (FileID ? FileID : ""),
+						DoesSync: true,
+
+						OnLoad: OnLoad
+					});
+				}
+			},
+
+			configurable: false,
+			writable: false,
+			enumerable: false
+		}
+	});
 
 
 
@@ -284,7 +321,7 @@ GoogleAPI.prototype = Object.create(null, {
 					"client_secret": this.SecretID,
 					"redirect_uri": this.RedirectURL,
 					"code": location.querySort().CODE,
-
+					
 					"grant_type": "authorization_code",
 					"access_type": this.OnOffline ? "offline" : null
 				},
@@ -351,7 +388,8 @@ GoogleAPI.prototype = Object.create(null, {
 
 					return Args.Params;
 				}).bind(this)(),
-
+				
+				Data: Args.Data,
 				OnLoad: Args.OnLoad
 			});
 		},
@@ -370,6 +408,7 @@ GoogleAPI.prototype = Object.create(null, {
 					Type: "GET",
 					URL: "https://www.googleapis.com/plus/v1/people/me",
 					DoesSync: Args.DoesSync,
+
 					Headers: Args.Headers,
 					Params: Args.Params,
 
