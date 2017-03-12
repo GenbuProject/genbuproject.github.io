@@ -1,0 +1,22 @@
+HTML, Body {
+	Height: 100%;
+
+	Margin: 0;
+	Overflow: Hidden;
+}
+
+Body {
+	Display: Flex;
+	Flex-Direction: Row;
+}
+
+Body > Div:Not(Last-Child) {
+	Border-Right: Thin Solid LightGray;
+}
+
+Body > Div IFrame {
+	Width: 100%;
+	Height: 100%;
+
+	Border: 0;
+}
