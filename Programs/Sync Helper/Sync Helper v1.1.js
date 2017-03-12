@@ -140,7 +140,7 @@ const GoogleAPI = function (Args) {
 	Googlethis = this;
 
 	Args = DOM.Util.Param(Args, {});
-	
+
 	var Watchers = [];
 
 	this.ClientID = DOM.Util.Param(Args.ID, "");
@@ -374,7 +374,7 @@ GoogleAPI.prototype = Object.create(null, {
 					Params: Args.Params,
 
 					OnLoad: function (Event) {
-						Args.OnLoad(JSON.parse(Event.target.response));
+						Args.OnLoad ? Args.OnLoad(JSON.parse(Event.target.response)) : null;
 					}
 				});
 			} else {
