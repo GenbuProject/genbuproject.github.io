@@ -560,7 +560,7 @@
 		return Loc;
 	}
 
-	window.DOM.importAPI = function (Url) {
+	window.DOM.importAPI = function (Url, OnLoad) {
 		let Reader = new XMLHttpRequest();
 			Reader.open("GET", DOM.Util.Param(Url, ""), false);
 			Reader.send(null);
@@ -576,34 +576,18 @@
 			}
 
 			if (IsAPI) {
-				document.head.appendChild(new Script(Reader.responseURL));
+				let Elem = new Script(Reader.responseURL);
+					Elem.onload = Elem.onreadystatechange = function (Event) {
+						if (!Event.target.readyState || Event.target.readyState == "loaded" || Event.target.readyState == "complete") {
+							DOM.Util.Param(OnLoad, function () {})();
+						}
+					}
+					
+				document.head.appendChild(Elem);
 			} else {
 				throw new DOM.APIError(Reader.responseURL);
 			}
 		})();
-
-		/*DOM.XHR({
-			Type: "GET",
-			URL: DOM.Util.Param(Url, ""),
-			DoesSync: false,
-
-			OnLoad: function (Event) {
-				let IsAPI = false;
-
-				for (let i = 0; i < Event.target.response.split("\n").length; i++) {
-					if (Event.target.response.split("\n")[i].match("use DOMExtender")) {
-						IsAPI = true;
-						break;
-					}
-				}
-
-				if (IsAPI) {
-					document.head.appendChild(new Script(Event.target.responseURL));
-				} else {
-					throw new DOM.APIError(Event.target.responseURL);
-				}
-			}
-		});*/
 	}
 	
 

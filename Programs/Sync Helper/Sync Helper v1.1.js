@@ -154,6 +154,11 @@ const GoogleAPI = function (Args) {
 
 	this.Watchers = [];
 
+	this.DriveAPI = function () {
+		this.AccessToken = DOM.Util.Param(Googlethis.AccessToken, "");
+		this.RefreshToken = DOM.Util.Param(Googlethis.RefreshToken, "");
+	};
+
 	this.login = function (Scope) {
 		Scope = DOM.Util.Param(Scope, []);
 		localStorage.setItem("GoogleAPI.Scope", JSON.stringify(Scope));
@@ -375,10 +380,6 @@ GoogleAPI.SCOPE = {
 		"https://www.googleapis.com/auth/userinfo.email",
 		"https://www.googleapis.com/auth/userinfo.profile"
 	]
-};
-
-GoogleAPI.DriveAPI = function () {
-	
 };
 
 
