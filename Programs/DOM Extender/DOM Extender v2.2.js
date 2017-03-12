@@ -429,8 +429,10 @@
 		
 		return Querys;
 	}
+})();
 
-	window.Location.prototype.isMobile = function () {
+(function () {
+	window.Navigator.prototype.isMobile = function () {
 		let Checker = new MobileDetect(window.navigator.userAgent);
 
 		return (Checker.mobile() || Checker.phone() || Checker.tablet()) ? true : false;
