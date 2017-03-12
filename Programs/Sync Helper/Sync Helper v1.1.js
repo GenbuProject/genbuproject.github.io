@@ -163,17 +163,41 @@ const GoogleAPI = function (Args) {
 	this.DriveAPI.prototype = Object.create(null, {
 		File: {
 			value: {
-				create: function (ContentType, OnLoad) {
+				create: function (Name, ContentType, OnLoad) {
+					Name = DOM.Util.Param(Name, "Untitled");
+					ContentType = DOM.Util.Param(ContentType, "text/plain");
+					OnLoad = DOM.Util.Param(OnLoad, function (Event) {});
+
+					let Separator = "{Drive API}";
+
 					Googlethis.request({
 						Type: "POST",
 						URL: "https://www.googleapis.com/upload/drive/v3/files",
 						DoesSync: true,
 
 						Headers: {
-							"Content-Type": ContentType ? ContentType : "text/plain"
+							"Content-Type": "multipart/related; boundary=" + Separator
 						},
 
-						Data: "",
+						Params: {
+							"uploadType": "multipart"
+						},
+
+						Data: [
+							"--" + Separator,
+							"Content-Type: application/json; charset=UTF-8",
+							"",
+							JSON.stringify({
+								name: Name
+							}, null, "\t"),
+							"",
+							"--" + Separator,
+							"Content-Type: " + ContentType,
+							"",
+							"",
+							"--" + Separator + "--"
+						].join("\n"),
+
 						OnLoad: OnLoad
 					});
 				},
@@ -193,7 +217,7 @@ const GoogleAPI = function (Args) {
 			writable: false,
 			enumerable: false
 		}
-	});
+	}), this.DriveAPI.prototype.File[Symbol.toStringTag] = "DriveFile";
 
 
 
