@@ -176,7 +176,7 @@ const GoogleAPI = function (Args) {
 						DoesSync: true,
 
 						Headers: {
-							"Content-Type": "multipart/related; boundary=" + Separator
+							"Content-Type": 'multipart/related; boundary="' + Separator + '"'
 						},
 
 						Params: {
