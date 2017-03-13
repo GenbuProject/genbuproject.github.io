@@ -407,7 +407,7 @@ GoogleAPI.prototype = Object.create(null, {
 				Params: {
 					"token": this.AccessToken
 				}
-			})
+			}, true)
 		},
 
 		configurable: false,
@@ -449,7 +449,7 @@ GoogleAPI.prototype = Object.create(null, {
 	},
 
 	request: {
-		value: function (Args) {
+		value: function (Args, IsWithoutToken) {
 			DOM.XHR({
 				Type: Args.Type,
 				URL: Args.URL, 
@@ -459,7 +459,7 @@ GoogleAPI.prototype = Object.create(null, {
 
 				Params: (function () {
 					(Args.Params && Args.Params.isStrictObject()) ? null : Args.Params = {};
-					Args.Params["access_token"] = this.AccessToken;
+					!IsWithoutToken ? Args.Params["access_token"] = this.AccessToken : null;
 
 					return Args.Params;
 				}).bind(this)(),
