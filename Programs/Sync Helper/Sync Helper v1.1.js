@@ -155,9 +155,11 @@ const GoogleAPI = function (Args) {
 
 
 
-	this.DriveAPI = function () {
+	this.DriveAPI = function (DoesSync) {
 		this.AccessToken = DOM.Util.Param(Googlethis.AccessToken, "");
 		this.RefreshToken = DOM.Util.Param(Googlethis.RefreshToken, "");
+
+		this.DoesSync = DOM.Util.Param(DoesSync, true);
 	};
 
 	this.DriveAPI.prototype = Object.create(null, {
@@ -173,7 +175,7 @@ const GoogleAPI = function (Args) {
 					Googlethis.request({
 						Type: "POST",
 						URL: "https://www.googleapis.com/upload/drive/v3/files",
-						DoesSync: true,
+						DoesSync: this.DoesSync,
 
 						Headers: {
 							"Content-Type": 'multipart/related; boundary="' + Separator + '"'
@@ -206,7 +208,22 @@ const GoogleAPI = function (Args) {
 					Googlethis.request({
 						Type: "DELETE",
 						URL: "https://www.googleapis.com/upload/drive/v3/files/" + (FileID ? FileID : ""),
-						DoesSync: true,
+						DoesSync: this.DoesSync,
+
+						OnLoad: OnLoad
+					});
+				},
+
+				getFiles: function (OnLoad) {
+					Googlethis.request({
+						Type: "GET",
+						URL: "https://www.googleapis.com/drive/v3/files",
+						DoesSync: this.DoesSync,
+
+						Params: {
+							"orderBy": "folder,name",
+							"fields": "files"
+						},
 
 						OnLoad: OnLoad
 					});
