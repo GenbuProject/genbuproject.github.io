@@ -350,6 +350,20 @@ GoogleAPI.prototype = Object.create(null, {
 		enumerable: false
 	},
 
+	dismissOAuthView: {
+		value: function () {
+			if (window.opener) {
+				window.close();
+			} else {
+				location.href = location.origin + location.pathname;
+			}
+		},
+
+		configurable: false,
+		writable: false,
+		enumerable: false
+	},
+
 	requestToken: {
 		value: function () {
 			DOM.XHR({
@@ -383,13 +397,31 @@ GoogleAPI.prototype = Object.create(null, {
 		enumerable: false
 	},
 
-	dismissOAuthView: {
+	revokeToken: {
 		value: function () {
-			if (window.opener) {
-				window.close();
-			} else {
-				location.href = location.origin + location.pathname;
-			}
+			this.request({
+				Type: "GET",
+				URL: "https://accounts.google.com/o/oauth2/revoke",
+				DoesSync: true,
+
+				Params: {
+					"token": this.AccessToken
+				}
+			})
+		},
+
+		configurable: false,
+		writable: false,
+		enumerable: false
+	},
+
+	hasLogined: {
+		value: function () {
+			this.request({
+				Type: "GET",
+				URL: "https://www.googleapis.com/oauth2/v3/tokeninfo",
+				DoesSync: false
+			});
 		},
 
 		configurable: false,
@@ -407,6 +439,8 @@ GoogleAPI.prototype = Object.create(null, {
 			
 			this.Scope = [],
 			localStorage.removeItem("GoogleAPI.Scope");
+
+			this.revokeToken();
 		},
 
 		configurable: false,
