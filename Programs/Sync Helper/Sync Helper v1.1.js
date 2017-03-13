@@ -165,7 +165,7 @@ const GoogleAPI = function (Args) {
 	this.DriveAPI.prototype = Object.create(null, {
 		File: {
 			value: {
-				create: function (Name, ContentType, OnLoad) {
+				create: (function (Name, ContentType, OnLoad) {
 					Name = DOM.Util.Param(Name, "Untitled");
 					ContentType = DOM.Util.Param(ContentType, "text/plain");
 					OnLoad = DOM.Util.Param(OnLoad, function (Event) {});
@@ -202,9 +202,9 @@ const GoogleAPI = function (Args) {
 
 						OnLoad: OnLoad
 					});
-				},
+				}).bind(this),
 
-				delete: function (FileID, OnLoad) {
+				delete: (function (FileID, OnLoad) {
 					Googlethis.request({
 						Type: "DELETE",
 						URL: "https://www.googleapis.com/upload/drive/v3/files/" + (FileID ? FileID : ""),
@@ -212,9 +212,9 @@ const GoogleAPI = function (Args) {
 
 						OnLoad: OnLoad
 					});
-				},
+				}).bind(this),
 
-				getFiles: function (OnLoad) {
+				getFiles: (function (OnLoad) {
 					let Res = Googlethis.request({
 						Type: "GET",
 						URL: "https://www.googleapis.com/drive/v3/files",
@@ -231,7 +231,7 @@ const GoogleAPI = function (Args) {
 					});
 
 					return Res.response ? JSON.parse(Res.response) : Res.response;
-				}
+				}).bind(this)
 			},
 
 			configurable: false,
@@ -247,7 +247,7 @@ const GoogleAPI = function (Args) {
 			value: null
 		}, Watchers[0][1] = new DOM.Watcher.ChangeWatcher({
 			Target: Watchers[0][0],
-			Tick: 1,
+			Tick: 100,
 
 			OnGetting: (function () {
 				Watchers[0][0].value = localStorage.getItem("GoogleAPI.AccessToken");
@@ -262,7 +262,7 @@ const GoogleAPI = function (Args) {
 			value: null
 		}, Watchers[1][1] = new DOM.Watcher.ChangeWatcher({
 			Target: Watchers[1][0],
-			Tick: 1,
+			Tick: 100,
 
 			OnGetting: (function () {
 				Watchers[1][0].value = localStorage.getItem("GoogleAPI.RefreshToken");
@@ -277,7 +277,7 @@ const GoogleAPI = function (Args) {
 			value: null
 		}, Watchers[2][1] = new DOM.Watcher.ChangeWatcher({
 			Target: Watchers[2][0],
-			Tick: 1,
+			Tick: 100,
 
 			OnGetting: (function () {
 				Watchers[2][0].value = JSON.parse(localStorage.getItem("GoogleAPI.Scope"));
@@ -421,19 +421,13 @@ GoogleAPI.prototype = Object.create(null, {
 
 	hasLogined: {
 		value: function () {
-			let Res;
-			
-			try {
-				Res = this.request({
-					Type: "GET",
-					URL: "https://www.googleapis.com/oauth2/v3/tokeninfo",
-					DoesSync: false,
-				});
+			let Res = this.request({
+				Type: "GET",
+				URL: "https://www.googleapis.com/oauth2/v3/tokeninfo",
+				DoesSync: false,
+			});
 
-				return JSON.parse(Res.response).exp ? true : false;
-			} catch (Error) {
-				return JSON.parse(Res.response).exp ? true : false;
-			}
+			return JSON.parse(Res.response).exp ? true : false;
 		},
 
 		configurable: false,
