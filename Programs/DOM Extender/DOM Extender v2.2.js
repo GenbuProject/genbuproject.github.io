@@ -496,6 +496,8 @@
 			Connector.onload = Args.OnLoad ? Args.OnLoad : null;
 			
 			Connector.send(Args.Data);
+
+		return Connector;
 	}
 	
 	window.DOM.JsonPXHR = function (Args) {

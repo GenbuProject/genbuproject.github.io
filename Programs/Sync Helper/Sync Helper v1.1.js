@@ -407,7 +407,7 @@ GoogleAPI.prototype = Object.create(null, {
 				Params: {
 					"token": this.AccessToken
 				}
-			}, true)
+			}, true);
 		},
 
 		configurable: false,
@@ -417,11 +417,13 @@ GoogleAPI.prototype = Object.create(null, {
 
 	hasLogined: {
 		value: function () {
-			this.request({
+			let Res = this.request({
 				Type: "GET",
 				URL: "https://www.googleapis.com/oauth2/v3/tokeninfo",
-				DoesSync: false
+				DoesSync: false,
 			});
+
+			return JSON.parse(Res.response);
 		},
 
 		configurable: false,
@@ -450,7 +452,7 @@ GoogleAPI.prototype = Object.create(null, {
 
 	request: {
 		value: function (Args, IsWithoutToken) {
-			DOM.XHR({
+			return DOM.XHR({
 				Type: Args.Type,
 				URL: Args.URL, 
 				DoesSync: Args.DoesSync,
