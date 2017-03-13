@@ -156,6 +156,8 @@ const GoogleAPI = function (Args) {
 
 
 	this.DriveAPI = function (DoesSync) {
+		Drivethis = this;
+
 		this.AccessToken = DOM.Util.Param(Googlethis.AccessToken, "");
 		this.RefreshToken = DOM.Util.Param(Googlethis.RefreshToken, "");
 
@@ -165,7 +167,7 @@ const GoogleAPI = function (Args) {
 	this.DriveAPI.prototype = Object.create(null, {
 		File: {
 			value: {
-				create: (function (Name, ContentType, OnLoad) {
+				create: function (Name, ContentType, OnLoad) {
 					Name = DOM.Util.Param(Name, "Untitled");
 					ContentType = DOM.Util.Param(ContentType, "text/plain");
 					OnLoad = DOM.Util.Param(OnLoad, function (Event) {});
@@ -175,7 +177,7 @@ const GoogleAPI = function (Args) {
 					Googlethis.request({
 						Type: "POST",
 						URL: "https://www.googleapis.com/upload/drive/v3/files",
-						DoesSync: this.DoesSync,
+						DoesSync: Drivethis.DoesSync,
 
 						Headers: {
 							"Content-Type": 'multipart/related; boundary="' + Separator + '"'
@@ -202,23 +204,23 @@ const GoogleAPI = function (Args) {
 
 						OnLoad: OnLoad
 					});
-				}).bind(this),
+				},
 
-				delete: (function (FileID, OnLoad) {
+				delete: function (FileID, OnLoad) {
 					Googlethis.request({
 						Type: "DELETE",
 						URL: "https://www.googleapis.com/upload/drive/v3/files/" + (FileID ? FileID : ""),
-						DoesSync: this.DoesSync,
+						DoesSync: Drivethis.DoesSync,
 
 						OnLoad: OnLoad
 					});
-				}).bind(this),
+				},
 
-				getFiles: (function (OnLoad) {
+				getFiles: function (OnLoad) {
 					let Res = Googlethis.request({
 						Type: "GET",
 						URL: "https://www.googleapis.com/drive/v3/files",
-						DoesSync: this.DoesSync,
+						DoesSync: Drivethis.DoesSync,
 
 						Params: {
 							"orderBy": "folder,name",
@@ -231,7 +233,7 @@ const GoogleAPI = function (Args) {
 					});
 
 					return Res.response ? JSON.parse(Res.response) : Res.response;
-				}).bind(this)
+				}
 			},
 
 			configurable: false,
