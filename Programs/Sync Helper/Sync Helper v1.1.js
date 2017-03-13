@@ -433,6 +433,8 @@ GoogleAPI.prototype = Object.create(null, {
 
 	clearOAuth: {
 		value: function () {
+			this.revokeToken();
+			
 			this.AccessToken = "",
 			localStorage.removeItem("GoogleAPI.AccessToken"),
 
@@ -441,8 +443,6 @@ GoogleAPI.prototype = Object.create(null, {
 			
 			this.Scope = [],
 			localStorage.removeItem("GoogleAPI.Scope");
-
-			this.revokeToken();
 		},
 
 		configurable: false,
