@@ -194,7 +194,7 @@ const GoogleAPI = function (Args) {
 							"--" + Separator,
 							"Content-Type: " + ContentType,
 							"",
-							"hoge",
+							"",
 							"--" + Separator + "--"
 						].join("\n"),
 
