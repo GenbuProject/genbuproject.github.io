@@ -247,7 +247,7 @@ const GoogleAPI = function (Args) {
 			value: null
 		}, Watchers[0][1] = new DOM.Watcher.ChangeWatcher({
 			Target: Watchers[0][0],
-			Tick: 100,
+			Tick: 1,
 
 			OnGetting: (function () {
 				Watchers[0][0].value = localStorage.getItem("GoogleAPI.AccessToken");
@@ -262,7 +262,7 @@ const GoogleAPI = function (Args) {
 			value: null
 		}, Watchers[1][1] = new DOM.Watcher.ChangeWatcher({
 			Target: Watchers[1][0],
-			Tick: 100,
+			Tick: 1,
 
 			OnGetting: (function () {
 				Watchers[1][0].value = localStorage.getItem("GoogleAPI.RefreshToken");
@@ -277,7 +277,7 @@ const GoogleAPI = function (Args) {
 			value: null
 		}, Watchers[2][1] = new DOM.Watcher.ChangeWatcher({
 			Target: Watchers[2][0],
-			Tick: 100,
+			Tick: 1,
 
 			OnGetting: (function () {
 				Watchers[2][0].value = JSON.parse(localStorage.getItem("GoogleAPI.Scope"));
