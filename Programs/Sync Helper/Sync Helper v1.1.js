@@ -225,7 +225,9 @@ const GoogleAPI = function (Args) {
 							"fields": "files"
 						},
 
-						OnLoad: OnLoad
+						OnLoad: function (Event) {
+							OnLoad ? OnLoad(JSON.parse(Event.target.response)) : null;
+						}
 					});
 				}
 			},
@@ -434,7 +436,7 @@ GoogleAPI.prototype = Object.create(null, {
 	clearOAuth: {
 		value: function () {
 			this.revokeToken();
-			
+
 			this.AccessToken = "",
 			localStorage.removeItem("GoogleAPI.AccessToken"),
 
