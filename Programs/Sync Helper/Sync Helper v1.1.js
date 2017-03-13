@@ -430,9 +430,9 @@ GoogleAPI.prototype = Object.create(null, {
 					DoesSync: false,
 				});
 
-				return Res.response ? true : false;
+				return JSON.parse(Res.response).expires ? true : false;
 			} catch (Error) {
-				return Res.response ? true : false;
+				return JSON.parse(Res.response).expires ? true : false;
 			}
 		},
 
