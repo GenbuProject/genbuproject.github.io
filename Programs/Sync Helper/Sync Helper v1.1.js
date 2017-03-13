@@ -215,7 +215,7 @@ const GoogleAPI = function (Args) {
 				},
 
 				getFiles: function (OnLoad) {
-					Googlethis.request({
+					let Res = Googlethis.request({
 						Type: "GET",
 						URL: "https://www.googleapis.com/drive/v3/files",
 						DoesSync: this.DoesSync,
@@ -229,6 +229,8 @@ const GoogleAPI = function (Args) {
 							OnLoad ? OnLoad(JSON.parse(Event.target.response)) : null;
 						}
 					});
+
+					return Res.response ? JSON.parse(Res.response) : Res.response;
 				}
 			},
 
@@ -419,13 +421,19 @@ GoogleAPI.prototype = Object.create(null, {
 
 	hasLogined: {
 		value: function () {
-			let Res = this.request({
-				Type: "GET",
-				URL: "https://www.googleapis.com/oauth2/v3/tokeninfo",
-				DoesSync: false,
-			});
+			let Res;
+			
+			try {
+				Res = this.request({
+					Type: "GET",
+					URL: "https://www.googleapis.com/oauth2/v3/tokeninfo",
+					DoesSync: false,
+				});
 
-			return JSON.parse(Res.response);
+				return Res.response ? true : false;
+			} catch (Error) {
+				return Res.response ? true : false;
+			}
 		},
 
 		configurable: false,
