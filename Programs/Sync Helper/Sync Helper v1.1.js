@@ -209,7 +209,7 @@ const GoogleAPI = function (Args) {
 				delete: function (FileID, OnLoad) {
 					return Googlethis.request({
 						Type: "DELETE",
-						URL: "https://www.googleapis.com/upload/drive/v3/files/" + (FileID ? FileID : ""),
+						URL: "https://www.googleapis.com/drive/v3/files/" + (FileID ? FileID : ""),
 						DoesSync: Drivethis.DoesSync,
 
 						OnLoad: OnLoad
