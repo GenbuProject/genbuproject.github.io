@@ -183,7 +183,7 @@ const GoogleAPI = function (Args) {
 						}
 					});
 
-					return Res.response ? JSON.parse(Res.response) : {};
+					return Res.response ? JSON.parse(Res.response).files : {};
 				},
 
 				create: function (Name, ContentType, OnLoad) {
