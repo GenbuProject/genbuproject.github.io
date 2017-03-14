@@ -174,7 +174,7 @@ const GoogleAPI = function (Args) {
 
 					let Separator = "{Drive API}";
 
-					Googlethis.request({
+					return Googlethis.request({
 						Type: "POST",
 						URL: "https://www.googleapis.com/upload/drive/v3/files",
 						DoesSync: Drivethis.DoesSync,
@@ -207,7 +207,7 @@ const GoogleAPI = function (Args) {
 				},
 
 				delete: function (FileID, OnLoad) {
-					Googlethis.request({
+					return Googlethis.request({
 						Type: "DELETE",
 						URL: "https://www.googleapis.com/upload/drive/v3/files/" + (FileID ? FileID : ""),
 						DoesSync: Drivethis.DoesSync,
@@ -232,7 +232,7 @@ const GoogleAPI = function (Args) {
 						}
 					});
 
-					return Res.response ? JSON.parse(Res.response) : Res.response;
+					return Res.response ? JSON.parse(Res.response) : {};
 				}
 			},
 
