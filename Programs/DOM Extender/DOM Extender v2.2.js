@@ -268,7 +268,7 @@
 	}
 
 	window.Math.radicalRoot = function (base, exponent) {
-		return Math.pow(Math.sqrt(base), 1 / (exponent / 2));
+		return Math.pow(base, 1 / exponent);
 	}
 })();
 
