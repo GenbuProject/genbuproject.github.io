@@ -266,6 +266,10 @@
 
 		return Result;
 	}
+
+	window.Math.radicalRoot = function (a, n) {
+		return Math.pow(Math.sqrt(a), 1 / (n / 2));
+	}
 })();
 
 
