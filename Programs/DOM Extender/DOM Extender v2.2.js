@@ -187,6 +187,10 @@
 		return decodeURIComponent(escape(atob(Base64Str)));
 	}
 
+	window.urlSafe = function (Str) {
+		return Str.replace(/\+/g, '-').replace(/\//g, '_');
+	}
+
 	window.document.createElementWithParam = function (TagName, Params) {
 		let Elem = document.createElement(TagName);
 		

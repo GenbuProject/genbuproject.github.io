@@ -227,9 +227,11 @@ const GoogleAPI = function (Args) {
 				},
 
 				delete: function (FileID, OnLoad) {
+					FileID = DOM.Util.Param(FileID, "");
+
 					let Res = Googlethis.request({
 						Type: "DELETE",
-						URL: "https://www.googleapis.com/drive/v3/files/" + (FileID ? FileID : ""),
+						URL: "https://www.googleapis.com/drive/v3/files/" + FileID,
 						DoesSync: Drivethis.DoesSync,
 
 						OnLoad: OnLoad
@@ -258,27 +260,32 @@ const GoogleAPI = function (Args) {
 
 
 
-		this.Mail = function (To, Subject, Content) {
+		this.Gmail = function (To, Subject, Content, ContentType) {
 			let Separator = "{Gmail API}",
-				toRTC2822 = function (To, Subject, Content) {
-					To = DOM.Util.Param(To, "genbuproject@gmail.com");
+				toRTC2822 = function (To, Subject, Content, ContentType) {
+					To = DOM.Util.Param(To, "@gmail.com");
 					Subject = DOM.Util.Param(Subject, "");
-					Content = DOM.Util.Param(Content, "This is the contents.");
+					Content = DOM.Util.Param(Content, "");
+					ContentType = DOM.Util.Param(ContentType, "text/plain");
 
 					return [
 						"To: " + To,
-						"Subject: "
+						"Subject: =?utf-8?B?" + btoaAsUTF8(Subject) + "?=",
+						"MIME-Version: 1.0",
+						"Content-Type: " + ContentType + "; charset=UTF-8",
+						"",
+						Content
 					].join("\n");
 				};
 
 			this.Type = "Multipart Mail";
-			
+
 			this.Data = [
 				"--" + Separator,
 				"Content-Type: application/json; charset=UTF-8",
 				"",
 				JSON.stringify({
-					raw: btoaAsUTF8(toRTC2822(To, Subject, Content))
+					raw: urlSafe(btoaAsUTF8(toRTC2822(To, Subject, Content)))
 				}, null, "\t"),
 				"",
 				"--" + Separator,
@@ -288,13 +295,13 @@ const GoogleAPI = function (Args) {
 				"--" + Separator + "--"
 			].join("\n");
 		};
-
-		this.Mail.prototype = Object.create(Object.prototype), this.Mail.prototype[Symbol.toStringTag] = "Gmail";
 	};
 
 	this.GmailAPI.prototype = Object.create(null, {
 		send: {
 			value: function (Mail, OnLoad) {
+				Mail = DOM.Util.Param(Mail, new this.Mail());
+
 				let Res = Googlethis.request({
 					Type: "POST",
 					URL: "https://www.googleapis.com/upload/gmail/v1/users/me/messages/send",
@@ -306,7 +313,10 @@ const GoogleAPI = function (Args) {
 
 					Headers: {
 						"Content-Type": 'multipart/related; boundary="' + Separator + '"'
-					}
+					},
+
+					Data: Mail.Data,
+					OnLoad: OnLoad
 				});
 
 				return Res.response ? JSON.parse(Res.response) : {};
