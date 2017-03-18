@@ -266,33 +266,33 @@ const GoogleAPI = function (Args) {
 			Content = DOM.Util.Param(Content, "");
 			ContentType = DOM.Util.Param(ContentType, "text/plain");
 
-			let Separator = "{Gmail API}",
-				toRTC2822 = function (To, Subject, Content, ContentType) {
-					return [
-						"To: " + To,
-						"Subject: =?utf-8?B?" + btoaAsUTF8(Subject) + "?=",
-						"MIME-Version: 1.0",
-						"Content-Type: " + ContentType + "; charset=UTF-8",
-						"",
-						Content
-					].join("\n");
-				};
+			let toRTC2822 = function (To, Subject, Content, ContentType) {
+				return [
+					"To: " + To,
+					"Subject: =?utf-8?B?" + btoaAsUTF8(Subject) + "?=",
+					"MIME-Version: 1.0",
+					"Content-Type: " + ContentType + "; charset=UTF-8",
+					"",
+					Content
+				].join("\n");
+			};
 
+			this.Separator = "{Gmail API}";
 			this.Type = "Multipart Mail";
 
 			this.Data = [
-				"--" + Separator,
+				"--" + this.Separator,
 				"Content-Type: application/json; charset=UTF-8",
 				"",
 				JSON.stringify({
 					raw: urlSafe(btoaAsUTF8(toRTC2822(To, Subject, Content, ContentType)))
 				}, null, "\t"),
 				"",
-				"--" + Separator,
+				"--" + this.Separator,
 				"Content-Type: message/rfc822",
 				"",
 				toRTC2822(To, Subject, Content, ContentType),
-				"--" + Separator + "--"
+				"--" + this.Separator + "--"
 			].join("\n");
 		};
 	};
@@ -312,7 +312,7 @@ const GoogleAPI = function (Args) {
 					},
 
 					Headers: {
-						"Content-Type": 'multipart/related; boundary="' + Separator + '"'
+						"Content-Type": 'multipart/related; boundary="' + Mail.Separator + '"'
 					},
 
 					Data: Mail.Data,
