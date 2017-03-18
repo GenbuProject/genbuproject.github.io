@@ -167,6 +167,8 @@ const GoogleAPI = function (Args) {
 		File: {
 			value: {
 				getFiles: function (OnLoad) {
+					OnLoad = DOM.Util.Param(OnLoad, function (Event) {});
+
 					let Res = Googlethis.request({
 						Type: "GET",
 						URL: "https://www.googleapis.com/drive/v3/files",
@@ -178,7 +180,7 @@ const GoogleAPI = function (Args) {
 						},
 
 						OnLoad: function (Event) {
-							OnLoad ? OnLoad(JSON.parse(Event.target.response)) : null;
+							OnLoad(JSON.parse(Event.target.response));
 						}
 					});
 
@@ -228,6 +230,7 @@ const GoogleAPI = function (Args) {
 
 				delete: function (FileID, OnLoad) {
 					FileID = DOM.Util.Param(FileID, "");
+					OnLoad = DOM.Util.Param(OnLoad, function (Event) {});
 
 					let Res = Googlethis.request({
 						Type: "DELETE",
@@ -250,6 +253,8 @@ const GoogleAPI = function (Args) {
 			enumerable: false
 		}
 	}), this.DriveAPI.prototype[Symbol.toStringTag] = "DriveAPI", this.DriveAPI.prototype.File[Symbol.toStringTag] = "DriveFile";
+
+
 
 	this.GmailAPI = function (DoesSync) {
 		Gmailthis = this;
@@ -301,6 +306,7 @@ const GoogleAPI = function (Args) {
 		send: {
 			value: function (Mail, OnLoad) {
 				Mail = DOM.Util.Param(Mail, new this.Gmail());
+				OnLoad = DOM.Util.Param(OnLoad, function (Event) {});
 
 				let Res = Googlethis.request({
 					Type: "POST",
@@ -320,7 +326,32 @@ const GoogleAPI = function (Args) {
 				});
 
 				return Res.response ? JSON.parse(Res.response) : {};
-			}
+			},
+
+			configurable: false,
+			writable: false,
+			enumerable: false
+		},
+
+		delete: {
+			value: function (MailID, OnLoad) {
+				MailID = DOM.Util.Param(MailID, "Yajuu1145148101919364364");
+				OnLoad = DOM.Util.Param(OnLoad, function (Event) {});
+
+				let Res = Googlethis.request({
+					Type: "DELETE",
+					URL: "https://www.googleapis.com/gmail/v1/users/me/messages/" + MailID,
+					DoesSync: this.DoesSync,
+
+					OnLoad: OnLoad
+				});
+
+				return Res.response ? JSON.parse(Res.response) : {};
+			},
+
+			configurable: false,
+			writable: false,
+			enumerable: false
 		}
 	}), this.GmailAPI.prototype[Symbol.toStringTag] = "GmailAPI";
 
@@ -371,8 +402,6 @@ const GoogleAPI = function (Args) {
 				this.Scope = Checker.newValue;
 			}).bind(this)
 		});
-
-
 
 		DOM.Watcher.addChangeWatcher(Watchers[0][1]);
 		DOM.Watcher.addChangeWatcher(Watchers[1][1]);
@@ -630,6 +659,7 @@ GoogleAPI.SCOPE = {
 		"https://www.googleapis.com/auth/userinfo.profile"
 	]
 };
+
 
 
 const TwitterAPI = function () {
