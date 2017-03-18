@@ -160,7 +160,6 @@ const GoogleAPI = function (Args) {
 
 		this.AccessToken = DOM.Util.Param(Googlethis.AccessToken, "");
 		this.RefreshToken = DOM.Util.Param(Googlethis.RefreshToken, "");
-
 		this.DoesSync = DOM.Util.Param(DoesSync, true);
 	};
 
@@ -248,7 +247,72 @@ const GoogleAPI = function (Args) {
 			writable: false,
 			enumerable: false
 		}
-	}), this.DriveAPI.prototype.File[Symbol.toStringTag] = "DriveFile";
+	}), this.DriveAPI.prototype[Symbol.toStringTag] = "DriveAPI", this.DriveAPI.prototype.File[Symbol.toStringTag] = "DriveFile";
+
+	this.GmailAPI = function (DoesSync) {
+		Gmailthis = this;
+
+		this.AccessToken = DOM.Util.Param(Googlethis.AccessToken, "");
+		this.RefreshToken = DOM.Util.Param(Googlethis.RefreshToken, "");
+		this.DoesSync = DOM.Util.Param(DoesSync, true);
+
+
+
+		this.Mail = function (To, Subject, Content) {
+			let Separator = "{Gmail API}",
+				toRTC2822 = function (To, Subject, Content) {
+					To = DOM.Util.Param(To, "genbuproject@gmail.com");
+					Subject = DOM.Util.Param(Subject, "");
+					Content = DOM.Util.Param(Content, "This is the contents.");
+
+					return [
+						"To: " + To,
+						"Subject: "
+					].join("\n");
+				};
+
+			this.Type = "Multipart Mail";
+			
+			this.Data = [
+				"--" + Separator,
+				"Content-Type: application/json; charset=UTF-8",
+				"",
+				JSON.stringify({
+					raw: btoaAsUTF8(toRTC2822(To, Subject, Content))
+				}, null, "\t"),
+				"",
+				"--" + Separator,
+				"Content-Type: message/rfc822",
+				"",
+				toRTC2822(To, Subject, Content),
+				"--" + Separator + "--"
+			].join("\n");
+		};
+
+		this.Mail.prototype = Object.create(Object.prototype), this.Mail.prototype[Symbol.toStringTag] = "Gmail";
+	};
+
+	this.GmailAPI.prototype = Object.create(null, {
+		send: {
+			value: function (Mail, OnLoad) {
+				let Res = Googlethis.request({
+					Type: "POST",
+					URL: "https://www.googleapis.com/upload/gmail/v1/users/me/messages/send",
+					DoesSync: this.DoesSync,
+
+					Params: {
+						"uploadType": "multipart"
+					},
+
+					Headers: {
+						"Content-Type": 'multipart/related; boundary="' + Separator + '"'
+					}
+				});
+
+				return Res.response ? JSON.parse(Res.response) : {};
+			}
+		}
+	}), this.GmailAPI.prototype[Symbol.toStringTag] = "GmailAPI";
 
 
 
@@ -516,7 +580,7 @@ GoogleAPI.prototype = Object.create(null, {
 		writable: false,
 		enumerable: false
 	}
-});
+}), GoogleAPI.prototype[Symbol.toStringTag] = "GoogleAPI";
 
 //Please check the others at https://developers.google.com/identity/protocols/googlescopes
 GoogleAPI.SCOPE = {
