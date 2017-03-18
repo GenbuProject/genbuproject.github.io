@@ -261,13 +261,13 @@ const GoogleAPI = function (Args) {
 
 
 		this.Gmail = function (To, Subject, Content, ContentType) {
+			To = DOM.Util.Param(To, "@gmail.com");
+			Subject = DOM.Util.Param(Subject, "");
+			Content = DOM.Util.Param(Content, "");
+			ContentType = DOM.Util.Param(ContentType, "text/plain");
+
 			let Separator = "{Gmail API}",
 				toRTC2822 = function (To, Subject, Content, ContentType) {
-					To = DOM.Util.Param(To, "@gmail.com");
-					Subject = DOM.Util.Param(Subject, "");
-					Content = DOM.Util.Param(Content, "");
-					ContentType = DOM.Util.Param(ContentType, "text/plain");
-
 					return [
 						"To: " + To,
 						"Subject: =?utf-8?B?" + btoaAsUTF8(Subject) + "?=",
@@ -285,13 +285,13 @@ const GoogleAPI = function (Args) {
 				"Content-Type: application/json; charset=UTF-8",
 				"",
 				JSON.stringify({
-					raw: urlSafe(btoaAsUTF8(toRTC2822(To, Subject, Content)))
+					raw: urlSafe(btoaAsUTF8(toRTC2822(To, Subject, Content, ContentType)))
 				}, null, "\t"),
 				"",
 				"--" + Separator,
 				"Content-Type: message/rfc822",
 				"",
-				toRTC2822(To, Subject, Content),
+				toRTC2822(To, Subject, Content, ContentType),
 				"--" + Separator + "--"
 			].join("\n");
 		};
@@ -300,7 +300,7 @@ const GoogleAPI = function (Args) {
 	this.GmailAPI.prototype = Object.create(null, {
 		send: {
 			value: function (Mail, OnLoad) {
-				Mail = DOM.Util.Param(Mail, new this.Mail());
+				Mail = DOM.Util.Param(Mail, new this.Gmail());
 
 				let Res = Googlethis.request({
 					Type: "POST",
