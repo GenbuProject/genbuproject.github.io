@@ -596,7 +596,7 @@ GoogleAPI.prototype = Object.create(null, {
 	getUserInfo: {
 		value: function () {
 			if (this.AccessToken && (this.Scope.includes(GoogleAPI.SCOPE.PLUS[0]) || this.Scope.includes(GoogleAPI.SCOPE.PLUS[1]))) {
-				this.request({
+				let Res = this.request({
 					Type: "GET",
 					URL: "https://www.googleapis.com/plus/v1/people/me",
 					DoesSync: false
