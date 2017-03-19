@@ -470,7 +470,12 @@
 			let ip_regex = /([0-9]{1,3}(\.[0-9]{1,3}){3}|[a-f0-9]{1,4}(:[a-f0-9]{1,4}){7})/
 			let ip_addr = ip_regex.exec(candidate)[1];
 			
-			if (ip_dups[ip_addr] === undefined) OnLoad(ip_addr);
+			if (ip_dups[ip_addr] === undefined) {
+				OnLoad({
+					type: ip_addr.match(/^(192\.168\.|169\.254\.|10\.|172\.(1[6-9]|2\d|3[01]))/) ? "v4" : ip_addr.match(/^[a-f0-9]{1,4}(:[a-f0-9]{1,4}){7}$/) ? "v6" : "private",
+					value: ip_addr
+				});
+			}
 			
 			ip_dups[ip_addr] = true;
 		}
