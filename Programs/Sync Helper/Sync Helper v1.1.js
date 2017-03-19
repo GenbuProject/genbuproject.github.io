@@ -306,7 +306,7 @@ const GoogleAPI = function (Args) {
 		send: {
 			value: function (Mail, OnLoad) {
 				Mail = DOM.Util.Param(Mail, new this.Gmail());
-				OnLoad = DOM.Util.Param(OnLoad, function (Event) {});
+				OnLoad = DOM.Util.Param(OnLoad, function (Res) {});
 
 				let Res = Googlethis.request({
 					Type: "POST",
@@ -322,7 +322,10 @@ const GoogleAPI = function (Args) {
 					},
 
 					Data: Mail.Data,
-					OnLoad: OnLoad
+
+					OnLoad: function () {
+						OnLoad(Res.response);
+					}
 				});
 
 				return Res.response ? JSON.parse(Res.response) : {};
@@ -336,14 +339,16 @@ const GoogleAPI = function (Args) {
 		delete: {
 			value: function (MailID, OnLoad) {
 				MailID = DOM.Util.Param(MailID, "Yajuu1145148101919364364");
-				OnLoad = DOM.Util.Param(OnLoad, function (Event) {});
+				OnLoad = DOM.Util.Param(OnLoad, function (Res) {});
 
 				let Res = Googlethis.request({
 					Type: "DELETE",
 					URL: "https://www.googleapis.com/gmail/v1/users/me/messages/" + MailID,
 					DoesSync: this.DoesSync,
 
-					OnLoad: OnLoad
+					OnLoad: function () {
+						OnLoad(Res.response);
+					}
 				});
 
 				return Res.response ? JSON.parse(Res.response) : {};
