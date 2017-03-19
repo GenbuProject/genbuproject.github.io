@@ -594,22 +594,15 @@ GoogleAPI.prototype = Object.create(null, {
 	},
 
 	getUserInfo: {
-		value: function (Args) {
-			Args = DOM.Util.Param(Args, {});
-			
+		value: function () {
 			if (this.AccessToken && (this.Scope.includes(GoogleAPI.SCOPE.PLUS[0]) || this.Scope.includes(GoogleAPI.SCOPE.PLUS[1]))) {
 				this.request({
 					Type: "GET",
 					URL: "https://www.googleapis.com/plus/v1/people/me",
-					DoesSync: Args.DoesSync,
-
-					Headers: Args.Headers,
-					Params: Args.Params,
-
-					OnLoad: function (Event) {
-						Args.OnLoad ? Args.OnLoad(JSON.parse(Event.target.response)) : null;
-					}
+					DoesSync: false
 				});
+
+				return Res.response ? JSON.parse(Res.response) : {};
 			} else {
 				return {};
 			}
