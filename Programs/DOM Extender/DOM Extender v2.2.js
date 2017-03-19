@@ -528,6 +528,10 @@
 			case ":":
 				Memory = document.getElementsByTagName(Str.substr(1));
 				break;
+
+			case "@":
+				Memory = document.querySelectorAll(Str.substr(1));
+				break;
 				
 			default:
 				Memory = (arguments[1] ? document.createElementWithParam(Str, arguments[1]) : document.createElement(Str));
