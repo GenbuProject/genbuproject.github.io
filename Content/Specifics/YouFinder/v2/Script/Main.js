@@ -8,7 +8,7 @@ DOM.importAPI("https://genbuproject.github.io/Programs/Sync Helper/Sync Helper v
 		ID: "239141875067-k7ftnrifgiv328ai7j0nnec8s79pjlro.apps.googleusercontent.com",
 		Key: atob("Z21COW1NOWVxVXhCOHRqNVVBSWZIeThf"),
 
-		Url: "http://localhost:8001/Content/Specifics/YouFinder/v2/"
+		Url: "https://genbuproject.github.io/Content/Specifics/YouFinder/v2/"
 	});
 
 	(function () {
