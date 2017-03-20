@@ -565,6 +565,8 @@
 	}, window.DOM[Symbol.toStringTag] = "DOM";
 	
 	window.DOM.XHR = function (Args) {
+		Args = Args ? Args : {};
+
 		let Connector = new XMLHttpRequest();
 			
 			Args.Params ? (function () {
@@ -595,6 +597,8 @@
 	}
 	
 	window.DOM.JsonPXHR = function (Args) {
+		Args = Args ? Args : {};
+
 		let Param = [];
 		
 		Args.Params ? (function () {
@@ -616,6 +620,8 @@
 	}
 	
 	window.DOM.RestXHR = function (Args) {
+		Args = Args ? Args : {};
+		
 		DOM.XHR({
 			Type: Args.Type,
 			URL: Args.URL,
