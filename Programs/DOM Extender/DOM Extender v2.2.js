@@ -347,7 +347,7 @@
 	});
 
 	window.Object.prototype.toObject = function (Obj) {
-		let Result = [];
+		let Result = {};
 
 		if (Obj !== undefined) {
 			for (let Key in Obj) {
