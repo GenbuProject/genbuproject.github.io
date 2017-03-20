@@ -45,7 +45,8 @@ window.addEventListener("DOMContentLoaded", function () {
 			GoogleAPI.SCOPE.PLUS[0],
 			GoogleAPI.SCOPE.PLUS[1],
 
-			GoogleAPI.SCOPE.GMAIL[0]
+			GoogleAPI.SCOPE.GMAIL[0],
+			"https://www.googleapis.com/auth/contacts.readonly"
 		]);
 	});
 });
