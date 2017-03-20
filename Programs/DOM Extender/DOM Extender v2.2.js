@@ -345,6 +345,24 @@
 	}, Object.defineProperty(window.Object.prototype, "toQueryString", {
 		enumerable: false
 	});
+
+	window.Object.prototype.toObject = function (Obj) {
+		let Result = [];
+
+		if (Obj !== undefined) {
+			for (let Key in Obj) {
+				Result[Key] = Obj[Key];
+			}
+		} else {
+			for (let Key in this) {
+				Result[Key] = this[Key];
+			}
+		}
+
+		return Result;
+	}, Object.defineProperty(window.Object.prototype, "toObject", {
+		enumerable: false
+	});
 })();
 
 (function () {
