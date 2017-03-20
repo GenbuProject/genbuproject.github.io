@@ -324,7 +324,7 @@ const GoogleAPI = function (Args) {
 					Data: Mail.Data,
 
 					OnLoad: function () {
-						OnLoad(JSON.parse(Res.response));
+						OnLoad(Res.response ? JSON.parse(Res.response) : {});
 					}
 				});
 
@@ -347,7 +347,7 @@ const GoogleAPI = function (Args) {
 					DoesSync: this.DoesSync,
 
 					OnLoad: function () {
-						OnLoad(JSON.parse(Res.response));
+						OnLoad(Res.response ? JSON.parse(Res.response) : {});
 					}
 				});
 
