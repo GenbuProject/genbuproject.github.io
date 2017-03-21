@@ -135,7 +135,7 @@ const Chat = function (Args, DoesAppend) {
 
 	this.disableStyle = function () {
 		for (let i = 0; i < DOM(":Style").length; i++) {
-			if (DOM(":Style")[i].attributes["UUID"] == APIInfo[0] + " " + APIInfo[1] + " - ChatStyle") {
+			if (DOM(":Style")[i].getAttribute("UUID") == APIInfo[0] + " " + APIInfo[1] + " - ChatStyle") {
 				DOM(":Style")[i].dismiss();
 			}
 		}

@@ -1,3 +1,10 @@
+DialogJs-Dialog {
+	Position: Absolute;
+	
+	Display: Flex;
+	Flex-Direction: Column;
+}
+
 DialogJs-DialogBack {
 	Position: Fixed;
 	Top: 0;
