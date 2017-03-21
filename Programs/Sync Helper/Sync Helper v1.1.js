@@ -539,13 +539,17 @@ GoogleAPI.prototype = Object.create(null, {
 
 	hasLogined: {
 		value: function () {
-			let Res = this.request({
-				Type: "GET",
-				URL: "https://www.googleapis.com/oauth2/v3/tokeninfo",
-				DoesSync: false,
-			});
+			if (this.AccessToken) {
+				let Res = this.request({
+					Type: "GET",
+					URL: "https://www.googleapis.com/oauth2/v3/tokeninfo",
+					DoesSync: false,
+				});
 
-			return JSON.parse(Res.response).exp ? true : false;
+				return JSON.parse(Res.response).exp ? true : false;
+			} else {
+				return false;
+			}
 		},
 
 		configurable: false,
