@@ -11,6 +11,11 @@
 		<loc>https://genbuproject.github.io/Content/JavaScript Debuger/</loc>
 		<priority>0.7</priority>
 	</url>
+
+	<url>
+		<loc>https://genbuproject.github.io/Content/KasuteraLibrary/</loc>
+		<priority>0.7</priority>
+	</url>
 	
 	<url>
 		<loc>https://genbuproject.github.io/Content/PianoRoll On HTML5/</loc>
