@@ -1,8 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-   <url>
-      <loc>https://genbuproject.github.io/</loc>
-      <lastmod>2017-03-25</lastmod>
-      <priority>1.0</priority>
-   </url>
+	<url>
+		<loc>https://genbuproject.github.io/</loc>
+		<priority>1.0</priority>
+		<lastmod>2016-12-08T15:01:45+09:00</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://genbuproject.github.io/Content/JavaScript Debuger/</loc>
+		<priority>0.7</priority>
+	</url>
+	
+	<url>
+		<loc>https://genbuproject.github.io/Content/PianoRoll On HTML5/</loc>
+		<priority>0.7</priority>
+	</url>
+	
+	<url>
+		<loc>https://genbuproject.github.io/Content/RhythmTapRide/</loc>
+		<priority>0.7</priority>
+		<lastmod>2016-12-08T15:01:44+09:00</lastmod>
+	</url>
+	
+	<url>
+		<loc>https://genbuproject.github.io/Content/RhythmTapRide/Content/Uploader/</loc>
+		<priority>0.7</priority>
+		<lastmod>2016-12-08T15:01:44+09:00</lastmod>
+	</url>
+
+	<url>
+		<loc>https://genbuproject.github.io/Content/The Called Name/</loc>
+		<priority>0.7</priority>
+	</url>
+	
+	<url>
+		<loc>https://genbuproject.github.io/Content/TipNumberViewerForRPGHelper/</loc>
+		<priority>0.7</priority>
+	</url>
+	
+	<url>
+		<loc>https://genbuproject.github.io/Content/TipSettingCreatorwithWolfRPGEditor/</loc>
+		<priority>0.7</priority>
+	</url>
+	
+	<url>
+		<loc>https://genbuproject.github.io/Content/ToneLine/</loc>
+		<priority>0.7</priority>
+		<lastmod>2016-12-08T15:01:45+09:00</lastmod>
+	</url>
+
+	<url>
+		<loc>https://genbuproject.github.io/Content/Web Audio Player By URL/</loc>
+		<priority>0.7</priority>
+		<lastmod>2017-03-08T12:01:41+09:00</lastmod>
+	</url>
+
+	<url>
+		<loc>https://genbuproject.github.io/Programs/Dictionary/CsuteraPhrase/</loc>
+		<priority>0.7</priority>
+	</url>
 </urlset>
