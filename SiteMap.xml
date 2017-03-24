@@ -5,64 +5,8 @@
 <url>
   <loc>https://genbuproject.github.io/</loc>
   <priority>1.0</priority>
-  <lastmod>2016-12-08T15:01:45+09:00</lastmod>
-</url>
-<url>
-  <loc>https://genbuproject.github.io/Menu.html</loc>
-  <priority>0.8</priority>
-  <lastmod>2016-12-08T15:01:45+09:00</lastmod>
-</url>
-<url>
-  <loc>https://genbuproject.github.io/Top.html</loc>
-  <priority>0.8</priority>
-  <lastmod>2016-12-08T15:01:45+09:00</lastmod>
-</url>
-<url>
-  <loc>https://genbuproject.github.io/Content/GPSLocation/</loc>
-  <priority>0.7</priority>
-</url>
-<url>
-  <loc>https://genbuproject.github.io/Content/JavaScriptDebuger/</loc>
-  <priority>0.7</priority>
-</url>
-<url>
-  <loc>https://genbuproject.github.io/Content/PianoRollOnHTML5/</loc>
-  <priority>0.7</priority>
-</url>
-<url>
-  <loc>https://genbuproject.github.io/Content/RhythmTapRide/</loc>
-  <priority>0.7</priority>
-  <lastmod>2016-12-08T15:01:44+09:00</lastmod>
-</url>
-<url>
-  <loc>https://genbuproject.github.io/Content/RhythmTapRide/Content/Uploader/</loc>
-  <priority>0.7</priority>
-  <lastmod>2016-12-08T15:01:44+09:00</lastmod>
-</url>
-<url>
-  <loc>https://genbuproject.github.io/Content/TheCalledName/</loc>
-  <priority>0.7</priority>
-</url>
-<url>
-  <loc>https://genbuproject.github.io/Content/TheFirstPosting/</loc>
-  <priority>0.7</priority>
-</url>
-<url>
-  <loc>https://genbuproject.github.io/Content/TipNumberViewerForRPGHelper/</loc>
-  <priority>0.7</priority>
-</url>
-<url>
-  <loc>https://genbuproject.github.io/Content/TipSettingCreatorwithWolfRPGEditor/</loc>
-  <priority>0.7</priority>
-</url>
-<url>
-  <loc>https://genbuproject.github.io/Content/ToneLine/</loc>
-  <priority>0.7</priority>
-  <lastmod>2016-12-08T15:01:45+09:00</lastmod>
-</url>
-<url>
-  <loc>https://genbuproject.github.io/Content/KasuteraLibrary/</loc>
-  <priority>0.7</priority>
+  <lastmod>2017-03-21T16:48:13+09:00</lastmod>
+  <changefreq>daily</changefreq>
 </url>
 
 </urlset>
