@@ -191,18 +191,22 @@
 		return Str.replace(/\+/g, '-').replace(/\//g, '_');
 	}
 
-	window.Object.definePropertiesAsConst = function (Obj) {
-		for (let Key in Obj) {
-			if (Obj[Key].getClassName() == "Object") {
-				arguments.callee(Obj[Key]);
+	window.Object.definePropertiesAsConst = function (Obj, Prop) {
+		for (let Key in Prop) {
+			if (Prop[Key].getClassName() == "Object") {
+				arguments.callee(Prop[Key]);
 			} else {
 				Object.defineProperty(Obj, Key, {
+					value: Prop[Key],
+					
 					configurable: false,
 					writable: false
 				});
 			}
 		}
-	}
+
+		return Obj;
+	};
 
 	window.document.createElementWithParam = function (TagName, Params) {
 		let Elem = document.createElement(TagName);
