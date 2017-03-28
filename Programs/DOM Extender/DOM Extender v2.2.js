@@ -191,6 +191,19 @@
 		return Str.replace(/\+/g, '-').replace(/\//g, '_');
 	}
 
+	window.Object.definePropertiesAsConst = function (Obj) {
+		for (let Key in Obj) {
+			if (Obj[Key].getClassName() == "Object") {
+				arguments.callee(Obj[Key]);
+			} else {
+				Object.defineProperty(Obj, Key, {
+					configurable: false,
+					writable: false
+				});
+			}
+		}
+	}
+
 	window.document.createElementWithParam = function (TagName, Params) {
 		let Elem = document.createElement(TagName);
 		
