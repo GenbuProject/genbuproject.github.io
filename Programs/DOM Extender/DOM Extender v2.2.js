@@ -193,15 +193,15 @@
 
 	window.Object.definePropertiesAsConst = function (Obj, Prop) {
 		for (let Key in Prop) {
+			Object.defineProperty(Obj, Key, {
+				value: Prop[Key],
+				
+				configurable: false,
+				writable: false
+			});
+
 			if (Prop[Key].getClassName() == "Object") {
 				arguments.callee(Prop[Key]);
-			} else {
-				Object.defineProperty(Obj, Key, {
-					value: Prop[Key],
-					
-					configurable: false,
-					writable: false
-				});
 			}
 		}
 
