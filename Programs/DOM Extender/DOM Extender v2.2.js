@@ -191,23 +191,6 @@
 		return Str.replace(/\+/g, '-').replace(/\//g, '_');
 	}
 
-	window.Object.definePropertiesAsConst = function (Obj, Prop) {
-		for (let Key in Prop) {
-			Object.defineProperty(Obj, Key, {
-				value: Prop[Key],
-				
-				configurable: false,
-				writable: false
-			});
-
-			if (Prop[Key].getClassName() == "Object") {
-				arguments.callee(Prop[Key]);
-			}
-		}
-
-		return Obj;
-	};
-
 	window.document.createElementWithParam = function (TagName, Params) {
 		let Elem = document.createElement(TagName);
 		

@@ -5,10 +5,21 @@ window["Dialog.js"].HTMLDialogElement = Object.create(HTMLElement.prototype, {
 	theme: { value: "LightSeaGreen" },
 	width: { value: window.innerWidth / 3 },
 	height: { value: window.innerHeight / 1.5 },
+	root: { value: null },
 
 	show: {
 		value: function () {
-			
+			this.root.appendChild(this);
+		},
+
+		configurable: false,
+		writable: false,
+		enumerable: false
+	},
+
+	dismiss: {
+		value: function () {
+			this.parentElement.removeChild(this);
 		},
 
 		configurable: false,
