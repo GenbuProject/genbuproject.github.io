@@ -5,7 +5,8 @@
 		<Meta Charset = "UTF-8">
 		<Title>Genbu Project Official Site == JavaScript Debuger</Title>
 		
-		<Script Src = "https://genbuproject.github.io/Programs/JSConsole For All Devices/JSConsole For All Devices v1.1.js"></Script>
+		<Script Src = "https://genbuproject.github.io/Programs/DOM Extender/DOM Extender v2.2.js"></Script>
+
 		<Script Src = "Script/JsDecoder.js"></Script>
 		<Script Src = "Script/JsColorizer.js"></Script>
 		
@@ -21,7 +22,13 @@
 		</Script>
 		
 		<Script Type = "Text/JavaScript">
-			function KeySet() {
+			DOM.importAPI("https://genbuproject.github.io/Programs/JSConsole For All Devices/JSConsole For All Devices v1.2.js", function () {
+				window.debuger = new JSCFAD({
+					Console: DOM("#Console")
+				});
+			});
+
+			function keyInit() {
 				document.getElementById("Code").addEventListener("keydown", function (Event) {
 					switch (Event.keyCode) {
 						case 9:
@@ -37,7 +44,7 @@
 				});
 			}
 			
-			function Formater() {
+			function formatInit() {
 				var Code = document.getElementById("Code").value;
 				
 				var Decoder = new JsDecoder();
@@ -61,7 +68,7 @@
 		</Script>
 	</Head>
 	
-	<Body OnLoad = "KeySet();">
+	<Body OnLoad = "keyInit();">
 		<P>
 			<TextArea ID = "Code" Wrap = "Off" Style = "Width: 100%; Height: 250px" OnKeyDown = "Formater();" OnKeyPress = "Formater();" OnKeyUp = "Formater();"></TextArea>
 			<Pre ID = "FormatedCode" Style = "Width: 100%; Color: MenuText; BackGround: Menu; Border: Thin Solid OrangeRed; Border-Radius: 5px; Line-Height: 1.5; Display: None;"></Pre><Br>

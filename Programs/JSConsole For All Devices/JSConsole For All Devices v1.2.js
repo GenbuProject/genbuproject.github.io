@@ -5,17 +5,6 @@
  *#######################################################################
 /*/
 (function () {
-	let DOMExtender = (function () {
-		let Elem = document.createElement("Script");
-			Elem.src = "https://genbuproject.github.io/Programs/DOM%20Extender/DOM%20Extender.js";
-			
-		return Elem;
-	})();
-	
-	document.head.appendChild(DOMExtender);
-})();
-
-(function () {
 	window.JSCFAD = function (Args) {
 		window.JSCFAD.self = this;
 		
@@ -119,29 +108,6 @@
 				})();
 			}
 		}
-		
-		window.Function.prototype.debug = function (Args) {
-			try {
-				this.apply(this, Args ? Args : null);
-			} catch (Error) {
-				let Info = DOM("Span", {
-					Styles: {
-						"Display": "Block",
-						"White-Space": "Pre",
-						
-						"Color": JSCFAD.self.Style.Error
-					}
-				});
-				
-				Info.innerHTML = Error.stack.replaces([
-					[/</g, "&lt;"],
-					[/>/g, "&gt;"],
-					[/    /g, "\t"]
-				]);
-				
-				JSCFAD.self.Console.appendChild(Info);
-			}
-		}
 	}
 	
 	window.JSCFAD.Style = {
@@ -155,4 +121,31 @@
 			Arrow: "LightCoral"
 		}
 	}
+
+
+
+	window.Function.prototype.debug = function (Args) {
+		try {
+			this.apply(this, Args ? Args : null);
+		} catch (Error) {
+			let Info = DOM("Span", {
+				Styles: {
+					"Display": "Block",
+					"White-Space": "Pre",
+					
+					"Color": JSCFAD.self.Style.Error
+				}
+			});
+			
+			Info.innerHTML = Error.stack.replaces([
+				[/</g, "&lt;"],
+				[/>/g, "&gt;"],
+				[/    /g, "\t"]
+			]);
+			
+			JSCFAD.self.Console.appendChild(Info);
+		}
+	}
 })();
+
+"use DOMExtender";
