@@ -24,25 +24,9 @@
 		<Script Type = "Text/JavaScript">
 			DOM.importAPI("https://genbuproject.github.io/Programs/JSConsole For All Devices/JSConsole For All Devices v1.2.js", function () {
 				window.debuger = new JSCFAD({
-					Console: DOM("#Console")
+					Console: DOM("#Logger")
 				});
 			});
-
-			function keyInit() {
-				document.getElementById("Code").addEventListener("keydown", function (Event) {
-					switch (Event.keyCode) {
-						case 9:
-			        		Event.preventDefault();
-			        		
-			        		var Pos = document.getElementById("Code").selectionStart;
-			        		
-			       			document.getElementById("Code").value = document.getElementById("Code").value.substr(0, document.getElementById("Code").selectionStart) + "\t" + document.getElementById("Code").value.substr(document.getElementById("Code").selectionStart, document.getElementById("Code").value.length);
-			        		document.getElementById("Code").setSelectionRange(Pos + 1, Pos + 1);
-			        		
-			        		break;
-		    		}
-				});
-			}
 			
 			function formatInit() {
 				var Code = document.getElementById("Code").value;
@@ -63,18 +47,108 @@
 					document.getElementById("FormatedCode").style.display = "Block";
 				}
 			}
-			
-			window.ConsoleID = "Console";
+
+			window.addEventListener("DOMContentLoaded", function () {
+				/*DOM("#Console").addEventListener("keydown", function (Event) {
+					switch (Event.keyCode) {
+						case 9:
+							Event.preventDefault();
+
+							let Selection = window.getSelection();
+							let Select = Selection.getRangeAt(0);
+							let OldPos = Select.startOffset;
+
+							console.log(Selection);
+							console.log(Select);
+
+							Select.startContainer.textContent = Select.startContainer.textContent.slice(0, OldPos) + "\t" + Select.startContainer.textContent.slice(OldPos);
+							Selection.collapse(false);
+					}
+				});*/
+
+				DOM("#Run").addEventListener("click", function () {
+					eval([
+						"(function () {",
+						DOM("#Editor").textContent,
+						"}).bind(JSCFAD.self).debug()"
+					].join("\r\n"));
+				});
+			});
 		</Script>
+
+		<Style>
+			HTML, Body {
+				Height: 100%;
+
+				Margin: 0;
+			}
+
+			Body {
+				Display: Flex;
+				Flex-Direction: Column;
+			}
+
+
+
+			#Logger, #Console {
+				Outline: Thin Solid LightGray;
+
+				Overflow: Overlay;
+				White-Space: Pre-Wrap;
+			}
+
+			#Logger {
+				Height: 30%;
+			}
+
+			#Console {
+				Position: Relative;
+
+				Display: Flex;
+				Flex-Direction: Column;
+				Height: 70%;
+				Flex: 1;
+			}
+
+			#Editor {
+				Height: 100%;
+				Flex: 1;
+			}
+		</Style>
+
+		<Style>
+			Toolbar {
+				Display: Flex;
+				Flex-Direction: Row-Reverse;
+				Width: 100%;
+				Height: 5%;
+
+				Opacity: 0.5;
+				Border-Top: Thin Solid Gray;
+			}
+
+			Toolbar > Button, Toolbar Li {
+				Width: 1em;
+				Height: 1em;
+
+				Padding: 0.5em;
+				Border-Right: Thin Solid Gray;
+			}
+
+			Toolbar Li:Last-Child {
+				Border: None;
+			}
+		</Style>
 	</Head>
 	
-	<Body OnLoad = "keyInit();">
-		<P>
-			<TextArea ID = "Code" Wrap = "Off" Style = "Width: 100%; Height: 250px" OnKeyDown = "Formater();" OnKeyPress = "Formater();" OnKeyUp = "Formater();"></TextArea>
-			<Pre ID = "FormatedCode" Style = "Width: 100%; Color: MenuText; BackGround: Menu; Border: Thin Solid OrangeRed; Border-Radius: 5px; Line-Height: 1.5; Display: None;"></Pre><Br>
-			<Div ID = "Console" Style = "Width: 100%; Color: Gray; BackGround: LightGray; Border: Thin Solid DarkOrange; Border-Radius: 5px;"></Div>
-		</P>
-		
-		<Button OnClick = 'eval("(function () {" + document.getElementById("Code").value + "}).Debug();");'>コード実行</Button>
+	<Body>
+		<Div ID = "Logger"></Div>
+
+		<Div ID = "Console">
+			<Div ID = "Editor" ContentEditable = "true"></Div>
+			<Toolbar></Toolbar>
+		</Div>
+
+		<Button ID = "Run">実行</Button>
 	</Body>
 </HTML>

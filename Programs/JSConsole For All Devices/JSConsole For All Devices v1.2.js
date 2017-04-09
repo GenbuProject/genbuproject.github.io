@@ -107,6 +107,8 @@
 					JSCFAD.self.Console.appendChild(Info);
 				})();
 			}
+
+			JSCFAD.self.Console.scrollTo(0, JSCFAD.self.Console.children[JSCFAD.self.Console.children.length - 1].offsetTop);
 		}
 	}
 	
@@ -144,6 +146,7 @@
 			]);
 			
 			JSCFAD.self.Console.appendChild(Info);
+			JSCFAD.self.Console.scrollTo(0, JSCFAD.self.Console.children[JSCFAD.self.Console.children.length - 1].offsetTop);
 		}
 	}
 })();
