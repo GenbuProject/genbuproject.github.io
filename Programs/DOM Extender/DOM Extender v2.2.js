@@ -61,6 +61,8 @@
 		
 		return Memory.join(" ");
 	}
+
+
 	
 	window.Svg = function (Width, Height) {
 		let Elem = document.createElementNS("http://www.w3.org/2000/svg", "svg");

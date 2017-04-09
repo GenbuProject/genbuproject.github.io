@@ -1,0 +1,229 @@
+<!DocType HTML>
+
+<HTML>
+	<Head>
+		<Meta Charset = "UTF-8">
+		<Title>Genbu Project Official Site == JavaScript Debugger</Title>
+		
+		<Script Src = "https://genbuproject.github.io/Programs/DOM Extender/DOM Extender v2.2.js"></Script>
+
+		<Script Src = "Script/JsDecoder.js"></Script>
+		<Script Src = "Script/JsColorizer.js"></Script>
+		
+		<Script>
+			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+			})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+			
+			ga('create', 'UA-88656260-1', 'auto');
+			ga('require', 'linkid', 'linkid.js');
+			ga('send', 'pageview');
+		</Script>
+		
+		<Script>
+			DOM.importAPI("https://genbuproject.github.io/Programs/JSConsole For All Devices/JSConsole For All Devices v1.2.js", function () {
+				window.debug = new JSCFAD({
+					Console: DOM("#Logger")
+				});
+			});
+
+
+
+			const Debugger = function () {
+				this.format = function () {
+					let Code = "";
+					
+					let Decoder = new JsDecoder();
+						Decoder.s = document.getElementById("Editor").innerText;
+
+						Code = Decoder.decode();
+						
+					let Colorizer = new JsColorizer();
+						Colorizer.s = document.getElementById("Editor").innerText;
+
+						Code = Colorizer.colorize();
+						
+					document.getElementById("Formatted").innerHTML = Code;
+				};
+
+				this.tabKey = function () {
+					let Select = window.getSelection();
+					let Area = Select.getRangeAt(0);
+
+					if (SelectingMode) Area.deleteContents();
+
+					Area.insertNode(new Text("\t"));
+					Area.setStart(Area.commonAncestorContainer, Area.endOffset);
+
+					Select.removeAllRanges();
+					Select.addRange(Area);
+				}
+			};
+
+
+
+			let scope = new Debugger();
+
+			window.addEventListener("DOMContentLoaded", function () {
+				DOM("#Console").addEventListener("keydown", function (Event) {
+					switch (Event.keyCode) {
+						case 9:
+							Event.preventDefault();
+							scope.tabKey();
+
+							break;
+					}
+				});
+
+				DOM("#Run").addEventListener("click", function () {
+					eval([
+						"(function () {",
+						DOM("#Editor").textContent,
+						"}).bind(JSCFAD.self).debug()"
+					].join("\r\n"));
+				});
+			});
+
+			window.addEventListener("input", function () {
+				scope.format();
+			});
+		</Script>
+
+		<Style>
+			* {
+				Tab-Size: 4;
+			}
+
+			HTML, Body {
+				Height: 100%;
+
+				Margin: 0;
+			}
+
+			Body {
+				Display: Flex;
+				Flex-Direction: Column;
+			}
+
+
+
+			#Console, #Logger {
+				Outline: Thin Solid LightGray;
+
+				Overflow: Overlay;
+				White-Space: Pre;
+			}
+
+			#Console {
+				Position: Relative;
+
+				Display: Flex;
+				Flex-Direction: Column;
+				Width: 100%;
+				Flex: 1;
+			}
+
+			#EditorPane {
+				Display: Flex;
+				Flex-Direction: Row;
+				Width: 100%;
+				Flex: 1;
+			}
+
+			#Editor, #Formatted {
+				Padding: 0.5em;
+
+				Outline: Thin Solid Gray;
+				Overflow: Overlay;
+
+				Font-Family: Monospace;
+			}
+
+			#Editor {
+				Width: 50%;
+			}
+
+			#Formatted {
+				Width: 50%;
+			}
+
+			#Logger {
+				Width: 100%;
+				Height: 30%;
+			}
+
+			#Run {
+				Width: 100%;
+				Height: 2em;
+			}
+		</Style>
+
+		<Style>
+			Toolbar {
+				Display: Flex;
+				Flex-Direction: Row-Reverse;
+				Width: 100%;
+				Height: 2em;
+
+				BackGround: RGBA(200, 200, 200, 0.25);
+				Border-Top: Thin Solid Gray;
+			}
+
+			Toolbar Li {
+				Width: 2em;
+				Height: 2em;
+
+				Border-Right: Thin Solid Gray;
+				Text-Align: Center;
+
+				List-Style: None;
+			}
+
+			Toolbar Li:Last-Child {
+				Border: None;
+			}
+
+			Toolbar Li:Hover {
+				BackGround: LightGray;
+
+				Cursor: Pointer;
+			}
+
+			Toolbar > Div {
+				Display: Flex;
+				Flex-Direction: Row;
+				Width: 100%;
+				Flex: 1;
+
+				Border-Right: Thin Solid Gray;
+			}
+		</Style>
+	</Head>
+	
+	<Body>
+		<Div ID = "Console">
+			<Div ID = "EditorPane">
+				<Div ID = "Editor" ContentEditable = "true"></Div>
+				<Div ID = "Formatted"></Div>
+			</Div>
+
+			<Toolbar>
+				<Li ID = "OpenBtn">…</Li>
+
+				<Div>
+					<Li>→</Li>
+					<Li>()</Li>
+					<Li>{}</Li>
+					<Li>[]</Li>
+					<Li>""</Li>
+					<Li>''</Li>
+				</Div>
+			</Toolbar>
+		</Div>
+
+		<Div ID = "Logger"></Div>
+
+		<Button ID = "Run">実行</Button>
+	</Body>
+</HTML>
