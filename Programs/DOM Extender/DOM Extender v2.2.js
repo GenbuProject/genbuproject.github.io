@@ -130,6 +130,17 @@
 
 			Selecter.removeAllRanges();
 			Selecter.addRange(Area);
+		},
+
+		moveTo: function (Container, Start, End) {
+			let Selecter = window.getSelection();
+			let Area = Selecter.getRangeAt(0);
+
+			Area.setStart(Container, Start);
+			Area.setEnd(Container, End);
+
+			Selecter.removeAllRanges();
+			Selecter.addRange(Area);
 		}
 	}
 })();

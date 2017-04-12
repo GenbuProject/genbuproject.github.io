@@ -30,33 +30,48 @@
 
 
 
-			let format = function () {
-				let Code = "";
-				
-				let Decoder = new JsDecoder();
-					Decoder.s = document.getElementById("Editor").innerText;
+			const Debugger = function () {
+				this.currentCaret = [null, 0, 0];
 
-					Code = Decoder.decode();
+				this.appendValue = function (Value) {
+					Caret.moveTo(this.currentCaret[0], this.currentCaret[1], this.currentCaret[2]);
+					Caret.appendValue(Value);
+				};
+
+				this.format = function () {
+					let Code = "";
 					
-				let Colorizer = new JsColorizer();
-					Colorizer.s = document.getElementById("Editor").innerText;
+					let Decoder = new JsDecoder();
+						Decoder.s = document.getElementById("Editor").innerText;
 
-					Code = Colorizer.colorize();
-					
-				document.getElementById("Formatted").innerHTML = Code;
-			}
+						Code = Decoder.decode();
+						
+					let Colorizer = new JsColorizer();
+						Colorizer.s = document.getElementById("Editor").innerText;
+
+						Code = Colorizer.colorize();
+						
+					document.getElementById("Formatted").innerHTML = Code;
+				};
+			};
 
 
+
+			let scope = new Debugger();
 
 			window.addEventListener("DOMContentLoaded", function () {
-				DOM("#Console").addEventListener("keydown", function (Event) {
+				DOM("#Editor").addEventListener("keydown", function (Event) {
 					switch (Event.keyCode) {
 						case 9: //TABキー
 							Event.preventDefault();
-							Caret.appendValue("\t");
+							scope.appendValue("\t");
 
 							break;
 					}
+				});
+
+				DOM("#Editor").addEventListener("blur", function (Event) {
+					scope.currentCaret = [window.getSelection().getRangeAt(0).commonAncestorContainer, window.getSelection().getRangeAt(0).startOffset, window.getSelection().getRangeAt(0).endOffset];
 				});
 
 				DOM("#Run").addEventListener("click", function () {
@@ -69,7 +84,7 @@
 			});
 
 			window.addEventListener("input", function () {
-				format();
+				scope.format();
 			});
 		</Script>
 
@@ -163,6 +178,7 @@
 				Border-Right: Thin Solid Gray;
 				Text-Align: Center;
 
+				Cursor: Pointer;
 				List-Style: None;
 			}
 
@@ -172,8 +188,6 @@
 
 			Toolbar Li:Hover {
 				BackGround: LightGray;
-
-				Cursor: Pointer;
 			}
 		</Style>
 	</Head>
@@ -186,7 +200,7 @@
 			</Div>
 
 			<Toolbar>
-				<Li>→</Li>
+				<Li OnClick = 'DOM("#Editor").focus(); Caret.appendValue("\t");'>→</Li>
 				<Li>{</Li>
 				<Li>}</Li>
 				<Li>(</Li>
