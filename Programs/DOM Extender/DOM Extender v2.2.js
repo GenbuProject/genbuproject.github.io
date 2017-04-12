@@ -117,6 +117,21 @@
 	window.Svg.RGBA = function (R, G, B, A) {
 		return "RGBA(" + (R ? R : 0) + ", " + (G ? G : 0) + ", " + (B ? B : 0) + ", " + (A ? A : 0) + ")";
 	}
+
+	window.Caret = {
+		appendValue: function (Value) {
+			let Selecter = window.getSelection();
+			let Area = Selecter.getRangeAt(0);
+
+			if (!Area.collapsed) Area.deleteContents();
+
+			Area.insertNode(new Text(Value));
+			Area.setStart(Area.commonAncestorContainer, Area.endOffset);
+
+			Selecter.removeAllRanges();
+			Selecter.addRange(Area);
+		}
+	}
 })();
 
 (function () {

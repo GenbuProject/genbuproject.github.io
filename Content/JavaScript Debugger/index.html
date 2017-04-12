@@ -30,47 +30,30 @@
 
 
 
-			const Debugger = function () {
-				this.format = function () {
-					let Code = "";
+			let format = function () {
+				let Code = "";
+				
+				let Decoder = new JsDecoder();
+					Decoder.s = document.getElementById("Editor").innerText;
+
+					Code = Decoder.decode();
 					
-					let Decoder = new JsDecoder();
-						Decoder.s = document.getElementById("Editor").innerText;
+				let Colorizer = new JsColorizer();
+					Colorizer.s = document.getElementById("Editor").innerText;
 
-						Code = Decoder.decode();
-						
-					let Colorizer = new JsColorizer();
-						Colorizer.s = document.getElementById("Editor").innerText;
-
-						Code = Colorizer.colorize();
-						
-					document.getElementById("Formatted").innerHTML = Code;
-				};
-
-				this.tabKey = function () {
-					let Select = window.getSelection();
-					let Area = Select.getRangeAt(0);
-
-					if (SelectingMode) Area.deleteContents();
-
-					Area.insertNode(new Text("\t"));
-					Area.setStart(Area.commonAncestorContainer, Area.endOffset);
-
-					Select.removeAllRanges();
-					Select.addRange(Area);
-				}
-			};
+					Code = Colorizer.colorize();
+					
+				document.getElementById("Formatted").innerHTML = Code;
+			}
 
 
-
-			let scope = new Debugger();
 
 			window.addEventListener("DOMContentLoaded", function () {
 				DOM("#Console").addEventListener("keydown", function (Event) {
 					switch (Event.keyCode) {
-						case 9:
+						case 9: //TABキー
 							Event.preventDefault();
-							scope.tabKey();
+							Caret.appendValue("\t");
 
 							break;
 					}
@@ -86,7 +69,7 @@
 			});
 
 			window.addEventListener("input", function () {
-				scope.format();
+				format();
 			});
 		</Script>
 
@@ -162,7 +145,7 @@
 		<Style>
 			Toolbar {
 				Display: Flex;
-				Flex-Direction: Row-Reverse;
+				Flex-Direction: Row;
 				Width: 100%;
 				Height: 2em;
 
@@ -171,6 +154,9 @@
 			}
 
 			Toolbar Li {
+				Display: Inline-Flex;
+				Justify-Content: Center;
+				Align-Items: Center;
 				Width: 2em;
 				Height: 2em;
 
@@ -189,15 +175,6 @@
 
 				Cursor: Pointer;
 			}
-
-			Toolbar > Div {
-				Display: Flex;
-				Flex-Direction: Row;
-				Width: 100%;
-				Flex: 1;
-
-				Border-Right: Thin Solid Gray;
-			}
 		</Style>
 	</Head>
 	
@@ -209,16 +186,30 @@
 			</Div>
 
 			<Toolbar>
-				<Li ID = "OpenBtn">…</Li>
-
-				<Div>
-					<Li>→</Li>
-					<Li>()</Li>
-					<Li>{}</Li>
-					<Li>[]</Li>
-					<Li>""</Li>
-					<Li>''</Li>
-				</Div>
+				<Li>→</Li>
+				<Li>{</Li>
+				<Li>}</Li>
+				<Li>(</Li>
+				<Li>)</Li>
+				<Li>;</Li>
+				<Li>,</Li>
+				<Li>.</Li>
+				<Li>=</Li>
+				<Li>"</Li>
+				<Li>|</Li>
+				<Li>&</Li>
+				<Li>!</Li>
+				<Li>[</Li>
+				<Li>]</Li>
+				<Li><</Li>
+				<Li>></Li>
+				<Li>+</Li>
+				<Li>-</Li>
+				<Li>/</Li>
+				<Li>*</Li>
+				<Li>?</Li>
+				<Li>:</Li>
+				<Li>_</Li>
 			</Toolbar>
 		</Div>
 
