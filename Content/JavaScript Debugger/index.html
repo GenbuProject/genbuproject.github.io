@@ -34,8 +34,8 @@
 				this.currentCaret = [null, 0, 0];
 
 				this.appendValue = function (Value) {
-					Caret.moveTo(this.currentCaret[0], this.currentCaret[1], this.currentCaret[2]);
-					Caret.appendValue(Value);
+					DOM.Caret.moveTo(this.currentCaret[0], this.currentCaret[1], this.currentCaret[2]);
+					DOM.Caret.appendValue(Value);
 				};
 
 				this.format = function () {
@@ -53,6 +53,10 @@
 						
 					document.getElementById("Formatted").innerHTML = Code;
 				};
+
+				this.resetCaret = function () {
+					this.currentCaret = [window.getSelection().getRangeAt(0).commonAncestorContainer, window.getSelection().getRangeAt(0).startOffset, window.getSelection().getRangeAt(0).endOffset];
+				};
 			};
 
 
@@ -60,18 +64,32 @@
 			let scope = new Debugger();
 
 			window.addEventListener("DOMContentLoaded", function () {
+				DOM("@Toolbar > Li").forEach(function (Elem, Index, Parent) {
+					Elem.addEventListener("click", function () {
+						DOM("#Editor").focus();
+
+						switch (Elem.textContent) {
+							case "→":
+								scope.appendValue("\t");
+								break;
+						}
+					});
+				});
+
+
+
 				DOM("#Editor").addEventListener("keydown", function (Event) {
 					switch (Event.keyCode) {
 						case 9: //TABキー
 							Event.preventDefault();
-							scope.appendValue("\t");
+							DOM("@Toolbar > Li[Key='TAB']")[0].click();
 
 							break;
 					}
 				});
 
 				DOM("#Editor").addEventListener("blur", function (Event) {
-					scope.currentCaret = [window.getSelection().getRangeAt(0).commonAncestorContainer, window.getSelection().getRangeAt(0).startOffset, window.getSelection().getRangeAt(0).endOffset];
+					scope.resetCaret();
 				});
 
 				DOM("#Run").addEventListener("click", function () {
@@ -81,6 +99,9 @@
 						"}).bind(JSCFAD.self).debug()"
 					].join("\r\n"));
 				});
+
+				DOM("#Editor").focus();
+				DOM("#Editor").blur();
 			});
 
 			window.addEventListener("input", function () {
@@ -200,22 +221,22 @@
 			</Div>
 
 			<Toolbar>
-				<Li OnClick = 'DOM("#Editor").focus(); Caret.appendValue("\t");'>→</Li>
-				<Li>{</Li>
+				<Li Key = 'TAB'>→</Li>
+				<Li Key = '{'>{</Li>
 				<Li>}</Li>
-				<Li>(</Li>
+				<Li Key = '('>(</Li>
 				<Li>)</Li>
 				<Li>;</Li>
 				<Li>,</Li>
 				<Li>.</Li>
 				<Li>=</Li>
-				<Li>"</Li>
+				<Li Key = '"'>"</Li>
 				<Li>|</Li>
 				<Li>&</Li>
 				<Li>!</Li>
-				<Li>[</Li>
+				<Li Key = '['>[</Li>
 				<Li>]</Li>
-				<Li><</Li>
+				<Li Key = '<'><</Li>
 				<Li>></Li>
 				<Li>+</Li>
 				<Li>-</Li>

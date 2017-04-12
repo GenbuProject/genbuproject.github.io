@@ -11,7 +11,7 @@
 			Elem.width = Height ? Height : "0";
 
 		return Elem;
-	}
+	};
 
 	window.Script = function (Src, Options) {
 		let Elem = document.createElement("Script");
@@ -25,7 +25,7 @@
 		})();
 		
 		return Elem;
-	}
+	};
 	
 	window.Style = function (Data) {
 		let Elem = document.createElement("Style"),
@@ -50,7 +50,7 @@
 		})();
 		
 		return Elem;
-	}
+	};
 	
 	window.InlineStyle = function (Styles) {
 		let Memory = [];
@@ -60,7 +60,7 @@
 		}
 		
 		return Memory.join(" ");
-	}
+	};
 
 
 	
@@ -86,7 +86,7 @@
 			Elem.setAttribute("fill", Args.Fill ? Args.Fill : "#000000");
 			
 		return Elem;
-	}
+	};
 
 	window.Svg.Circle = function (Args) {
 		let Elem = document.createElementNSWithParam("http://www.w3.org/2000/svg", "circle", Args.Params ? Args.Params : {});
@@ -97,7 +97,7 @@
 			Elem.setAttribute("fill", Args.Fill ? Args.Fill : "#000000");
 			
 		return Elem;
-	}
+	};
 	
 	window.Svg.Text = function (Args) {
 		let Elem = document.createElementNSWithParam("http://www.w3.org/2000/svg", "text", Args.Params ? Args.Params : {});
@@ -108,41 +108,15 @@
 			Elem.setAttribute("rotate", Args.Rotate ? Args.Rotate : "0");
 			
 		return Elem;
-	}
+	};
 	
 	window.Svg.RGB = function (R, G, B) {
 		return "RGB(" + (R ? R : 0) + ", " + (G ? G : 0) + ", " + (B ? B : 0) + ")";
-	}
+	};
 	
 	window.Svg.RGBA = function (R, G, B, A) {
 		return "RGBA(" + (R ? R : 0) + ", " + (G ? G : 0) + ", " + (B ? B : 0) + ", " + (A ? A : 0) + ")";
-	}
-
-	window.Caret = {
-		appendValue: function (Value) {
-			let Selecter = window.getSelection();
-			let Area = Selecter.getRangeAt(0);
-
-			if (!Area.collapsed) Area.deleteContents();
-
-			Area.insertNode(new Text(Value));
-			Area.setStart(Area.commonAncestorContainer, Area.endOffset);
-
-			Selecter.removeAllRanges();
-			Selecter.addRange(Area);
-		},
-
-		moveTo: function (Container, Start, End) {
-			let Selecter = window.getSelection();
-			let Area = Selecter.getRangeAt(0);
-
-			Area.setStart(Container, Start);
-			Area.setEnd(Container, End);
-
-			Selecter.removeAllRanges();
-			Selecter.addRange(Area);
-		}
-	}
+	};
 })();
 
 (function () {
@@ -170,7 +144,7 @@
 
 			document.head.appendChild(Elem);
 		}
-	}
+	};
 
 	window.importScripts = function (Urls, OnLoad) {
 		Urls = Urls ? Urls : [""];
@@ -205,19 +179,19 @@
 				document.head.appendChild(Elem);
 			}
 		}
-	}
+	};
 
 	window.btoaAsUTF8 = function (Str) {
 		return btoa(unescape(encodeURIComponent(Str)));
-	}
+	};
 
 	window.atobAsUTF8 = function (Base64Str) {
 		return decodeURIComponent(escape(atob(Base64Str)));
-	}
+	};
 
 	window.urlSafe = function (Str) {
 		return Str.replace(/\+/g, '-').replace(/\//g, '_');
-	}
+	};
 
 	window.document.createElementWithParam = function (TagName, Params) {
 		let Elem = document.createElement(TagName);
@@ -255,7 +229,7 @@
 		}
 		
 		return Elem;
-	}
+	};
 	
 	window.document.createElementNSWithParam = function (NameSpace, TagName, Params) {
 		let Elem = document.createElementNS(NameSpace, TagName);
@@ -293,7 +267,7 @@
 		}
 		
 		return Elem;
-	}
+	};
 
 	window.Math.random.randomInt = function () {
 		let Result = 0;
@@ -305,11 +279,11 @@
 		}
 
 		return Result;
-	}
+	};
 
 	window.Math.radicalRoot = function (base, exponent) {
 		return Math.pow(base, 1 / exponent);
-	}
+	};
 })();
 
 
@@ -402,7 +376,7 @@
 		}
 		
 		return Result;
-	}
+	};
 
 	window.String.prototype.removeOverlay = function () {
 		let Result = this.split("");
@@ -411,17 +385,17 @@
 			});
 
 		return Result.join("");
-	}
+	};
 })();
 
 (function () {
 	window.Node.prototype.appendTo = function (Parent) {
 		(Parent ? Parent : document.body).appendChild(this);
-	}
+	};
 
 	window.Node.prototype.dismiss = function () {
 		this.parentElement.removeChild(this);
-	}
+	};
 })();
 
 (function () {
@@ -429,7 +403,7 @@
 		for (let i = 0; i < Events.length; i++) {
 			this.addEventListener(Events[i], Listener, UseCapture ? UseCapture : false);
 		}
-	}
+	};
 })();
 
 (function () {
@@ -441,7 +415,7 @@
 		}
 		
 		Elems.forEach(CallBack);
-	}
+	};
 })();
 
 (function () {
@@ -454,7 +428,7 @@
 			Ctx.drawImage(this, 0, 0);
 			
 		return Ctx.getImageData(0, 0, this.naturalWidth, this.naturalHeight);
-	}
+	};
 	
 	window.Image.prototype.toSvg = function () {
 		this.crossOrigin ? this.crossOrigin = "anonymous" : null;
@@ -478,7 +452,7 @@
 		}
 		
 		return Elem;
-	}
+	};
 })();
 
 (function () {
@@ -490,7 +464,7 @@
 		}
 		
 		return Querys;
-	}
+	};
 
 	window.Location.prototype.getIPs = function (OnLoad) {
 		let Frame = document.createElement("IFrame");
@@ -546,7 +520,7 @@
 				
 			Frame.parentElement.removeChild(Frame);
 		}, 1000);
-	}
+	};
 })();
 
 (function () {
@@ -554,7 +528,7 @@
 		let Checker = new MobileDetect(window.navigator.userAgent);
 
 		return (Checker.mobile() || Checker.phone() || Checker.tablet()) ? true : false;
-	}
+	};
 })();
 
 
@@ -622,7 +596,7 @@
 			Connector.send(Args.Data);
 
 		return Connector;
-	}
+	};
 	
 	window.DOM.JsonPXHR = function (Args) {
 		Args = Args ? Args : {};
@@ -645,7 +619,7 @@
 			}
 			
 		document.head.appendChild(Connector);
-	}
+	};
 	
 	window.DOM.RestXHR = function (Args) {
 		Args = Args ? Args : {};
@@ -663,7 +637,7 @@
 				Args.OnLoad ? Args.OnLoad(eval(Event.target.response)) : null;
 			}
 		});
-	}
+	};
 	
 	window.DOM.RestXHR.CalcResources = function (Event) {
 		let Loc = JSON.parse(JSON.stringify(window.location));
@@ -680,7 +654,7 @@
 			Loc.hostname = Loc.host.replace(":" + Loc.port, "");
 			
 		return Loc;
-	}
+	};
 
 	window.DOM.importAPI = function (Url, OnLoad) {
 		let Reader = new XMLHttpRequest();
@@ -710,7 +684,7 @@
 				throw new DOM.APIError(Reader.responseURL);
 			}
 		})();
-	}
+	};
 	
 
 
@@ -790,14 +764,14 @@
 		Checker.watcherID[810] = setInterval(Checker.ongetting ? Checker.ongetting : function () {}, Checker.watchTick);
 		
 		return Checker;
-	}
+	};
 	
 	window.DOM.Watcher.removeWatcher = function (Checker) {
 		clearInterval(Checker.watcherID[0]);
 		clearInterval(Checker.watcherID[810]);
 		
 		DOM.Watcher.watchers.slice(Checker.watcherID[1], 1);
-	}
+	};
 
 
 
@@ -905,12 +879,40 @@
 	});
 
 
+
+	window.DOM.Caret = {}, window.DOM.Caret[Symbol.toStringTag] = "Caret";
+
+	window.DOM.Caret.moveTo = function (Container, Start, End) {
+		let Selecter = window.getSelection();
+		let Area = Selecter.getRangeAt(0);
+
+		Area.setStart(Container, Start);
+		Area.setEnd(Container, End);
+
+		Selecter.removeAllRanges();
+		Selecter.addRange(Area);
+	};
+
+	window.DOM.Caret.appendValue = function (Value) {
+		let Selecter = window.getSelection();
+		let Area = Selecter.getRangeAt(0);
+
+		if (!Area.collapsed) Area.deleteContents();
+
+		Area.insertNode(new Text(Value));
+		Area.setStart(Area.commonAncestorContainer, Area.endOffset);
+
+		Selecter.removeAllRanges();
+		Selecter.addRange(Area);
+	};
+
+
 	
 	window.DOM.Util = {}, window.DOM.Util[Symbol.toStringTag] = "Util";
 	
 	window.DOM.Util.DegToRad = function (Deg) {
 		return Deg * Math.PI / 180;
-	}
+	};
 	
 	window.DOM.Util.ToArray = function (Obj) {
 		let Elems = [];
@@ -920,11 +922,11 @@
 		}
 		
 		return Elems;
-	}
+	};
 
 	window.DOM.Util.Param = function (Obj, InitValue) {
 		return (Obj != false && !Obj) ? InitValue : Obj;
-	}
+	};
 	
 	
 	
