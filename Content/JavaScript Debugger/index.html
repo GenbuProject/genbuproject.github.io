@@ -69,10 +69,36 @@
 						DOM("#Editor").focus();
 
 						switch (Elem.textContent) {
+							default:
+								scope.appendValue(Elem.textContent);
+								break;
+
 							case "→":
 								scope.appendValue("\t");
 								break;
+
+							case "{":
+								scope.appendValue("{}");
+								break;
+
+							case "(":
+								scope.appendValue("()");
+								break;
+
+							case '"':
+								scope.appendValue('""');
+								break;
+
+							case "'":
+								scope.appendValue("''");
+								break;
+
+							case "`":
+								scope.appendValue("``");
+								break;
 						}
+
+						scope.format();
 					});
 				});
 
@@ -82,6 +108,8 @@
 					switch (Event.keyCode) {
 						case 9: //TABキー
 							Event.preventDefault();
+
+							scope.resetCaret();
 							DOM("@Toolbar > Li[Key='TAB']")[0].click();
 
 							break;
@@ -231,6 +259,8 @@
 				<Li>.</Li>
 				<Li>=</Li>
 				<Li Key = '"'>"</Li>
+				<Li Key = "'">'</Li>
+				<Li Key = '`'>`</Li>
 				<Li>|</Li>
 				<Li>&</Li>
 				<Li>!</Li>
