@@ -389,6 +389,20 @@
 })();
 
 (function () {
+	window.Window.prototype.getCenteredBoundingClientRect = function (Width, Height) {
+		return Object.create(ClientRect.prototype, {
+			width: { value: Width },
+			height: { value: Height },
+
+			left: { value: (window.outerWidth - Width) / 2},
+			right: { value: (window.outerWidth + Width) / 2},
+			top: { value: (window.outerHeight - Height) / 2},
+			bottom: { value: (window.outerHeight + Height) / 2}
+		});
+	}
+})();
+
+(function () {
 	window.Node.prototype.appendTo = function (Parent) {
 		(Parent ? Parent : document.body).appendChild(this);
 	};
