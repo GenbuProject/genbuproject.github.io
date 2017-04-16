@@ -30,42 +30,50 @@
 
 
 
-			const Debugger = function () {
-				this.currentCaret = [null, 0, 0];
+			const Debugger = function (Base, Output) {
+				this.base = Base;
+				this.output = Output;
+
+				this.currentCaret = [0, 0];
 
 				this.appendValue = function (Value) {
-					DOM.Caret.moveTo(this.currentCaret[0], this.currentCaret[1], this.currentCaret[2]);
-					DOM.Caret.appendValue(Value);
+					this.base.value = this.base.value.substr(0, this.currentCaret[0]) + Value + this.base.value.substr(this.currentCaret[1]);
+
+					this.base.selectionStart = this.currentCaret[0] + Value.length;
+					this.base.selectionEnd = this.base.selectionStart;
 				};
 
-				this.format = function () {
-					let Code = "";
+				this.format = function (DoesDecode) {
+					let Code = this.base.value;
 					
 					let Decoder = new JsDecoder();
-						Decoder.s = document.getElementById("Editor").innerText;
+						Decoder.s = Code;
 
 						Code = Decoder.decode();
 						
 					let Colorizer = new JsColorizer();
-						Colorizer.s = document.getElementById("Editor").innerText;
+						Colorizer.s = Code;
 
 						Code = Colorizer.colorize();
 						
-					document.getElementById("Formatted").innerHTML = Code;
+					this.output.innerHTML = Code;
 				};
 
 				this.resetCaret = function () {
-					this.currentCaret = [window.getSelection().getRangeAt(0).commonAncestorContainer, window.getSelection().getRangeAt(0).startOffset, window.getSelection().getRangeAt(0).endOffset];
+					this.currentCaret = [this.base.selectionStart, this.base.selectionEnd];
 				};
 			};
 
 
 
-			let scope = new Debugger();
+			let scope;
 
 			window.addEventListener("DOMContentLoaded", function () {
+				scope = new Debugger(DOM("#Editor"), DOM("#Formatted"));
+
 				DOM("@Toolbar > Li").forEach(function (Elem, Index, Parent) {
 					Elem.addEventListener("click", function () {
+						DOM("#Editor").blur();
 						DOM("#Editor").focus();
 
 						switch (Elem.textContent) {
@@ -102,34 +110,27 @@
 					});
 				});
 
-
+				DOM("#Editor").addEventListener("blur", function (Event) {
+					scope.resetCaret();
+				})
 
 				DOM("#Editor").addEventListener("keydown", function (Event) {
 					switch (Event.keyCode) {
 						case 9: //TABキー
 							Event.preventDefault();
-
-							scope.resetCaret();
 							DOM("@Toolbar > Li[Key='TAB']")[0].click();
 
 							break;
 					}
 				});
 
-				DOM("#Editor").addEventListener("blur", function (Event) {
-					scope.resetCaret();
-				});
-
 				DOM("#Run").addEventListener("click", function () {
 					eval([
 						"(function () {",
-						DOM("#Editor").textContent,
+						DOM("#Editor").value,
 						"}).bind(JSCFAD.self).debug()"
 					].join("\r\n"));
 				});
-
-				DOM("#Editor").focus();
-				DOM("#Editor").blur();
 			});
 
 			window.addEventListener("input", function () {
@@ -189,6 +190,13 @@
 
 			#Editor {
 				Width: 50%;
+
+				Border: None;
+				Resize: None;
+			}
+
+			#Editor:Focus {
+				Outline-Offset: 0;
 			}
 
 			#Formatted {
@@ -244,7 +252,7 @@
 	<Body>
 		<Div ID = "Console">
 			<Div ID = "EditorPane">
-				<Div ID = "Editor" ContentEditable = "true"></Div>
+				<TextArea ID = "Editor"></TextArea>
 				<Div ID = "Formatted"></Div>
 			</Div>
 
