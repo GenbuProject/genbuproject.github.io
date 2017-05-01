@@ -5,31 +5,36 @@
  *#######################################################################
 /*/
 const WorldBuilder = (function () {
-	function WorldBuilder (Width, Height) {
+	function WorldBuilder (Args) {
+		!Args ? Args = {} : null;
+		!Args.width ? Args.width = window.innerWidth : null;
+		!Args.height ? Args.height = window.innerHeight : null;
+
+
+
 		let Ctx = new THREE.WebGLRenderer({ antialias: true });
-			Ctx.setSize(Width, Height);
+			Ctx.setSize(Args.width, Args.height);
 
 			document.body.appendChild(Ctx.domElement);
 
 		let World = new THREE.Scene();
 
-		let Camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight);
+		let Camera = new THREE.PerspectiveCamera(50, Args.width / Args.height, 0.1, 0xFFFFFF);
 			Camera.position.set(-256, 128, 256);
 			
 			new THREE.OrbitControls(Camera);
 
-		let Light = new THREE.AmbientLight(0xFFFFFF);
+		let Light = new THREE.DirectionalLight(0xFFFFFF);
+			Light.position.set(128, 512, 128);
 			World.add(Light);
 			
-		let Grid = new THREE.GridHelper(1024, 32);
-			Grid.material.color = new THREE.Color(0x666666);
-
+		let Grid = new THREE.GridHelper(16 * 512, 16, new THREE.Color(0xFF8000), new THREE.Color(0x666666));
 			World.add(Grid);
 
 			
 
-		let Ground = new THREE.Mesh(new THREE.PlaneGeometry(1024, 1024), new THREE.MeshBasicMaterial({ side: THREE.DoubleSide, map: new THREE.TextureLoader().load("Image/Ground.png") }));
-			Ground.position.set(0, 0, 0);
+		let Ground = new THREE.Mesh(new THREE.CubeGeometry(16 * 512, 16 * 512, 16 * 512), new THREE.MeshStandardMaterial({ color: "lightseagreen" }));
+			Ground.position.set(0, -16 * 256, 0);
 			Ground.rotation.set(-(Math.PI / 2), 0, 0);
 
 			World.add(Ground);
@@ -45,18 +50,16 @@ const WorldBuilder = (function () {
 		this.world = new WorldBuilder.World(this);
 		this.blockManager = null//new WorldBuilder.BlockManager();
 	}; WorldBuilder.prototype = Object.create(null, {
-		world: { value: null, configurable: true, writable: true, enumerable: true },
-		blockManager: { value: null, configurable: true, writable: true, enumerable: true }
+		constructor: { value: WorldBuilder }
 	});
+
+
 
 	WorldBuilder.World = (function () {
 		function World (Scope) {
 			World.scope = Scope;
-
-			this.environment = new World.Environment();
 		}; World.prototype = Object.create(null, {
-			blocks: { value: [], configurable: true, writable: true, enumerable: true },
-			environment: { value: null, configurable: true, writable: true, enumerable: true },
+			constructor: { value: World },
 
 			putBlock: {
 				value: function (X, Y, Z, Block) {
@@ -65,19 +68,28 @@ const WorldBuilder = (function () {
 			}
 		});
 
-		World.Environment = (function () {
-			function Environment () {};
-			
-			Environment.prototype = Object.create(null, {
-				blockSize: { value: [32, 32, 32], configurable: true, writable: true, enumerable: true },
-				worldSize: { value: [1024, 4096, 1024], configurable: true, writable: true, enumerable: true }
-			});
-
-			return Environment;
-		})();
-
 		return World;
 	})();
+
+
+
+	WorldBuilder.Block = (function () {
+		function Block () {
+
+		}; Block.prototype = Object.create(null, {
+			constructor: { value: Block },
+
+			id: { value: 0, configurable: true, writable: true, enumerable: true },
+			damage: { value: 0, configurable: true, writable: true, enumerable: true },
+			name: { value: "", configurable: true, writable: true, enumerable: true },
+			textures: { value: [null], configurable: true, writable: true, enumerable: true },
+			modelType: { value: null, configurable: true, writable: true, enumerable: true }
+		});
+
+		return Block;
+	})();
+
+
 
 	return WorldBuilder;
 })();

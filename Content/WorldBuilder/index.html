@@ -13,7 +13,10 @@
 
 		<Script>
 			window.addEventListener("DOMContentLoaded", function () {
-				window.Base = new WorldBuilder(window.innerWidth, window.innerHeight);
+				window.Base = new WorldBuilder({
+					width: window.innerWidth,
+					height: window.innerHeight
+				});
 			});
 		</Script>
 
