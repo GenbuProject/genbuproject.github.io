@@ -38,8 +38,8 @@ const WorldBuilder = (function () {
 			
 			new THREE.OrbitControls(_camera);
 
-		_player = new THREE.ObjectLoader().load("Creeper.json", function (Model) {
-			Model.scale.set(64, 64, 64);
+		_player = new THREE.ObjectLoader().load("Creeper-New.json", function (Model) {
+			Model.scale.set(48, 48, 48);
 			_world.add(Model);
 		});
 
