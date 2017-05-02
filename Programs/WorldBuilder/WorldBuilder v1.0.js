@@ -5,6 +5,11 @@
  *#######################################################################
 /*/
 const WorldBuilder = (function () {
+	let _ctx = null,
+		_world = null,
+
+		_player = null;
+
 	function WorldBuilder (Args) {
 		!Args ? Args = {} : null;
 		!Args.width ? Args.width = window.innerWidth : null;
@@ -12,43 +17,48 @@ const WorldBuilder = (function () {
 
 
 
-		let Ctx = new THREE.WebGLRenderer({ antialias: true });
-			Ctx.setSize(Args.width, Args.height);
-
-			document.body.appendChild(Ctx.domElement);
-
-		let World = new THREE.Scene();
-
-		let Camera = new THREE.PerspectiveCamera(50, Args.width / Args.height, 0.1, 0xFFFFFF);
-			Camera.position.set(-256, 128, 256);
+		_ctx = new THREE.WebGLRenderer({ antialias: true });
+			_ctx.setSize(Args.width, Args.height);
 			
-			new THREE.OrbitControls(Camera);
-
-		let Light = new THREE.DirectionalLight(0xFFFFFF);
-			Light.position.set(128, 512, 128);
-			World.add(Light);
+			document.body.appendChild(_ctx.domElement);
 			
-		let Grid = new THREE.GridHelper(16 * 512, 16, new THREE.Color(0xFF8000), new THREE.Color(0x666666));
-			World.add(Grid);
-
+		_world = new THREE.Scene();
+			_world.add(new THREE.AmbientLight(0xFFFFFF));
 			
+		let _grid = new THREE.GridHelper(16 * 128, 128, new THREE.Color(0xFF8000), new THREE.Color(0x000000));
+			_world.add(_grid);
 
-		let Ground = new THREE.Mesh(new THREE.CubeGeometry(16 * 512, 16 * 512, 16 * 512), new THREE.MeshStandardMaterial({ color: "lightseagreen" }));
-			Ground.position.set(0, -16 * 256, 0);
-			Ground.rotation.set(-(Math.PI / 2), 0, 0);
+		let _light = new THREE.PointLight(0xFFFF00);
+			_light.position.set(128 * 4, 128 * 4, 128 * 4);
 
-			World.add(Ground);
+			_world.add(_light);
+
+		let _camera = new THREE.PerspectiveCamera(50, Args.width / Args.height, 0.1, 0xFFFFFF);
+			_camera.position.set(-8 * 128, 256, 8 * 128);
+			
+			new THREE.OrbitControls(_camera);
+
+		_player = new THREE.ObjectLoader().load("Creeper.json", function (Model) {
+			Model.scale.set(64, 64, 64);
+			_world.add(Model);
+		});
+
+		let _ground = new THREE.Mesh(new THREE.PlaneGeometry(16 * 128, 16 * 128), new THREE.MeshStandardMaterial({ side: THREE.DoubleSide, color: "lightseagreen" }));
+			_ground.rotation.set(Math.PI / 2, 0, 0);
+			
+			_world.add(_ground);
+
+
 
 		(function Render () {
 			requestAnimationFrame(Render);
 
-			Ctx.render(World, Camera);
+			_ctx.render(_world, _camera);
 		})();
 
 
 
 		this.world = new WorldBuilder.World(this);
-		this.blockManager = null//new WorldBuilder.BlockManager();
 	}; WorldBuilder.prototype = Object.create(null, {
 		constructor: { value: WorldBuilder }
 	});
@@ -56,13 +66,42 @@ const WorldBuilder = (function () {
 
 
 	WorldBuilder.World = (function () {
+		let scope = null;
+
 		function World (Scope) {
-			World.scope = Scope;
+			scope = Scope;
 		}; World.prototype = Object.create(null, {
 			constructor: { value: World },
 
 			putBlock: {
-				value: function (X, Y, Z, Block) {
+				value (X, Y, Z, Block) {
+					let Poly = new THREE.Mesh(new THREE.CubeGeometry(16, 16, 16), new THREE.MeshStandardMaterial());
+						Poly.position.set(16 * (-64 + X) + 8, 16 * Y + 8, 16 * (64 - Z) - 8);
+						
+						_world.add(Poly);
+				}
+			},
+
+			removeBlock: {
+				value (X, Y, Z) {
+
+				}
+			},
+
+			fillBlock: {
+				value (Range, Block) {
+
+				}
+			},
+
+			replaceBlock: {
+				value (Range, Old, New) {
+
+				}
+			},
+
+			clearBlock: {
+				value () {
 
 				}
 			}
@@ -87,6 +126,37 @@ const WorldBuilder = (function () {
 		});
 
 		return Block;
+	})();
+
+
+
+	WorldBuilder.Model = (function () {
+		function Model () {
+
+		};
+
+		return Model;
+	})();
+
+
+
+	WorldBuilder.Range = (function () {
+		function Range (X1, Y1, Z1, X2, Y2, Z2) {
+			!X1 ? X1 = 0 : null,
+			!Y1 ? Y1 = 0 : null,
+			!Z1 ? Z1 = 0 : null,
+			!X2 ? X2 = 0 : null,
+			!Y2 ? Y2 = 0 : null,
+			!Z2 ? Z2 = 0 : null;
+
+			this.startPos = [X1, Y1, Z1],
+			this.endPos = [X2, Y2, Z2];
+		}; Range.prototype = Object.create(null, {
+			startPos: { value: [0, 0, 0], configurable: true, writable: true, enumerable: true },
+			endPos: { value: [0, 0, 0], configurable: true, writable: true, enumerable: true }
+		});
+
+		return Range;
 	})();
 
 
