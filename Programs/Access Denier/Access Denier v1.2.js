@@ -31,13 +31,13 @@
 								CodeListGetter.open("GET", Error[i].attributes["Href"].value, false);
 								
 								CodeListGetter.onload = function (Event) {
+									let Querys = location.querySort();
+									
 									!Querys.ID ? Querys.ID = "" : null,
 									!Querys.PASSWORD ? Querys.PASSWORD = "" : null;
-									
+
 									if (Error[i].attributes["Value"]) {
 										if (Error[i].attributes["ID"] && Error[i].attributes["Password"]) {
-											let Querys = location.querySort();
-											
 											if (Error[i].attributes["Type"]) {
 												Error[i].attributes["Type"].value == "Hash" ? (function () {
 													let Protector = [];
