@@ -6,9 +6,7 @@
 /*/
 const WorldBuilder = (function () {
 	let _ctx = null,
-		_world = null,
-
-		_player = null;
+		_world = null;
 
 	function WorldBuilder (Args) {
 		!Args ? Args = {} : null;
@@ -37,12 +35,7 @@ const WorldBuilder = (function () {
 			_camera.position.set(-8 * 128, 256, 8 * 128);
 			
 			new THREE.OrbitControls(_camera);
-
-		_player = new THREE.ObjectLoader().load("Creeper-New.json", function (Model) {
-			Model.scale.set(48, 48, 48);
-			_world.add(Model);
-		});
-
+			
 		let _ground = new THREE.Mesh(new THREE.PlaneGeometry(16 * 128, 16 * 128), new THREE.MeshStandardMaterial({ side: THREE.DoubleSide, color: "lightseagreen" }));
 			_ground.rotation.set(Math.PI / 2, 0, 0);
 			
@@ -60,7 +53,9 @@ const WorldBuilder = (function () {
 
 		this.world = new WorldBuilder.World(this);
 	}; WorldBuilder.prototype = Object.create(null, {
-		constructor: { value: WorldBuilder }
+		constructor: { value: WorldBuilder },
+
+		getPlayer: { value () { return _player } }
 	});
 
 
