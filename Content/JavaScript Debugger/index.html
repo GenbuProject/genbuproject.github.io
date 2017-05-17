@@ -4,6 +4,8 @@
 	<Head>
 		<Meta Charset = "UTF-8">
 		<Title>Genbu Project Official Site == JavaScript Debugger</Title>
+
+		<Meta Name = "Viewport" Content = "Width=Device-Width, Initial-Scale=1, User-Scalable=No" />
 		
 		<Script Src = "https://genbuproject.github.io/Programs/DOM Extender/DOM Extender v2.2.js"></Script>
 
@@ -22,9 +24,9 @@
 		</Script>
 		
 		<Script>
-			DOM.importAPI("https://genbuproject.github.io/Programs/JSConsole For All Devices/JSConsole For All Devices v1.2.js", function () {
+			DOM.importAPI("../../Programs/JSConsole For All Devices/JSConsole For All Devices v1.3.js", function () {
 				window.debug = new JSCFAD({
-					Console: DOM("#Logger")
+					console: DOM("#Logger")
 				});
 			});
 
@@ -43,7 +45,7 @@
 					this.base.selectionEnd = this.base.selectionStart;
 				};
 
-				this.format = function (DoesDecode) {
+				this.format = function () {
 					let Code = this.base.value;
 					
 					let Decoder = new JsDecoder();
@@ -110,11 +112,9 @@
 					});
 				});
 
-				DOM("#Editor").addEventListener("blur", function (Event) {
-					scope.resetCaret();
-				})
-
 				DOM("#Editor").addEventListener("keydown", function (Event) {
+					scope.resetCaret();
+
 					switch (Event.keyCode) {
 						case 9: //TABキー
 							Event.preventDefault();
@@ -124,11 +124,15 @@
 					}
 				});
 
+				DOM("#Editor").addEventListener("blur", function (Event) {
+					scope.resetCaret();
+				});
+
 				DOM("#Run").addEventListener("click", function () {
 					eval([
 						"(function () {",
-						DOM("#Editor").value,
-						"}).bind(JSCFAD.self).debug()"
+						"	" + DOM("#Editor").value,
+						"}).bind(JSCFAD.self).debug();"
 					].join("\r\n"));
 				});
 			});
@@ -287,7 +291,6 @@
 		</Div>
 
 		<Div ID = "Logger"></Div>
-
 		<Button ID = "Run">実行</Button>
 	</Body>
 </HTML>
