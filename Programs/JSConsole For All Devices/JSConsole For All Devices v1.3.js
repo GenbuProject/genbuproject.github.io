@@ -30,7 +30,7 @@ const JSCFAD = (function () {
 					for (var i = 0; i < Obj.length; i++) {
 						Result.push([
 							"<Span Style = '" + InlineStyle({"Color": this.style.Arrow}) + "'>==></Span>",
-							"<Span Style = '" + (typeof Obj[i] == "string" ? InlineStyle({"Color": this.style.String}) : typeof Obj[i] == "number" ? InlineStyle({"Color": this.Style.Number}) : (Obj[i] instanceof Array && Array.isArray(Obj[i])) ? InlineStyle({"Color": this.Style.Array}) : Obj[i] instanceof Error ? InlineStyle({"Color": this.Style.Error}) : (Obj[i] instanceof Object && !Array.isArray(Obj[i])) ? InlineStyle({"Color": this.Style.Object}) : InlineStyle({"Color": this.Style.Object})) + "'>" + Obj[i] + "</Span>"
+							"<Span Style = '" + (typeof Obj[i] == "string" ? InlineStyle({"Color": this.style.String}) : typeof Obj[i] == "number" ? InlineStyle({"Color": this.style.Number}) : (Obj[i] instanceof Array && Array.isArray(Obj[i])) ? InlineStyle({"Color": this.style.Array}) : Obj[i] instanceof Error ? InlineStyle({"Color": this.style.Error}) : (Obj[i] instanceof Object && !Array.isArray(Obj[i])) ? InlineStyle({"Color": this.style.Object}) : InlineStyle({"Color": this.style.Object})) + "'>" + Obj[i] + "</Span>"
 						].join("\t"));
 					}
 					
