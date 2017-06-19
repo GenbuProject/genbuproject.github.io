@@ -212,6 +212,109 @@ const DOM = (function () {
 			},
 
 			enumerable: true
+		},
+
+
+
+		Watcher: {
+			value: (function () {
+				let watchers = [];
+
+				/**
+				 * @param {object} option
+				 */
+				function Watcher (option) {
+					option = option || {};
+
+					this.setTarget(option.target || { value: null });
+					this.setWatchTick(option.tick || 1);
+					this.onGet = option.onGet || function () {};
+					this.onChange = option.onChange || function (watcher) {};
+				}; Watcher.prototype = Object.create(null, {
+					constructor: { value: Watcher },
+
+					watcherID: { value: [0, 0], configurable: true, writable: true, enumerable: true },
+					watchTick: { value: [0, 0], configurable: true, writable: true, enumerable: true },
+					target: { value: { value: null }, configurable: true, writable: true, enumerable: true },
+					oldValue: { value: 0, configurable: true, writable: true, enumerable: true },
+					newValue: { value: 0, configurable: true, writable: true, enumerable: true },
+					onGet: { value: function () {}, configurable: true, writable: true, enumerable: true },
+					onChange: { value: function (watcher) {}, configurable: true, writable: true, enumerable: true },
+
+					setWatchTick: {
+						/**
+						 * @param {number} tick
+						 */
+						value (tick) { this.watchTick = tick }, enumerable: true
+					},
+
+					setTarget: {
+						/**
+						 * @param {object} target
+						 */
+						value (target) { this.target = target }, enumerable: true
+					}
+				}); Object.defineProperties(Watcher, {
+					addWatcher: {
+						value (watcher) {
+							watcher.watcherID[0] = setInterval(function () {
+								watcher.newValue = watcher.target.value;
+								
+								if (watcher.oldValue !== watcher.newValue) {
+									watcher.onChange(watcher);
+									watcher.oldValue = watcher.newValue;
+								}
+							}, watcher.watchTick);
+							
+							watcher.oldValue = watcher.target.value,
+							watcher.newValue = watcher.target.value;
+							
+							watchers.push(watcher);
+							watchers[watchers.length - 1].watcherID[1] = watchers.length - 1;
+							
+							watcher.watcherID[810] = setInterval(watcher.onGet || function () {}, watcher.watchTick);
+							
+							return watcher;
+						},
+
+						enumerable: true
+					},
+
+					removeWatcher: {
+						value (watcher) {
+							clearInterval(watcher.watcherID[0]);
+							clearInterval(watcher.watcherID[810]);
+							
+							watchers.slice(watcher.watcherID[1], 1);
+						},
+
+						enumerable: true
+					}
+				});
+
+				return Watcher;
+			})(),
+
+			enumerable: true
+		},
+
+		Randomizer: {
+			value: (function () {
+				function Randomizer (type) {
+					this.currentType = !type || this.TYPE[Symbol.keyFor(type)];
+				}; Randomizer.prototype = Object.create(null, {
+					constructor: { value: Randomizer },
+					
+					TYPE: { value: DOM.Randomizer.TYPE, configurable: true, writable: true, enumerable: true },
+					CHARMAP: { value: DOM.Randomizer.CHARMAP, configurable: true, writable: true, enumerable: true },
+
+					currentType: { value: this.TYPE.LEVEL3, configurable: true, writable: true, enumerable: true }
+				});
+
+				return Randomizer;
+			})(),
+
+			enumerable: true
 		}
 	});
 
@@ -236,125 +339,6 @@ const DOM = (function () {
 
 
 (function () {
-	window.DOM.importAPI = function (Url, OnLoad) {
-		let Reader = new XMLHttpRequest();
-			Reader.open("GET", Url ? Url : "", false);
-			Reader.send(null);
-			
-		(function () {
-			let IsAPI = false;
-
-			for (let i = 0; i < Reader.response.split("\n").length; i++) {
-				if (Reader.response.split("\n")[i].match("use DOMExtender")) {
-					IsAPI = true;
-					break;
-				}
-			}
-
-			if (IsAPI) {
-				let Elem = new Script(Reader.responseURL);
-					Elem.onload = Elem.onreadystatechange = function (Event) {
-						if (!Event.target.readyState || Event.target.readyState == "loaded" || Event.target.readyState == "complete") {
-							OnLoad ? OnLoad() : null;
-						}
-					}
-
-				document.head.appendChild(Elem);
-			} else {
-				throw new DOM.APIError(Reader.responseURL);
-			}
-		})();
-	};
-	
-
-
-	window.DOM.Watcher = function () {
-		this.watcherID = [0, 0];
-		this.watchTick = 1;
-		
-		this.target = {value: null};
-		this.oldValue = 0;
-		this.newValue = 0;
-
-		this.ongetting = function () {};
-	}, window.DOM.Watcher[Symbol.toStringTag] = "Watcher";
-	
-	window.DOM.Watcher.prototype = Object.create(Object.prototype, {
-		setWatchTick: {
-			value: function (Value) {
-				this.watchTick = Value;
-			},
-			
-			writable: false,
-			configurable: false,
-			enumerable: false
-		},
-
-		setTarget: {
-			value: function (Value) {
-				this.target = Value;
-			},
-			
-			writable: false,
-			configurable: false,
-			enumerable: false
-		},
-		
-		constructor: {
-			value: DOM.Watcher
-		}
-	});
-	
-	window.DOM.Watcher.ChangeWatcher = function (Option) {
-		DOM.Watcher.call(this);
-
-		if (!Option) {			
-			this.onchange = function () {};
-			this.ongetting = function () {};
-		} else {
-			this.setTarget(Option.Target ? Option.Target : {value: null});
-			this.setWatchTick(Option.Tick ? Option.Tick : 1);
-			this.onchange = Option.OnChange ? Option.OnChange : function () {};
-			this.ongetting = Option.OnGetting ? Option.OnGetting : function () {};
-		}
-	}, window.DOM.Watcher.ChangeWatcher[Symbol.toStringTag] = "ChangeWatcher";
-	
-	window.DOM.Watcher.ChangeWatcher.prototype = Object.create(window.DOM.Watcher.prototype, {
-		constructor: {
-			value: DOM.ChangeWatcher
-		}
-	});
-	
-	window.DOM.Watcher.addChangeWatcher = function (Checker) {
-		Checker.watcherID[0] = setInterval(function () {
-			Checker.newValue = Checker.target.value;
-			
-			if (Checker.oldValue !== Checker.newValue) {
-				Checker.onchange(Checker);
-				Checker.oldValue = Checker.newValue;
-			}
-		}, Checker.watchTick);
-		
-		Checker.oldValue = Checker.target.value,
-		Checker.newValue = Checker.target.value;
-		
-		DOM.Watcher.watchers.push(Checker);
-		DOM.Watcher.watchers[DOM.Watcher.watchers.length - 1].watcherID[1] = DOM.Watcher.watchers.length - 1;
-		
-		Checker.watcherID[810] = setInterval(Checker.ongetting ? Checker.ongetting : function () {}, Checker.watchTick);
-		
-		return Checker;
-	};
-	
-	window.DOM.Watcher.removeWatcher = function (Checker) {
-		clearInterval(Checker.watcherID[0]);
-		clearInterval(Checker.watcherID[810]);
-		
-		DOM.Watcher.watchers.slice(Checker.watcherID[1], 1);
-	};
-
-
-
 	window.DOM.Randomizer = function (Type) {
 		this.TYPE = DOM.Randomizer.TYPE,
 		this.CHARMAP = DOM.Randomizer.CHARMAP;
