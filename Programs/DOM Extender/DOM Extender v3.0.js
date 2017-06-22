@@ -4,6 +4,120 @@
  *Copyright (C) 2016-2020 Genbu Project & Genbu Hase All Rights Reversed.
  *#######################################################################
 /*/
+(function () {
+	Object.defineProperties(Object.prototype, {
+		getClassName: {
+			value () {
+				return Object.prototype.toString.call(this).slice(8, -1);
+			}
+		}
+	});
+
+	Object.defineProperties(String.prototype, {
+		removeOverlay: {
+			value () {
+				let result = this.split("");
+					result = result.filter(function (elem, index, parent) {
+						return parent.indexOf(elem) == index;
+					});
+
+				return result.join("");
+			}
+		}
+	});
+
+	Object.defineProperties(Math.random, {
+		randomInt: {
+			value () {
+				let result = 0;
+
+				if (arguments.length >= 2) {
+					result = Math.round(Math.random() * (arguments[1] - arguments[0]) + arguments[0]);
+				} else {
+					result = Math.round(Math.random() * arguments[0]);
+				}
+
+				return result;
+			}
+		}
+	});
+
+	Object.defineProperties(Document.prototype, {
+		createElementWithParam: {
+			/**
+			 * @param {string} tagName
+			 * @param {object} options
+			 */
+			value (tagName, options) {
+				let elem = document.createElement(tagName);
+				
+				if (options) {
+					!options.attributes || (function () {
+						for (let paramName in options.attributes) {
+							elem.setAttribute(paramName, options.attributes[paramName]);
+						}
+					})();
+					
+					!options.styles || (function () {
+						elem.setAttribute("Style", InlineStyle(options.styles));
+					})();
+					
+					!options.events || (function () {
+						for (let eventName in options.events) {
+							elem.addEventListener(eventName, options.events[eventName]);
+						}
+					})();
+
+					!options.children || (function () {
+						for (let i = 0; i < options.children.length; i++) {
+							elem.appendChild(options.children[i]);
+						}
+					})();
+				}
+				
+				return elem;
+			}
+		},
+
+		createElementNSWithParam: {
+			/**
+			 * @param {string} nameSpace
+			 * @param {string} tagName
+			 * @param {object} options
+			 */
+			value (nameSpace, tagName, options) {
+				let elem = document.createElementNS(nameSpace, tagName);
+				
+				if (options) {
+					!options.attributes || (function () {
+						for (let paramName in options.attributes) {
+							elem.setAttribute(paramName, options.attributes[paramName]);
+						}
+					})();
+					
+					!options.styles || (function () {
+						elem.setAttribute("Style", InlineStyle(options.styles));
+					})();
+					
+					!options.events || (function () {
+						for (let eventName in options.events) {
+							elem.addEventListener(eventName, options.events[eventName]);
+						}
+					})();
+
+					!options.children || (function () {
+						for (let i = 0; i < options.children.length; i++) {
+							elem.appendChild(options.children[i]);
+						}
+					})();
+				}
+				
+				return elem;
+			}
+		}
+	});
+})();
+
 const DOM = (function () {
 	/**
 	 * セレクタ($1)に応じてDOM要素を返す
@@ -205,7 +319,7 @@ const DOM = (function () {
 
 							DOM(":Head")[0].appendChild(elem);
 						} else {
-							throw new EvalError("Please load the code for DOM Extender!")
+							throw new EvalError("Please load the API for DOM Extender!")
 						}
 					}
 				});
@@ -300,15 +414,171 @@ const DOM = (function () {
 
 		Randomizer: {
 			value: (function () {
-				function Randomizer (type) {
-					this.currentType = !type || this.TYPE[Symbol.keyFor(type)];
+				/**
+				 * @param {RamdomizeType} type
+				 */
+				function Randomizer (usedType) {
+					this.TYPE = Randomizer.TYPE,
+					this.CHARMAP = Randomizer.CHARMAP;
+					
+					this.setType(usedType || this.TYPE.LEVEL3);
 				}; Randomizer.prototype = Object.create(null, {
 					constructor: { value: Randomizer },
 					
-					TYPE: { value: DOM.Randomizer.TYPE, configurable: true, writable: true, enumerable: true },
-					CHARMAP: { value: DOM.Randomizer.CHARMAP, configurable: true, writable: true, enumerable: true },
+					TYPE: { value: null, configurable: true, writable: true, enumerable: true },
+					CHARMAP: { value: null, configurable: true, writable: true, enumerable: true },
+					currentType: { value: null, configurable: true, writable: true, enumerable: true },
 
-					currentType: { value: this.TYPE.LEVEL3, configurable: true, writable: true, enumerable: true }
+					setType: {
+						/**
+						 * @param {RandomizeType} usedType
+						 */
+						value (usedType) {
+							!usedType || (this.currentType = this.TYPE[Symbol.keyFor(usedType)]);
+						},
+
+						enumerable: true
+					},
+
+					addRandomizeType: {
+						/**
+						 * @param {Randomizer.RandomizeType} randomizeType
+						 */
+						value (randomizeType) {
+							if (randomizeType) {
+								this.TYPE[randomizeType.name] = randomizeType.type,
+								this.CHARMAP[randomizeType.name] = randomizeType.charMap;
+							}
+						},
+
+						enumerable: true
+					},
+
+					removeRandomizeType: {
+						/**
+						 * @param {Randomizer.RandomizeType} randomizeType
+						 */
+						value (randomizeType) {
+							if (randomizeType) {
+								this.TYPE[randomizeType.name] = undefined,
+								this.CHARMAP[randomizeType.name] = undefined;
+							}
+						},
+
+						enumerable: true
+					},
+
+					resetRandomizeType: {
+						value () {
+							this.TYPE = DOM.Randomize.TYPE,
+							this.CHARMAP = DOM.Randomize.CHARMAP;
+						},
+
+						enumerable: true
+					},
+
+					generate: {
+						/**
+						 * @param {number} strLength
+						 */
+						value (strLength) {
+							let result = "";
+
+							strLength = strLength || 8;
+
+							for (let i = 0; i < strLength; i++) {
+								result += this.CHARMAP[Symbol.keyFor(this.currentType)][Math.random.randomInt(this.CHARMAP[Symbol.keyFor(this.currentType)].length - 1)];
+							}
+
+							return result;
+						},
+
+						writable: false,
+						configurable: false,
+						enumerable: false
+					}
+				}); Object.defineProperties(Randomizer, {
+					TYPE: {
+						value: (function () {
+							const TYPE = Object.create(Object.prototype, {
+								LEVEL1: { value: Symbol.for("LEVEL1"), enumerable: true },	//Only Numbers
+								LEVEL2: { value: Symbol.for("LEVEL2"), enumerable: true },	//Only Alphabets
+								LEVEL3: { value: Symbol.for("LEVEL3"), enumerable: true },	//Numbers & Alphabets
+								LEVEL4: { value: Symbol.for("LEVEL4"), enumerable: true },	//Numbers & Alphabets & Some Symbols
+
+								LEVEL101: { value: Symbol.for("LEVEL101"), enumerable: true },	//ひらがな
+								LEVEL102: { value: Symbol.for("LEVEL102"), enumerable: true },	//真夏(まなつ)の夜(よる)の淫夢(いんむ)
+								LEVEL103: { value: Symbol.for("LEVEL103"), enumerable: true },	//唐澤弁護士(からさわべんごし) & 尊師(そんし)
+								LEVEL104: { value: Symbol.for("LEVEL104"), enumerable: true },	//かすてら。じゅーしー & ちんかすてら & 珠照(すてら) & 未定義(みていぎ)さん
+								LEVEL105: { value: Symbol.for("LEVEL105"), enumerable: true },	//イサト & 望月(もちづき) & モッチー & もっちー & もちもちゃん
+								LEVEL106: { value: Symbol.for("LEVEL106"), enumerable: true },	//魂魄妖夢(こんぱくようむ) & 魂魄妖夢Channel & ValkyrieChannel & Durandal.Project & VC.Project & DCProject & Object & 黐麟(ちりん) & 氏名(しめい)
+								LEVEL107: { value: Symbol.for("LEVEL107"), enumerable: true },	//勿論偽名(もちろんぎめい) & 偽名ちゃん(ぎめいちゃん)
+								LEVEL108: { value: Symbol.for("LEVEL108"), enumerable: true },	//てぃお
+								LEVEL109: { value: Symbol.for("LEVEL109"), enumerable: true },	//Mr.Taka & Takaチャンネル & タカチャンネル
+								LEVEL110: { value: Symbol.for("LEVEL110"), enumerable: true }	//ナイキ & Nike(ないき) & にけ & にけにけ(にけみん)
+							}); TYPE[Symbol.toStringTag] = "RandomizeType";
+
+							return TYPE;
+						})(),
+
+						enumerable: true
+					},
+
+					CHARMAP: {
+						value: (function () {
+							const CHARMAP = Object.create(Object.prototype, {
+								LEVEL1: { value: "1234567890".split(""), enumerable: true },
+								LEVEL2: { value: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ".split(""), enumerable: true },
+								LEVEL3: { value: [""], enumerable: true },
+								LEVEL4: { value: "!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~".split(""), enumerable: true },
+
+								LEVEL101: { value: "あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをん".split(""), enumerable: true },
+								LEVEL102: { value: ["真夏の夜の淫夢", "まなつのよるのいんむ"].join("").removeOverlay().split(""), enumerable: true },
+								LEVEL103: { value: ["唐澤弁護士", "からさわべんごし", "尊師", "そんし"].join("").removeOverlay().split(""), enumerable: true },
+								LEVEL104: { value: ["かすてら。じゅーしー", "ちんかすてら", "珠照", "すてら", "未定義さん", "みていぎさん"].join("").removeOverlay().split(""), enumerable: true },
+								LEVEL105: { value: ["イサト", "望月", "もちづき", "モッチー", "もっちー", "もちもちゃん"].join("").removeOverlay().split(""), enumerable: true },
+								LEVEL106: { value: ["魂魄妖夢", "こんぱくようむ", "魂魄妖夢Channel", "ValkyrieChannel", "Durandal.Project", "VC.Project", "DCProject", "Object", "黐麟", "ちりん", "氏名", "しめい"].join("").removeOverlay().split(""), enumerable: true },
+								LEVEL107: { value: ["勿論偽名", "もちろんぎめい", "偽名ちゃん", "ぎめいちゃん"].join("").removeOverlay().split(""), enumerable: true },
+								LEVEL108: { value: ["てぃお"].join("").removeOverlay().split(""), enumerable: true },
+								LEVEL109: { value: ["Mr.Taka", "Takaチャンネル", "タカチャンネル"].join("").removeOverlay().split(""), enumerable: true },
+								LEVEL110: { value: ["ナイキ", "Nike", "ないき", "にけ", "にけにけ", "にけみん"].join("").removeOverlay().split(""), enumerable: true }
+							}); CHARMAP[Symbol.toStringTag] = "RandomizeMap";
+
+							CHARMAP.LEVEL3 = CHARMAP.LEVEL1.concat(CHARMAP.LEVEL2),
+							CHARMAP.LEVEL4 = CHARMAP.LEVEL4.concat(CHARMAP.LEVEL1.concat(CHARMAP.LEVEL2));
+
+							return CHARMAP;
+						})(),
+
+						enumerable: true
+					},
+
+
+
+					RamdomizeType: {
+						value: (function () {
+							/**
+							 * @param {string} name
+							 * @param {string} usedChars
+							 */
+							function RandomizeType (name, usedChars) {
+								!name || (this.name = name);
+								!usedChars || (this.charMap = usedChars.removeOverlay().split(""));
+
+								this.type = Symbol.for(this.name);
+							}; RandomizeType.prototype = Object.create(null, {
+								constructor: { value: RandomizeType },
+
+								name: { value: "LEVEL", configurable: true, writable: true, enumerable: true },
+								type: { value: null, configurable: true, writable: true, enumerable: true },
+								charMap: { value: ["0"], configurable: true, writable: true, enumerable: true }
+							});
+
+							return RandomizeType;
+						})(),
+
+						enumerable: true
+					}
 				});
 
 				return Randomizer;
@@ -339,93 +609,6 @@ const DOM = (function () {
 
 
 (function () {
-	window.DOM.Randomizer = function (Type) {
-		this.TYPE = DOM.Randomizer.TYPE,
-		this.CHARMAP = DOM.Randomizer.CHARMAP;
-
-		this.currentType = Type ? this.TYPE[Symbol.keyFor(Type)] : this.TYPE.LEVEL3;
-	}, window.DOM.Randomizer[Symbol.toStringTag] = "Randomizer";
-
-	window.DOM.Randomizer.prototype = Object.create(Object.prototype, {
-		setType: {
-			value: function (Type) {
-				this.currentType = Type ? Type : this.TYPE.LEVEL3;
-			},
-
-			writable: false,
-			configurable: false,
-			enumerable: false
-		},
-
-		addRandomizeType: {
-			value: function (RType) {
-				if (RType) {
-					this.TYPE[RType.name] = RType.type,
-					this.CHARMAP[RType.name] = RType.charMap;
-				}
-			},
-
-			writable: false,
-			configurable: false,
-			enumerable: false
-		},
-
-		removeRandomizeType: {
-			value: function (RType) {
-				if (RType) {
-					this.TYPE[RType.name] = undefined,
-					this.CHARMAP[RType.name] = undefined;
-				}
-			},
-
-			writable: false,
-			configurable: false,
-			enumerable: false
-		},
-
-		resetRandomizeType: {
-			value: function () {
-				this.TYPE = DOM.Randomize.TYPE,
-				this.CHARMAP = DOM.Randomize.CHARMAP;
-			},
-
-			writable: false,
-			configurable: false,
-			enumerable: false
-		},
-
-		generate: {
-			value: function (Length) {
-				let Result = "";
-
-				!Length ? Length = 8 : null;
-
-				for (let i = 0; i < Length; i++) {
-					Result += this.CHARMAP[Symbol.keyFor(this.currentType)][Math.random.randomInt(this.CHARMAP[Symbol.keyFor(this.currentType)].length - 1)];
-				}
-
-				return Result;
-			},
-
-			writable: false,
-			configurable: false,
-			enumerable: false
-		},
-
-		constructor: {
-			value: DOM.Randomizer
-		}
-	});
-
-	window.DOM.Randomizer.RandomizeType = function (Name, UseChars) {
-		this.name = Name ? Name : "LEVEL0";
-
-		this.type = Symbol.for(this.name),
-		this.charMap = UseChars ? UseChars.removeOverlay().split("") : ["0"];
-	}, window.DOM.Randomizer.RandomizeType[Symbol.toStringTag] = "RandomizeType";
-
-
-
 	window.DOM.APIError = function (Name) {
 		Error.call(this);
 
@@ -508,53 +691,6 @@ const DOM = (function () {
 	
 	window.DOM.width = window.innerWidth;
 	window.DOM.height = window.innerHeight;
-	
-	window.DOM.Watcher.watchers = [];
-
-	window.DOM.Randomizer.TYPE = {
-		LEVEL1: Symbol.for("LEVEL1"),	//Only Numbers
-		LEVEL2: Symbol.for("LEVEL2"),	//Only Alphabets
-		LEVEL3: Symbol.for("LEVEL3"),	//Numbers & Alphabets
-		LEVEL4: Symbol.for("LEVEL4"),	//Numbers & Alphabets & Some Symbols
-
-		LEVEL101: Symbol.for("LEVEL101"),	//ひらがな
-		LEVEL102: Symbol.for("LEVEL102"),	//真夏(まなつ)の夜(よる)の淫夢(いんむ)
-		LEVEL103: Symbol.for("LEVEL103"),	//唐澤弁護士(からさわべんごし) & 尊師(そんし)
-		LEVEL104: Symbol.for("LEVEL104"),	//かすてら。じゅーしー & ちんかすてら & 珠照(すてら) & 未定義(みていぎ)さん
-		LEVEL105: Symbol.for("LEVEL105"),	//イサト & 望月(もちづき) & モッチー & もっちー & もちもちゃん
-		LEVEL106: Symbol.for("LEVEL106"),	//魂魄妖夢(こんぱくようむ) & 魂魄妖夢Channel & ValkyrieChannel & Durandal.Project & VC.Project & DCProject & Object & 黐麟(ちりん)
-		LEVEL107: Symbol.for("LEVEL107"),	//勿論偽名(もちろんぎめい) & 偽名ちゃん(ぎめいちゃん)
-		LEVEL108: Symbol.for("LEVEL108"),	//てぃお
-		LEVEL109: Symbol.for("LEVEL109"),	//Mr.Taka & Takaチャンネル & タカチャンネル
-		LEVEL110: Symbol.for("LEVEL110"),	//ナイキ & Nike(ないき) & にけ & にけにけ(にけみん)
-	}, Object.defineProperty(window.DOM.Randomizer, "TYPE", {
-		writable: false,
-		configurable: false
-	}), window.DOM.Randomizer.TYPE[Symbol.toStringTag] = "GenerateType";
-
-	window.DOM.Randomizer.CHARMAP = {
-		LEVEL1: "1234567890".split(""),
-		LEVEL2: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ".split(""),
-		LEVEL3: [],
-		LEVEL4: "!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~".split(""),
-
-		LEVEL101: "あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをん".split(""),
-		LEVEL102: ["真夏の夜の淫夢", "まなつのよるのいんむ"].join("").removeOverlay().split(""),
-		LEVEL103: ["唐澤弁護士", "からさわべんごし", "尊師", "そんし"].join("").removeOverlay().split(""),
-		LEVEL104: ["かすてら。じゅーしー", "ちんかすてら", "珠照", "すてら", "未定義さん", "みていぎさん"].join("").removeOverlay().split(""),
-		LEVEL105: ["イサト", "望月", "もちづき", "モッチー", "もっちー", "もちもちゃん"].join("").removeOverlay().split(""),
-		LEVEL106: ["魂魄妖夢", "こんぱくようむ", "魂魄妖夢Channel", "ValkyrieChannel", "Durandal.Project", "VC.Project", "DCProject", "Object", "黐麟", "ちりん"].join("").removeOverlay().split(""),
-		LEVEL107: ["勿論偽名", "もちろんぎめい", "偽名ちゃん", "ぎめいちゃん"].join("").removeOverlay().split(""),
-		LEVEL108: ["てぃお"].join("").removeOverlay().split(""),
-		LEVEL109: ["Mr.Taka", "Takaチャンネル", "タカチャンネル"].join("").removeOverlay().split(""),
-		LEVEL110: ["ナイキ", "Nike", "ないき", "にけ", "にけにけ", "にけみん"].join("").removeOverlay().split(""),
-	}, Object.defineProperty(window.DOM.Randomizer, "CHARMAP", {
-		writable: false,
-		configurable: false
-	}), window.DOM.Randomizer.CHARMAP[Symbol.toStringTag] = "GenerateMap";
-
-	window.DOM.Randomizer.CHARMAP.LEVEL3 = window.DOM.Randomizer.CHARMAP.LEVEL1.concat(window.DOM.Randomizer.CHARMAP.LEVEL2),
-	window.DOM.Randomizer.CHARMAP.LEVEL4 = window.DOM.Randomizer.CHARMAP.LEVEL4.concat(window.DOM.Randomizer.CHARMAP.LEVEL1.concat(window.DOM.Randomizer.CHARMAP.LEVEL2));
 	
 	
 
