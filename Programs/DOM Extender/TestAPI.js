@@ -1,7 +1,14 @@
-"#{using} DOMExtender";
+//#{using} DOMExtender;
+(function (info) {
+	const VERSION = 3.0;
 
-(DOM && DOM.version >= 3.0) ? (function () {
-	console.log("Successed.");
-})() : (function () {
-	throw new EvalError("Do not load without DOM Extender!");
-})();
+	if (info && DOM) {
+		if (info instanceof DOM.APIInfo && info.version >= VERSION) {
+			console.log("Succeed.");
+		} else {
+			throw new EvalError("Not matching for the version");
+		}
+	} else {
+		throw new EvalError("Do not load without DOM Extender");
+	}
+}).bind(window);

@@ -7,14 +7,46 @@
 (function () {
 	Object.defineProperties(Object.prototype, {
 		getClassName: {
+			/**
+			 * @returns {String}
+			 */
 			value () {
 				return Object.prototype.toString.call(this).slice(8, -1);
+			}
+		},
+
+		isStrictObject: {
+			/**
+			 * @param {object} obj
+			 */
+			value (obj) {
+				if (obj !== undefined) {
+					return (obj.getClassName() !== "String" && obj.getClassName() !== "Number" && obj instanceof Object && !Array.isArray(obj));
+				} else {
+					return (this.getClassName() !== "String" && this.getClassName() !== "Number" && this instanceof Object && !Array.isArray(this));
+				}
+			}
+		},
+
+		isStrictArray: {
+			/**
+			 * @param {object} obj
+			 */
+			value (obj) {
+				if (obj !== undefined) {
+					return (obj.getClassName() !== "String" && obj.getClassName() !== "Number" && obj instanceof Array && Array.isArray(obj));
+				} else {
+					return (this.getClassName() !== "String" && this.getClassName() !== "Number" && this instanceof Array && Array.isArray(this));
+				}
 			}
 		}
 	});
 
 	Object.defineProperties(String.prototype, {
 		removeOverlay: {
+			/**
+			 * @returns {String}
+			 */
 			value () {
 				let result = this.split("");
 					result = result.filter(function (elem, index, parent) {
@@ -25,6 +57,321 @@
 			}
 		}
 	});
+
+	Object.defineProperties(Window.prototype, {
+		Script: {
+			value: (function () {
+				/**
+				 * @param {String} url
+				 * @param {object} [option={}]
+				 * @returns {HTMLScriptElement}
+				 */
+				function Script (url, option) {
+					option = option || {};
+
+					let elem = document.createElement("Script");
+						!url || (elem.src = url);
+						elem.async = option.async || false;
+						elem.defer = option.defer || false;
+						
+					return elem;
+				};
+
+				return Script;
+			})(),
+
+			enumerable: true
+		},
+
+		Style: {
+			value: (function () {
+				/**
+				 * @param {object} data
+				 * @returns {HTMLStyleElement}
+				 */
+				function Style (data) {
+					data = data || {};
+
+					let elem = document.createElement("Style");
+						elem.textContent = (function () {
+							let mem = [];
+
+							(function Looper (currentData, currentLevel) {
+								for (let elemName in currentData) {
+									if (currentData[elemName].isStrictObject()) {
+										mem.push("\t".repeat(currentLevel) + elemName + " {");
+										Looper(currentData[elemName], currentLevel + 1);
+										mem.push("\t".repeat(currentLevel) + "}");
+										mem.push("\t".repeat(currentLevel) + "");
+									} else {
+										mem.push("\t".repeat(currentLevel) + elemName + ": " + currentData[elemName] + ";");
+									}
+								}
+							})(data, 1);
+
+							return mem.join("\r\n");
+						})();
+
+					return elem;
+				};
+
+				return Style;
+			})(),
+
+			enumerable: true
+		},
+
+		InlineStyle: {
+			value: (function () {
+				/**
+				 * @param {object} data
+				 */
+				function InlineStyle (data) {
+					let mem = [];
+					
+					for (let styleName in data) {
+						mem.push(styleName + ": " + data[styleName] + ";");
+					}
+					
+					return mem.join(" ");
+				};
+
+				return InlineStyle;
+			})(),
+
+			enumerable: true
+		},
+
+		Canvas: {
+			value: (function () {
+				/**
+				 * @param {Number} [width=0]
+				 * @param {Number} [height=0]
+				 */
+				function Canvas (width, height) {
+					let Elem = document.createElement("Canvas");
+						Elem.width = width || 0;
+						Elem.height = height || 0;
+
+					return Elem;
+				};
+
+				return Canvas;
+			})(),
+
+			enumerable: true
+		},
+
+		Svg: {
+			value: (function () {
+				/**
+				 * @param {Number} [width=0]
+				 * @param {Number} [height=0]
+				 */
+				function Svg (width, height) {
+					let elem = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+						elem.setAttribute("version", "1.1");
+						elem.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+						
+						elem.setAttribute("width", width || 0);
+						elem.setAttribute("height", height || 0);
+						elem.setAttribute("viewBox", "0 0 " + (width || 0) + " " + (height || 0));
+						
+					return elem;
+				}; Object.defineProperties(Svg, {
+					Rectangle: {
+						value: (function () {
+							/**
+							 * @param {object} [option={}]
+							 * @returns {HTMLElement}
+							 */
+							function Rectangle (option) {
+								option = option || {};
+
+								let elem = document.createElementNSWithParam("http://www.w3.org/2000/svg", "rect", option.params);
+									elem.setAttribute("x", option.x || 0);
+									elem.setAttribute("y", option.y || 0);
+									
+									elem.setAttribute("width", option.width || 0);
+									elem.setAttribute("height", option.height || 0);
+									elem.setAttribute("fill", option.fill || "#000000");
+									
+								return elem;
+							};
+
+							return Rectangle;
+						})(),
+
+						enumerable: true
+					},
+
+					Circle: {
+						value: (function () {
+							/**
+							 * @param {object} [option={}]
+							 * @returns {HTMLElement}
+							 */
+							function Circle (option) {
+								option = option || {};
+
+								let elem = document.createElementNSWithParam("http://www.w3.org/2000/svg", "circle", option.params);
+									elem.setAttribute("cx", option.x || 0);
+									elem.setAttribute("cy", option.y || 0);
+									elem.setAttribute("r", option.radius || 0);
+
+									elem.setAttribute("fill", option.fill || "#000000");
+									
+								return elem;
+							};
+
+							return Circle;
+						})(),
+
+						enumerable: true
+					},
+
+					Text: {
+						value: (function () {
+							/**
+							 * @param {object} [option={}]
+							 * @returns {HTMLElement}
+							 */
+							function Text (option) {
+								option = option || {};
+
+								let elem = document.createElementNSWithParam("http://www.w3.org/2000/svg", "text", option.params);
+									elem.textContent = option.value || "";
+									
+									elem.setAttribute("x", option.x || 0);
+									elem.setAttribute("y", option.y || 0);
+									elem.setAttribute("rotate", option.rotate || 0);
+									
+								return elem;
+							};
+
+							return Text;
+						})(),
+
+						enumerable: true
+					},
+
+					RGB: {
+						value: (function () {
+							/**
+							 * @param {Number} r
+							 * @param {Number} g
+							 * @param {Number} b
+							 */
+							function RGB (r, g, b) {
+								return "RGB(" + (r || 0) + ", " + (g || 0) + ", " + (b || 0) + ")";
+							};
+
+							return RGB;
+						})(),
+
+						enumerable: true
+					},
+
+					RGBA: {
+						value: (function () {
+							/**
+							 * @param {Number} r
+							 * @param {Number} g
+							 * @param {Number} b
+							 * @param {Number} a
+							 */
+							function RGBA (r, g, b, a) {
+								return "RGBA(" + (r || 0) + ", " + (g || 0) + ", " + (b || 0) + ", " + (a || 0) + ")";
+							};
+
+							return RGBA;
+						})(),
+
+						enumerable: true
+					}
+				});
+
+				return Svg;
+			})(),
+
+			enumerable: true
+		}
+	});
+
+	Object.defineProperties(Document.prototype, {
+		createElementWithParam: {
+			/**
+			 * @param {String} tagName
+			 * @param {object} [option={}]
+			 */
+			value (tagName, option) {
+				option = option || {};
+
+				let elem = document.createElement(tagName);
+					!option.attributes || (function () {
+						for (let paramName in option.attributes) {
+							elem.setAttribute(paramName, option.attributes[paramName]);
+						}
+					})();
+					
+					!option.styles || (function () {
+						elem.setAttribute("Style", InlineStyle(option.styles));
+					})();
+					
+					!option.events || (function () {
+						for (let eventName in option.events) {
+							elem.addEventListener(eventName, option.events[eventName]);
+						}
+					})();
+
+					!option.children || (function () {
+						for (let i = 0; i < option.children.length; i++) {
+							elem.appendChild(option.children[i]);
+						}
+					})();
+				
+				return elem;
+			}
+		},
+
+		createElementNSWithParam: {
+			/**
+			 * @param {String} nameSpace
+			 * @param {String} tagName
+			 * @param {object} [option={}]
+			 */
+			value (nameSpace, tagName, option) {
+				option = option || {};
+
+				let elem = document.createElementNS(nameSpace, tagName);
+					!option.attributes || (function () {
+						for (let paramName in option.attributes) {
+							elem.setAttribute(paramName, option.attributes[paramName]);
+						}
+					})();
+					
+					!option.styles || (function () {
+						elem.setAttribute("Style", InlineStyle(option.styles));
+					})();
+					
+					!option.events || (function () {
+						for (let eventName in option.events) {
+							elem.addEventListener(eventName, option.events[eventName]);
+						}
+					})();
+
+					!option.children || (function () {
+						for (let i = 0; i < option.children.length; i++) {
+							elem.appendChild(option.children[i]);
+						}
+					})();
+				
+				return elem;
+			}
+		}
+	});
+
+
 
 	Object.defineProperties(Math.random, {
 		randomInt: {
@@ -38,81 +385,6 @@
 				}
 
 				return result;
-			}
-		}
-	});
-
-	Object.defineProperties(Document.prototype, {
-		createElementWithParam: {
-			/**
-			 * @param {string} tagName
-			 * @param {object} options
-			 */
-			value (tagName, options) {
-				let elem = document.createElement(tagName);
-				
-				if (options) {
-					!options.attributes || (function () {
-						for (let paramName in options.attributes) {
-							elem.setAttribute(paramName, options.attributes[paramName]);
-						}
-					})();
-					
-					!options.styles || (function () {
-						elem.setAttribute("Style", InlineStyle(options.styles));
-					})();
-					
-					!options.events || (function () {
-						for (let eventName in options.events) {
-							elem.addEventListener(eventName, options.events[eventName]);
-						}
-					})();
-
-					!options.children || (function () {
-						for (let i = 0; i < options.children.length; i++) {
-							elem.appendChild(options.children[i]);
-						}
-					})();
-				}
-				
-				return elem;
-			}
-		},
-
-		createElementNSWithParam: {
-			/**
-			 * @param {string} nameSpace
-			 * @param {string} tagName
-			 * @param {object} options
-			 */
-			value (nameSpace, tagName, options) {
-				let elem = document.createElementNS(nameSpace, tagName);
-				
-				if (options) {
-					!options.attributes || (function () {
-						for (let paramName in options.attributes) {
-							elem.setAttribute(paramName, options.attributes[paramName]);
-						}
-					})();
-					
-					!options.styles || (function () {
-						elem.setAttribute("Style", InlineStyle(options.styles));
-					})();
-					
-					!options.events || (function () {
-						for (let eventName in options.events) {
-							elem.addEventListener(eventName, options.events[eventName]);
-						}
-					})();
-
-					!options.children || (function () {
-						for (let i = 0; i < options.children.length; i++) {
-							elem.appendChild(options.children[i]);
-						}
-					})();
-				}
-				
-				return elem;
 			}
 		}
 	});
@@ -131,18 +403,20 @@ const DOM = (function () {
 	 * => ${:elemName} … elemNameセレクタの1要素を返す
 	 * => @{:elemName} … elemNameセレクタの要素を返す
 	 * 
-	 * @param {string} selectorStr
+	 * @param {String} selectorStr
+	 * @param {object} [option={}]
 	 */
-	const DOM = function (selectorStr) {
-		selectorStr = selectorStr || "";
+	const DOM = function (selectorStr, option) {
+		selectorStr = selectorStr || "",
+		option = option || {};
 
 		let elem = null;
 
 		switch (selectorStr.substr(0, 1)) {
 			default:
 				try {
-					elem = document.createElement(selectorStr);
-				} catch (Err) {
+					elem = document.createElementWithParam(selectorStr, option);
+				} catch (err) {
 					throw new SyntaxError("The selector includes invalid characters.");
 				}
 
@@ -175,12 +449,9 @@ const DOM = (function () {
 
 		return elem;
 	}; Object.defineProperties(DOM, {
-		name: { value: "DOM Extender" },
-		version: { value: 3.0 },
-
 		xhr: {
 			/**
-			 * @param {object} option
+			 * @param {object} [option={}]
 			 */
 			value (option) {
 				option = option || {};
@@ -213,7 +484,7 @@ const DOM = (function () {
 
 		jsonp: {
 			/**
-			 * @param {object} option
+			 * @param {object} [option={}]
 			 */
 			value (option) {
 				option = option || {};
@@ -242,7 +513,7 @@ const DOM = (function () {
 		rest: {
 			value: (function () {
 				/**
-				 * @param {object} option
+				 * @param {object} [option={}]
 				 */
 				function rest (option) {
 					option = option || {};
@@ -297,8 +568,8 @@ const DOM = (function () {
 
 		import: {
 			/**
-			 * @param {string} url
-			 * @param {function} onLoad
+			 * @param {String} url
+			 * @param {function} [onLoad=function]
 			 */
 			value (url, onLoad) {
 				this.xhr({
@@ -306,20 +577,11 @@ const DOM = (function () {
 					url: url,
 					doesSync: true,
 
-					onLoad: function (event1) {
-						if (event1.target.response.match("#{using} DOMExtender")) {
-							let elem = DOM("Script");
-								elem.src = event1.target.responseURL;
-
-								elem.onload = elem.onreadystatechange = function (event2) {
-									if (!event2.target.readyState || event2.target.readyState == "loaded" || event2.target.readyState == "complete") {
-										!onLoad || onLoad();
-									}
-								}
-
-							DOM(":Head")[0].appendChild(elem);
+					onLoad: function (event) {
+						if (event.target.response.match("#{using} DOMExtender")) {
+							eval(event.target.response)(apiInfo);
 						} else {
-							throw new EvalError("Please load the API for DOM Extender!")
+							throw new EvalError("Load the API for DOM Extender!")
 						}
 					}
 				});
@@ -329,13 +591,110 @@ const DOM = (function () {
 		},
 
 
+		
+		/** @type {Number} */
+		width: { value: window.innerWidth, configurable: true, writable: true, enumerable: true },
+
+		/** @type {Number} */
+		height: { value: window.innerHeight, configurable: true, writable: true, enumerable: true },
+
+		util: {
+			value: (function () {
+				const util = Object.create(Object.prototype, {
+					degToRad: {
+						/**
+						 * @param {Number} degree
+						 */
+						value (degree) {
+							return degree * Math.PI / 180;
+						},
+
+						enumerable: true
+					},
+
+					radToDeg: {
+						/**
+						 * @param {Number} radian
+						 */
+						value (radian) {
+							return radian * 180 / Math.PI;
+						},
+
+						enumerable: true
+					},
+
+					paramInit: {
+						/**
+						 * @param {any} obj
+						 * @param {any} initValue
+						 */
+						value (obj, initValue) {
+							return (obj != false && !obj) ? initValue : obj;
+						},
+
+						enumerable: true
+					},
+
+					getCenteredBoundingClientRect: {
+						/**
+						 * @param {Number} [width=0]
+						 * @param {Number} [height=0]
+						 * @param {Number} [basisWidth=window.outerWidth]
+						 * @param {Number} [basisHeight=window.outerHeight]
+						 */
+						value (width, height, basisWidth, basisHeight) {
+							width = width || 0,
+							height = height || 0;
+
+							return Object.create(ClientRect.prototype, {
+								width: { value: width },
+								height: { value: height },
+
+								left: { value: (window.outerWidth - width) / 2},
+								right: { value: (window.outerWidth + width) / 2},
+								top: { value: (window.outerHeight - height) / 2},
+								bottom: { value: (window.outerHeight + height) / 2}
+							});
+						}
+					}
+				}); util[Symbol.toStringTag] = "DOM Utility";
+
+				return util;
+			})(),
+
+			enumerable: true
+		},
+
+
+
+		APIInfo: {
+			value: (function () {
+				/**
+				 * @param {String} apiName
+				 * @param {Number} apiVersion
+				 */
+				function APIInfo (apiName, apiVersion) {
+					this.name = apiName || "Untitled API";
+					this.version = apiVersion || 1.0;
+				}; APIInfo.prototype = Object.create(null, {
+					constructor: { value: APIInfo },
+
+					name: { value: "", configurable: true, writable: true, enumerable: true },
+					version: { value: 0.0, configurable: true, writable: true, enumerable: true }
+				});
+
+				return APIInfo;
+			})(),
+
+			enumerable: true
+		},
 
 		Watcher: {
 			value: (function () {
 				let watchers = [];
 
 				/**
-				 * @param {object} option
+				 * @param {object} [option={}]
 				 */
 				function Watcher (option) {
 					option = option || {};
@@ -357,7 +716,7 @@ const DOM = (function () {
 
 					setWatchTick: {
 						/**
-						 * @param {number} tick
+						 * @param {Number} tick
 						 */
 						value (tick) { this.watchTick = tick }, enumerable: true
 					},
@@ -370,6 +729,9 @@ const DOM = (function () {
 					}
 				}); Object.defineProperties(Watcher, {
 					addWatcher: {
+						/**
+						 * @param {Watcher} watcher
+						 */
 						value (watcher) {
 							watcher.watcherID[0] = setInterval(function () {
 								watcher.newValue = watcher.target.value;
@@ -395,6 +757,9 @@ const DOM = (function () {
 					},
 
 					removeWatcher: {
+						/**
+						 * @param {Watcher} watcher
+						 */
 						value (watcher) {
 							clearInterval(watcher.watcherID[0]);
 							clearInterval(watcher.watcherID[810]);
@@ -415,7 +780,7 @@ const DOM = (function () {
 		Randomizer: {
 			value: (function () {
 				/**
-				 * @param {RamdomizeType} type
+				 * @param {Symbol} [usedType=Symbol]
 				 */
 				function Randomizer (usedType) {
 					this.TYPE = Randomizer.TYPE,
@@ -431,7 +796,7 @@ const DOM = (function () {
 
 					setType: {
 						/**
-						 * @param {RandomizeType} usedType
+						 * @param {Symbol} [usedType=Symbol]
 						 */
 						value (usedType) {
 							!usedType || (this.currentType = this.TYPE[Symbol.keyFor(usedType)]);
@@ -448,6 +813,8 @@ const DOM = (function () {
 							if (randomizeType) {
 								this.TYPE[randomizeType.name] = randomizeType.type,
 								this.CHARMAP[randomizeType.name] = randomizeType.charMap;
+
+								this.currentType = randomizeType.type;
 							}
 						},
 
@@ -462,6 +829,8 @@ const DOM = (function () {
 							if (randomizeType) {
 								this.TYPE[randomizeType.name] = undefined,
 								this.CHARMAP[randomizeType.name] = undefined;
+								
+								this.currentType = null;
 							}
 						},
 
@@ -472,6 +841,8 @@ const DOM = (function () {
 						value () {
 							this.TYPE = DOM.Randomize.TYPE,
 							this.CHARMAP = DOM.Randomize.CHARMAP;
+
+							this.currentType = null;
 						},
 
 						enumerable: true
@@ -479,7 +850,7 @@ const DOM = (function () {
 
 					generate: {
 						/**
-						 * @param {number} strLength
+						 * @param {Number} [strLength=8]
 						 */
 						value (strLength) {
 							let result = "";
@@ -487,7 +858,11 @@ const DOM = (function () {
 							strLength = strLength || 8;
 
 							for (let i = 0; i < strLength; i++) {
-								result += this.CHARMAP[Symbol.keyFor(this.currentType)][Math.random.randomInt(this.CHARMAP[Symbol.keyFor(this.currentType)].length - 1)];
+								try {
+									result += this.CHARMAP[Symbol.keyFor(this.currentType)][Math.random.randomInt(this.CHARMAP[Symbol.keyFor(this.currentType)].length - 1)];
+								} catch (err) {
+									throw new TypeError("Do not {:generate} before using {:setType}");
+								}
 							}
 
 							return result;
@@ -558,8 +933,8 @@ const DOM = (function () {
 					RamdomizeType: {
 						value: (function () {
 							/**
-							 * @param {string} name
-							 * @param {string} usedChars
+							 * @param {String} [name="Untitled Type"]
+							 * @param {String} [usedChars=""]
 							 */
 							function RandomizeType (name, usedChars) {
 								!name || (this.name = name);
@@ -569,7 +944,7 @@ const DOM = (function () {
 							}; RandomizeType.prototype = Object.create(null, {
 								constructor: { value: RandomizeType },
 
-								name: { value: "LEVEL", configurable: true, writable: true, enumerable: true },
+								name: { value: "Untitled Type", configurable: true, writable: true, enumerable: true },
 								type: { value: null, configurable: true, writable: true, enumerable: true },
 								charMap: { value: ["0"], configurable: true, writable: true, enumerable: true }
 							});
@@ -603,31 +978,35 @@ const DOM = (function () {
 
 
 
+	/**
+	 * @type {DOM.APIInfo}
+	 */
+	let apiInfo = new DOM.APIInfo("DOM Extender", 3.0);
+
+	window.addEventListener("resize", function (event) {
+		DOM.width = window.innerWidth;
+		DOM.height = window.innerHeight;
+	});
+
 	return DOM;
 })();
 
 
 
 (function () {
-	window.DOM.APIError = function (Name) {
-		Error.call(this);
-
-		Name = DOM.Util.Param(Name, "Unknown");
-
-		this.name = "APIError";
-		this.message = Name + " isn't available for DOM Extender";
-		Error.captureStackTrace(this, this.constructor);
-	}, window.DOM.APIError[Symbol.toStringTag] = "APIError";
-
-	window.DOM.APIError.prototype = Object.create(Error.prototype, {
-		constructor: {
-			value: DOM.APIError
+	/*window.DOM.Util.ToArray = function (Obj) {
+		let Elems = [];
+		
+		for (let i = 0; i < Obj.length; i++) {
+			Elems.push(Obj[i]);
 		}
-	});
+		
+		return Elems;
+	};*/
 
 
 
-	window.DOM.Caret = {}, window.DOM.Caret[Symbol.toStringTag] = "Caret";
+	/*window.DOM.Caret = {}, window.DOM.Caret[Symbol.toStringTag] = "Caret";
 
 	window.DOM.Caret.moveTo = function (Container, Start, End) {
 		let Selecter = window.getSelection();
@@ -651,176 +1030,13 @@ const DOM = (function () {
 
 		Selecter.removeAllRanges();
 		Selecter.addRange(Area);
-	};
-
-
-	
-	window.DOM.Util = {}, window.DOM.Util[Symbol.toStringTag] = "Util";
-	
-	window.DOM.Util.DegToRad = function (Deg) {
-		return Deg * Math.PI / 180;
-	};
-	
-	window.DOM.Util.ToArray = function (Obj) {
-		let Elems = [];
-		
-		for (let i = 0; i < Obj.length; i++) {
-			Elems.push(Obj[i]);
-		}
-		
-		return Elems;
-	};
-
-	window.DOM.Util.Param = function (Obj, InitValue) {
-		return (Obj != false && !Obj) ? InitValue : Obj;
-	};
-
-	window.DOM.Util.getCenteredBoundingClientRect = function (Width, Height) {
-		return Object.create(ClientRect.prototype, {
-			width: { value: Width },
-			height: { value: Height },
-
-			left: { value: (window.outerWidth - Width) / 2},
-			right: { value: (window.outerWidth + Width) / 2},
-			top: { value: (window.outerHeight - Height) / 2},
-			bottom: { value: (window.outerHeight + Height) / 2}
-		});
-	};
-	
-	
-	
-	window.DOM.width = window.innerWidth;
-	window.DOM.height = window.innerHeight;
-	
-	
-
-	window.addEventListener("resize", function (Event) {
-		window.DOM.width = window.innerWidth;
-		window.DOM.height = window.innerHeight;
-	});
+	};*/
 })();
 
 
 
 (function () {
 	importScript("https://cdnjs.cloudflare.com/ajax/libs/mobile-detect/1.3.5/mobile-detect.min.js");
-})();
-
-
-
-(function () {
-	window.Canvas = function (Width, Height) {
-		let Elem = document.createElement("Canvas");
-			Elem.width = Width ? Width : "0";
-			Elem.width = Height ? Height : "0";
-
-		return Elem;
-	};
-
-	window.Script = function (Src, Options) {
-		let Elem = document.createElement("Script");
-			Elem.src = Src ? Src : "";
-			
-		Options ? (function () {
-			Options.Async ? Elem.setAttribute("Async", "") : null;
-			Options.Defer ? Elem.setAttribute("Defer", "") : null;
-		})() : (function () {
-			
-		})();
-		
-		return Elem;
-	};
-	
-	window.Style = function (Data) {
-		let Elem = document.createElement("Style"),
-			Memory = [];
-			
-		Data ? (function () {
-			for (let ElemName in Data) {
-				Memory.push("");
-				Memory.push(ElemName + " {");
-				
-				for (let StyleName in Data[ElemName]) {
-					Memory.push("\t" + StyleName + ": " + Data[ElemName][StyleName] + ";");
-				}
-				
-				Memory.push("}");
-				Memory.push("");
-			}
-			
-			Elem.textContent = Memory.join("\n");
-		})() : (function () {
-			
-		})();
-		
-		return Elem;
-	};
-	
-	window.InlineStyle = function (Styles) {
-		let Memory = [];
-		
-		for (let StyleName in Styles) {
-			Memory.push(StyleName + ": " + Styles[StyleName] + ";");
-		}
-		
-		return Memory.join(" ");
-	};
-
-
-	
-	window.Svg = function (Width, Height) {
-		let Elem = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-			Elem.setAttribute("version", "1.1");
-			Elem.setAttribute("xmlns", "http://www.w3.org/2000/svg");
-			
-			Elem.setAttribute("width", Width ? Width : "0");
-			Elem.setAttribute("height", Height ? Height : "0");
-			Elem.setAttribute("viewBox", "0 0 " + (Width ? Width : "0") + " " + (Height ? Height : "0"));
-			
-		return Elem;
-	}, window.Svg[Symbol.toStringTag] = "Svg";
-	
-	window.Svg.Rect = function (Args) {
-		let Elem = document.createElementNSWithParam("http://www.w3.org/2000/svg", "rect", Args.Params ? Args.Params : {});
-			Elem.setAttribute("x", Args.X ? Args.X : "0");
-			Elem.setAttribute("y", Args.Y ? Args.Y : "0");
-			
-			Elem.setAttribute("width", Args.Width ? Args.Width : "0");
-			Elem.setAttribute("height", Args.Height ? Args.Height : "0");
-			Elem.setAttribute("fill", Args.Fill ? Args.Fill : "#000000");
-			
-		return Elem;
-	};
-
-	window.Svg.Circle = function (Args) {
-		let Elem = document.createElementNSWithParam("http://www.w3.org/2000/svg", "circle", Args.Params ? Args.Params : {});
-			Elem.setAttribute("cx", Args.X ? Args.X : "0");
-			Elem.setAttribute("cy", Args.Y ? Args.Y : "0");
-			Elem.setAttribute("r", Args.Radius ? Args.Radius : "0");
-
-			Elem.setAttribute("fill", Args.Fill ? Args.Fill : "#000000");
-			
-		return Elem;
-	};
-	
-	window.Svg.Text = function (Args) {
-		let Elem = document.createElementNSWithParam("http://www.w3.org/2000/svg", "text", Args.Params ? Args.Params : {});
-			Elem.textContent = Args.Value ? Args.Value : "";
-			
-			Elem.setAttribute("x", Args.X ? Args.X : "0");
-			Elem.setAttribute("y", Args.Y ? Args.Y : "0");
-			Elem.setAttribute("rotate", Args.Rotate ? Args.Rotate : "0");
-			
-		return Elem;
-	};
-	
-	window.Svg.RGB = function (R, G, B) {
-		return "RGB(" + (R ? R : 0) + ", " + (G ? G : 0) + ", " + (B ? B : 0) + ")";
-	};
-	
-	window.Svg.RGBA = function (R, G, B, A) {
-		return "RGBA(" + (R ? R : 0) + ", " + (G ? G : 0) + ", " + (B ? B : 0) + ", " + (A ? A : 0) + ")";
-	};
 })();
 
 (function () {
@@ -897,94 +1113,6 @@ const DOM = (function () {
 		return Str.replace(/\+/g, '-').replace(/\//g, '_');
 	};
 
-	window.document.createElementWithParam = function (TagName, Params) {
-		let Elem = document.createElement(TagName);
-		
-		if (Params) {
-			Params.Attributes ? (function () {
-				for (let ParamName in Params.Attributes) {
-					Elem.setAttribute(ParamName, Params.Attributes[ParamName]);
-				}
-			})() : (function () {
-				
-			})();
-			
-			Params.Styles ? (function () {
-				Elem.setAttribute("Style", InlineStyle(Params.Styles));
-			})() : (function () {
-				
-			})();
-			
-			Params.Events ? (function () {
-				for (let EventName in Params.Events) {
-					Elem.addEventListener(EventName, Params.Events[EventName]);
-				}
-			})() : (function () {
-				
-			})();
-
-			Params.Children ? (function () {
-				for (let i = 0; i < Params.Children.length; i++) {
-					Elem.appendChild(Params.Children[i]);
-				}
-			})() : (function () {
-				
-			})();
-		}
-		
-		return Elem;
-	};
-	
-	window.document.createElementNSWithParam = function (NameSpace, TagName, Params) {
-		let Elem = document.createElementNS(NameSpace, TagName);
-		
-		if (Params) {
-			Params.Attributes ? (function () {
-				for (let ParamName in Params.Attributes) {
-					Elem.setAttribute(ParamName, Params.Attributes[ParamName]);
-				}
-			})() : (function () {
-				
-			})();
-			
-			Params.Styles ? (function () {
-				Elem.setAttribute("Style", InlineStyle(Params.Styles));
-			})() : (function () {
-				
-			})();
-			
-			Params.Events ? (function () {
-				for (let EventName in Params.Events) {
-					Elem.addEventListener(EventName, Params.Events[EventName]);
-				}
-			})() : (function () {
-				
-			})();
-
-			Params.Children ? (function () {
-				for (let i = 0; i < Params.Children.length; i++) {
-					Elem.appendChild(Params.Children[i]);
-				}
-			})() : (function () {
-				
-			})();
-		}
-		
-		return Elem;
-	};
-
-	window.Math.random.randomInt = function () {
-		let Result = 0;
-
-		if (arguments.length >= 2) {
-			Result = Math.round(Math.random() * (arguments[1] - arguments[0]) + arguments[0]);
-		} else {
-			Result = Math.round(Math.random() * arguments[0]);
-		}
-
-		return Result;
-	};
-
 	window.Math.radicalRoot = function (base, exponent) {
 		return Math.pow(base, 1 / exponent);
 	};
@@ -993,32 +1121,6 @@ const DOM = (function () {
 
 
 (function () {
-	window.Object.prototype.getClassName = function () {
-		return Object.prototype.toString.call(this).slice(8, -1);
-	}, Object.defineProperty(window.Object.prototype, "getClassName", {
-		enumerable: false
-	});
-	
-	window.Object.prototype.isStrictObject = function (Obj) {
-		if (Obj !== undefined) {
-			return (Obj.getClassName() !== "String" && Obj.getClassName() !== "Number" && Obj instanceof Object && !Array.isArray(Obj));
-		} else {
-			return (this.getClassName() !== "String" && this.getClassName() !== "Number" && this instanceof Object && !Array.isArray(this));
-		}
-	}, Object.defineProperty(window.Object.prototype, "isStrictObject", {
-		enumerable: false
-	});
-	
-	window.Object.prototype.isStrictArray = function (Obj) {
-		if (Obj !== undefined) {
-			return (Obj.getClassName() !== "String" && Obj.getClassName() !== "Number" && Obj instanceof Array && Array.isArray(Obj));
-		} else {
-			return (this.getClassName() !== "String" && this.getClassName() !== "Number" && this instanceof Array && Array.isArray(this));
-		}
-	}, Object.defineProperty(window.Object.prototype, "isStrictArray", {
-		enumerable: false
-	});
-
 	window.Object.prototype.connect = function (ValueSeparator, ParamSeparator) {
 		ValueSeparator = DOM.Util.Param(ValueSeparator, "=");
 		ParamSeparator = DOM.Util.Param(ParamSeparator, "&");
@@ -1080,15 +1182,6 @@ const DOM = (function () {
 		}
 		
 		return Result;
-	};
-
-	window.String.prototype.removeOverlay = function () {
-		let Result = this.split("");
-			Result = Result.filter(function (Elem, ID, Parent) {
-				return Parent.indexOf(Elem) == ID;
-			});
-
-		return Result.join("");
 	};
 })();
 
