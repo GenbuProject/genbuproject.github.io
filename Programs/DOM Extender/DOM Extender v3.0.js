@@ -104,7 +104,7 @@
 	Object.defineProperties(Window.prototype, {
 		importScript: {
 			/**
-			 * @param {String} url
+			 * @param {String} [url=""]
 			 * @param {function (Event)} [onLoad=function (event) {}]
 			 */
 			value (url, onLoad) {
@@ -132,7 +132,7 @@
 
 		btoaAsUTF8: {
 			/**
-			 * @param {String} str
+			 * @param {String} [str=""]
 			 */
 			value (str) {
 				return btoa(unescape(encodeURIComponent(str || "")));
@@ -141,7 +141,7 @@
 
 		atobAsUTF8: {
 			/**
-			 * @param {String} base64Str
+			 * @param {String} [base64Str=""]
 			 */
 			value (base64Str) {
 				return decodeURIComponent(escape(atob(base64Str || "")));
@@ -150,7 +150,7 @@
 
 		urlSafe: {
 			/**
-			 * @param {String} url
+			 * @param {String} [url=""]
 			 */
 			value (url) {
 				return (url || "").replace(/\+/g, '-').replace(/\//g, '_');
