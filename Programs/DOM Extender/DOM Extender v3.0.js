@@ -39,6 +39,34 @@
 					return (this.getClassName() !== "String" && this.getClassName() !== "Number" && this instanceof Array && Array.isArray(this));
 				}
 			}
+		},
+
+		connect: {
+			/**
+			 * @param {String} valueSeparator
+			 * @param {String} paramSeparator
+			 */
+			value (valueSeparator, paramSeparator) {
+				valueSeparator = valueSeparator || "=";
+				paramSeparator = paramSeparator || "&";
+
+				let result = [];
+
+				for (let i = 0; i < Object.entries(this).length; i++) {
+					result.push(Object.entries(this)[i].join(valueSeparator));
+				}
+				
+				return result.join(paramSeparator);
+			}
+		},
+
+		toQueryString: {
+			/**
+			 * @param {object} obj
+			 */
+			value (obj) {
+				return "?" + Object.prototype.connect.call(obj || this, "=", "&");
+			}
 		}
 	});
 
@@ -55,10 +83,81 @@
 
 				return result.join("");
 			}
+		},
+
+		replaces: {
+			/**
+			 * @param {Array<String>} replaceStrs
+			 */
+			value (replaceStrs) {
+				let res = this;
+				
+				for (let i = 0; i < replaceStrs.length; i++) {
+					res = res.replace(replaceStrs[i][0], replaceStrs[i][1]);
+				}
+				
+				return res;
+			}
 		}
 	});
 
 	Object.defineProperties(Window.prototype, {
+		importScript: {
+			/**
+			 * @param {String} url
+			 * @param {function (Event)} [onLoad=function (event) {}]
+			 */
+			value (url, onLoad) {
+				url = url || "",
+				onLoad = onLoad || function (event) {};
+
+				if (!(function () {
+					let scripts = document.getElementsByTagName("script");
+					
+					for (let i = 0; i < scripts.length; i++) {
+						if (scripts[i].src == url) return true;
+					}
+				})()) {
+					let elem = document.createElement("script");
+						elem.src = url;
+
+						elem.addEventListener("load", function (event) {
+							onLoad(event);
+						});
+
+					document.head.appendChild(elem);
+				}
+			}
+		},
+
+		btoaAsUTF8: {
+			/**
+			 * @param {String} str
+			 */
+			value (str) {
+				return btoa(unescape(encodeURIComponent(str || "")));
+			}
+		},
+
+		atobAsUTF8: {
+			/**
+			 * @param {String} base64Str
+			 */
+			value (base64Str) {
+				return decodeURIComponent(escape(atob(base64Str || "")));
+			}
+		},
+
+		urlSafe: {
+			/**
+			 * @param {String} url
+			 */
+			value (url) {
+				return (url || "").replace(/\+/g, '-').replace(/\//g, '_');
+			}
+		},
+
+
 		Script: {
 			value: (function () {
 				/**
@@ -69,7 +168,7 @@
 				function Script (url, option) {
 					option = option || {};
 
-					let elem = document.createElement("Script");
+					let elem = document.createElement("script");
 						!url || (elem.src = url);
 						elem.async = option.async || false;
 						elem.defer = option.defer || false;
@@ -78,9 +177,7 @@
 				};
 
 				return Script;
-			})(),
-
-			enumerable: true
+			})()
 		},
 
 		Style: {
@@ -92,7 +189,7 @@
 				function Style (data) {
 					data = data || {};
 
-					let elem = document.createElement("Style");
+					let elem = document.createElement("style");
 						elem.textContent = (function () {
 							let mem = [];
 
@@ -116,9 +213,7 @@
 				};
 
 				return Style;
-			})(),
-
-			enumerable: true
+			})()
 		},
 
 		InlineStyle: {
@@ -137,9 +232,7 @@
 				};
 
 				return InlineStyle;
-			})(),
-
-			enumerable: true
+			})()
 		},
 
 		Canvas: {
@@ -149,7 +242,7 @@
 				 * @param {Number} [height=0]
 				 */
 				function Canvas (width, height) {
-					let Elem = document.createElement("Canvas");
+					let Elem = document.createElement("canvas");
 						Elem.width = width || 0;
 						Elem.height = height || 0;
 
@@ -157,9 +250,7 @@
 				};
 
 				return Canvas;
-			})(),
-
-			enumerable: true
+			})()
 		},
 
 		Svg: {
@@ -179,13 +270,13 @@
 						
 					return elem;
 				}; Object.defineProperties(Svg, {
-					Rectangle: {
+					Rect: {
 						value: (function () {
 							/**
 							 * @param {object} [option={}]
 							 * @returns {HTMLElement}
 							 */
-							function Rectangle (option) {
+							function Rect (option) {
 								option = option || {};
 
 								let elem = document.createElementNSWithParam("http://www.w3.org/2000/svg", "rect", option.params);
@@ -199,10 +290,8 @@
 								return elem;
 							};
 
-							return Rectangle;
-						})(),
-
-						enumerable: true
+							return Rect;
+						})()
 					},
 
 					Circle: {
@@ -225,9 +314,7 @@
 							};
 
 							return Circle;
-						})(),
-
-						enumerable: true
+						})()
 					},
 
 					Text: {
@@ -250,51 +337,35 @@
 							};
 
 							return Text;
-						})(),
-
-						enumerable: true
+						})()
 					},
 
 					RGB: {
-						value: (function () {
-							/**
-							 * @param {Number} r
-							 * @param {Number} g
-							 * @param {Number} b
-							 */
-							function RGB (r, g, b) {
-								return "RGB(" + (r || 0) + ", " + (g || 0) + ", " + (b || 0) + ")";
-							};
-
-							return RGB;
-						})(),
-
-						enumerable: true
+						/**
+						 * @param {Number} r
+						 * @param {Number} g
+						 * @param {Number} b
+						 */
+						value (r, g, b) {
+							return "RGB(" + (r || 0) + ", " + (g || 0) + ", " + (b || 0) + ")";
+						}
 					},
 
 					RGBA: {
-						value: (function () {
-							/**
-							 * @param {Number} r
-							 * @param {Number} g
-							 * @param {Number} b
-							 * @param {Number} a
-							 */
-							function RGBA (r, g, b, a) {
-								return "RGBA(" + (r || 0) + ", " + (g || 0) + ", " + (b || 0) + ", " + (a || 0) + ")";
-							};
-
-							return RGBA;
-						})(),
-
-						enumerable: true
+						/**
+						 * @param {Number} r
+						 * @param {Number} g
+						 * @param {Number} b
+						 * @param {Number} a
+						 */
+						value (r, g, b, a) {
+							return "RGBA(" + (r || 0) + ", " + (g || 0) + ", " + (b || 0) + ", " + (a || 0) + ")";
+						}
 					}
 				});
 
 				return Svg;
-			})(),
-
-			enumerable: true
+			})()
 		}
 	});
 
@@ -371,7 +442,180 @@
 		}
 	});
 
+	Object.defineProperties(Node.prototype, {
+		appendTo: {
+			/**
+			 * @param {HTMLElement} [parent=document.body]
+			 */
+			value (parent) {
+				(parent || document.body).appendChild(this);
+			}
+		},
 
+		dismiss: {
+			value () {
+				this.parentElement.removeChild(this);
+			}
+		}
+	});
+
+	Object.defineProperties(Image.prototype, {
+		getImageData: {
+			/**
+			 * @returns {ImageData}
+			 */
+			value () {
+				this.crossOrigin = this.crossOrigin || "anonymous";
+
+				let cvs = document.createElement("canvas");
+					cvs.width = this.naturalWidth;
+					cvs.height = this.naturalHeight;
+					
+				let ctx = cvs.getContext("2d");
+					ctx.drawImage(this, 0, 0);
+					
+				return ctx.getImageData(0, 0, this.naturalWidth, this.naturalHeight);
+			}
+		},
+
+		toSvg: {
+			/**
+			 * @returns {SVGSVGElement}
+			 */
+			value () {
+				this.crossOrigin = this.crossOrigin || "anonymous";
+				
+				let pixels = this.getImageData(),
+					elem = new Svg(pixels.width, pixels.height);
+					
+				for (let y = 0; y < pixels.height; y++) {
+					for (let x = 0; x < pixels.width; x++) {
+						elem.appendChild(
+							new Svg.Rect({
+								width: 1,
+								height: 1,
+								
+								x: x,
+								x: y,
+								fill: Svg.RGBA(pixels.data[(x + y * pixels.width) * 4], pixels.data[(x + y * pixels.width) * 4 + 1], pixels.data[(x + y * pixels.width) * 4 + 2], pixels.data[(x + y * pixels.width) * 4 + 3])
+							})
+						);
+					}
+				}
+				
+				return elem;
+			}
+		}
+	});
+
+	Object.defineProperties(Location.prototype, {
+		querySort: {
+			value () {
+				let querys = {};
+				
+				for (var i = 0; i < this.search.substr(1).split("&").length; i++) {
+					querys[this.search.substr(1).split("&")[i].split("=")[0].toUpperCase()] = this.search.substr(1).split("&")[i].split("=")[1];
+				}
+				
+				return querys;
+			}
+		},
+
+		getIPs: {
+			/**
+			 * @param {function (object)} [onLoad=function (res) {}]
+			 */
+			value (onLoad) {
+				onLoad = onLoad || function (res) {};
+
+				let iframe = document.createElement("iframe");
+					iframe.style.display = "None";
+					
+				document.body.appendChild(iframe);
+				
+				let ip_dups = {};
+				
+				let RTCPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection;
+				let useWebKit = !!window.webkitRTCPeerConnection;
+				
+				if (!RTCPeerConnection) {
+					let win = iframe.contentWindow;
+					
+					RTCPeerConnection = win.RTCPeerConnection || win.mozRTCPeerConnection || win.webkitRTCPeerConnection;
+					useWebKit = !!win.webkitRTCPeerConnection;
+				}
+				
+				let pc = new RTCPeerConnection({
+					iceServers: [{
+						urls: "stun:stun.services.mozilla.com"
+					}],
+					
+					optional: [{
+						RtpDataChannels: true
+					}]
+				});
+				
+				function handleCandidate(candidate) {
+					let ip_regex = /([0-9]{1,3}(\.[0-9]{1,3}){3}|[a-f0-9]{1,4}(:[a-f0-9]{1,4}){7})/
+					let ip_addr = ip_regex.exec(candidate)[1];
+					
+					if (ip_dups[ip_addr] === undefined) {
+						onLoad({
+							type: ip_addr.match(/^(192\.168\.|169\.254\.|10\.|172\.(1[6-9]|2\d|3[01]))/) ? "v4" : ip_addr.match(/^[a-f0-9]{1,4}(:[a-f0-9]{1,4}){7}$/) ? "v6" : "private",
+							value: ip_addr
+						});
+					}
+					
+					ip_dups[ip_addr] = true;
+				}
+				
+				pc.onicecandidate = function (ice) {
+					if (ice.candidate) handleCandidate(ice.candidate.candidate);
+				}
+				
+				pc.createDataChannel("");
+				
+				pc.createOffer(function (result) {
+					pc.setLocalDescription(result, function () {}, function () {});
+				}, function () {
+					
+				});
+				
+				setTimeout(function () {
+					let lines = pc.localDescription.sdp.split('\n');
+						lines.forEach(function (line) {
+							if (line.indexOf('a=candidate:') === 0) handleCandidate(line);
+						});
+						
+					iframe.parentElement.removeChild(iframe);
+				}, 1000);
+			}
+		}
+	});
+
+	Object.defineProperties(Navigator.prototype, {
+		isMobile: {
+			value () {
+				let checker = new MobileDetect(window.navigator.userAgent);
+
+				return (checker.mobile() || checker.phone() || checker.tablet()) ? true : false;
+			}
+		}
+	});
+
+
+
+	Object.defineProperties(Math, {
+		radicalRoot: {
+			/**
+			 * @param {Number} base
+			 * @param {Number} exponent
+			 */
+			value (base, exponent) {
+				return Math.pow(base, 1 / exponent);
+			}
+		}
+	});
 
 	Object.defineProperties(Math.random, {
 		randomInt: {
@@ -389,6 +633,10 @@
 		}
 	});
 })();
+
+
+
+importScript("https://cdnjs.cloudflare.com/ajax/libs/mobile-detect/1.3.5/mobile-detect.min.js");
 
 const DOM = (function () {
 	/**
@@ -497,7 +745,7 @@ const DOM = (function () {
 					}
 				})();
 
-				let elem = document.createElement("Script");
+				let elem = document.createElement("script");
 					elem.src = (option.url || location.href) + (option.params ? "?" + param.join("&") : "");
 					
 					elem.onload = function (event) {
@@ -569,9 +817,11 @@ const DOM = (function () {
 		import: {
 			/**
 			 * @param {String} url
-			 * @param {function} [onLoad=function]
+			 * @param {function} [onLoad=function (event)]
 			 */
 			value (url, onLoad) {
+				onLoad = onLoad || function (event) {};
+
 				this.xhr({
 					type: "GET",
 					url: url,
@@ -580,8 +830,9 @@ const DOM = (function () {
 					onLoad: function (event) {
 						if (event.target.response.match("#{using} DOMExtender")) {
 							eval(event.target.response)(apiInfo);
+							onLoad(event);
 						} else {
-							throw new EvalError("Load the API for DOM Extender!")
+							throw new EvalError("Load the API for only DOM Extender")
 						}
 					}
 				});
@@ -989,341 +1240,4 @@ const DOM = (function () {
 	});
 
 	return DOM;
-})();
-
-
-
-(function () {
-	/*window.DOM.Util.ToArray = function (Obj) {
-		let Elems = [];
-		
-		for (let i = 0; i < Obj.length; i++) {
-			Elems.push(Obj[i]);
-		}
-		
-		return Elems;
-	};*/
-
-
-
-	/*window.DOM.Caret = {}, window.DOM.Caret[Symbol.toStringTag] = "Caret";
-
-	window.DOM.Caret.moveTo = function (Container, Start, End) {
-		let Selecter = window.getSelection();
-		let Area = Selecter.getRangeAt(0);
-
-		Area.setStart(Container, Start);
-		Area.setEnd(Container, End);
-
-		Selecter.removeAllRanges();
-		Selecter.addRange(Area);
-	};
-
-	window.DOM.Caret.appendValue = function (Value) {
-		let Selecter = window.getSelection();
-		let Area = Selecter.getRangeAt(0);
-
-		if (!Area.collapsed) Area.deleteContents();
-
-		Area.insertNode(new Text(Value));
-		Area.setStart(Area.commonAncestorContainer, Area.endOffset);
-
-		Selecter.removeAllRanges();
-		Selecter.addRange(Area);
-	};*/
-})();
-
-
-
-(function () {
-	importScript("https://cdnjs.cloudflare.com/ajax/libs/mobile-detect/1.3.5/mobile-detect.min.js");
-})();
-
-(function () {
-	window.importScript = function (Url, OnLoad) {
-		Url = Url ? Url : "";
-
-		let IsVaild = false;
-
-		for (let i = 0; i < document.getElementsByTagName("Script").length; i++) {
-			if (document.getElementsByTagName("Script")[i].src == Url) {
-				IsVaild = true;
-				break;
-			}
-		}
-
-		if (!IsVaild) {
-			let Elem = document.createElement("Script");
-				Elem.src = Url;
-
-				Elem.onload = Elem.onreadystatechange = function (Event) {
-					if (!Event.target.readyState || Event.target.readyState == "loaded" || Event.target.readyState == "complete") {
-						OnLoad ? OnLoad() : null;
-					}
-				}
-
-			document.head.appendChild(Elem);
-		}
-	};
-
-	window.importScripts = function (Urls, OnLoad) {
-		Urls = Urls ? Urls : [""];
-
-		let Loaded = [false],
-			Timer = setInterval(function () {
-				if (Loaded.every(function (Elem, ID, Parent) {
-					return Elem;
-				})) {
-					clearInterval(Timer);
-					OnLoad ? OnLoad() : null;
-				}
-			}, 1);
-
-		for (let i = 0; i < Urls.length; i++) {
-			let IsVaild = false;
-
-			for (let j = 0; j < document.getElementsByTagName("Script").length; j++) {
-				if (document.getElementsByTagName("Script")[j].src == Urls[i]) {
-					IsVaild = true;
-				}
-			}
-
-			if (!IsVaild) {
-				let Elem = document.createElement("Script");
-					Elem.src = Urls[i];
-
-					Elem.onload = function () {
-						Loaded[i] = true;
-					}
-					
-				document.head.appendChild(Elem);
-			}
-		}
-	};
-
-	window.btoaAsUTF8 = function (Str) {
-		return btoa(unescape(encodeURIComponent(Str)));
-	};
-
-	window.atobAsUTF8 = function (Base64Str) {
-		return decodeURIComponent(escape(atob(Base64Str)));
-	};
-
-	window.urlSafe = function (Str) {
-		return Str.replace(/\+/g, '-').replace(/\//g, '_');
-	};
-
-	window.Math.radicalRoot = function (base, exponent) {
-		return Math.pow(base, 1 / exponent);
-	};
-})();
-
-
-
-(function () {
-	window.Object.prototype.connect = function (ValueSeparator, ParamSeparator) {
-		ValueSeparator = DOM.Util.Param(ValueSeparator, "=");
-		ParamSeparator = DOM.Util.Param(ParamSeparator, "&");
-
-		let Result = [];
-
-		for (let i = 0; i < Object.entries(this).length; i++) {
-			Result.push(Object.entries(this)[i].join(ValueSeparator));
-		}
-		
-		return Result.join(ParamSeparator);
-	}, Object.defineProperty(window.Object.prototype, "connect", {
-		enumerable: false
-	});
-
-	window.Object.prototype.toQueryString = function (Obj) {
-		let Result = [];
-
-		if (Obj !== undefined) {
-			for (let i = 0; i < Object.entries(Obj).length; i++) {
-				Result.push(Object.entries(Obj)[i].join("="));
-			}
-		} else {
-			for (let i = 0; i < Object.entries(this).length; i++) {
-				Result.push(Object.entries(this)[i].join("="));
-			}
-		}
-
-		return "?" + Result.join("&");
-	}, Object.defineProperty(window.Object.prototype, "toQueryString", {
-		enumerable: false
-	});
-
-	window.Object.prototype.toObject = function (Obj) {
-		let Result = {};
-
-		if (Obj !== undefined) {
-			for (let Key in Obj) {
-				Result[Key] = Obj[Key];
-			}
-		} else {
-			for (let Key in this) {
-				Result[Key] = this[Key];
-			}
-		}
-
-		return Result;
-	}, Object.defineProperty(window.Object.prototype, "toObject", {
-		enumerable: false
-	});
-})();
-
-(function () {
-	window.String.prototype.replaces = function (ReplaceStrs) {
-		let Result = this;
-		
-		for (let i = 0; i < ReplaceStrs.length; i++) {
-			Result = Result.replace(ReplaceStrs[i][0], ReplaceStrs[i][1]);
-		}
-		
-		return Result;
-	};
-})();
-
-(function () {
-	window.Node.prototype.appendTo = function (Parent) {
-		(Parent ? Parent : document.body).appendChild(this);
-	};
-
-	window.Node.prototype.dismiss = function () {
-		this.parentElement.removeChild(this);
-	};
-})();
-
-(function () {
-	window.EventTarget.prototype.addEventListeners = function (Events, Listener, UseCapture) {
-		for (let i = 0; i < Events.length; i++) {
-			this.addEventListener(Events[i], Listener, UseCapture ? UseCapture : false);
-		}
-	};
-})();
-
-(function () {
-	window.HTMLCollection.prototype.forEach = function (CallBack) {
-		let Elems = [];
-		
-		for (let i = 0; i < this.length; i++) {
-			Elems.push(this[i]);
-		}
-		
-		Elems.forEach(CallBack);
-	};
-})();
-
-(function () {
-	window.Image.prototype.getImageData = function () {
-		let Cvs = document.createElement("Canvas");
-			Cvs.width = this.naturalWidth;
-			Cvs.height = this.naturalHeight;
-			
-		let Ctx = Cvs.getContext("2d");
-			Ctx.drawImage(this, 0, 0);
-			
-		return Ctx.getImageData(0, 0, this.naturalWidth, this.naturalHeight);
-	};
-	
-	window.Image.prototype.toSvg = function () {
-		this.crossOrigin ? this.crossOrigin = "anonymous" : null;
-		
-		let Pixels = this.getImageData(),
-			Elem = new Svg(Pixels.width, Pixels.height);
-			
-		for (let y = 0; y < Pixels.height; y++) {
-			for (let x = 0; x < Pixels.width; x++) {
-				Elem.appendChild(
-					new Svg.Rect({
-						Width: 1,
-						Height: 1,
-						
-						X: x,
-						Y: y,
-						Fill: Svg.RGBA(Pixels.data[(x + y * Pixels.width) * 4], Pixels.data[(x + y * Pixels.width) * 4 + 1], Pixels.data[(x + y * Pixels.width) * 4 + 2], Pixels.data[(x + y * Pixels.width) * 4 + 3])
-					})
-				);
-			}
-		}
-		
-		return Elem;
-	};
-})();
-
-(function () {
-	window.Location.prototype.querySort = function () {
-		var Querys = {};
-		
-		for (var i = 0; i < this.search.substr(1).split("&").length; i++) {
-			Querys[this.search.substr(1).split("&")[i].split("=")[0].toUpperCase()] = this.search.substr(1).split("&")[i].split("=")[1];
-		}
-		
-		return Querys;
-	};
-
-	window.Location.prototype.getIPs = function (OnLoad) {
-		let Frame = document.createElement("IFrame");
-			Frame.style.display = "None";
-			
-		document.body.appendChild(Frame);
-		
-		let ip_dups = {};
-		
-		let RTCPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection;
-		let useWebKit = !!window.webkitRTCPeerConnection;
-		
-		if (!RTCPeerConnection) {
-			let win = iframe.contentWindow;
-			
-			RTCPeerConnection = win.RTCPeerConnection || win.mozRTCPeerConnection || win.webkitRTCPeerConnection;
-			useWebKit = !!win.webkitRTCPeerConnection;
-		}
-		
-		let pc = new RTCPeerConnection({iceServers: [{urls: "stun:stun.services.mozilla.com"}], optional: [{RtpDataChannels: true}]});
-		
-		function handleCandidate(candidate) {
-			let ip_regex = /([0-9]{1,3}(\.[0-9]{1,3}){3}|[a-f0-9]{1,4}(:[a-f0-9]{1,4}){7})/
-			let ip_addr = ip_regex.exec(candidate)[1];
-			
-			if (ip_dups[ip_addr] === undefined) {
-				OnLoad({
-					type: ip_addr.match(/^(192\.168\.|169\.254\.|10\.|172\.(1[6-9]|2\d|3[01]))/) ? "v4" : ip_addr.match(/^[a-f0-9]{1,4}(:[a-f0-9]{1,4}){7}$/) ? "v6" : "private",
-					value: ip_addr
-				});
-			}
-			
-			ip_dups[ip_addr] = true;
-		}
-		
-		pc.onicecandidate = function (ice) {
-			if (ice.candidate) handleCandidate(ice.candidate.candidate);
-		}
-		
-		pc.createDataChannel("");
-		
-		pc.createOffer(function (result) {
-			pc.setLocalDescription(result, function(){}, function(){});
-		}, function () {
-			
-		});
-		
-		setTimeout(function () {
-			let lines = pc.localDescription.sdp.split('\n');
-				lines.forEach(function (line) {
-					if (line.indexOf('a=candidate:') === 0) handleCandidate(line);
-				});
-				
-			Frame.parentElement.removeChild(Frame);
-		}, 1000);
-	};
-})();
-
-(function () {
-	window.Navigator.prototype.isMobile = function () {
-		let Checker = new MobileDetect(window.navigator.userAgent);
-
-		return (Checker.mobile() || Checker.phone() || Checker.tablet()) ? true : false;
-	};
 })();
