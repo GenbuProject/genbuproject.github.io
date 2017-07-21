@@ -1,0 +1,34 @@
+<!DocType HTML>
+
+<HTML>
+	<Head>
+		<Meta Charset = "UTF-8" />
+		<Title>Genbu Project Official Site == Explorer.js</Title>
+		
+		<Script Src = "https://genbuproject.github.io/Programs/DOM Extender/DOM Extender v3.0.js"></Script>
+		<Script Src = "v2.js"></Script>
+		<Link Rel = "StyleSheet" Href = "v2.css" />
+
+		<Script>
+			window.addEventListener("DOMContentLoaded", function () {
+			});
+		</Script>
+	</Head>
+
+	<Body>
+		<GP-Explorer Style = "Width: 100%">
+			<GP-Explorer-Header>
+				<Li>名前</Li><Li>更新日時</Li><Li>種類</Li>
+			</GP-Explorer-Header>
+
+			<GP-Explorer-Content>
+				<GP-Explorer-File Path = "File/A.txt">
+					<Li>doc1.txt</Li><Li>2017/07/21</Li><Li>テキストファイル</Li>
+				</GP-Explorer-File>
+				
+				<GP-Explorer-File Path = "File/B.txt"></GP-Explorer-File>
+				<GP-Explorer-File Path = "File/C.txt"></GP-Explorer-File>
+			</GP-Explorer-Content>
+		</GP-Explorer>
+	</Body>
+</HTML>

@@ -1,3 +1,9 @@
+/*/
+ *###########################################################################
+ *#Explorer.js v1
+ *#Copyright (C) 2017 Genbu Project & Genbu Hase All Rights Reserved.
+ *###########################################################################
+/*/
 (function () {
 	let Style = document.createElement("Style");
 		Style.textContent = (function () {

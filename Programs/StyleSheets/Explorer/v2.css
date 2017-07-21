@@ -1,0 +1,70 @@
+/*/
+ *###########################################################################
+ *#Explorer.js v2
+ *#Copyright (C) 2017 Genbu Project & Genbu Hase All Rights Reserved.
+ *###########################################################################
+/*/
+GP-Explorer, GP-Explorer * {
+	Font: Small / 2 "";
+
+	Box-Sizing: Border-Box;
+}
+
+
+
+GP-Explorer {
+	Display: Table;
+
+	Padding: 0.5pc;
+
+	Background: var(--Color_Theme, White);
+	Border-Collapse: Collapse;
+	Cursor: Default;
+}
+
+GP-Explorer-Header {
+	Display: Table-Header-Group;
+}
+
+GP-Explorer-Header > Li {
+	Color: #666666;
+}
+
+GP-Explorer-Header > Li:After {
+	Content: "";
+
+	Display: Block;
+	Width: 1px;
+	Height: 100%;
+	Float: Right;
+
+	BackGround: Linear-Gradient(LightGray, White);
+}
+
+GP-Explorer-File {
+	Display: Table-Row;
+}
+
+GP-Explorer-File:Hover, GP-Explorer-File[Selected] {
+	Background: var(--Color_Selecting, SkyBlue);
+	Outline: Thin Solid Blue;
+
+	--Color_Selecting: Inherit;
+}
+
+GP-Explorer-Header, GP-Explorer-File {
+	Height: 100%;
+}
+
+GP-Explorer-Header > Li, GP-Explorer-File > Li {
+	Display: Table-Cell;
+	Height: 100%;
+
+	Padding-Left: 0.5pc;
+}
+
+
+
+GP-Explorer-Content {
+	Display: Table-Row-Group;
+}
