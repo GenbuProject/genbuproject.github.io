@@ -55,12 +55,50 @@ const GP = Object.create(Object.prototype, {
 								}
 							},
 
+							download: {
+								value () {
+									let dataGetter = new XMLHttpRequest();
+										dataGetter.open("GET", this.filePath);
+
+										dataGetter.onload = (function (event) {
+											let blob = new Blob([dataGetter.response], { type: this.contentType || dataGetter.getResponseHeader("Content-Type") }),
+												fileName = this.filePath.split("/")[this.filePath.split("/").length - 1];
+
+											if (window.navigator.msSaveBlob) {
+												window.navigator.msSaveBlob(blob, fileName);
+											} else {
+												let link = document.createElement("A");
+													link.href = URL.createObjectURL(blob);
+													link.download = fileName;
+													link.target = "_blank";
+
+												let clickEve = document.createEvent("MouseEvents");
+													clickEve.initEvent("click", false, true);
+													
+												link.dispatchEvent(clickEve);
+												
+												URL.revokeObjectURL(blob);
+											}
+										}).bind(this);
+
+										dataGetter.send(null);
+								}
+							},
+
 							createdCallback: {
 								value () {
 									this.initializeElement();
 
 									this.addEventListener("click", function (event) {
-										this.selected = !this.selected;
+										if (this.selected) {
+											this.download();
+										} else {
+											this.parentElement.querySelectorAll("GP-Explorer-File[Selected]").forEach(function (elem, index, parent) {
+												elem.selected = false;
+											});
+
+											this.selected = true;
+										}
 									});
 								}
 							},
@@ -74,36 +112,64 @@ const GP = Object.create(Object.prototype, {
 										case "path":
 											this.filePath = newValue;
 											break;
+
+										case "contenttype":
+											this.contentType = newValue;
+											break;
+
+										case "selected":
+											this.selected = (newValue === "" ? true : false);
+											break;
 									}
 								}
 							},
 
 
 
-							__filepath__: { value: "", configurable: true, writable: true },
-							__selected__: { value: false, configurable: true, writable: true },
+							filePath: (function () {
+								this.__filePath__ = "";
 
-							filePath: {
-								/** @returns {String} **/
-								get () { return this.__filepath__ },
+								return {
+									/** @returns {String} **/
+									get () { return this.__filePath__ },
 
-								/** @param {String} val **/
-								set (val) {
-									this.__filepath__ = val;
-									this.setAttribute("Path", val);
-								}
-							},
+									/** @param {String} val **/
+									set (val) {
+										this.__filePath__ = val;
+										this.setAttribute("Path", val);
+									}
+								};
+							})(),
 
-							selected: {
-								/** @returns {Boolean} **/
-								get () { return this.__selected__ },
+							contentType: (function () {
+								this.__contentType__ = "";
 
-								/** @param {Boolean} val **/
-								set (val) {
-									this.__selected__ = val;
-									val ? this.setAttribute("Selected", "") : this.removeAttribute("Selected");
-								}
-							}
+								return {
+									/** @returns {String} **/
+									get () { return this.__contentType__ },
+
+									/** @param {String} val **/
+									set (val) {
+										this.__contentType__ = val;
+										this.setAttribute("ContentType", val);
+									}
+								};
+							})(),
+
+							selected: (function () {
+								this.__selected__ = false;
+
+								return {
+									/** @returns {Boolean} **/
+									get () { return this.__selected__ },
+
+									/** @param {Boolean} val **/
+									set (val) {
+										this.__selected__ = val;
+										val ? this.setAttribute("Selected", "") : this.removeAttribute("Selected");
+									}
+								};
+							})()
 						})
 					}),
 

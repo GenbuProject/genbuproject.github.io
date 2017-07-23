@@ -18,16 +18,17 @@ GP-Explorer {
 	Padding: 0.5pc;
 
 	Background: var(--Color_Theme, White);
+	Border: Thin Solid LightGray;
 	Border-Collapse: Collapse;
+	
 	Cursor: Default;
 }
 
 GP-Explorer-Header {
 	Display: Table-Header-Group;
-}
 
-GP-Explorer-Header > Li {
-	Color: #666666;
+	Color: var(--Color_HeaderText, #666666);
+	--Color_HeaderText: Inherit;
 }
 
 GP-Explorer-Header > Li:After {
@@ -43,6 +44,9 @@ GP-Explorer-Header > Li:After {
 
 GP-Explorer-File {
 	Display: Table-Row;
+
+	Color: var(--Color_Text, Black);
+	--Color_Text: Inherit;
 }
 
 GP-Explorer-File:Hover, GP-Explorer-File[Selected] {

@@ -10,24 +10,22 @@
 		<Link Rel = "StyleSheet" Href = "v2.css" />
 
 		<Script>
-			window.addEventListener("DOMContentLoaded", function () {
-			});
+			console.info('The document uses "Explorer.js v2"');
 		</Script>
 	</Head>
 
-	<Body>
+	<Body Style = 'Color: #EEE; Font: 14px/2 "メイリオ", Meiryo, Osaka; BackGround: URL("https://genbuproject.github.io/Image/Back.jpg");'>
 		<GP-Explorer Style = "Width: 100%">
 			<GP-Explorer-Header>
 				<Li>名前</Li><Li>更新日時</Li><Li>種類</Li>
 			</GP-Explorer-Header>
 
 			<GP-Explorer-Content>
-				<GP-Explorer-File Path = "File/A.txt">
-					<Li>doc1.txt</Li><Li>2017/07/21</Li><Li>テキストファイル</Li>
-				</GP-Explorer-File>
-				
-				<GP-Explorer-File Path = "File/B.txt"></GP-Explorer-File>
-				<GP-Explorer-File Path = "File/C.txt"></GP-Explorer-File>
+				<GP-Explorer-File Path = "v1.js" ContentType = "text/javascript"><Li>Explorer v1.js</Li><Li>2017/07/20</Li><Li>JavaScriptファイル</Li></GP-Explorer-File>
+				<GP-Explorer-File Path = "v1.css" ContentType = "text/css"><Li>Explorer v1.css</Li><Li>2017/07/20</Li><Li>カスケードスタイルファイル</Li></GP-Explorer-File>
+
+				<GP-Explorer-File Path = "v2.js" ContentType = "text/javascript"><Li>Explorer v2.js</Li><Li>2017/07/22</Li><Li>JavaScriptファイル</Li></GP-Explorer-File>
+				<GP-Explorer-File Path = "v2.css" ContentType = "text/css"><Li>Explorer v2.css</Li><Li>2017/07/22</Li><Li>カスケードスタイルファイル</Li></GP-Explorer-File>
 			</GP-Explorer-Content>
 		</GP-Explorer>
 	</Body>
