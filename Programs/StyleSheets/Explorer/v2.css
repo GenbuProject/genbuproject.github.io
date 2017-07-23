@@ -20,7 +20,7 @@ GP-Explorer {
 	Background: var(--Color_Theme, White);
 	Border: Thin Solid LightGray;
 	Border-Collapse: Collapse;
-	
+
 	Cursor: Default;
 }
 
@@ -50,9 +50,16 @@ GP-Explorer-File {
 }
 
 GP-Explorer-File:Hover, GP-Explorer-File[Selected] {
-	Background: var(--Color_Selecting, SkyBlue);
 	Outline: Thin Solid Blue;
+}
 
+GP-Explorer-File:Hover {
+	Background: var(--Color_Hovering, SkyBlue);
+	--Color_Hovering: Inherit;
+}
+
+GP-Explorer-File[Selected] {
+	Background: var(--Color_Selecting, PowderBlue);
 	--Color_Selecting: Inherit;
 }
 

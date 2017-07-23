@@ -82,7 +82,9 @@ const GP = Object.create(Object.prototype, {
 										}).bind(this);
 
 										dataGetter.send(null);
-								}
+								},
+								
+								enumerable: true
 							},
 
 							createdCallback: {
@@ -126,50 +128,42 @@ const GP = Object.create(Object.prototype, {
 
 
 
-							filePath: (function () {
-								this.__filePath__ = "";
+							__filePath__: { value: "", configurable: true, writable: true },
+							__contentType__: { value: "", configurable: true, writable: true },
+							__selected__: { value: "", configurable: true, writable: true },
 
-								return {
-									/** @returns {String} **/
-									get () { return this.__filePath__ },
+							filePath: {
+								/** @returns {String} **/
+								get () { return this.__filePath__ },
 
-									/** @param {String} val **/
-									set (val) {
-										this.__filePath__ = val;
-										this.setAttribute("Path", val);
-									}
-								};
-							})(),
+								/** @param {String} val **/
+								set (val) {
+									this.__filePath__ = val;
+									this.setAttribute("Path", val);
+								}
+							},
 
-							contentType: (function () {
-								this.__contentType__ = "";
+							contentType: {
+								/** @returns {String} **/
+								get () { return this.__contentType__ },
 
-								return {
-									/** @returns {String} **/
-									get () { return this.__contentType__ },
+								/** @param {String} val **/
+								set (val) {
+									this.__contentType__ = val;
+									this.setAttribute("ContentType", val);
+								}
+							},
 
-									/** @param {String} val **/
-									set (val) {
-										this.__contentType__ = val;
-										this.setAttribute("ContentType", val);
-									}
-								};
-							})(),
+							selected: {
+								/** @returns {Boolean} **/
+								get () { return this.__selected__ },
 
-							selected: (function () {
-								this.__selected__ = false;
-
-								return {
-									/** @returns {Boolean} **/
-									get () { return this.__selected__ },
-
-									/** @param {Boolean} val **/
-									set (val) {
-										this.__selected__ = val;
-										val ? this.setAttribute("Selected", "") : this.removeAttribute("Selected");
-									}
-								};
-							})()
+								/** @param {Boolean} val **/
+								set (val) {
+									this.__selected__ = val;
+									val ? this.setAttribute("Selected", "") : this.removeAttribute("Selected");
+								}
+							}
 						})
 					}),
 
