@@ -7,8 +7,9 @@
 
 		<Script Src = "https://genbuproject.github.io/Programs/Too Many Tags/v2.0/Too Many Tags v2.0.js"></Script>
 		<Link Rel = "StyleSheet" Href = "https://genbuproject.github.io/Programs/Too Many Tags/v2.0/Too Many Tags v2.0.css" />
-		
-		<Script Src = "https://genbuproject.github.io/Programs/StyleSheets/Explorer/v1.js"></Script>
+
+		<Script Src = "https://genbuproject.github.io/Programs/StyleSheets/Explorer/v2.js"></Script>
+		<Link Rel = "StyleSheet" Href = "https://genbuproject.github.io/Programs/StyleSheets/Explorer/v2.css" />
 
 		<Script>
 			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -28,17 +29,17 @@
 		ダウンロードは以下のリンクからどうぞ。<Br /><Br />
 
 		<Collapsible Name = "Google日本語入力用" Value = "false" Width = "98%">
-			<Table Class = "Explorer">
-				<THead>
-					<TR><TH>名前</TH><TH>更新日時</TH><TH>種類</TH><TH>語彙登録数</TH></TR>
-				</THead>
+			<GP-Explorer Style = "Width: 100%">
+				<GP-Explorer-Header>
+					<Li>名前</Li><Li>更新日時</Li><Li>種類</Li><Li>語彙登録数</Li>
+				</GP-Explorer-Header>
 
-				<TBody>
-					<TR FileName = "珠照語録辞書 v4.txt" Path = "Google/v4.txt"><TD>珠照語録辞書 v4</TD><TD>2017/01/24</TD><TD>テキストファイル</TD><TD>90種</TD></TR>
-					<TR FileName = "珠照語録辞書 v5.txt" Path = "Google/v5.txt"><TD>珠照語録辞書 v5</TD><TD>2017/03/02</TD><TD>テキストファイル</TD><TD>114種</TD></TR>
-					<TR FileName = "珠照語録辞書 v6.txt" Path = "Google/v6.txt"><TD>珠照語録辞書 v6</TD><TD>2017/07/20</TD><TD>テキストファイル</TD><TD>130種</TD></TR>
-				</TBody>
-			</Table>
+				<GP-Explorer-Content>
+					<GP-Explorer-File Path = "Google/v4.txt"><Li>珠照語録辞書 v4</Li><Li>2017/01/24</Li><Li>テキストファイル</Li><Li>90種</Li></GP-Explorer-File>
+					<GP-Explorer-File Path = "Google/v5.txt"><Li>珠照語録辞書 v5</Li><Li>2017/03/02</Li><Li>テキストファイル</Li><Li>114種</Li></GP-Explorer-File>
+					<GP-Explorer-File Path = "Google/v6.txt"><Li>珠照語録辞書 v6</Li><Li>2017/07/20</Li><Li>テキストファイル</Li><Li>130種</Li></GP-Explorer-File>
+				</GP-Explorer-Content>
+			</GP-Explorer>
 		</Collapsible>
 	</Body>
 </HTML>

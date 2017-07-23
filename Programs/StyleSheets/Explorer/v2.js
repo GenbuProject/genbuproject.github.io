@@ -177,3 +177,7 @@ const GP = Object.create(Object.prototype, {
 		enumerable: true
 	}
 });
+
+
+
+console.info('This page uses "Explorer.js v2"');
