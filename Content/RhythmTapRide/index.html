@@ -3,22 +3,31 @@
 <HTML>
 	<Head>
 		<Meta Charset = "UTF-8" />
+		<Meta Name = "KeyWords" Content = "Rhythm Tap Ride, RTR, 音ゲー" />
+		<Meta Name = "Description" Content = "ブラウザ上で完全動作する音ゲーです。" />
+
 		<Link Rel = "ShortCut Icon" Href = "favicon.png" />
-		<Title>Genbu Project Official Site == Rhythm Tap Ride(RTR)</Title>
+		<Title>Rhythm Tap Ride(RTR)</Title>
 
-		<Script Src = "https://genbuproject.github.io/Programs/DOM Extender/DOM Extender v2.2.js"></Script>
-
-		<Link Rel = "StyleSheet" Href = "https://genbuproject.github.io/Programs/StyleSheets/Back.css" />
-		<Link Rel = "StyleSheet" Href = "RTR.css" />
+		<Script Src = "https://www.gstatic.com/firebasejs/4.1.3/firebase.js"></Script>
 
 		<Script>
-			let Base = null;
-
-			DOM.importAPI("RTR.js", function () {
-				Base = new RTR();
+			// Initialize Firebase
+			firebase.initializeApp({
+				apiKey: "AIzaSyC-VgGf9pRoOpVcTA3eIrump7tKOJH1_Ao",
+				authDomain: "rhythm-tap-ride.firebaseapp.com",
+				databaseURL: "https://rhythm-tap-ride.firebaseio.com",
+				projectId: "rhythm-tap-ride",
+				storageBucket: "rhythm-tap-ride.appspot.com",
+				messagingSenderId: "568561761665"
 			});
+
+			let p = new firebase.auth.GoogleAuthProvider();
+				p.addScope("profile");
+
+			firebase.auth().signInWithPopup(p);
 		</Script>
-		
+
 		<Script>
 			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
