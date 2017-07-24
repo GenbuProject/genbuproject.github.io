@@ -1,0 +1,29 @@
+* {
+	Box-Sizing: Border-Box;
+}
+
+HTML, Body {
+	Height: 100%;
+}
+
+Body {
+	Margin: 0;
+}
+
+
+
+RTR-Base {
+	Display: Flex;
+	Flex-Direction: Row;
+	Justify-Content: Center;
+	Align-Items: Baseline;
+	Width: 100%;
+	Height: 100%;
+}
+
+Img[Is="RTR-Tone"], Img[Is="RTR-Tone-CenterToneSign"] {
+	Width: 5%;
+
+	Border: Thin Solid Red;
+	Border-Radius: 100%;
+}
