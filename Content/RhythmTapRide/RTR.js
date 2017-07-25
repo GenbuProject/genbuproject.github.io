@@ -31,24 +31,47 @@ const RTR = (function () {
 			value: (function () {
 				const Tone = document.registerElement("RTR-Tone", {
 					prototype: Object.create(HTMLImageElement.prototype, {
-						createdCallback: { value () {} },
-						attachedCallback: { value () {} },
-						detachedCallback: { value () {} },
-						attributeChangedCallback: { value (attr, oldValue, newValue) {} }
-					}),
+						initializeElement: {
+							value () {
+								for (let i = 0; i < this.attributes.length; i++) {
+									this.attributeChangedCallback(this.attributes[i].name, "", this.attributes[i].value);
+								}
+							}
+						},
 
-					extends: "Img"
+						createdCallback: { value () { this.initializeElement() } },
+						attachedCallback: { value () { this.initializeElement() } },
+						detachedCallback: { value () { this.initializeElement() } },
+
+						attributeChangedCallback: {
+							value (attr, oldValue, newValue) {
+								switch (attr.toLowerCase()) {
+									case "src":
+										this.src = newValue;
+										break;
+								}
+							}
+						},
+
+
+
+						__src__: { value: "", configurable: true, writable: true },
+
+						src: {
+							get () { return this.__src__ },
+
+							set (val) {
+								this.__src__ = val; this.setAttribute("src", val);
+
+								this.style.backgroundImage = ["URL(", val, ")"].join('"');
+							}
+						}
+					})
 				}); Object.defineProperties(Tone, {
 					CenterToneSign: {
 						value: document.registerElement("RTR-Tone-CenterToneSign", {
 							prototype: Object.create(Tone.prototype, {
-								createdCallback: { value () {} },
-								attachedCallback: { value () {} },
-								detachedCallback: { value () {} },
-								attributeChangedCallback: { value (attr, oldValue, newValue) {} }
-							}),
-
-							extends: "Img"
+							})
 						}),
 
 						enumerable: true

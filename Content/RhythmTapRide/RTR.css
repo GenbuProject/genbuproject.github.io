@@ -21,9 +21,16 @@ RTR-Base {
 	Height: 100%;
 }
 
-Img[Is="RTR-Tone"], Img[Is="RTR-Tone-CenterToneSign"] {
-	Width: 5%;
+RTR-Tone:Before, RTR-Tone-CenterToneSign:Before {
+	Content: "";
 
+	Display: Block;
+	Padding-Top: 100%;
+}
+
+RTR-Tone, RTR-Tone-CenterToneSign {
+	Background: Transparent Center / Cover;
+	
 	Border: Thin Solid Red;
 	Border-Radius: 100%;
 }
