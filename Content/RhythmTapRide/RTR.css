@@ -1,22 +1,8 @@
-* {
-	Box-Sizing: Border-Box;
-}
-
-HTML, Body {
-	Height: 100%;
-}
-
-Body {
-	Margin: 0;
-}
-
-
-
 RTR-Base {
 	Display: Flex;
-	Flex-Direction: Row;
-	Justify-Content: Center;
-	Align-Items: Baseline;
+	Flex-Direction: Column;
+	Align-Items: Center;
+	
 	Width: 100%;
 	Height: 100%;
 }
@@ -33,4 +19,16 @@ RTR-Tone, RTR-Tone-CenterToneSign {
 	
 	Border: Thin Solid Red;
 	Border-Radius: 100%;
+}
+
+RTR-Score {
+	Display: Flex;
+	Flex-Direction: Column;
+	Align-Items: Center;
+
+	Width: 100%;
+	Height: 15%;
+
+	Background-Image: Linear-Gradient(-45deg, RGBA(255, 255, 255, 0.5) 25%, Transparent 25%, Transparent 50%, RGBA(255, 255, 255, 0.5) 50%, RGBA(255, 255, 255, 0.5) 75%, Transparent 75%, Transparent);
+	Background-Size: 0.25pc 0.25pc;
 }

@@ -1,9 +1,35 @@
-<Template ID = "RTR-Base">
+<Template ID = "RTR-Score">
+	<Style>
+		RTR-Score-Scorebar, RTR-Score-ScorePoint {
+			Display: Flex;
+			Flex-Direction: Row;
+			Justify-Content: Center;
+			Align-Items: Center;
+			Flex: 1;
 
-</Template>
+			Width: 100%;
+		}
 
-<Template ID = "RTR-Tone">
-</Template>
+		RTR-Score-Scorebar {
+			Background: RGBA(0, 0, 0, 0.5);
+		}
 
-<Template ID = "RTR-Tone-CenterMark">
+		RTR-Score-Scorebar > Img {
+			Height: 100%;
+
+			Margin-Right: 2pc;
+		}
+
+		RTR-Score-Scorebar > Meter {
+			Width: 100%;
+		}
+	</Style>
+
+	<RTR-Score-Scorebar>
+		<Img Src = "assets/Score.svg" /><Meter Min = "0" Max = "1000000" Value = "0"></Meter>
+	</RTR-Score-Scorebar>
+
+	<RTR-Score-ScorePoint>
+		<Content></Content>
+	</RTR-Score-ScorePoint>
 </Template>
