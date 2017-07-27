@@ -127,10 +127,6 @@ const RTR = (function () {
 									case "value":
 										this.value = parseInt(newValue);
 										break;
-
-									case "rankscore":
-										this.rankScore = newValue.split(",");
-										break;
 								}
 							}
 						},
@@ -146,8 +142,9 @@ const RTR = (function () {
 							/** @param {Number} val */
 							set (val) {
 								this.__value__ = val; this.setAttribute("value", val);
-
-								this.shadowRoot.querySelector("Meter").value = val;
+								
+								this.textContent = val;
+								this.shadowRoot.querySelector("RTR-Score-Scorebar").value = val;
 							}
 						}
 					})
@@ -180,21 +177,34 @@ const RTR = (function () {
 											case "value":
 												this.value = parseInt(newValue);
 												break;
-
-											case "rankscore":
-												this.rankScore = newValue.split(",");
-												break;
 										}
 									}
 								},
+
+								__value__: { value: 0, configurable: true, writable: true },
+
+								value: {
+									/** @returns {Number} */
+									get () { return this.__value__ },
+
+									/** @param {Number} val */
+									set (val) {
+										this.__value__ = val; this.setAttribute("value", val);
+
+										this.getRootNode().querySelector('Style[UUID="ScorebarStyle"]').textContent = (function () {
+											let style = new Style({
+												"RTR-Score-Scorebar:Before": {
+													"Width": ((val / 1000000) > 1 ? 1 : val / 1000000) * 100 + "%"
+												}
+											}); style.setAttribute("UUID", "ScorebarStyle");
+
+											return style.textContent.replace(/\r\n/g, "").replace(/\t/g, "");
+										})();
+									}
+								}
 							})
 						}),
 
-						enumerable: true
-					},
-
-					ScorePoint: {
-						value: document.registerElement("RTR-Score-ScorePoint", { prototype: Object.create(HTMLDivElement.prototype, {}) }),
 						enumerable: true
 					}
 				});

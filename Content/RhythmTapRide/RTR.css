@@ -2,7 +2,7 @@ RTR-Base {
 	Display: Flex;
 	Flex-Direction: Column;
 	Align-Items: Center;
-	
+
 	Width: 100%;
 	Height: 100%;
 }
@@ -21,6 +21,10 @@ RTR-Tone, RTR-Tone-CenterToneSign {
 	Border-Radius: 100%;
 }
 
+RTR-Tone-CenterToneSign {
+	Width: 5%;
+}
+
 RTR-Score {
 	Display: Flex;
 	Flex-Direction: Column;
@@ -28,7 +32,24 @@ RTR-Score {
 
 	Width: 100%;
 	Height: 15%;
+}
 
-	Background-Image: Linear-Gradient(-45deg, RGBA(255, 255, 255, 0.5) 25%, Transparent 25%, Transparent 50%, RGBA(255, 255, 255, 0.5) 50%, RGBA(255, 255, 255, 0.5) 75%, Transparent 75%, Transparent);
-	Background-Size: 0.25pc 0.25pc;
+RTR-Score-Scorebar:Before {
+	Content: "";
+
+	Display: Block;
+	Height: 100%;
+
+	Background: Linear-Gradient(90deg, Orange, DarkOrange);
+	Border-Radius: 1pc;
+}
+
+RTR-Score-Scorebar {
+	Display: Block;
+	Width: 100%;
+	Height: 50%;
+
+	Background: Gray;
+	Border: Medium Solid White;
+	Border-Radius: 1pc;
 }

@@ -1,35 +1,46 @@
 <Template ID = "RTR-Score">
+	<Link Rel = "StyleSheet" Href = "RTR.css" />
+	
 	<Style>
-		RTR-Score-Scorebar, RTR-Score-ScorePoint {
+		Div {
 			Display: Flex;
 			Flex-Direction: Row;
 			Justify-Content: Center;
 			Align-Items: Center;
 			Flex: 1;
 
+			Background-Image: Linear-Gradient(-45deg, RGBA(255, 255, 255, 0.5) 25%, Transparent 25%, Transparent 50%, RGBA(255, 255, 255, 0.5) 50%, RGBA(255, 255, 255, 0.5) 75%, Transparent 75%, Transparent);
+			Background-Size: 0.25pc 0.25pc;
+		}
+
+		Div[UUID="Scorebar"] {
 			Width: 100%;
+
+			Background-Color: RGBA(0, 0, 0, 0.8);
 		}
 
-		RTR-Score-Scorebar {
-			Background: RGBA(0, 0, 0, 0.5);
-		}
-
-		RTR-Score-Scorebar > Img {
+		Div[UUID="Scorebar"] > Img {
 			Height: 100%;
 
-			Margin-Right: 2pc;
+			Margin-Right: 1pc;
 		}
 
-		RTR-Score-Scorebar > Meter {
-			Width: 100%;
+		Div[UUID="ScorePoint"] {
+			Width: 20%;
+
+			Background-Color: #ff4466;
+			Border-Radius: 0 0 1pc 1pc;
 		}
 	</Style>
 
-	<RTR-Score-Scorebar>
-		<Img Src = "assets/Score.svg" /><Meter Min = "0" Max = "1000000" Value = "0"></Meter>
-	</RTR-Score-Scorebar>
+	<Style UUID = "ScorebarStyle"></Style>
 
-	<RTR-Score-ScorePoint>
+	<Div UUID = "Scorebar">
+		<Img Src = "assets/Score.svg" />
+		<RTR-Score-Scorebar Value = ""></RTR-Score-Scorebar>
+	</Div>
+
+	<Div UUID = "ScorePoint">
 		<Content></Content>
-	</RTR-Score-ScorePoint>
+	</Div>
 </Template>
