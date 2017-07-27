@@ -36,65 +36,6 @@ const RTR = (function () {
 			enumerable: true
 		},
 
-		Tone: {
-			value: (function () {
-				const Tone = document.registerElement("RTR-Tone", {
-					prototype: Object.create(HTMLImageElement.prototype, {
-						initializeElement: {
-							value () {
-								for (let i = 0; i < this.attributes.length; i++) {
-									this.attributeChangedCallback(this.attributes[i].name, "", this.attributes[i].value);
-								}
-							}
-						},
-
-						createdCallback: { value () { this.initializeElement() } },
-						attachedCallback: { value () { this.initializeElement() } },
-						detachedCallback: { value () { this.initializeElement() } },
-
-						attributeChangedCallback: {
-							value (attr, oldValue, newValue) {
-								switch (attr.toLowerCase()) {
-									case "src":
-										this.src = newValue;
-										break;
-								}
-							}
-						},
-
-
-
-						__src__: { value: "", configurable: true, writable: true },
-
-						src: {
-							/** @returns {String} */
-							get () { return this.__src__ },
-
-							/** @param {String} val */
-							set (val) {
-								this.__src__ = val; this.setAttribute("src", val);
-
-								this.style.backgroundImage = ["URL(", val, ")"].join('"');
-							}
-						}
-					})
-				}); Object.defineProperties(Tone, {
-					CenterToneSign: {
-						value: document.registerElement("RTR-Tone-CenterToneSign", {
-							prototype: Object.create(Tone.prototype, {
-							})
-						}),
-
-						enumerable: true
-					}
-				});
-
-				return Tone;
-			})(),
-
-			enumerable: true
-		},
-
 		Score: {
 			value: (function () {
 				const Score = document.registerElement("RTR-Score", {
@@ -210,6 +151,89 @@ const RTR = (function () {
 				});
 
 				return Score;
+			})(),
+
+			enumerable: true
+		},
+
+		Playzone: {
+			value: document.registerElement("RTR-Playzone", {
+				prototype: Object.create(HTMLDivElement.prototype, {
+					createdCallback: {
+						value () {
+							for (let i = 0; i < this.children.length; i++) {
+								if (i > 0) this.children[i].style.transform = ["Rotate(", (90 + 22.5) - 22.5 * i, "deg)"].join("");
+							}
+						}
+					}
+				})
+			}),
+
+			enumerable: true
+		},
+
+		ToneStream: {
+			value: document.registerElement("RTR-ToneStream", {
+				prototype: Object.create(HTMLDivElement.prototype, {})
+			}),
+
+			enumerable: true
+		},
+
+		Tone: {
+			value: (function () {
+				const Tone = document.registerElement("RTR-Tone", {
+					prototype: Object.create(HTMLImageElement.prototype, {
+						initializeElement: {
+							value () {
+								for (let i = 0; i < this.attributes.length; i++) {
+									this.attributeChangedCallback(this.attributes[i].name, "", this.attributes[i].value);
+								}
+							}
+						},
+
+						createdCallback: { value () { this.initializeElement() } },
+						attachedCallback: { value () { this.initializeElement() } },
+						detachedCallback: { value () { this.initializeElement() } },
+
+						attributeChangedCallback: {
+							value (attr, oldValue, newValue) {
+								switch (attr.toLowerCase()) {
+									case "src":
+										this.src = newValue;
+										break;
+								}
+							}
+						},
+
+
+
+						__src__: { value: "", configurable: true, writable: true },
+
+						src: {
+							/** @returns {String} */
+							get () { return this.__src__ },
+
+							/** @param {String} val */
+							set (val) {
+								this.__src__ = val; this.setAttribute("src", val);
+
+								this.style.backgroundImage = ["URL(", val, ")"].join('"');
+							}
+						}
+					})
+				}); Object.defineProperties(Tone, {
+					CenterToneSign: {
+						value: document.registerElement("RTR-Tone-CenterToneSign", {
+							prototype: Object.create(Tone.prototype, {
+							})
+						}),
+
+						enumerable: true
+					}
+				});
+
+				return Tone;
 			})(),
 
 			enumerable: true

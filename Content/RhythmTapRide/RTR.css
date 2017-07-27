@@ -7,24 +7,6 @@ RTR-Base {
 	Height: 100%;
 }
 
-RTR-Tone:Before, RTR-Tone-CenterToneSign:Before {
-	Content: "";
-
-	Display: Block;
-	Padding-Top: 100%;
-}
-
-RTR-Tone, RTR-Tone-CenterToneSign {
-	Background: Transparent Center / Cover;
-	
-	Border: Thin Solid Red;
-	Border-Radius: 100%;
-}
-
-RTR-Tone-CenterToneSign {
-	Width: 5%;
-}
-
 RTR-Score {
 	Display: Flex;
 	Flex-Direction: Column;
@@ -52,4 +34,73 @@ RTR-Score-Scorebar {
 	Background: Gray;
 	Border: Medium Solid White;
 	Border-Radius: 1pc;
+}
+
+RTR-Playzone {
+	Display: Flex;
+	Flex-Direction: Column;
+	Align-Items: Center;
+
+	Width: 100%;
+	Height: 100%;
+
+	Padding: 1pc;
+}
+
+RTR-ToneStream {
+	Position: Absolute;
+
+	Display: Flex;
+	Flex-Direction: Column;
+	Align-Items: Center;
+
+	Height: 80%;
+
+	Transform-Origin: 2pc 2pc;
+}
+
+RTR-ToneStream:Before {
+	Content: "";
+
+	Display: Block;
+	Flex: 1;
+}
+
+RTR-ToneStream:After {
+	Content: "";
+
+	Display: Block;
+	Width: 4pc;
+	Height: 4pc;
+
+	Border: Thick Ridge #FF6644;
+	Border-Radius: 100%;
+
+	Box-Sizing: Border-Box;
+}
+
+
+
+RTR-Tone, RTR-Tone-CenterToneSign {
+	Display: Block;
+	Width: 4pc;
+	Height: 4pc;
+
+	Background: Transparent Center / Cover;
+	Border-Radius: 100%;
+}
+
+RTR-Tone:Before {
+	Content: "";
+
+	Display: Block;
+	Padding-Top: 100%;
+}
+
+RTR-Tone {
+	Border: Medium Outset #FF4466;
+}
+
+RTR-Tone-CenterToneSign {
+	Border: Thin Solid Red;
 }

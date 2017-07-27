@@ -10,13 +10,15 @@
 			Flex: 1;
 
 			Background-Image: Linear-Gradient(-45deg, RGBA(255, 255, 255, 0.5) 25%, Transparent 25%, Transparent 50%, RGBA(255, 255, 255, 0.5) 50%, RGBA(255, 255, 255, 0.5) 75%, Transparent 75%, Transparent);
-			Background-Size: 0.25pc 0.25pc;
+			Background-Size: 0.25pc 0.25pc;;
 		}
 
 		Div[UUID="Scorebar"] {
 			Width: 100%;
 
 			Background-Color: RGBA(0, 0, 0, 0.8);
+			Border-Top: Medium Solid RGBA(200, 200, 200, 0.5);
+			Border-Bottom: Medium Solid RGBA(200, 200, 200, 0.5)
 		}
 
 		Div[UUID="Scorebar"] > Img {
@@ -28,8 +30,13 @@
 		Div[UUID="ScorePoint"] {
 			Width: 20%;
 
-			Background-Color: #ff4466;
+			Background-Color: RGBA(255, 255, 255, 0.8);
+			Border: Medium Solid RGBA(200, 200, 200, 0.5);
 			Border-Radius: 0 0 1pc 1pc;
+
+			Color: WhiteSmoke;
+			Text-Shadow: 0 0 0.1em DarkViolet;
+			Font-Size: X-Large;
 		}
 	</Style>
 
@@ -43,4 +50,8 @@
 	<Div UUID = "ScorePoint">
 		<Content></Content>
 	</Div>
+</Template>
+
+<Template>
+
 </Template>
