@@ -66,14 +66,14 @@ RTR-ToneStream:Before {
 	Flex: 1;
 }
 
-RTR-ToneStream:After {
+RTR-ToneStream-EndPoint {
 	Content: "";
 
 	Display: Block;
 	Width: 15vh;
 	Height: 15vh;
 
-	Background: URL("assets/Foreground0001.png") Center / Cover;
+	Background: URL("assets/favicon-Default.png") Center / Cover;
 	Border: Thick Ridge #FF6644;
 	Border-Radius: 100%;
 
@@ -102,15 +102,14 @@ RTR-ToneStream:After {
 	}
 }
 
-RTR-Tone, RTR-Tone-CenterToneSign {
+RTR-Tone {
 	Display: Block;
-	Width: 15vh;
 
 	Background: Transparent Center / Cover;
 	Border-Radius: 100%;
 }
 
-RTR-Tone:Before, RTR-Tone-CenterToneSign:Before {
+RTR-Tone:Before {
 	Content: "";
 
 	Display: Block;
@@ -118,13 +117,18 @@ RTR-Tone:Before, RTR-Tone-CenterToneSign:Before {
 }
 
 RTR-Tone {
-	Animation: RTR-Tone_Streaming 2s Linear 0s Infinite Normal;
+	Transition-Property: Top, Width;
+	Transition-Duration: 2s, 1s;
+	Transition-Timing-Function: Linear;
 
 	Position: Absolute;
+	Top: 0;
+	Width: 0;
+
 	Border: Medium Outset #FF4466;
 }
 
-RTR-Tone-CenterToneSign {
-	Position: Relative;
-	Border: Thin Solid Red;
+RTR-Tone[Streaming] {
+	Top: 120vh;
+	Width: 15vh;
 }

@@ -173,59 +173,40 @@ const RTR = (function () {
 		},
 
 		ToneStream: {
-			value: document.registerElement("RTR-ToneStream", {
-				prototype: Object.create(HTMLDivElement.prototype, {})
-			}),
-
-			enumerable: true
-		},
-
-		Tone: {
 			value: (function () {
-				const Tone = document.registerElement("RTR-Tone", {
-					prototype: Object.create(HTMLImageElement.prototype, {
-						initializeElement: {
+				const ToneStream = document.registerElement("RTR-ToneStream", {
+					prototype: Object.create(HTMLDivElement.prototype, {
+						createdCallback: {
 							value () {
-								for (let i = 0; i < this.attributes.length; i++) {
-									this.attributeChangedCallback(this.attributes[i].name, "", this.attributes[i].value);
-								}
+								let base = this.createShadowRoot();
+									base.appendChild(document.importNode(template.querySelector("Template#RTR-ToneStream").content, true));
 							}
 						},
 
-						createdCallback: { value () { this.initializeElement() } },
-						attachedCallback: { value () { this.initializeElement() } },
-						detachedCallback: { value () { this.initializeElement() } },
-
-						attributeChangedCallback: {
-							value (attr, oldValue, newValue) {
-								switch (attr.toLowerCase()) {
-									case "src":
-										this.src = newValue;
-										break;
-								}
-							}
-						},
-
-
-
-						__src__: { value: "", configurable: true, writable: true },
-
-						src: {
-							/** @returns {String} */
-							get () { return this.__src__ },
-
-							/** @param {String} val */
-							set (val) {
-								this.__src__ = val; this.setAttribute("src", val);
-
-								this.style.backgroundImage = ["URL(", val, ")"].join('"');
-							}
-						}
+						attachedCallback: { value () {} },
+						detachedCallback: { value () {} },
+						attributeChangedCallback: { value (attr, oldValue, newValue) {} }
 					})
-				}); Object.defineProperties(Tone, {
-					CenterToneSign: {
-						value: document.registerElement("RTR-Tone-CenterToneSign", {
-							prototype: Object.create(Tone.prototype, {
+				}); Object.defineProperties(ToneStream, {
+					EndPoint: {
+						value: document.registerElement("RTR-ToneStream-EndPoint", {
+							prototype: Object.create(HTMLDivElement.prototype, {
+								createdCallback: {
+									value () {
+										["touchstart", "mousedown"].forEach((function (elem, index, parent) {
+											this.addEventListener(elem, function (event) {
+												let boundary = this.getBoundingClientRect();
+												
+
+												document.querySelector("RTR-Score").value += Math.round(Math.random() * 1000 + 1);
+											});
+										}).bind(this));
+									}
+								},
+
+								attachedCallback: { value () {} },
+								detachedCallback: { value () {} },
+								attributeChangedCallback: { value (attr, oldValue, newValue) {} }
 							})
 						}),
 
@@ -233,8 +214,90 @@ const RTR = (function () {
 					}
 				});
 
-				return Tone;
+				return ToneStream;
 			})(),
+
+			enumerable: true
+		},
+
+		Tone: {
+			value: document.registerElement("RTR-Tone", {
+				prototype: Object.create(HTMLImageElement.prototype, {
+					initializeElement: {
+						value () {
+							for (let i = 0; i < this.attributes.length; i++) {
+								this.attributeChangedCallback(this.attributes[i].name, "", this.attributes[i].value);
+							}
+						}
+					},
+
+					createdCallback: {
+						value () {
+							this.initializeElement();
+
+							this.addEventListener("transitionend", function (event) {
+								if (event.propertyName == "top") this.streaming = false;
+							});
+						}
+					},
+
+					attachedCallback: {
+						value () {
+							this.initializeElement();
+
+							setTimeout((function () {
+								this.streaming = true;
+							}).bind(this), 10);
+						}
+					},
+
+					detachedCallback: { value () { this.initializeElement() } },
+
+					attributeChangedCallback: {
+						value (attr, oldValue, newValue) {
+							switch (attr.toLowerCase()) {
+								case "src":
+									this.src = newValue;
+									break;
+
+								case "streaming":
+									this.streaming = (newValue === "" ? true : false);
+									break;
+							}
+						}
+					},
+
+
+
+					__src__: { value: "", configurable: true, writable: true },
+					__streaming__: { value: false, configurable: true, writable: true },
+
+					src: {
+						/** @returns {String} */
+						get () { return this.__src__ },
+
+						/** @param {String} val */
+						set (val) {
+							this.__src__ = val; this.setAttribute("src", val);
+
+							this.style.backgroundImage = ["URL(", val, ")"].join('"');
+						}
+					},
+
+					streaming: {
+						/** @returns {Boolean} */
+						get () { return this.__streaming__ },
+
+						/** @param {Boolean} val */
+						set (val) {
+							this.__streaming__ = val;
+							val ? this.setAttribute("Streaming", "") : this.removeAttribute("Streaming");
+
+							if (!val) this.remove();
+						}
+					}
+				})
+			}),
 
 			enumerable: true
 		}

@@ -130,7 +130,7 @@ const GP = Object.create(Object.prototype, {
 
 							__filePath__: { value: "", configurable: true, writable: true },
 							__contentType__: { value: "", configurable: true, writable: true },
-							__selected__: { value: "", configurable: true, writable: true },
+							__selected__: { value: false, configurable: true, writable: true },
 
 							filePath: {
 								/** @returns {String} **/
