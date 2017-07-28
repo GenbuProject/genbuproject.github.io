@@ -73,7 +73,7 @@ RTR-ToneStream-EndPoint {
 	Width: 15vh;
 	Height: 15vh;
 
-	Background: URL("assets/favicon-Default.png") Center / Cover;
+	Background: URL("assets/images/Icon.png") Center / Cover;
 	Border: Thick Ridge #FF6644;
 	Border-Radius: 100%;
 

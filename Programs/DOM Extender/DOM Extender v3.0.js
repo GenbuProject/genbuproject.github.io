@@ -705,6 +705,8 @@ const DOM = (function () {
 				option = option || {};
 
 				let connector = new XMLHttpRequest();
+					!option.resType || (connector.responseType = option.resType);
+					
 					connector.open(option.type || "GET", option.url || location.href + (option.params ? "?" + (function () {
 						let param = [];
 

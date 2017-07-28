@@ -20,6 +20,18 @@ const RTR = (function () {
 		return body;
 	})();
 
+	let player = {
+		bgm: new Audio(),
+
+		se: {
+			tap: (function () {
+				let tapPlayer = new AudioContext();
+			})(),
+
+			miss: new Audio()
+		}
+	};
+
 
 
 	const RTR = {}; Object.defineProperties(RTR, {
@@ -185,7 +197,15 @@ const RTR = (function () {
 
 						attachedCallback: { value () {} },
 						detachedCallback: { value () {} },
-						attributeChangedCallback: { value (attr, oldValue, newValue) {} }
+						attributeChangedCallback: { value (attr, oldValue, newValue) {} },
+
+
+
+						addTone: {
+							value (toneObj) {
+								this.appendChild(toneObj || new RTR.Tone());
+							}
+						}
 					})
 				}); Object.defineProperties(ToneStream, {
 					EndPoint: {
@@ -195,10 +215,20 @@ const RTR = (function () {
 									value () {
 										["touchstart", "mousedown"].forEach((function (elem, index, parent) {
 											this.addEventListener(elem, function (event) {
-												let boundary = this.getBoundingClientRect();
-												
+												let closedTone = this.parentNode.querySelector("Content").getDistributedNodes()[0];
 
-												document.querySelector("RTR-Score").value += Math.round(Math.random() * 1000 + 1);
+												if (closedTone) {
+													let selfBoundary = [this.clientTop, this.clientWidth],
+														closedToneBoundary = [closedTone.clientTop, closedTone.clientWidth];
+
+													if (selfBoundary) {
+
+													}
+
+													//document.querySelector("RTR-Score").value += Math.round(Math.random() * 1000 + 1);
+												}
+
+												player.se.tap.play();
 											});
 										}).bind(this));
 									}
@@ -231,6 +261,8 @@ const RTR = (function () {
 						}
 					},
 
+
+
 					createdCallback: {
 						value () {
 							this.initializeElement();
@@ -247,7 +279,7 @@ const RTR = (function () {
 
 							setTimeout((function () {
 								this.streaming = true;
-							}).bind(this), 10);
+							}).bind(this));
 						}
 					},
 
@@ -270,7 +302,7 @@ const RTR = (function () {
 
 
 					__src__: { value: "", configurable: true, writable: true },
-					__streaming__: { value: false, configurable: true, writable: true },
+					__streaming__: { value: null, configurable: true, writable: true },
 
 					src: {
 						/** @returns {String} */
