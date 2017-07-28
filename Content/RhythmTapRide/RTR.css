@@ -13,7 +13,7 @@ RTR-Score {
 	Align-Items: Center;
 
 	Width: 100%;
-	Height: 15%;
+	Height: 20vh;
 }
 
 RTR-Score-Scorebar:Before {
@@ -44,7 +44,7 @@ RTR-Playzone {
 	Width: 100%;
 	Height: 100%;
 
-	Padding: 1pc;
+	Padding: 2vh;
 }
 
 RTR-ToneStream {
@@ -54,9 +54,9 @@ RTR-ToneStream {
 	Flex-Direction: Column;
 	Align-Items: Center;
 
-	Height: 80%;
+	Height: 75vh;
 
-	Transform-Origin: 2pc 2pc;
+	Transform-Origin: 7.5vh 7.5vh;
 }
 
 RTR-ToneStream:Before {
@@ -70,9 +70,10 @@ RTR-ToneStream:After {
 	Content: "";
 
 	Display: Block;
-	Width: 4pc;
-	Height: 4pc;
+	Width: 15vh;
+	Height: 15vh;
 
+	Background: URL("assets/Foreground0001.png") Center / Cover;
 	Border: Thick Ridge #FF6644;
 	Border-Radius: 100%;
 
@@ -81,16 +82,31 @@ RTR-ToneStream:After {
 
 
 
+@keyframes RTR-Tone_Streaming {
+	0% {
+		Top: 0;
+
+		Width: 0;
+		Height: 0;
+	}
+
+	100% {
+		Top: 60vh;
+
+		Width: 15vh;
+		Height: 15vh;
+	}
+}
+
 RTR-Tone, RTR-Tone-CenterToneSign {
 	Display: Block;
-	Width: 4pc;
-	Height: 4pc;
+	Width: 15vh;
 
 	Background: Transparent Center / Cover;
 	Border-Radius: 100%;
 }
 
-RTR-Tone:Before {
+RTR-Tone:Before, RTR-Tone-CenterToneSign:Before {
 	Content: "";
 
 	Display: Block;
@@ -98,9 +114,13 @@ RTR-Tone:Before {
 }
 
 RTR-Tone {
+	Animation: RTR-Tone_Streaming 2s Linear 0s Infinite Normal;
+
+	Position: Absolute;
 	Border: Medium Outset #FF4466;
 }
 
 RTR-Tone-CenterToneSign {
+	Position: Relative;
 	Border: Thin Solid Red;
 }

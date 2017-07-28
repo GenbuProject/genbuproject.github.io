@@ -162,7 +162,7 @@ const RTR = (function () {
 					createdCallback: {
 						value () {
 							for (let i = 0; i < this.children.length; i++) {
-								if (i > 0) this.children[i].style.transform = ["Rotate(", (90 + 22.5) - 22.5 * i, "deg)"].join("");
+								this.children[i].style.transform = ["Rotate(", 90 - 22.5 * i, "deg)"].join("");
 							}
 						}
 					}
