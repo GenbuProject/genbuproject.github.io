@@ -74,33 +74,13 @@ RTR-ToneStream-EndPoint {
 	Height: 15vh;
 
 	Background: URL("assets/images/Icon.png") Center / Cover;
-	Border: Thick Ridge #FF6644;
+	Border: 1vh Ridge #FF6644;
 	Border-Radius: 100%;
 
 	Box-Sizing: Border-Box;
 }
 
 
-
-@keyframes RTR-Tone_Streaming {
-	0% {
-		Top: 0;
-
-		Width: 0;
-		Height: 0;
-	}
-
-	50% {
-		Top: 60vh;
-
-		Width: 15vh;
-		Height: 15vh;
-	}
-
-	100% {
-		Top: 120vh;
-	}
-}
 
 RTR-Tone {
 	Display: Block;
@@ -125,7 +105,7 @@ RTR-Tone {
 	Top: 0;
 	Width: 0;
 
-	Border: Medium Outset #FF4466;
+	Border: 0.75vh Outset #FF4466;
 }
 
 RTR-Tone[Streaming] {
