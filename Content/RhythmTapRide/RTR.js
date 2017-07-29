@@ -13,6 +13,98 @@ window.addEventListener("DOMContentLoaded", function () {
 
 
 const RTR = (function () {
+	const AudioPlayer = (function () {
+		const CTX = new (AudioContext || webkitAudioContext);
+
+		/**
+		 * @param {String} url
+		 */
+		function AudioPlayer (url) {
+			!url || (this.src = url);
+		}; AudioPlayer.prototype = Object.create(Object.prototype, {
+			constructor: { value: AudioPlayer },
+
+
+
+			currentSource: { value: CTX.createBufferSource(), configurable: true, writable: true },
+			__src__: { value: "", configurable: true, writable: true },
+			__buffer__: { value: null, configurable: true, writable: true },
+
+			src: {
+				/**
+				 * @returns {String}
+				 */
+				get () {
+					return this.__src__;
+				},
+
+				/**
+				 * @param {String} val
+				 */
+				set (val) {
+					this.__src__ = val;
+					
+					DOM.xhr({
+						type: "GET",
+						url: val,
+						doesSync: true,
+						resType: "arraybuffer",
+
+						onLoad: (function (event) {
+							CTX.decodeAudioData(event.target.response, (function (audioBuf) {
+								this.buffer = audioBuf;
+							}).bind(this));
+						}).bind(this)
+					});
+				}
+			},
+
+			buffer: {
+				/**
+				 * @returns {AudioBuffer}
+				 */
+				get () {
+					return this.__buffer__;
+				},
+
+				/**
+				 * @param {AudioBuffer} val
+				 */
+				set (val) {
+					this.__buffer__ = val;
+
+					this.generateSource(val);
+				}
+			},
+
+
+
+			play: {
+				value () {
+					this.currentSource.start(0);
+					this.src = this.src;
+				},
+
+				enumerable: true
+			},
+
+			generateSource: {
+				/**
+				 * @param {AudioBuffer} audioBuf
+				 */
+				value (audioBuf) {
+					this.currentSource = CTX.createBufferSource();
+					this.currentSource.buffer = audioBuf;
+					this.currentSource.connect(CTX.destination);
+				}
+			}
+		})
+
+		return AudioPlayer;
+	})();
+
+
+
 	const template = (function () {
 		let body = DOM("Body");
 			body.innerHTML = DOM.xhr({ url: "Template.html", doesSync: false }).response;
@@ -22,37 +114,18 @@ const RTR = (function () {
 
 	const audioPlayer = {}; Object.defineProperty(audioPlayer, "ctx", { value: new (AudioContext || webkitAutioContext), enumerable: true }); Object.defineProperties(audioPlayer, {
 		bgm: {
-			value: new Audio()
+			value: new AudioPlayer()
 		},
 
 		se: {
 			value: Object.create(Object.prototype, {
 				tap: {
-					value: function () {
-						let sePlayer = audioPlayer.ctx.createBufferSource();
-							sePlayer.connect(audioPlayer.ctx.destination);
-
-						DOM.xhr({
-							type: "GET",
-							url: "assets/sounds/Tone_Tap.wav",
-							doesSync: true,
-							resType: "arraybuffer",
-
-							onLoad: function (event) {
-								audioPlayer.ctx.decodeAudioData(event.target.response, function (buf) {
-									sePlayer.buffer = buf;
-								});
-							}
-						});
-
-						sePlayer.start(0);
-					},
-
+					value: new AudioPlayer("assets/sounds/Tone_Tap.wav"),
 					enumerable: true
 				},
 
 				miss: {
-					value: new Audio(),
+					value: new AudioPlayer(),
 					enumerable: true
 				}
 			}),
@@ -255,7 +328,7 @@ const RTR = (function () {
 													}
 												}
 
-												audioPlayer.se.tap();
+												audioPlayer.se.tap.play();
 												document.querySelector("RTR-Score").value += Math.round(Math.random() * 1000 + 1);
 											});
 										}).bind(this));
