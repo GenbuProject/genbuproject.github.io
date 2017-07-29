@@ -13,24 +13,53 @@ window.addEventListener("DOMContentLoaded", function () {
 
 
 const RTR = (function () {
-	let template = (function () {
+	const template = (function () {
 		let body = DOM("Body");
 			body.innerHTML = DOM.xhr({ url: "Template.html", doesSync: false }).response;
 			
 		return body;
 	})();
 
-	let player = {
-		bgm: new Audio(),
+	const audioPlayer = {}; Object.defineProperty(audioPlayer, "ctx", { value: new (AudioContext || webkitAutioContext), enumerable: true }); Object.defineProperties(audioPlayer, {
+		bgm: {
+			value: new Audio()
+		},
 
 		se: {
-			tap: (function () {
-				let tapPlayer = new AudioContext();
-			})(),
+			value: Object.create(Object.prototype, {
+				tap: {
+					value: function () {
+						let sePlayer = audioPlayer.ctx.createBufferSource();
+							sePlayer.connect(audioPlayer.ctx.destination);
 
-			miss: new Audio()
+						DOM.xhr({
+							type: "GET",
+							url: "assets/sounds/Tone_Tap.wav",
+							doesSync: true,
+							resType: "arraybuffer",
+
+							onLoad: function (event) {
+								audioPlayer.ctx.decodeAudioData(event.target.response, function (buf) {
+									sePlayer.buffer = buf;
+								});
+							}
+						});
+
+						sePlayer.start(0);
+					},
+
+					enumerable: true
+				},
+
+				miss: {
+					value: new Audio(),
+					enumerable: true
+				}
+			}),
+
+			enumerable: true
 		}
-	};
+	});
 
 
 
@@ -224,11 +253,10 @@ const RTR = (function () {
 													if (selfBoundary) {
 
 													}
-
-													//document.querySelector("RTR-Score").value += Math.round(Math.random() * 1000 + 1);
 												}
 
-												player.se.tap.play();
+												audioPlayer.se.tap();
+												document.querySelector("RTR-Score").value += Math.round(Math.random() * 1000 + 1);
 											});
 										}).bind(this));
 									}
