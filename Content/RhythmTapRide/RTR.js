@@ -120,7 +120,7 @@ const RTR = (function () {
 		se: {
 			value: Object.create(Object.prototype, {
 				tap: {
-					value: new AudioPlayer("assets/sounds/Tone_Tap.wav"),
+					value: new AudioPlayer("assets/sounds/Tone_Tap001.wav"),
 					enumerable: true
 				},
 
@@ -317,16 +317,25 @@ const RTR = (function () {
 									value () {
 										["touchstart", "mousedown"].forEach((function (elem, index, parent) {
 											this.addEventListener(elem, function (event) {
-												let closedTone = this.parentNode.querySelector("Content").getDistributedNodes()[0];
+												let closedTone = this.parentNode.querySelector("Content").getDistributedNodes()[2];
 
-												if (closedTone) {
-													let selfBoundary = [this.clientTop, this.clientWidth],
-														closedToneBoundary = [closedTone.clientTop, closedTone.clientWidth];
+												/*if (closedTone) {
+													let selfBoundary = this.getBoundingClientRect(),
+														closedToneBoundary = closedTone.getBoundingClientRect();
 
-													if (selfBoundary) {
+													console.info(selfBoundary);
+													console.info(closedToneBoundary);
 
+													if (Math.abs(selfBoundary.left - closedToneBoundary.left) <= selfBoundary.width / 3 && Math.abs(selfBoundary.top - closedToneBoundary.top) <= selfBoundary.height / 3) {
+														console.info("Perfect");
+													} else if (Math.abs(selfBoundary.left - closedToneBoundary.left) <= selfBoundary.width / 2 && Math.abs(selfBoundary.top - closedToneBoundary.top) <= selfBoundary.height / 2) {
+														console.info("Great");
+													} else if (Math.abs(selfBoundary.left - closedToneBoundary.left) > selfBoundary.width / 2 && Math.abs(selfBoundary.top - closedToneBoundary.top) > selfBoundary.height / 2) {
+														console.info("Good");
+													} else {
+														console.info("Miss");
 													}
-												}
+												}*/
 
 												audioPlayer.se.tap.play();
 												document.querySelector("RTR-Score").value += Math.round(Math.random() * 1000 + 1);
@@ -380,7 +389,7 @@ const RTR = (function () {
 
 							setTimeout((function () {
 								this.streaming = true;
-							}).bind(this));
+							}).bind(this), 50);
 						}
 					},
 

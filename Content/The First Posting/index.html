@@ -2,12 +2,10 @@
 
 <HTML>
 	<Head>
-		<Meta Charset = "UTF-8">
-		<ErrorCode Href = "https://genbuproject.github.io/Content/ErrorFile/ErrorFile.Json" Value = "403.12" ID = "Admin" Password = "genbuproject" />
-		<Script Src = "https://genbuproject.github.io/Programs/Access Denier/Access Denier v1.1.js"></Script>
-		
+		<Meta Charset = "UTF-8" />
 		<Title>Genbu Project Official Site == The First Posting</Title>
 		
+		<Script Src = "https://genbuproject.github.io/Programs/DOM Extender/DOM Extender v3.0.js"></Script>
 		<Script Src = "Script/The First Posting.js"></Script>
 		
 		<Script>
@@ -23,12 +21,12 @@
 	</Head>
 	
 	<Body Style = 'Color: #EEE; Font: 14px/2 "メイリオ", Meiryo, Osaka; BackGround: URL("https://genbuproject.github.io/Image/Back.jpg");'>
-		<P>
-			<Input ID = "ID" Type = "TextBox" Value = "" PlaceHolder = "Google+のID"></Input><Br>
-			<Input ID = "Amount" Type = "Number" Value = "10" PlaceHolder = "検索するページ数(100)"></Input><Button OnClick = "Search(document.getElementById('ID').value, document.getElementById('Amount').value);">検索</Button>
-		</P>
-		
-		<Table Border = "1" Style = "Text-Align: Center;">
+		<Div>
+			<Input ID = "UserID" Type = "Text" Value = "" PlaceHolder = "Google+のID" />
+			<Button ID = "Apply">取得開始</Button>
+		</Div>
+
+		<Table Border = "1" Style = "Text-Align: Center">
 			<TR><TH>投稿日時</TH><TH>投稿リンク</TH></TR>
 			<TR><TD ID = "Date">----------</TD><TD ID = "Link">----------</TD></TR>
 		</Table>

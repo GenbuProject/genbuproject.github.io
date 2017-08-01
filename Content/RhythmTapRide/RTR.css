@@ -104,6 +104,7 @@ RTR-Tone {
 	Position: Absolute;
 	Top: 0;
 	Width: 0;
+	Z-Index: -1;
 
 	Border: 0.75vh Outset #FF4466;
 }
