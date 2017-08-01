@@ -22,6 +22,9 @@ window.addEventListener("DOMContentLoaded", function () {
 
 				onLoad: function (event) {
 					if (event.target.status == 404) {
+						DOM("#Apply").textContent = "取得開始",
+						DOM("#Apply").disabled = false;
+						
 						alert("IDが無効です");
 						return false;
 					} else {
