@@ -98,7 +98,7 @@ RTR-Tone:Before {
 
 RTR-Tone {
 	Transition-Property: Top, Width;
-	Transition-Duration: 2s 1s;
+	Transition-Duration: 2s, 1s;
 	Transition-Timing-Function: Linear;
 
 	Position: Absolute;
