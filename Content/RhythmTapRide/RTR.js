@@ -1,17 +1,3 @@
-window.addEventListener("DOMContentLoaded", function () {
-	// Initialize Firebase
-	firebase.initializeApp({
-		apiKey: "AIzaSyC-VgGf9pRoOpVcTA3eIrump7tKOJH1_Ao",
-		authDomain: "rhythm-tap-ride.firebaseapp.com",
-		databaseURL: "https://rhythm-tap-ride.firebaseio.com",
-		projectId: "rhythm-tap-ride",
-		storageBucket: "rhythm-tap-ride.appspot.com",
-		messagingSenderId: "568561761665"
-	});
-});
-
-
-
 const RTR = (function () {
 	const AudioPlayer = (function () {
 		const CTX = new (AudioContext || webkitAudioContext);
@@ -82,7 +68,8 @@ const RTR = (function () {
 			play: {
 				value () {
 					this.currentSource.start(0);
-					this.src = this.src;
+
+					this.generateSource(this.buffer);
 				},
 
 				enumerable: true
@@ -119,8 +106,18 @@ const RTR = (function () {
 
 		se: {
 			value: Object.create(Object.prototype, {
-				tap: {
-					value: new AudioPlayer("assets/sounds/Tone_Tap001.wav"),
+				perfect: {
+					value: new AudioPlayer("assets/sounds/Tone_Perfect.wav"),
+					enumerable: true
+				},
+
+				great: {
+					value: new AudioPlayer("assets/sounds/Tone_Great.mp3"),
+					enumerable: true
+				},
+
+				good: {
+					value: new AudioPlayer("assets/sounds/Tone_Good.wav"),
 					enumerable: true
 				},
 
@@ -317,27 +314,28 @@ const RTR = (function () {
 									value () {
 										["touchstart", "mousedown"].forEach((function (elem, index, parent) {
 											this.addEventListener(elem, function (event) {
-												let closedTone = this.parentNode.querySelector("Content").getDistributedNodes()[2];
+												let closedTone = this.getRootNode().host.children[this.getRootNode().host.children.length - 1];
 
-												/*if (closedTone) {
-													let selfBoundary = this.getBoundingClientRect(),
-														closedToneBoundary = closedTone.getBoundingClientRect();
+												if (closedTone) {
+													let selfBoundary = { top: this.offsetTop, height: this.offsetHeight },
+														closedToneBoundary = { top: closedTone.offsetTop, height: closedTone.offsetHeight };
 
-													console.info(selfBoundary);
-													console.info(closedToneBoundary);
+													console.info([selfBoundary.height, Math.abs(selfBoundary.top - closedToneBoundary.top)]);
 
-													if (Math.abs(selfBoundary.left - closedToneBoundary.left) <= selfBoundary.width / 3 && Math.abs(selfBoundary.top - closedToneBoundary.top) <= selfBoundary.height / 3) {
+													if (Math.abs(selfBoundary.top - closedToneBoundary.top) <= selfBoundary.height / 3) {
 														console.info("Perfect");
-													} else if (Math.abs(selfBoundary.left - closedToneBoundary.left) <= selfBoundary.width / 2 && Math.abs(selfBoundary.top - closedToneBoundary.top) <= selfBoundary.height / 2) {
+														audioPlayer.se.perfect.play();
+													} else if (Math.abs(selfBoundary.top - closedToneBoundary.top) <= selfBoundary.height / 2) {
 														console.info("Great");
-													} else if (Math.abs(selfBoundary.left - closedToneBoundary.left) > selfBoundary.width / 2 && Math.abs(selfBoundary.top - closedToneBoundary.top) > selfBoundary.height / 2) {
+														audioPlayer.se.great.play();
+													} else if (Math.abs(selfBoundary.top - closedToneBoundary.top) <= selfBoundary.height / 1.5) {
 														console.info("Good");
+														audioPlayer.se.good.play();
 													} else {
 														console.info("Miss");
 													}
-												}*/
+												}
 
-												audioPlayer.se.tap.play();
 												document.querySelector("RTR-Score").value += Math.round(Math.random() * 1000 + 1);
 											});
 										}).bind(this));

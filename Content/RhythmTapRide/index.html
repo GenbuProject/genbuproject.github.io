@@ -51,6 +51,16 @@
 			ga('require', 'linkid', 'linkid.js');
 			ga('send', 'pageview');
 		</Script>
+
+		<Script>
+			window.addEventListener("DOMContentLoaded", function () {
+				let self = DOM("$RTR-Playzone");
+
+				let looper = setInterval(() => {
+					self.children[Math.floor(Math.random() * (self.children.length - 1))].addTone();
+				}, 500);
+			});
+		</Script>
 	</Head>
 	
 	<Body>
