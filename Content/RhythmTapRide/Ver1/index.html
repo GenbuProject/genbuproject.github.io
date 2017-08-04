@@ -1,0 +1,84 @@
+<!DocType HTML>
+
+<HTML>
+	<Head>
+		<Meta Charset = "UTF-8" />
+		<Meta Name = "KeyWords" Content = "Rhythm Tap Ride, RTR, 音ゲー" />
+		<Meta Name = "Description" Content = "ブラウザ上で完全動作する音ゲーです。" />
+		<Meta Name = "Viewport" Content = "Width=Device-Width, Initial-Scale=1.0, User-Scalable=No" />
+
+		<Link Rel = "ShortCut Icon" Href = "favicon.png" />
+		<Title>Rhythm Tap Ride(RTR)</Title>
+
+		<Script Src = "https://www.gstatic.com/firebasejs/4.1.3/firebase.js"></Script>
+		<Script Src = "https://genbuproject.github.io/Programs/DOM Extender/DOM Extender v3.0.js"></Script>
+
+		<Script Src = "RTR.js"></Script>
+		<Link Rel = "StyleSheet" Href = "RTR.css" />
+
+		<Style>
+			@Font-Face {
+				Font-Family: "Hall Fetica";
+				Src: URL("https://genbuproject.github.io/Genbu-Project-Official-Site/Fonts/Hall Fetica/Hall Fetica.ttf");
+			}
+
+
+
+			* {
+				Font-Family: "Hall Fetica", "メイリオ";
+				Box-Sizing: Border-Box;
+			}
+
+			HTML, Body {
+				Height: 100%;
+			}
+
+			Body {
+				Margin: 0;
+				Overflow: Hidden;
+				
+				Background: URL("assets/images/Foreground0001.png") Center / Cover;
+			}
+		</Style>
+
+		<Script>
+			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+			})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+			
+			ga('create', 'UA-88656260-1', 'auto');
+			ga('require', 'linkid', 'linkid.js');
+			ga('send', 'pageview');
+		</Script>
+
+		<Script>
+			/*window.addEventListener("DOMContentLoaded", function () {
+				let self = DOM("$RTR-Playzone");
+
+				let looper = setInterval(() => {
+					self.children[Math.floor(Math.random() * (self.children.length - 1))].addTone();
+				}, 500);
+			});*/
+		</Script>
+	</Head>
+	
+	<Body>
+		<RTR-Base>
+			<RTR-Score Value = "500000"></RTR-Score>
+			
+			<RTR-Playzone>
+				<RTR-ToneStream></RTR-ToneStream>
+
+				<RTR-ToneStream></RTR-ToneStream>
+				<RTR-ToneStream></RTR-ToneStream>
+				<RTR-ToneStream></RTR-ToneStream>
+				<RTR-ToneStream></RTR-ToneStream>
+				<RTR-ToneStream></RTR-ToneStream>
+				<RTR-ToneStream></RTR-ToneStream>
+				<RTR-ToneStream></RTR-ToneStream>
+				<RTR-ToneStream></RTR-ToneStream>
+			</RTR-Playzone>
+		</RTR-Base>
+	</Body>
+</HTML>

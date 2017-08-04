@@ -312,7 +312,7 @@ const RTR = (function () {
 							prototype: Object.create(HTMLDivElement.prototype, {
 								createdCallback: {
 									value () {
-										["touchstart", "mousedown"].forEach((function (elem, index, parent) {
+										["mousedown"].forEach((function (elem, index, parent) {
 											this.addEventListener(elem, function (event) {
 												let closedTone = this.getRootNode().host.children[this.getRootNode().host.children.length - 1];
 

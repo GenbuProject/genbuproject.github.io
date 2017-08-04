@@ -83,9 +83,19 @@ RTR-ToneStream-EndPoint {
 
 
 RTR-Tone {
+	Transition-Property: Top, Width;
+	Transition-Duration: 2s;
+	Transition-Timing-Function: Linear;
+
+	Position: Absolute;
+	Top: 0;
+
 	Display: Block;
+	Width: 0;
+	Z-Index: -1;
 
 	Background: Transparent Center / Cover;
+	Border: 0.75vh Outset #FF4466;
 	Border-Radius: 100%;
 }
 
@@ -94,19 +104,6 @@ RTR-Tone:Before {
 
 	Display: Block;
 	Padding-Top: 100%;
-}
-
-RTR-Tone {
-	Transition-Property: Top, Width;
-	Transition-Duration: 2s;
-	Transition-Timing-Function: Linear;
-
-	Position: Absolute;
-	Top: 0;
-	Width: 0;
-	Z-Index: -1;
-
-	Border: 0.75vh Outset #FF4466;
 }
 
 RTR-Tone[Streaming] {
