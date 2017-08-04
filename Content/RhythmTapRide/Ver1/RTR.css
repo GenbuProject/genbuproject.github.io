@@ -106,7 +106,23 @@ RTR-Tone:Before {
 	Padding-Top: 100%;
 }
 
+<<<<<<< HEAD:Content/RhythmTapRide/Ver1/RTR.css
+=======
+RTR-Tone {
+	Transition-Property: Top, Width;
+	Transition-Duration: 2s, 1s;
+	Transition-Timing-Function: Linear;
+
+	Position: Absolute;
+	Top: 0;
+	Width: 0;
+	Z-Index: -1;
+
+	Border: 0.75vh Outset #FF4466;
+}
+
+>>>>>>> 16957f29d6e4659729bac4a0f43bbe692f2fd101:Content/RhythmTapRide/RTR.css
 RTR-Tone[Streaming] {
 	Top: 120vh;
-	Width: 30vh;
+	Width: 15vh;
 }
