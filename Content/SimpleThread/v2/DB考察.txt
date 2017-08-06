@@ -1,0 +1,21 @@
+Root
+> users
+	> xxxxxxxx
+		> defaultName: String
+		
+	> xxxxxxxx
+		> ...
+		
+> threads
+	> 0
+		> title: String
+		> overview: String
+		> detail: String
+		> admins
+			> xxxxxxxx: String <Owner || Admin || Observer || ...>
+			
+		> createdTime: DateString
+		> dataUrl: URLString
+		
+	> 1
+		> ...

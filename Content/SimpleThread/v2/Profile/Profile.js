@@ -1,6 +1,6 @@
 window.addEventListener("DOMContentLoaded", () => {
 	if (!base.user) {
-		location.href = "http://localhost:8001/Content/SimpleThread/v2/403/";
+		location.href = "https://genbuproject.github.io/Content/SimpleThread/v2/403/";
 	} else {
 		DOM("#Profile_Manager").textContent = (() => {
 			return new Style({
