@@ -8,10 +8,13 @@
 		<Link Rel = "StyleSheet" Href = "https://fonts.googleapis.com/icon?family=Material+Icons" />
 		<Link Rel = "StyleSheet" Href = "https://code.getmdl.io/1.3.0/material.blue_grey-pink.min.css" />
 		<Script Src = "https://code.getmdl.io/1.3.0/material.min.js" Defer = "Defer"></Script>
+
 		<Script Src = "https://www.gstatic.com/firebasejs/4.2.0/firebase.js"></Script>
 		<Script Src = "https://genbuproject.github.io/Programs/DOM Extender/DOM Extender v3.0.js"></Script>
 
-		<Script Src = "../../../Programs/FirebasePlus.js"></Script>
+		<Script Src = "http://localhost:8001/Programs/FirebasePlus.js"></Script>
+		<Script Src = "http://localhost:8001/Content/SimpleThread/v2/Core.js"></Script>
+		<Link Rel = "StyleSheet" Href = "http://localhost:8001/Content/SimpleThread/v2/Core.css" />
 
 		<Script Src = "Main.js"></Script>
 		<Link Rel = "StyleSheet" Href = "Main.css" />
@@ -28,7 +31,7 @@
 		</Script>
 	</Head>
 	
-	<Body>
+	<Body Style = 'Background: URL("https://genbuproject.github.io/Image/Back.jpg")'>
 		<Div Class = "mdl-layout mdl-js-layout mdl-layout--fixed-header">
 			<Header ID = "Header" Class = "mdl-layout__header">
 				<Div Class = "mdl-layout__header-row">
@@ -39,12 +42,12 @@
 						<Style ID = "Header_AccountPane_Manager"></Style>
 
 						<A ID = "Header_SignInOut" Class = "mdl-navigation__link">Sign In</A>
-						<A ID = "Header_AccountPane-Btn" Class = "mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect"></A>
+						<A ID = "Header_AccountPane-Btn" Class = "mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect" Href = "Profile/"></A>
 					</Nav>
 				</Div>
 			</Header>
 
-			<IFrame Class = "mdl-layout__content" Src = "Profile/"></IFrame>
+			<IFrame Class = "mdl-layout__content" Src = "about:blank"></IFrame>
 		</Div>
 	</Body>
 </HTML>

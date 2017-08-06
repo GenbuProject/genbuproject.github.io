@@ -1,5 +1,5 @@
-A:Not([Href]), A[Href=""] {
-	Cursor: Pointer;
+#Header_AccountPane-Btn {
+	Background: Transparent Center / Cover;
 }
 
 #Header_AccountPane-Btn[SignOut] {

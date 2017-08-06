@@ -8,13 +8,16 @@
 		<Link Rel = "StyleSheet" Href = "https://fonts.googleapis.com/icon?family=Material+Icons" />
 		<Link Rel = "StyleSheet" Href = "https://code.getmdl.io/1.3.0/material.blue_grey-pink.min.css" />
 		<Script Src = "https://code.getmdl.io/1.3.0/material.min.js" Defer = "Defer"></Script>
+
 		<Script Src = "https://www.gstatic.com/firebasejs/4.2.0/firebase.js"></Script>
 		<Script Src = "https://genbuproject.github.io/Programs/DOM Extender/DOM Extender v3.0.js"></Script>
 
-		<Script Src = "../../../../Programs/FirebasePlus.js"></Script>
+		<Script Src = "http://localhost:8001/Programs/FirebasePlus.js"></Script>
+		<Script Src = "http://localhost:8001/Content/SimpleThread/v2/Core.js"></Script>
+		<Link Rel = "StyleSheet" Href = "http://localhost:8001/Content/SimpleThread/v2/Core.css" />
 
-		<Script Src = "Main.js"></Script>
-		<Link Rel = "StyleSheet" Href = "Main.css" />
+		<Script Src = "Profile.js"></Script>
+		<Link Rel = "StyleSheet" Href = "Profile.css" />
 
 		<Script>
 			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -29,5 +32,16 @@
 	</Head>
 	
 	<Body>
+		<Div Class = "mdl-grid">
+			<Div ID = "Profile" Class = "mdl-cell mdl-cell--2-offset mdl-cell--8-col mdl-shadow--4dp mdl-color--white mdl-color-text--grey-800">
+				<Style ID = "Profile_Manager"></Style>
+				
+				<Div ID = "Profile_Photo"></Div>
+
+				<Div ID = "Profile_Info">
+					<Div ID = "Profile_Info_Name"></Div>
+				</Div>
+			</Div>
+		</Div>
 	</Body>
 </HTML>

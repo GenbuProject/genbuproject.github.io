@@ -1,4 +1,4 @@
-let base = null;
+window.base = null;
 
 window.addEventListener("DOMContentLoaded", () => {
 	base = new FirebasePlus({
@@ -12,8 +12,8 @@ window.addEventListener("DOMContentLoaded", () => {
 		if (user) {
 			DOM("#Header_AccountPane_Manager").textContent = (() => {
 				return new Style({
-					"#Header_AccountPane-Btn::Before": {
-						"Content": ["URL(", base.user.photoURL.replace("/photo", "/s32/photo"), ")"].join('"')
+					"#Header_AccountPane-Btn": {
+						"Background-Image": ["URL(", base.user.photoURL, ")"].join('"')
 					}
 				}).textContent;
 			})();
@@ -36,14 +36,5 @@ window.addEventListener("DOMContentLoaded", () => {
 				base.signOut();
 				break;
 		}
-	});
-});
-
-window.addEventListener("DOMContentLoaded", function () {
-	Array.prototype.concat(DOM('@A:Not([Href^="javascript:"])'), DOM('@A[Href]')).forEach(function (elem, index, p) {
-		elem.addEventListener("click", function (event) {
-			event.preventDefault();
-			parent.document.querySelector("IFrame.mdl-layout__content").src = elem.href;
-		});
 	});
 });

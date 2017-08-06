@@ -1,0 +1,7 @@
+A:Not([Href]) {
+	Cursor: Pointer;
+}
+
+Div.mdl-grid > Div.mdl-cell {
+	Padding: 4vmin;
+}

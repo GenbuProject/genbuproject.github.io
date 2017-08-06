@@ -1,0 +1,34 @@
+* {
+	Font-Family: "Meiryo UI";
+}
+
+
+
+#Profile {
+	Display: Flex;
+	Flex-Direction: Row;
+}
+
+#Profile_Photo {
+	Width: 20%;
+
+	Margin-Right: 5%;
+
+	Background: Transparent Center / Cover;
+	Border-Radius: 100%;
+}
+
+#Profile_Photo::Before {
+	Content: "";
+
+	Display: Block;
+	Padding-Top: 100%;
+}
+
+#Profile_Info {
+	Padding: 2vmin 0;
+}
+
+#Profile_Info_Name {
+	Font-Size: 2.5vw;
+}
