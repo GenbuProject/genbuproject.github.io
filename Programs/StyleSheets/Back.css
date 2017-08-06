@@ -2,10 +2,6 @@
 	Box-Sizing: Border-Box;
 }
 
-HTML, Body {
-	Height: 100%;
-}
-
 Body {
 	Color: #EEE;
 	Font: 14px/2 "メイリオ", Meiryo, Osaka;
