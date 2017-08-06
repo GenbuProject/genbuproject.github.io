@@ -65,6 +65,15 @@ const FirebasePlus = (function () {
 			},
 
 			enumerable: true
+		},
+
+		signOut: {
+			value () {
+				auth.signOut();
+				location.reload();
+			},
+
+			enumerable: true
 		}
 	});
 

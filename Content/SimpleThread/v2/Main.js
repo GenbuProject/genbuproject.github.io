@@ -9,27 +9,33 @@ window.addEventListener("DOMContentLoaded", () => {
 		storageBucket: "simple-thread.appspot.com",
 		messagingSenderId: "646527306803"
 	}, () => {
-		DOM("$Span#SignIn_Info_UserName").textContent = base.user.displayName;
+		DOM("$Span#Account_Info_UserName").textContent = base.user.displayName;
 		DOM("$Input#Info_Reload").click();
 	});
 
 
 	
-	DOM("$Input#SignIn_Apply").addEventListener("click", () => {
-		base.signIn(["https://www.googleapis.com/auth/plus.login"]);
+	DOM("$Input#Account_SignIn").addEventListener("click", () => {
+		base.signIn(["https://www.googleapis.com/auth/plus.login", "https://www.googleapis.com/auth/plus.me", "https://www.googleapis.com/auth/userinfo.email", "https://www.googleapis.com/auth/userinfo.profile"]);
 	});
 
-	DOM("$Input#Info_Apply").addEventListener("click", () => {
+	DOM("$Input#Account_SignOut").addEventListener("click", () => {
+		base.signOut();
+	});
+
+	DOM("$Input#UserInfo_Apply").addEventListener("click", () => {
 		base.Database.set(["user", base.user.uid].join("/"), {
-			userName: DOM("$Input#Info_UserName").value,
-			nickName: DOM("$Input#Info_NickName").value
+			userName: DOM("$Input#UserInfo_UserName").value,
+			nickName: DOM("$Input#UserInfo_NickName").value,
+			message: DOM("$TextArea#UserInfo_Message").value
 		});
 	});
 
-	DOM("$Input#Info_Reload").addEventListener("click", () => {
+	DOM("$Input#UserInfo_Reload").addEventListener("click", () => {
 		base.Database.get(["user", base.user.uid].join("/"), (res) => {
-			DOM("$Input#Info_UserName").value = res.userName,
-			DOM("$Input#Info_NickName").value = res.nickName;
+			DOM("$Input#UserInfo_UserName").value = res.userName,
+			DOM("$Input#UserInfo_NickName").value = res.nickName,
+			DOM("$TextArea#UserInfo_Message").value = res.message;
 		});
 	});
 });

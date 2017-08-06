@@ -28,19 +28,21 @@
 	<Body>
 		<H1 Align = "Center" Style = "Color: LightBlue; Border-Bottom: Thin Solid White;">Simple Thread</H1>
 
-		<Form>
-			<Div ID = "SignIn_Info">
+		<Form ID = "Account">
+			<Div ID = "Account_Info">
 				<H2>ログイン情報</H2>
 
-				アカウント名：<Span ID = "SignIn_Info_UserName"></Span>
+				アカウント名：<Span ID = "Account_Info_UserName"></Span>
 			</Div>
 
-			<Input ID = "SignIn_Apply" Type = "Button" Value = "Sign In" />
+			<Input ID = "Account_SignIn" Type = "Button" Value = "Sign In" />
+			<Input ID = "Account_SignOut" Type = "Button" Value = "Sign Out" />
 		</Form>
 
-		<Form>
-			<Input ID = "Info_UserName" Type = "Text" Value = "" PlaceHolder = "ユーザー名" />
-			<Input ID = "Info_NickName" Type = "Text" Value = "" PlaceHolder = "ニックネーム(任意)" />
+		<Form ID = "UserInfo">
+			<Input ID = "UserInfo_UserName" Type = "Text" Value = "" PlaceHolder = "ユーザー名" />
+			<Input ID = "UserInfo_NickName" Type = "Text" Value = "" PlaceHolder = "ニックネーム(任意)" />
+			<TextArea ID = "UserInfo_Message" Value = ""></TextArea>
 			
 			<Input ID = "Info_Apply" Type = "Button" Value = "変更" />
 			<Input ID = "Info_Reload" Type = "Button" Value = "読み込み" />
