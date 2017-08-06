@@ -24,6 +24,17 @@ const FirebasePlus = (function () {
 
 		Database: {
 			value: Object.create(Object.prototype, {
+				getInfo: {
+					value (path, onGet) {
+						path = path || "",
+						onGet = onGet || ((res) => {});
+
+						database.ref(path).on("value", (res) => {
+							onGet(res);
+						});
+					}
+				},
+
 				get: {
 					value (path, onGet) {
 						path = path || "",
