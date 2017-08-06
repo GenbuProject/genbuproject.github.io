@@ -1,11 +1,15 @@
-Body {
-    Color: #EEE;
-    Font: 14px/2 "メイリオ", Meiryo, Osaka;
+* {
+	Box-Sizing: Border-Box;
+}
 
-    BackGround: URL("https://genbuproject.github.io/Image/Back.jpg");
+Body {
+	Color: #EEE;
+	Font: 14px/2 "メイリオ", Meiryo, Osaka;
+
+	BackGround: URL("https://genbuproject.github.io/Image/Back.jpg");
 }
 
 A {
-    Color: Chartreuse;
-    Text-Decoration: None;
+	Color: Chartreuse;
+	Text-Decoration: None;
 }
