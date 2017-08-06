@@ -26,9 +26,7 @@
 }
 
 #Profile_Info {
+	Flex: 1;
+	
 	Padding: 2vmin 0;
-}
-
-#Profile_Info_Name {
-	Font-Size: 2.5vw;
 }

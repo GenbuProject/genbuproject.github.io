@@ -10,6 +10,6 @@ window.addEventListener("DOMContentLoaded", () => {
 			}).textContent;
 		})();
 
-		DOM("#Profile_Info_Name").textContent = base.user.displayName;
+		DOM("#Profile_Info_Name_Input").value = base.user.displayName;
 	}
 });
