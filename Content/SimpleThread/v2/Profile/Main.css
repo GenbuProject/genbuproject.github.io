@@ -1,7 +1,3 @@
-A:Not([Href]), A[Href=""] {
-	Cursor: Pointer;
-}
-
 #Header_AccountPane-Btn[SignOut] {
 	Display: None;
 }

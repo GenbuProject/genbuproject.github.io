@@ -38,12 +38,3 @@ window.addEventListener("DOMContentLoaded", () => {
 		}
 	});
 });
-
-window.addEventListener("DOMContentLoaded", function () {
-	Array.prototype.concat(DOM('@A:Not([Href^="javascript:"])'), DOM('@A[Href]')).forEach(function (elem, index, p) {
-		elem.addEventListener("click", function (event) {
-			event.preventDefault();
-			parent.document.querySelector("IFrame.mdl-layout__content").src = elem.href;
-		});
-	});
-});
