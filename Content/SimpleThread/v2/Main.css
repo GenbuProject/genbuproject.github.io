@@ -1,0 +1,17 @@
+* {
+	Box-Sizing: Border-Box;
+}
+
+HTML, Body {
+	Height: 100%;
+
+	Margin: 0;
+	Overflow: Hidden;
+}
+
+Div#SignIn_Info {
+	Padding: 2vmin;
+
+	Border: Thin Solid Black;
+	Border-Radius: 1vmin;
+}

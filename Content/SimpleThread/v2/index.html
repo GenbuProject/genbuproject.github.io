@@ -14,17 +14,6 @@
 		<Link Rel = "StyleSheet" Href = "Main.css" />
 
 		<Script>
-			let base = new FirebasePlus({
-				apiKey: "AIzaSyA62uPkN6WNV41oWWzOdiITMbBF9RDYOhM",
-				authDomain: "simple-thread.firebaseapp.com",
-				databaseURL: "https://simple-thread.firebaseio.com",
-				projectId: "simple-thread",
-				storageBucket: "simple-thread.appspot.com",
-				messagingSenderId: "646527306803"
-			});
-		</Script>
-
-		<Script>
 			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
 			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
@@ -40,7 +29,13 @@
 		<H1 Align = "Center" Style = "Color: LightBlue; Border-Bottom: Thin Solid White;">Simple Thread</H1>
 
 		<Form>
-			<Input ID = "Btns_SignIn" Type = "Button" Value = "Sign In" />
+			<Div ID = "SignIn_Info">
+				<H2>ログイン情報</H2>
+
+				アカウント名：<Span ID = "SignIn_Info_UserName"></Span>
+			</Div>
+
+			<Input ID = "SignIn_Apply" Type = "Button" Value = "Sign In" />
 		</Form>
 
 		<Form>

@@ -1,35 +1,22 @@
 const FirebasePlus = (function () {
-	let AUTH = null,
-		DATABASE = null;
+	let project = null,
+		auth = null,
+		database = null;
 
-	function FirebasePlus (option) {
-		firebase.initializeApp(option);
+	function FirebasePlus (option, onLoad) {
+		onLoad = onLoad || (() => {});
 
-		firebase.auth().getRedirectResult().then((res) => {
-			if (res.credential) {
-				this.credentialInfo = {
-					accessToken: res.credential.accessToken,
-					userId: res.user.uid
-				};
-			}
+		project = firebase.initializeApp(option);
+		auth = project.auth(),
+		database = project.database();
+
+		auth.onAuthStateChanged((user) => {
+			onLoad();
 		});
-
-		AUTH = firebase.auth(),
-		DATABASE = firebase.database();
 	}; FirebasePlus.prototype = Object.create(Function.prototype, {
 		constructor: { value: FirebasePlus },
 
-		_credentialInfo: { value: {}, configurable: true, writable: true },
-		credentialInfo: {
-			get () {
-				return this._credentialInfo;
-			},
-
-			set (val) {
-				this._credentialInfo = val;
-				localStorage.setItem("FirebasePlus_credentialInfo", JSON.stringify(val));
-			}
-		},
+		user: { get () { return auth.currentUser } },
 
 
 
@@ -40,7 +27,7 @@ const FirebasePlus = (function () {
 						path = path || "",
 						onGet = onGet || ((res) => {});
 
-						DATABASE.ref(path).on("value", (res) => {
+						database.ref(path).on("value", (res) => {
 							onGet(res.val());
 						});
 					},
@@ -53,7 +40,7 @@ const FirebasePlus = (function () {
 						path = path || "",
 						val = val || "";
 
-						DATABASE.ref(path).set(val);
+						database.ref(path).set(val);
 					},
 
 					enumerable: true
@@ -74,7 +61,7 @@ const FirebasePlus = (function () {
 						provider.addScope(value);
 					});
 
-				AUTH.signInWithRedirect(provider);
+				auth.signInWithRedirect(provider);
 			},
 
 			enumerable: true
