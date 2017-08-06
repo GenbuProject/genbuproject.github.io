@@ -5,10 +5,13 @@
 		<Meta Charset = "UTF-8" />
 		<Title>Genbu Project Official Site == Simple Thread</Title>
 
+		<Link Rel = "StyleSheet" Href = "https://fonts.googleapis.com/icon?family=Material+Icons" />
+		<Link Rel = "StyleSheet" Href = "https://code.getmdl.io/1.3.0/material.blue_grey-pink.min.css" />
+		<Script Src = "https://code.getmdl.io/1.3.0/material.min.js" Defer = "Defer"></Script>
 		<Script Src = "https://www.gstatic.com/firebasejs/4.2.0/firebase.js"></Script>
 		<Script Src = "https://genbuproject.github.io/Programs/DOM Extender/DOM Extender v3.0.js"></Script>
 
-		<Script Src = "FirebasePlus.js"></Script>
+		<Script Src = "../../../Programs/FirebasePlus.js"></Script>
 
 		<Script Src = "Main.js"></Script>
 		<Link Rel = "StyleSheet" Href = "Main.css" />
@@ -26,26 +29,20 @@
 	</Head>
 	
 	<Body>
-		<H1 Align = "Center" Style = "Color: LightBlue; Border-Bottom: Thin Solid White;">Simple Thread</H1>
+		<Div Class = "mdl-layout mdl-js-layout mdl-layout--fixed-header">
+			<Header ID = "Header" Class = "mdl-layout__header">
+				<Div Class = "mdl-layout__header-row">
+					<Span Class = "mdl-layout-title">Simple Thread</Span>
+					<Div Class = "mdl-layout-spacer"></Div>
 
-		<Form ID = "Account">
-			<Div ID = "Account_Info">
-				<H2>ログイン情報</H2>
+					<Nav Class = "mdl-navigation">
+						<Style ID = "Header_AccountPane_Manager"></Style>
 
-				アカウント名：<Span ID = "Account_Info_UserName"></Span>
-			</Div>
-
-			<Input ID = "Account_SignIn" Type = "Button" Value = "Sign In" />
-			<Input ID = "Account_SignOut" Type = "Button" Value = "Sign Out" />
-		</Form>
-
-		<Form ID = "UserInfo">
-			<Input ID = "UserInfo_UserName" Type = "Text" Value = "" PlaceHolder = "ユーザー名" />
-			<Input ID = "UserInfo_NickName" Type = "Text" Value = "" PlaceHolder = "ニックネーム(任意)" /><Br />
-			<TextArea ID = "UserInfo_Message" Value = ""></TextArea>
-			
-			<Input ID = "UserInfo_Apply" Type = "Button" Value = "変更" />
-			<Input ID = "UserInfo_Reload" Type = "Button" Value = "読み込み" />
-		</Form>
+						<A ID = "Header_SignInOut" Class = "mdl-navigation__link" Href = "javascript:void(0)">Sign In</A>
+						<A ID = "Header_AccountPane-Btn" Class = "mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect"></A>
+					</Nav>
+				</Div>
+			</Header>
+		</Div>
 	</Body>
 </HTML>

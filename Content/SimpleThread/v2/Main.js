@@ -8,38 +8,33 @@ window.addEventListener("DOMContentLoaded", () => {
 		projectId: "simple-thread",
 		storageBucket: "simple-thread.appspot.com",
 		messagingSenderId: window.atob("NjQ2NTI3MzA2ODAz")
-	}, () => {
-		DOM("$Span#Account_Info_UserName").textContent = base.user.displayName;
-		DOM("$Input#UserInfo_Reload").click();
+	}, (user) => {
+		if (user) {
+			DOM("#Header_AccountPane_Manager").textContent = (() => {
+				return new Style({
+					"#Header_AccountPane-Btn::Before": {
+						"Content": ["URL(", base.user.photoURL.replace("/photo", "/s32/photo"), ")"].join('"')
+					}
+				}).textContent;
+			})();
+
+			DOM("#Header_SignInOut").textContent = "Sign Out";
+		} else {
+			DOM("#Header_AccountPane-Btn").setAttribute("SignOut", "");
+		}
 	});
 
 
-	
-	DOM("$Input#Account_SignIn").addEventListener("click", () => {
-		base.signIn([
-			"https://www.googleapis.com/auth/plus.login",
-			"https://www.googleapis.com/auth/plus.me",
-			"https://www.googleapis.com/auth/userinfo.profile"
-		]);
-	});
 
-	DOM("$Input#Account_SignOut").addEventListener("click", () => {
-		base.signOut();
-	});
+	DOM("#Header_SignInOut").addEventListener("click", () => {
+		switch (DOM("#Header_SignInOut").textContent) {
+			case "Sign In":
+				base.signIn(["https://www.googleapis.com/auth/plus.login"]);
+				break;
 
-	DOM("$Input#UserInfo_Apply").addEventListener("click", () => {
-		base.Database.set(["user", base.user.uid].join("/"), {
-			userName: DOM("$Input#UserInfo_UserName").value,
-			nickName: DOM("$Input#UserInfo_NickName").value,
-			message: DOM("$TextArea#UserInfo_Message").value
-		});
-	});
-
-	DOM("$Input#UserInfo_Reload").addEventListener("click", () => {
-		base.Database.get(["user", base.user.uid].join("/"), (res) => {
-			DOM("$Input#UserInfo_UserName").value = res.userName,
-			DOM("$Input#UserInfo_NickName").value = res.nickName,
-			DOM("$TextArea#UserInfo_Message").value = res.message;
-		});
+			case "Sign Out":
+				base.signOut();
+				break;
+		}
 	});
 });

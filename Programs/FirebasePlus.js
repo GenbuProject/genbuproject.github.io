@@ -5,7 +5,7 @@ const FirebasePlus = (function () {
 		storage = null;
 
 	function FirebasePlus (option, onLoad) {
-		onLoad = onLoad || (() => {});
+		onLoad = onLoad || ((user) => {});
 
 		project = firebase.initializeApp(option);
 		auth = project.auth(),
@@ -13,7 +13,7 @@ const FirebasePlus = (function () {
 		storage = project.storage();
 
 		auth.onAuthStateChanged((user) => {
-			onLoad();
+			onLoad(user);
 		});
 	}; FirebasePlus.prototype = Object.create(Function.prototype, {
 		constructor: { value: FirebasePlus },
