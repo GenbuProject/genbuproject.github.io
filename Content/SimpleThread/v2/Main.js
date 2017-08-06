@@ -10,7 +10,7 @@ window.addEventListener("DOMContentLoaded", () => {
 		messagingSenderId: "646527306803"
 	}, () => {
 		DOM("$Span#Account_Info_UserName").textContent = base.user.displayName;
-		DOM("$Input#Info_Reload").click();
+		DOM("$Input#UserInfo_Reload").click();
 	});
 
 
