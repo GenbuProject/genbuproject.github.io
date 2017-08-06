@@ -2,12 +2,12 @@ let base = null;
 
 window.addEventListener("DOMContentLoaded", () => {
 	base = new FirebasePlus({
-		apiKey: "AIzaSyA62uPkN6WNV41oWWzOdiITMbBF9RDYOhM",
+		apiKey: window.atob("QUl6YVN5QTYydVBrTjZXTlY0MW9XV3pPZGlJVE1iQkY5UkRZT2hN"),
 		authDomain: "simple-thread.firebaseapp.com",
 		databaseURL: "https://simple-thread.firebaseio.com",
 		projectId: "simple-thread",
 		storageBucket: "simple-thread.appspot.com",
-		messagingSenderId: "646527306803"
+		messagingSenderId: window.atob("NjQ2NTI3MzA2ODAz")
 	}, () => {
 		DOM("$Span#Account_Info_UserName").textContent = base.user.displayName;
 		DOM("$Input#UserInfo_Reload").click();
@@ -16,7 +16,11 @@ window.addEventListener("DOMContentLoaded", () => {
 
 	
 	DOM("$Input#Account_SignIn").addEventListener("click", () => {
-		base.signIn(["https://www.googleapis.com/auth/plus.login", "https://www.googleapis.com/auth/plus.me", "https://www.googleapis.com/auth/userinfo.email", "https://www.googleapis.com/auth/userinfo.profile"]);
+		base.signIn([
+			"https://www.googleapis.com/auth/plus.login",
+			"https://www.googleapis.com/auth/plus.me",
+			"https://www.googleapis.com/auth/userinfo.profile"
+		]);
 	});
 
 	DOM("$Input#Account_SignOut").addEventListener("click", () => {

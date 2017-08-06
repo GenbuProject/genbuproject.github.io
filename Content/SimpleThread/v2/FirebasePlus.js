@@ -1,14 +1,16 @@
 const FirebasePlus = (function () {
 	let project = null,
 		auth = null,
-		database = null;
+		database = null,
+		storage = null;
 
 	function FirebasePlus (option, onLoad) {
 		onLoad = onLoad || (() => {});
 
 		project = firebase.initializeApp(option);
 		auth = project.auth(),
-		database = project.database();
+		database = project.database(),
+		storage = project.storage();
 
 		auth.onAuthStateChanged((user) => {
 			onLoad();
@@ -45,6 +47,14 @@ const FirebasePlus = (function () {
 
 					enumerable: true
 				}
+			}),
+
+			enumerable: true
+		},
+
+		Storage: {
+			value: Object.create(Object.prototype, {
+
 			}),
 
 			enumerable: true
