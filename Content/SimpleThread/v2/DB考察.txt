@@ -1,7 +1,7 @@
 Root
 > users
 	> xxxxxxxx
-		> defaultName: String
+		> userName: String
 		
 	> xxxxxxxx
 		> ...

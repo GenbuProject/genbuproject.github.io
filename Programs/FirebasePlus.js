@@ -46,6 +46,15 @@ const FirebasePlus = (function () {
 					},
 
 					enumerable: true
+				},
+
+				update: {
+					value (path, val) {
+						path = path || "",
+						val = val || "";
+
+						database.ref(path).update(val);
+					}
 				}
 			}),
 
