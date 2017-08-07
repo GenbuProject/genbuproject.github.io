@@ -3,7 +3,13 @@ Root
 	> xxxxxxxx
 		> userName: String
 		> detail: String
-		
+		> links: Array<Object>
+			> [0]
+				> name: String
+				> url: URLString
+
+			> ...
+			
 	> xxxxxxxx
 		> ...
 		
@@ -13,10 +19,10 @@ Root
 		> overview: String
 		> detail: String
 		> admins
-			> xxxxxxxx: String <Owner || Admin || Observer || ...>
+			> xxxxxxxx: String<Owner || Admin || Observer || ...>
 			
 		> createdTime: DateString
-		> dataUrl: URLString
+		> databaseName: URLString
 		
 	> 1
 		> ...
