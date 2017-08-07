@@ -2,6 +2,7 @@ Root
 > users
 	> xxxxxxxx
 		> userName: String
+		> detail: String
 		
 	> xxxxxxxx
 		> ...

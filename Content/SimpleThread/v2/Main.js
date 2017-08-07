@@ -13,7 +13,8 @@ window.addEventListener("DOMContentLoaded", () => {
 			base.Database.getInfo("users/" + user.uid, (res) => {
 				if (!res.exists()) {
 					base.Database.set("users/" + user.uid, {
-						userName: user.displayName
+						userName: user.displayName,
+						detail: ""
 					});
 				}
 			});

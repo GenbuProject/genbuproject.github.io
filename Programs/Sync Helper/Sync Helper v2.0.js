@@ -620,7 +620,7 @@ GoogleAPI.prototype = Object.create(null, {
 		value: function (Args, IsWithoutToken) {
 			return DOM.XHR({
 				Type: Args.Type,
-				URL: Args.URL, 
+				URL: Args.URL,
 				DoesSync: Args.DoesSync,
 
 				Headers: Args.Headers,

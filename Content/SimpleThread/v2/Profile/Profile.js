@@ -10,19 +10,25 @@ window.addEventListener("DOMContentLoaded", () => {
 			}).textContent;
 		})();
 
-		base.Database.get("users/" + base.user.uid + "/userName", (res) => {
-			DOM("#Profile_Info_Name_Input").value = res;
+		base.Database.get("users/" + base.user.uid, (res) => {
+			DOM("#Profile_Info_Name_Input").value = res.userName,
+			DOM("#Profile_Info_Detail_Input").value = res.detail;
 		});
 	}
 
 
 
-	DOM("#Profile_Info_Name_Apply").addEventListener("click", () => {
-		base.Database.set("users/" + base.user.uid + "/userName", DOM("#Profile_Info_Name_Input").value);
+	DOM("#Profile_Info_Btns_Apply").addEventListener("click", () => {
+		base.Database.update("users/" + base.user.uid, {
+			userName: DOM("#Profile_Info_Name_Input").value,
+			detail: DOM("#Profile_Info_Detail_Input").value
+		});
 	});
 
-	DOM("#Profile_Info_Name_Reload").addEventListener("click", () => {
-		base.Database.set("users/" + base.user.uid + "/userName", base.user.displayName);
+	DOM("#Profile_Info_Btns_Reload").addEventListener("click", () => {
+		base.Database.update("users/" + base.user.uid + "/userName", {
+			userName: base.user.displayName
+		});
 
 		DOM("#Profile_Info_Name_Input").value = base.user.displayName;
 	});

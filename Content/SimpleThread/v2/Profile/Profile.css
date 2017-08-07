@@ -7,6 +7,7 @@
 #Profile {
 	Display: Flex;
 	Flex-Direction: Row;
+	Align-Items: Flex-Start;
 }
 
 #Profile_Photo {
@@ -26,7 +27,14 @@
 }
 
 #Profile_Info {
+	Display: Flex;
+	Flex-Direction: Column;
+	
 	Flex: 1;
 	
 	Padding: 2vmin 0;
+}
+
+#Profile_Info > * {
+	Width: 100%;
 }
