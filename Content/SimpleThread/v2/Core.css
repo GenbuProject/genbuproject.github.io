@@ -5,7 +5,3 @@ A:Not([Href]) {
 *.mdl-grid > *.mdl-cell {
 	Padding: 4vmin;
 }
-
-*.mdl-select > Input.mdl-textfield__input {
-	Cursor: Pointer;
-}

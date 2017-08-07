@@ -8,6 +8,8 @@
 		<Link Rel = "StyleSheet" Href = "https://fonts.googleapis.com/icon?family=Material+Icons" />
 		<Link Rel = "StyleSheet" Href = "https://code.getmdl.io/1.3.0/material.blue_grey-pink.min.css" />
 		<Script Src = "https://code.getmdl.io/1.3.0/material.min.js" Defer = "Defer"></Script>
+		<Script Src = "https://genbuproject.github.io/Programs/MDL Extender/MDL Extender.js"></Script>
+		<Link Rel = "StyleSheet" Href = "https://genbuproject.github.io/Programs/MDL Extender/MDL Extender.css" />
 
 		<Script Src = "https://www.gstatic.com/firebasejs/4.2.0/firebase.js"></Script>
 		<Script Src = "https://genbuproject.github.io/Programs/DOM Extender/DOM Extender v3.0.js"></Script>
@@ -49,11 +51,25 @@
 						<Label Class = "mdl-textfield__label" For = "Profile_Info_Detail_Input" Rows = "3">自己紹介...</Label>
 					</Div>
 
-					<Div Class = "mdl-select" Data-Label = "Acts">
-						<Li></Li>
-						<Li>避難準備</Li>
-						<Li>FPSを続ける</Li>
-					</Div>
+					<UL CLass = "mdl-list">
+						<Li Class = "mdl-list__item">
+							<Div Class = "mdl-textfield">
+								<Input Class = "mdl-textfield__input" Type = "Text" />
+								<Label Class = "mdl-textfield__label">ABCD</Label>
+							</Div>
+
+							<Button Class = "mdl-button mdl-js-button mdl-button--icon mdl-js--ripple-effect">
+								<I Class = "material-icons">add</I>
+							</Button>
+						</Li>
+
+						<Li Class = "mdl-list__item">
+							<Div Class = "mdl-textfield">
+								<Input Class = "mdl-textfield__input" Type = "Text" />
+								<Label Class = "mdl-textfield__label">ABCD</Label>
+							</Div>
+						</Li>
+					</UL>
 
 					<Div ID = "Profile_Info_Btns">
 						<Button ID = "Profile_Info_Btns_Apply" Class = "mdl-button mdl-js-button mdl-button--raised">保存</Button>
