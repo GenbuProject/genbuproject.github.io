@@ -1157,8 +1157,8 @@ const DOM = (function () {
 							const CHARMAP = Object.create(Object.prototype, {
 								LEVEL1: { value: "1234567890".split(""), enumerable: true },
 								LEVEL2: { value: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ".split(""), enumerable: true },
-								LEVEL3: { value: [""], enumerable: true },
-								LEVEL4: { value: "!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~".split(""), enumerable: true },
+								LEVEL3: { value: "1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ".split(""), enumerable: true },
+								LEVEL4: { value: "1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~".split(""), enumerable: true },
 
 								LEVEL101: { value: "あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをん".split(""), enumerable: true },
 								LEVEL102: { value: ["真夏の夜の淫夢", "まなつのよるのいんむ"].join("").removeOverlay().split(""), enumerable: true },
@@ -1171,9 +1171,6 @@ const DOM = (function () {
 								LEVEL109: { value: ["Mr.Taka", "Takaチャンネル", "タカチャンネル"].join("").removeOverlay().split(""), enumerable: true },
 								LEVEL110: { value: ["ナイキ", "Nike", "ないき", "にけ", "にけにけ", "にけみん"].join("").removeOverlay().split(""), enumerable: true }
 							}); CHARMAP[Symbol.toStringTag] = "RandomizeMap";
-
-							CHARMAP.LEVEL3 = CHARMAP.LEVEL1.concat(CHARMAP.LEVEL2),
-							CHARMAP.LEVEL4 = CHARMAP.LEVEL4.concat(CHARMAP.LEVEL1.concat(CHARMAP.LEVEL2));
 
 							return CHARMAP;
 						})(),

@@ -11,6 +11,9 @@ window.addEventListener("DOMContentLoaded", () => {
 		})();
 
 		base.Database.get("users/" + base.user.uid, (res) => {
+			DOM("#Profile_Info_Name").classList.add("is-dirty"),
+			DOM("#Profile_Info_Detail").classList.add("is-dirty");
+
 			DOM("#Profile_Info_Name_Input").value = res.userName,
 			DOM("#Profile_Info_Detail_Input").value = res.detail;
 		});
@@ -30,6 +33,7 @@ window.addEventListener("DOMContentLoaded", () => {
 			userName: base.user.displayName
 		});
 
+		DOM("#Profile_Info_Name").classList.add("is-dirty");
 		DOM("#Profile_Info_Name_Input").value = base.user.displayName;
 	});
 });
