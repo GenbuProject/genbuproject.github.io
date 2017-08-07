@@ -456,12 +456,6 @@
 			value () {
 				this.parentElement.removeChild(this);
 			}
-		},
-
-		parents: {
-			value (selectorStr) {
-				
-			}
 		}
 	});
 
