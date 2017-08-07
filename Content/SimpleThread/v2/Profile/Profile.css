@@ -38,3 +38,7 @@
 #Profile_Info > * {
 	Width: 100%;
 }
+
+#Profile_Info_Detail_Input {
+	Height: 10em;
+}

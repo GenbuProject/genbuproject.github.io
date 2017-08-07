@@ -26,7 +26,7 @@ window.addEventListener("DOMContentLoaded", () => {
 	});
 
 	DOM("#Profile_Info_Btns_Reload").addEventListener("click", () => {
-		base.Database.update("users/" + base.user.uid + "/userName", {
+		base.Database.update("users/" + base.user.uid, {
 			userName: base.user.displayName
 		});
 
