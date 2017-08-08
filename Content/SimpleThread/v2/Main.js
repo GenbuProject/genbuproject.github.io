@@ -47,8 +47,4 @@ window.addEventListener("DOMContentLoaded", () => {
 				break;
 		}
 	});
-
-	DOM("#Dialog_Btns_No").addEventListener("click", () => {
-		DOM("#Dialog").close();
-	})
 });

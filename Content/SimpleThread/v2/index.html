@@ -17,7 +17,9 @@
 		<Script Src = "https://genbuproject.github.io/Programs/FirebasePlus.js"></Script>
 		<Script Src = "https://genbuproject.github.io/Content/SimpleThread/v2/Core.js"></Script>
 		<Link Rel = "StyleSheet" Href = "https://genbuproject.github.io/Content/SimpleThread/v2/Core.css" />
-
+		
+		<Script Src = "Dialog.js"></Script>
+		
 		<Script Src = "Main.js"></Script>
 		<Link Rel = "StyleSheet" Href = "Main.css" />
 
@@ -65,16 +67,32 @@
 
 			<IFrame Class = "mdl-layout__content" Src = "Top/"></IFrame>
 
-			<Dialog ID = "Dialog" Class = "mdl-dialog">
-				<Div ID = "Dialog_Content" Class = "mdl-dialog__content">
-					本当にアカウントを削除しますか？
-				</Div>
 
-				<Div ID = "Dialog_Btns" Class = "mdl-dialog__actions">
-					<Button ID = "Dialog_Btns_Yes" Class = "mdl-button" Type = "Button">はい</Button>
-					<Button ID = "Dialog_Btns_No" Class = "mdl-button" Type = "Button">いいえ</Button>
+
+			<Div ID = "Dialogs">
+				<Div ID = "Dialogs_Profile">
+					<Dialog ID = "Dialogs_Profile_ApplyNotify" Class = "mdl-dialog">
+						<Div ID = "Dialogs_Profile_ApplyNotify_Content" Class = "mdl-dialog__content">
+							プロフィールが変更されました。
+						</Div>
+
+						<Div ID = "Dialogs_Profile_ApplyNotify_Btns" Class = "mdl-dialog__actions">
+							<Button ID = "Dialogs_Profile_ApplyNotify_Btns_OK" Class = "mdl-button mdl-js-button mdl-js-ripple-effect" Data-Action = "Dialog_Close" Type = "Button">閉じる</Button>
+						</Div>
+					</Dialog>
+
+					<Dialog ID = "Dialogs_Profile_ConfirmDelete" Class = "mdl-dialog">
+						<Div ID = "Dialogs_Profile_ConfirmDelete_Content" Class = "mdl-dialog__content">
+							本当にアカウントを削除しますか？
+						</Div>
+
+						<Div ID = "Dialogs_Profile_ConfirmDelete_Btns" Class = "mdl-dialog__actions">
+							<Button ID = "Dialogs_Profile_ConfirmDelete_Btns_Yes" Class = "mdl-button mdl-js-button mdl-js-ripple-effect" Type = "Button">はい</Button>
+							<Button ID = "Dialogs_Profile_ConfirmDelete_Btns_No" Class = "mdl-button mdl-js-button mdl-js-ripple-effect" Data-Action = "Dialog_Close" Type = "Button">いいえ</Button>
+						</Div>
+					</Dialog>
 				</Div>
-			</Dialog>
+			</Div>
 		</Div>
 	</Body>
 </HTML>

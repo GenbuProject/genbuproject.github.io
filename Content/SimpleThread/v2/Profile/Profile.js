@@ -65,7 +65,15 @@ window.addEventListener("DOMContentLoaded", () => {
 		});
 	});
 
+
+
+	let doc = parent.document;
+
+	DOM("#Profile_Info_Btns_Apply").addEventListener("click", () => {
+		doc.querySelector("#Dialogs_Profile_ApplyNotify").showModal();
+	});
+
 	DOM("#Profile_Info_Btns_Delete").addEventListener("click", () => {
-		parent.document.querySelector("Dialog#Dialog").showModal();
+		doc.querySelector("#Dialogs_Profile_ConfirmDelete").showModal();
 	});
 });
