@@ -6,7 +6,7 @@
 		<Title>Simple Thread == プロフィール</Title>
 
 		<Link Rel = "StyleSheet" Href = "https://fonts.googleapis.com/icon?family=Material+Icons" />
-		<Link Rel = "StyleSheet" Href = "https://code.getmdl.io/1.3.0/material.blue_grey-pink.min.css" />
+		<Link Rel = "StyleSheet" Href = "https://code.getmdl.io/1.3.0/material.teal-red.min.css" />
 		<Script Src = "https://code.getmdl.io/1.3.0/material.min.js" Defer = "Defer"></Script>
 		<Script Src = "https://genbuproject.github.io/Programs/MDL Extender/MDL Extender.js"></Script>
 		<Link Rel = "StyleSheet" Href = "https://genbuproject.github.io/Programs/MDL Extender/MDL Extender.css" />
@@ -47,15 +47,15 @@
 					</Div>
 
 					<Div ID = "Profile_Info_Detail" Class = "mdl-textfield mdl-js-textfield">
-						<Textarea ID = "Profile_Info_Detail_Input" Class = "mdl-textfield__input"></Textarea>
-						<Label Class = "mdl-textfield__label" For = "Profile_Info_Detail_Input" Rows = "3">自己紹介...</Label>
+						<Textarea ID = "Profile_Info_Detail_Input" Class = "mdl-textfield__input" Rows = "10" MaxLength = "500"></Textarea>
+						<Label Class = "mdl-textfield__label" For = "Profile_Info_Detail_Input">自己紹介...</Label>
 					</Div>
 
 					<UL ID = "Profile_Info_URL" Class = "mdl-list mdl-extender__mdl-list--editable mdl-extender__mdl-list--2-field" Data-Label = "リンク" Data-Field0 = "表示名" Data-Field1 = "URL"></UL>
 
 					<Div ID = "Profile_Info_Btns">
 						<Button ID = "Profile_Info_Btns_Apply" Class = "mdl-button mdl-js-button mdl-button--raised">保存</Button>
-						<Button ID = "Profile_Info_Btns_Reload" Class = "mdl-button mdl-js-button mdl-button--raised">デフォルトに戻す</Button>
+						<Button ID = "Profile_Info_Btns_Delete" Class = "mdl-button mdl-js-button mdl-button--raised mdl-button--accent mdl-js-ripple-effect">アカウントを削除</Button>
 					</Div>
 				</Div>
 			</Div>

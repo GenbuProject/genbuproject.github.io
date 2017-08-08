@@ -1,6 +1,6 @@
 window.addEventListener("DOMContentLoaded", () => {
 	if (!base.user) {
-		location.href = "https://genbuproject.github.io/Content/SimpleThread/v2/403/";
+		location.href = "https://genbuproject.github.io/Content/SimpleThread/v2/Error/403/";
 	} else {
 		DOM("#Profile_Manager").textContent = (() => {
 			return new Style({
@@ -65,12 +65,7 @@ window.addEventListener("DOMContentLoaded", () => {
 		});
 	});
 
-	DOM("#Profile_Info_Btns_Reload").addEventListener("click", () => {
-		base.Database.update("users/" + base.user.uid, {
-			userName: base.user.displayName
-		});
-
-		DOM("#Profile_Info_Name").classList.add("is-dirty");
-		DOM("#Profile_Info_Name_Input").value = base.user.displayName;
+	DOM("#Profile_Info_Btns_Delete").addEventListener("click", () => {
+		parent.document.querySelector("Dialog#Dialog").showModal();
 	});
 });

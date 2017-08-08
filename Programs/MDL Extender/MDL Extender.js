@@ -130,6 +130,18 @@ window.addEventListener("DOMContentLoaded", () => {
 												children: (() => {
 													let items = [];
 
+													for (let i = 1; i <= 5; i++) {
+														if (list.classList.contains("mdl-extender__mdl-list--" + i + "-field")) {
+															fieldQuantity = i;
+															break;
+														} else {
+															if (i >= 5) {
+																fieldQuantity = 1;
+																list.classList.add("mdl-extender__mdl-list--1-field");
+															}
+														}
+													}
+
 													for (let i = 1; i <= fieldQuantity; i++) {
 														let fieldUUID = new DOM.Randomizer(DOM.Randomizer.TYPE.LEVEL3).generate(16);
 

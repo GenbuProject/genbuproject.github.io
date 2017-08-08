@@ -6,7 +6,7 @@
 		<Title>Simple Thread</Title>
 
 		<Link Rel = "StyleSheet" Href = "https://fonts.googleapis.com/icon?family=Material+Icons" />
-		<Link Rel = "StyleSheet" Href = "https://code.getmdl.io/1.3.0/material.blue_grey-pink.min.css" />
+		<Link Rel = "StyleSheet" Href = "https://code.getmdl.io/1.3.0/material.teal-red.min.css" />
 		<Script Src = "https://code.getmdl.io/1.3.0/material.min.js" Defer = "Defer"></Script>
 		<Script Src = "https://genbuproject.github.io/Programs/MDL Extender/MDL Extender.js"></Script>
 		<Link Rel = "StyleSheet" Href = "https://genbuproject.github.io/Programs/MDL Extender/MDL Extender.css" />
@@ -43,6 +43,18 @@
 					<Nav Class = "mdl-navigation">
 						<Style ID = "Header_AccountPane_Manager"></Style>
 
+						<Div ID = "Header_Searcher" Class = "mdl-textfield mdl-js-textfield mdl-textfield--expandable">
+							<Label Class = "mdl-button mdl-js-button mdl-button--icon" For = "Header_Searcher_Input">
+								<I Class = "material-icons">search</I>
+							</Label>
+
+							<Div Class = "mdl-textfield__expandable-holder">
+								<Input ID = "Header_Searcher_Input" Class = "mdl-textfield__input" Type = "Text" />
+								<Label Class = "mdl-textfield__label" For = "Header_Searcher_Input">Search...</Label>
+							</Div>
+						</Div>
+
+						<A Class = "mdl-navigation__link" Href = "Top/">Top</A>
 						<A ID = "Header_SignInOut" Class = "mdl-navigation__link">Sign In</A>
 						<A ID = "Header_AccountPane-Btn" Class = "mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect" Href = "Profile/"></A>
 
@@ -51,7 +63,18 @@
 				</Div>
 			</Header>
 
-			<IFrame Class = "mdl-layout__content" Src = "Top.html"></IFrame>
+			<IFrame Class = "mdl-layout__content" Src = "Top/"></IFrame>
+
+			<Dialog ID = "Dialog" Class = "mdl-dialog">
+				<Div ID = "Dialog_Content" Class = "mdl-dialog__content">
+					本当にアカウントを削除しますか？
+				</Div>
+
+				<Div ID = "Dialog_Btns" Class = "mdl-dialog__actions">
+					<Button ID = "Dialog_Btns_Yes" Class = "mdl-button" Type = "Button">はい</Button>
+					<Button ID = "Dialog_Btns_No" Class = "mdl-button" Type = "Button">いいえ</Button>
+				</Div>
+			</Dialog>
 		</Div>
 	</Body>
 </HTML>

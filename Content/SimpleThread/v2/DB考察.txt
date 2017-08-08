@@ -22,7 +22,7 @@ Root
 			> xxxxxxxx: String<Owner || Admin || Observer || ...>
 			
 		> createdTime: DateString
-		> databaseName: URLString
+		> dbName: URLString
 		
 	> 1
 		> ...
