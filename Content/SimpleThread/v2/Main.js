@@ -14,7 +14,8 @@ window.addEventListener("DOMContentLoaded", () => {
 				if (!res.exists()) {
 					base.Database.set("users/" + user.uid, {
 						userName: user.displayName,
-						detail: ""
+						detail: "",
+						links: []
 					});
 				}
 			});

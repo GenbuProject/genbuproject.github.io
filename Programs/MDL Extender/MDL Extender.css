@@ -1,3 +1,29 @@
 *.mdl-select > Input.mdl-textfield__input {
 	Cursor: Pointer;
 }
+
+
+
+*.mdl-extender__mdl-list--editable *.mdl-list__item-primary-content {
+	Justify-Content: Space-Between;
+}
+
+*.mdl-extender__mdl-list--editable.mdl-extender__mdl-list--1-field *.mdl-textfield {
+	Width: 90%;
+}
+
+*.mdl-extender__mdl-list--editable.mdl-extender__mdl-list--2-field *.mdl-textfield {
+	Width: 45%;
+}
+
+*.mdl-extender__mdl-list--editable.mdl-extender__mdl-list--3-field *.mdl-textfield {
+	Width: 30%;
+}
+
+*.mdl-extender__mdl-list--editable.mdl-extender__mdl-list--4-field *.mdl-textfield {
+	Width: 22.5%;
+}
+
+*.mdl-extender__mdl-list--editable.mdl-extender__mdl-list--5-field *.mdl-textfield {
+	Width: 18%;
+}
