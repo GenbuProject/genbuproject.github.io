@@ -55,7 +55,10 @@ window.addEventListener("DOMContentLoaded", () => {
 		let content = event.target;
 
 		if (content.nodeName === "ARTICLE" && content.parentNode.nodeName !== "HEAD") {
-			let text = `${content.querySelector("Strong.display-name__html").textContent}さん ${content.querySelector("Div.status__content").getAttribute("Aria-Label")}`;
+			let text =
+				`${content.querySelector("Strong.display-name__html").textContent}さん
+				${content.querySelector("Div.status__content").getAttribute("Aria-Label")}`;
+				
 			bouyomi.speak(-1, -1, -1, 0, text);
 		}
 	});
