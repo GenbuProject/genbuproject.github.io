@@ -104,6 +104,21 @@ const FirebasePlus = (function () {
 			},
 
 			enumerable: true
+		},
+
+		reauth: {
+			value (scope) {
+				scope = scope || [""];
+
+				let provider = new firebase.auth.GoogleAuthProvider();
+					scope.forEach((value) => {
+						provider.addScope(value);
+					});
+
+				this.user.reauthenticateWithPopup(provider);
+			},
+
+			enumerable: true
 		}
 	});
 

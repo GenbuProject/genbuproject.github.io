@@ -10,22 +10,16 @@ window.addEventListener("DOMContentLoaded", () => {
 			}).textContent;
 		})();
 
-		base.Database.get("users/" + base.user.uid, (res) => {
-			DOM("#Profile_Info_Name").classList.add("is-dirty"),
-			DOM("#Profile_Info_Detail").classList.add("is-dirty");
+		DOM("#Profile_Info_Name").classList.add("is-dirty"),
+		DOM("#Profile_Info_Name_Input").value = base.user.displayName;
 
-			DOM("#Profile_Info_Name_Input").value = res.userName,
+		base.Database.get("users/" + base.user.uid, (res) => {
+			DOM("#Profile_Info_Detail").classList.add("is-dirty"),
 			DOM("#Profile_Info_Detail_Input").value = res.detail;
 
 			(() => {
-				if (res.links.length - DOM("#Profile_Info_URL").dataset.listlength > 0) {
-					for (let i = 0; i <= res.links.length - parseInt(DOM("#Profile_Info_URL").dataset.listlength); i++) {
-						DOM("#Profile_Info_URL_Add").click();
-					}
-				} else {
-					for (let i = 0; i < parseInt(DOM("#Profile_Info_URL").dataset.listlength) - res.links.length; i++) {
-						DOM("#Profile_Info_URL").children[0].querySelector('Button[ID*="Remove"]').click();
-					}
+				for (let i = 0; i <= res.links.length - parseInt(DOM("#Profile_Info_URL").dataset.listlength); i++) {
+					DOM("#Profile_Info_URL_Add").click();
 				}
 
 				for (let i = 0; i < res.links.length; i++) {
@@ -44,8 +38,9 @@ window.addEventListener("DOMContentLoaded", () => {
 
 
 	DOM("#Profile_Info_Btns_Apply").addEventListener("click", () => {
+		base.user.updateProfile({ displayName: DOM("#Profile_Info_Name_Input").value });
+
 		base.Database.update("users/" + base.user.uid, {
-			userName: DOM("#Profile_Info_Name_Input").value,
 			detail: DOM("#Profile_Info_Detail_Input").value,
 
 			links: (() => {
@@ -70,7 +65,7 @@ window.addEventListener("DOMContentLoaded", () => {
 	let doc = parent.document;
 
 	DOM("#Profile_Info_Btns_Apply").addEventListener("click", () => {
-		doc.querySelector("#Dialogs_Profile_ApplyNotify").showModal();
+		doc.querySelector("#Dialogs_Profile_ChangeNotify").showModal();
 	});
 
 	DOM("#Profile_Info_Btns_Delete").addEventListener("click", () => {

@@ -71,19 +71,37 @@
 
 			<Div ID = "Dialogs">
 				<Div ID = "Dialogs_Profile">
-					<Dialog ID = "Dialogs_Profile_ApplyNotify" Class = "mdl-dialog">
-						<Div ID = "Dialogs_Profile_ApplyNotify_Content" Class = "mdl-dialog__content">
-							プロフィールが変更されました。
+					<Dialog ID = "Dialogs_Profile_CreateNotify" Class = "mdl-dialog">
+						<Div ID = "Dialogs_Profile_CreateNotify_Content" Class = "mdl-dialog__content">
+							アカウントを作成しました。<Br />
+							Simple Threadにようこそ！！
 						</Div>
 
-						<Div ID = "Dialogs_Profile_ApplyNotify_Btns" Class = "mdl-dialog__actions">
-							<Button ID = "Dialogs_Profile_ApplyNotify_Btns_OK" Class = "mdl-button mdl-js-button mdl-js-ripple-effect" Data-Action = "Dialog_Close" Type = "Button">閉じる</Button>
+						<Div ID = "Dialogs_Profile_CreateNotify_Btns" Class = "mdl-dialog__actions">
+							<Button ID = "Dialogs_Profile_CreateNotify_Btns_OK" Class = "mdl-button mdl-js-button mdl-js-ripple-effect" Data-Action = "Dialog_Close" Type = "Button">閉じる</Button>
 						</Div>
 					</Dialog>
 
+					<Dialog ID = "Dialogs_Profile_ChangeNotify" Class = "mdl-dialog">
+						<Div ID = "Dialogs_Profile_ChangeNotify_Content" Class = "mdl-dialog__content">
+							プロフィールが変更されました。
+						</Div>
+
+						<Div ID = "Dialogs_Profile_ChangeNotify_Btns" Class = "mdl-dialog__actions">
+							<Button ID = "Dialogs_Profile_ChangeNotify_Btns_OK" Class = "mdl-button mdl-js-button mdl-js-ripple-effect" Data-Action = "Dialog_Close" Type = "Button">閉じる</Button>
+						</Div>
+					</Dialog>
+
+
+
 					<Dialog ID = "Dialogs_Profile_ConfirmDelete" Class = "mdl-dialog">
 						<Div ID = "Dialogs_Profile_ConfirmDelete_Content" Class = "mdl-dialog__content">
-							本当にアカウントを削除しますか？
+							本当にアカウントを削除しますか？<Br />
+							処理を続行するにはパスワードを入力してください。
+
+							<Div Class = "mdl-textfield mdl-js-textfield">
+								<Input Class = "mdl-textfield__input" Type = "Text" Value = "" />
+							</Div>
 						</Div>
 
 						<Div ID = "Dialogs_Profile_ConfirmDelete_Btns" Class = "mdl-dialog__actions">

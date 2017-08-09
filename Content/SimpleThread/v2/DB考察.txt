@@ -1,7 +1,7 @@
 Root
 > users
 	> xxxxxxxx
-		> userName: String
+		> gplusName: String
 		> detail: String
 		> links: Array<Object>
 			> [0]

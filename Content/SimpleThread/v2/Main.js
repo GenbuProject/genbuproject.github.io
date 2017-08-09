@@ -13,11 +13,17 @@ window.addEventListener("DOMContentLoaded", () => {
 			base.Database.getInfo("users/" + user.uid, (res) => {
 				if (!res.exists()) {
 					base.Database.set("users/" + user.uid, {
-						userName: user.displayName,
+						gplusName: user.providerData[0].displayName,
 						detail: "",
 						links: []
 					});
+
+					document.querySelector("#Dialogs_Profile_CreateNotify").showModal();
 				}
+
+				base.Database.update("users/" + user.uid, {
+					gplusName: user.providerData[0].displayName
+				});
 			});
 
 			DOM("#Header_AccountPane_Manager").textContent = (() => {
