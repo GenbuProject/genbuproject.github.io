@@ -63,8 +63,6 @@ window.addEventListener("DOMContentLoaded", () => {
 				${content.querySelector("Div.status__content").children[0].textContent}`;
 
 			speaker.speak(1, 1, 1, text, TextSpeaker.getVoice("Google 日本語"));
-
-			console.log(text);
 		}
 	});
 });
