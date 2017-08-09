@@ -19,6 +19,7 @@
 		<Link Rel = "StyleSheet" Href = "https://genbuproject.github.io/Content/SimpleThread/v2/Core.css" />
 		
 		<Script Src = "Dialog.js"></Script>
+		<Link Rel = "StyleSheet" Href = "Dialog.css" />
 		
 		<Script Src = "Main.js"></Script>
 		<Link Rel = "StyleSheet" Href = "Main.css" />
@@ -71,16 +72,28 @@
 
 			<Div ID = "Dialogs">
 				<Div ID = "Dialogs_Profile">
-					<Dialog ID = "Dialogs_Profile_CreateNotify" Class = "mdl-dialog">
-						<Div ID = "Dialogs_Profile_CreateNotify_Content" Class = "mdl-dialog__content">
+					<Dialog ID = "Dialogs_Account_CreateNotify" Class = "mdl-dialog">
+						<Div ID = "Dialogs_Account_CreateNotify_Content" Class = "mdl-dialog__content">
 							アカウントを作成しました。<Br />
 							Simple Threadにようこそ！！
 						</Div>
 
-						<Div ID = "Dialogs_Profile_CreateNotify_Btns" Class = "mdl-dialog__actions">
-							<Button ID = "Dialogs_Profile_CreateNotify_Btns_OK" Class = "mdl-button mdl-js-button mdl-js-ripple-effect" Data-Action = "Dialog_Close" Type = "Button">閉じる</Button>
+						<Div ID = "Dialogs_Account_CreateNotify_Btns" Class = "mdl-dialog__actions">
+							<Button ID = "Dialogs_Account_CreateNotify_Btns_OK" Class = "mdl-button mdl-js-button mdl-js-ripple-effect" Data-Action = "Dialog_Close" Type = "Button">閉じる</Button>
 						</Div>
 					</Dialog>
+
+					<Dialog ID = "Dialogs_Account_DeleteNotify" Class = "mdl-dialog">
+						<Div ID = "Dialogs_Account_DeleteNotify_Content" Class = "mdl-dialog__content">
+							アカウントを削除しました。
+						</Div>
+
+						<Div ID = "Dialogs_Account_DeleteNotify_Btns" Class = "mdl-dialog__actions">
+							<Button ID = "Dialogs_Account_DeleteNotify_Btns_OK" Class = "mdl-button mdl-js-button mdl-js-ripple-effect" Data-Action = "Dialog_Close" Type = "Button">閉じる</Button>
+						</Div>
+					</Dialog>
+
+
 
 					<Dialog ID = "Dialogs_Profile_ChangeNotify" Class = "mdl-dialog">
 						<Div ID = "Dialogs_Profile_ChangeNotify_Content" Class = "mdl-dialog__content">
@@ -99,8 +112,9 @@
 							本当にアカウントを削除しますか？<Br />
 							処理を続行するにはパスワードを入力してください。
 
-							<Div Class = "mdl-textfield mdl-js-textfield">
-								<Input Class = "mdl-textfield__input" Type = "Text" Value = "" />
+							<Div ID = "Dialogs_Profile_ConfirmDelete_Content_Email" Class = "mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+								<Input ID = "Dialogs_Profile_ConfirmDelete_Content_Email_Input" Class = "mdl-textfield__input" Type = "Email" Value = "" />
+								<Label ID = "Dialogs_Profile_ConfirmDelete_Content_Email_Label" Class = "mdl-textfield__label" For = "Dialogs_Profile_ConfirmDelete_Content_Email_Input">メールアドレス...</Label>
 							</Div>
 						</Div>
 

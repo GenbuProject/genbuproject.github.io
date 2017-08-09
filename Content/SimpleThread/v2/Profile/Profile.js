@@ -14,12 +14,20 @@ window.addEventListener("DOMContentLoaded", () => {
 		DOM("#Profile_Info_Name_Input").value = base.user.displayName;
 
 		base.Database.get("users/" + base.user.uid, (res) => {
+			res.links = res.links || [];
+
 			DOM("#Profile_Info_Detail").classList.add("is-dirty"),
 			DOM("#Profile_Info_Detail_Input").value = res.detail;
 
 			(() => {
-				for (let i = 0; i <= res.links.length - parseInt(DOM("#Profile_Info_URL").dataset.listlength); i++) {
-					DOM("#Profile_Info_URL_Add").click();
+				if (res.links.length - DOM("#Profile_Info_URL").dataset.listlength > 0) {
+					for (let i = 0; i <= res.links.length - parseInt(DOM("#Profile_Info_URL").dataset.listlength); i++) {
+						DOM("#Profile_Info_URL_Add").click();
+					}
+				} else {
+					for (let i = 0; i < parseInt(DOM("#Profile_Info_URL").dataset.listlength) - res.links.length; i++) {
+						DOM("#Profile_Info_URL").children[0].querySelector('Button[ID*="Remove"]').click();
+					}
 				}
 
 				for (let i = 0; i < res.links.length; i++) {

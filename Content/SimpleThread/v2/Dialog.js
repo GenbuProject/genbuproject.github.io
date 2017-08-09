@@ -4,4 +4,12 @@ window.addEventListener("DOMContentLoaded", () => {
 			btn.offsetParent.close();
 		});
 	});
+
+
+
+	DOM("#Dialogs_Profile_ConfirmDelete_Btns_Yes").addEventListener("click", () => {
+		if (DOM("#Dialogs_Profile_ConfirmDelete_Content_Email_Input").value == base.user.email) {
+			base.delete();
+		}
+	});
 });

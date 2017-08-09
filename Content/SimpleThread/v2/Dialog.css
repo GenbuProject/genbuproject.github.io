@@ -1,0 +1,7 @@
+Dialog[ID^="Dialogs"] {
+	Width: 50%;
+}
+
+Dialog[ID^="Dialogs"] Div.mdl-textfield {
+	Width: 100%;
+}

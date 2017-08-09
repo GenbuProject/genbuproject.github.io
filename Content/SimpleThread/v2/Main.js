@@ -18,7 +18,7 @@ window.addEventListener("DOMContentLoaded", () => {
 						links: []
 					});
 
-					document.querySelector("#Dialogs_Profile_CreateNotify").showModal();
+					document.querySelector("#Dialogs_Account_CreateNotify").showModal();
 				}
 
 				base.Database.update("users/" + user.uid, {

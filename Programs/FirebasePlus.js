@@ -32,7 +32,17 @@ const FirebasePlus = (function () {
 						database.ref(path).on("value", (res) => {
 							onGet(res);
 						});
-					}
+					},
+
+					enumerable: true
+				},
+
+				getFile: {
+					value (path) {
+						return database.ref(path || "");
+					},
+
+					enumerable: true
 				},
 
 				get: {
@@ -65,7 +75,18 @@ const FirebasePlus = (function () {
 						val = val || "";
 
 						database.ref(path).update(val);
-					}
+					},
+
+					enumerable: true
+				},
+
+				delete: {
+					value (path) {
+						path = path || "";
+						database.ref(path).remove();
+					},
+
+					enumerable: true
 				}
 			}),
 
@@ -115,7 +136,23 @@ const FirebasePlus = (function () {
 						provider.addScope(value);
 					});
 
-				this.user.reauthenticateWithPopup(provider);
+				return this.user.reauthenticateWithPopup(provider);
+			},
+
+			enumerable: true
+		},
+
+		delete: {
+			value () {
+				this.reauth([]).then((res) => {
+					this.Database.delete("users/" + this.user.uid);
+					database.goOffline();
+					
+					this.user.delete();
+
+					database.goOnline();
+					location.reload();
+				});
 			},
 
 			enumerable: true
