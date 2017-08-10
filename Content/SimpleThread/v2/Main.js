@@ -53,4 +53,12 @@ window.addEventListener("DOMContentLoaded", () => {
 				break;
 		}
 	});
+
+	DOM("$IFrame#Page").contentWindow.addEventListener("beforeunload", () => {
+		DOM("#Screens_Loading").removeAttribute("Disabled");
+	});
+
+	DOM("$IFrame#Page").addEventListener("load", () => {
+		DOM("#Screens_Loading").setAttribute("Disabled", "");
+	});
 });
