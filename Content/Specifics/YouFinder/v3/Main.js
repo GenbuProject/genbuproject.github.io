@@ -18,10 +18,13 @@ DOM.importAPI("https://genbuproject.github.io/Programs/Sync Helper/Sync Helper v
 	(function () {
 		let Timer = setInterval(function () {
 			if (GBase.hasLogined()) {
-				!DOM("#Dialogs_UnauthorizedNotify").open || DOM("#Dialogs_UnauthorizedNotify").close();
 				DOM(":HTML")[0].dataset.pageid == "Top" || (location.href += "Top.html");
 
-				DOM("#Dialogs_SignInNotify").showModal();
+				if (DOM(":HTML")[0].dataset.pageid == "Main") {
+					!DOM("#Dialogs_UnauthorizedNotify").open || DOM("#Dialogs_UnauthorizedNotify").close();
+				} else if (DOM(":HTML")[0].dataset.pageid == "Top") {
+					DOM("#Dialogs_SignInNotify").showModal();
+				}
 
 				clearInterval(Timer);
 
@@ -48,7 +51,9 @@ DOM.importAPI("https://genbuproject.github.io/Programs/Sync Helper/Sync Helper v
 					});
 				}, function () {}, {enableHighAccuracy: true});
 			} else {
-				DOM("#Dialogs_UnauthorizedNotify").open || DOM("#Dialogs_UnauthorizedNotify").showModal();
+				if (DOM(":HTML")[0].dataset.pageid == "Main") {
+					DOM("#Dialogs_UnauthorizedNotify").open || DOM("#Dialogs_UnauthorizedNotify").showModal();
+				}
 			}
 		}, 200);
 	})();
