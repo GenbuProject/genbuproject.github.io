@@ -1,4 +1,8 @@
 window.addEventListener("DOMContentLoaded", () => {
+	DOM('@Dialog').forEach((dialog) => {
+		dialogPolyfill.registerDialog(dialog);
+	});
+	
 	DOM('@Dialog Button[Data-Action="Dialog_Close"]').forEach((btn) => {
 		btn.addEventListener("click", () => {
 			btn.offsetParent.close();
