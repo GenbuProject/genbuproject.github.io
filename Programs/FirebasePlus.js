@@ -24,13 +24,13 @@ const FirebasePlus = (function () {
 
 		Database: {
 			value: Object.create(Object.prototype, {
-				getInfo: {
-					value (path, onGet) {
+				connect: {
+					value (path, onConnect) {
 						path = path || "",
-						onGet = onGet || ((res) => {});
+						onConnect = onConnect || ((res) => {});
 
 						database.ref(path).on("value", (res) => {
-							onGet(res);
+							onConnect(res);
 						});
 					},
 
@@ -45,12 +45,25 @@ const FirebasePlus = (function () {
 					enumerable: true
 				},
 
+				getInfo: {
+					value (path, onGet) {
+						path = path || "",
+						onGet = onGet || ((res) => {});
+
+						database.ref(path).once("value").then((res) => {
+							onGet(res);
+						});
+					},
+
+					enumerable: true
+				},
+
 				get: {
 					value (path, onGet) {
 						path = path || "",
 						onGet = onGet || ((res) => {});
 
-						database.ref(path).on("value", (res) => {
+						database.ref(path).once("value").then((res) => {
 							onGet(res.val());
 						});
 					},

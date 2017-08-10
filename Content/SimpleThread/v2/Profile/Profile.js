@@ -13,7 +13,8 @@ window.addEventListener("DOMContentLoaded", () => {
 		DOM("#Profile_Info_Name").classList.add("is-dirty"),
 		DOM("#Profile_Info_Name_Input").value = base.user.displayName;
 
-		base.Database.get("users/" + base.user.uid, (res) => {
+		base.Database.connect("users/" + base.user.uid, (res) => {
+			res = res.val();
 			res.links = res.links || [];
 
 			DOM("#Profile_Info_Detail").classList.add("is-dirty"),
