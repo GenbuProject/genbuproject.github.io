@@ -159,11 +159,8 @@ const FirebasePlus = (function () {
 			value () {
 				this.reauth([]).then((res) => {
 					this.Database.delete("users/" + this.user.uid);
-					database.goOffline();
-					
 					this.user.delete();
-
-					database.goOnline();
+					
 					location.reload();
 				});
 			},
