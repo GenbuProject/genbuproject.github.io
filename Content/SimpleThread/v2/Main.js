@@ -26,7 +26,7 @@ window.addEventListener("DOMContentLoaded", () => {
 				});
 			});
 
-			DOM("#Header_AccountPane_Manager").textContent = (() => {
+			DOM("#Header_AccountPane-Btn_Manager").textContent = (() => {
 				return new Style({
 					"#Header_AccountPane-Btn": {
 						"Background-Image": ["URL(", user.photoURL, ")"].join('"')

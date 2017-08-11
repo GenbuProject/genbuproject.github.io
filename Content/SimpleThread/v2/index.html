@@ -46,18 +46,7 @@
 					<Div Class = "mdl-layout-spacer"></Div>
 
 					<Nav Class = "mdl-navigation">
-						<Style ID = "Header_AccountPane_Manager"></Style>
-
-						<Div ID = "Header_Searcher" Class = "mdl-textfield mdl-js-textfield mdl-textfield--expandable">
-							<Label Class = "mdl-button mdl-js-button mdl-button--icon" For = "Header_Searcher_Input">
-								<I Class = "material-icons">search</I>
-							</Label>
-
-							<Div Class = "mdl-textfield__expandable-holder">
-								<Input ID = "Header_Searcher_Input" Class = "mdl-textfield__input" Type = "Text" />
-								<Label Class = "mdl-textfield__label" For = "Header_Searcher_Input">Search...</Label>
-							</Div>
-						</Div>
+						<Style ID = "Header_AccountPane-Btn_Manager"></Style>
 
 						<A Class = "mdl-navigation__link" Href = "Top/">Top</A>
 						<A ID = "Header_SignInOut" Class = "mdl-navigation__link">Sign In</A>
@@ -94,7 +83,7 @@
 
 
 		<Div ID = "Dialogs">
-			<Div ID = "Dialogs_Profile">
+			<Div ID = "Dialogs_Account">
 				<Dialog ID = "Dialogs_Account_CreateNotify" Class = "mdl-dialog">
 					<Div ID = "Dialogs_Account_CreateNotify_Content" Class = "mdl-dialog__content">
 						アカウントを作成しました。<Br />
@@ -115,9 +104,9 @@
 						<Button ID = "Dialogs_Account_DeleteNotify_Btns_OK" Class = "mdl-button mdl-js-button mdl-js-ripple-effect" Data-Action = "Dialog_Close" Type = "Button">閉じる</Button>
 					</Div>
 				</Dialog>
+			</Div>
 
-
-
+			<Div ID = "Dialogs_Profile">
 				<Dialog ID = "Dialogs_Profile_ChangeNotify" Class = "mdl-dialog">
 					<Div ID = "Dialogs_Profile_ChangeNotify_Content" Class = "mdl-dialog__content">
 						プロフィールが変更されました。
@@ -128,8 +117,26 @@
 					</Div>
 				</Dialog>
 
+				<Dialog ID = "Dialogs_Profile_ConfirmDelete" Class = "mdl-dialog">
+					<Div ID = "Dialogs_Profile_ConfirmDelete_Content" Class = "mdl-dialog__content">
+						本当にアカウントを削除しますか？<Br />
+						処理を続行するにはパスワードを入力してください。
 
+						<Div ID = "Dialogs_Profile_ConfirmDelete_Content_Email" Class = "mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+							<Input ID = "Dialogs_Profile_ConfirmDelete_Content_Email_Input" Class = "mdl-textfield__input" Type = "Email" Value = "" />
+							<Label ID = "Dialogs_Profile_ConfirmDelete_Content_Email_Label" Class = "mdl-textfield__label" For = "Dialogs_Profile_ConfirmDelete_Content_Email_Input">メールアドレス...</Label>
+							<Span Class = "mdl-textfield__error">無効なメールアドレスです</Span>
+						</Div>
+					</Div>
 
+					<Div ID = "Dialogs_Profile_ConfirmDelete_Btns" Class = "mdl-dialog__actions">
+						<Button ID = "Dialogs_Profile_ConfirmDelete_Btns_Yes" Class = "mdl-button mdl-js-button mdl-js-ripple-effect" Type = "Button">はい</Button>
+						<Button ID = "Dialogs_Profile_ConfirmDelete_Btns_No" Class = "mdl-button mdl-js-button mdl-js-ripple-effect" Data-Action = "Dialog_Close" Type = "Button">いいえ</Button>
+					</Div>
+				</Dialog>
+			</Div>
+
+			<Div ID = "Dialogs_Thread">
 				<Dialog ID = "Dialogs_Profile_ConfirmDelete" Class = "mdl-dialog">
 					<Div ID = "Dialogs_Profile_ConfirmDelete_Content" Class = "mdl-dialog__content">
 						本当にアカウントを削除しますか？<Br />

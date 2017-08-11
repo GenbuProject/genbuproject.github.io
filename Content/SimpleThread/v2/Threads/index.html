@@ -36,6 +36,81 @@
 	<Body>
 		<Div Class = "mdl-grid">
 			<Div ID = "Top" Class = "mdl-cell mdl-cell--2-offset mdl-cell--8-col mdl-shadow--4dp mdl-color--white mdl-color-text--grey-800">
+				<Div ID = "Thread" Class = "mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
+					<Div ID = "Thread_Tab" Class = "mdl-tabs__tab-bar">
+						<A ID = "Thread_Tab_All" Class = "mdl-tabs__tab is-active" Href = "#Thread_All">全てのスレッド</A>
+						<A ID = "Thread_Tab_Member" Class = "mdl-tabs__tab" Href = "#Thread_Member">参加中のスレッド</A>
+						<A ID = "Thread_Tab_Admin" Class = "mdl-tabs__tab" Href = "#Thread_Admin">管理中のスレッド</A>
+					</Div>
+
+
+
+					<Div ID = "Thread_All" Class = "mdl-tabs__panel is-active">
+						<UL Class = "mdl-list">
+							<Div Class = "Thread_Searcher mdl-list__item">
+								<Label Class = "Thread_Searcher_Label mdl-button mdl-js-button mdl-button--icon" For = "">
+									<I Class = "material-icons">search</I>
+								</Label>
+
+								<Div Class = "Thread_Searcher_Container mdl-textfield mdl-js-textfield">
+									<Input Class = "Thread_Searcher_Container_Input mdl-textfield__input" Type = "Search" />
+									<Label Class = "Thread_Searcher_Container_Label mdl-textfield__label" For = "">Search...</Label>
+								</Div>
+							</Div>
+
+							<A Class = "mdl-list__item">
+								<Span Class = "mdl-list__item-primary-content">
+									<I Class = "mdl-list__item-avatar material-icons">person</I>
+									<Span>MineCraftについて語りあうスレ</Span>
+								</Span>
+							</A>
+						</UL>
+					</Div>
+
+					<Div ID = "Thread_Member" Class = "mdl-tabs__panel">
+						<UL Class = "mdl-list">
+							<Div Class = "Thread_Searcher mdl-list__item">
+								<Label Class = "Thread_Searcher_Label mdl-button mdl-js-button mdl-button--icon" For = "">
+									<I Class = "material-icons">search</I>
+								</Label>
+
+								<Div Class = "Thread_Searcher_Container mdl-textfield mdl-js-textfield">
+									<Input Class = "Thread_Searcher_Container_Input mdl-textfield__input" Type = "Search" />
+									<Label Class = "Thread_Searcher_Container_Label mdl-textfield__label" For = "">Search...</Label>
+								</Div>
+							</Div>
+
+							<A Class = "mdl-list__item">
+								<Span Class = "mdl-list__item-primary-content">
+									<I Class = "mdl-list__item-avatar material-icons">person</I>
+									<Span>MineCraftについて語りあうスレ</Span>
+								</Span>
+							</A>
+						</UL>
+					</Div>
+
+					<Div ID = "Thread_Admin" Class = "mdl-tabs__panel">
+						<UL Class = "mdl-list">
+							<Div Class = "Thread_Searcher mdl-list__item">
+								<Label Class = "Thread_Searcher_Label mdl-button mdl-js-button mdl-button--icon" For = "">
+									<I Class = "material-icons">search</I>
+								</Label>
+
+								<Div Class = "Thread_Searcher_Container mdl-textfield mdl-js-textfield">
+									<Input Class = "Thread_Searcher_Container_Input mdl-textfield__input" Type = "Search" />
+									<Label Class = "Thread_Searcher_Container_Label mdl-textfield__label" For = "">Search...</Label>
+								</Div>
+							</Div>
+
+							<A Class = "mdl-list__item">
+								<Span Class = "mdl-list__item-primary-content">
+									<I Class = "mdl-list__item-avatar material-icons">person</I>
+									<Span>MineCraftについて語りあうスレ</Span>
+								</Span>
+							</A>
+						</UL>
+					</Div>
+				</Div>
 			</Div>
 		</Div>
 	</Body>
