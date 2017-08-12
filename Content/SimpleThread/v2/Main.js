@@ -1,5 +1,4 @@
 window.base = null;
-window.jsConsole = null;
 
 window.addEventListener("DOMContentLoaded", () => {
 	base = new FirebasePlus({
@@ -39,10 +38,6 @@ window.addEventListener("DOMContentLoaded", () => {
 		} else {
 			DOM("#Header_AccountPane-Btn").setAttribute("SignOut", "");
 		}
-	});
-	
-	jsConsole = new JSCFAD({
-		console: DOM("#Console")
 	});
 
 
