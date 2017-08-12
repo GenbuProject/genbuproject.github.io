@@ -53,6 +53,10 @@ window.addEventListener("DOMContentLoaded", () => {
 			case "Sign Out":
 				base.signOut();
 				break;
+				
+			default:
+				alert("Got to Default.");
+				break;
 		}
 	});
 
