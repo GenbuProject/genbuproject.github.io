@@ -41,7 +41,9 @@ window.addEventListener("DOMContentLoaded", () => {
 		}
 	});
 	
-	jsConsole = new JSCFAD(DOM("#Console"));
+	jsConsole = new JSCFAD({
+		console: DOM("#Console")
+	});
 
 
 
