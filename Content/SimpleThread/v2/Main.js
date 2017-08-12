@@ -43,6 +43,8 @@ window.addEventListener("DOMContentLoaded", () => {
 
 
 	DOM("#Header_SignInOut").addEventListener("click", () => {
+		alert("Called.");
+		
 		switch (DOM("#Header_SignInOut").textContent) {
 			case "Sign In":
 				base.signIn(["https://www.googleapis.com/auth/plus.login"]);
