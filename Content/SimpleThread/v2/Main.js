@@ -43,21 +43,21 @@ window.addEventListener("DOMContentLoaded", () => {
 
 
 	DOM("#Header_SignInOut").addEventListener("click", () => {
-		alert("Called2.");
-		
-		switch (DOM("#Header_SignInOut").textContent) {
-			case "Sign In":
-				base.signIn(["https://www.googleapis.com/auth/plus.login"]);
-				break;
-
-			case "Sign Out":
-				base.signOut();
-				break;
-				
-			default:
-				alert("Got to Default.");
-				break;
-		}
+		(() => {
+			switch (DOM("#Header_SignInOut").textContent) {
+				case "Sign In":
+					base.signIn(["https://www.googleapis.com/auth/plus.login"]);
+					break;
+					
+				case "Sign Out":
+					base.signOut();
+					break;
+					
+				default:
+					alert("Got to Default.");
+					break;
+			}
+		}).debug();
 	});
 
 	DOM("$IFrame#Page").contentWindow.addEventListener("beforeunload", () => {
