@@ -10,7 +10,7 @@ window.addEventListener("DOMContentLoaded", () => {
 		messagingSenderId: window.atob("NjQ2NTI3MzA2ODAz")
 	}, (user) => {
 		if (user) {
-			base.Database.getInfo("users/" + user.uid, (res) => {
+			base.Database.getInfo(base.Database.ONCE, "users/" + user.uid, (res) => {
 				if (!res.exists()) {
 					base.Database.set("users/" + user.uid, {
 						gplusName: user.providerData[0].displayName,

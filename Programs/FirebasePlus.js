@@ -24,88 +24,110 @@ const FirebasePlus = (function () {
 
 		Database: {
 			value: Object.create(Object.prototype, {
-				connect: {
-					value (path, onConnect) {
-						path = path || "",
-						onConnect = onConnect || ((res) => {});
-
-						database.ref(path).on("value", (res) => {
-							onConnect(res);
-						});
-					},
-
+				ONCE: {
+					value: Symbol.for("ONCE"),
 					enumerable: true
 				},
 
-				getFile: {
-					value (path) {
-						return database.ref(path || "");
-					},
-
+				INTERVAL: {
+					value: Symbol.for("INTERVAL"),
 					enumerable: true
 				},
+
+
 
 				getInfo: {
-					value (path, onGet) {
+					value (mode, path, onGet) {
+						mode = mode || this.ONCE,
 						path = path || "",
 						onGet = onGet || ((res) => {});
 
-						database.ref(path).once("value").then((res) => {
-							onGet(res);
-						});
+						if (mode === this.ONCE) {
+							database.ref(path).once("value").then((res) => {
+								onGet(res);
+							});
+						} else if (mode === this.INTERVAL) {
+							database.ref(path).on("value", (res) => {
+								onGet(res);
+							});
+						}
 					},
 
 					enumerable: true
 				},
 
 				get: {
-					value (path, onGet) {
+					value (mode, path, onGet) {
+						mode = mode || this.ONCE,
 						path = path || "",
 						onGet = onGet || ((res) => {});
 
-						database.ref(path).once("value").then((res) => {
-							onGet(res.val());
-						});
+						if (mode === this.ONCE) {
+							database.ref(path).once("value").then((res) => {
+								onGet(res.val());
+							});
+						} else if (mode === this.INTERVAL) {
+							database.ref(path).on("value", (res) => {
+								onGet(res.val());
+							});
+						}
 					},
 
 					enumerable: true
 				},
 
 				set: {
-					value (path, val) {
+					value (path, val, onComplete) {
 						path = path || "",
-						val = val || "";
+						val = val || "",
+						onComplete = onComplete || ((error) => {});
 
-						database.ref(path).set(val);
-					},
-
-					enumerable: true
-				},
-
-				update: {
-					value (path, val) {
-						path = path || "",
-						val = val || "";
-
-						database.ref(path).update(val);
+						database.ref(path).set(val, onComplete);
 					},
 
 					enumerable: true
 				},
 
 				push: {
-					value (path, val) {
+					value (path, val, onComplete) {
 						path = path || "",
-						val = val || null;
+						val = val || null,
+						onComplete = onComplete || ((error) => {});
 
-						database.ref(path).push(val);
+						database.ref(path).push(val, onComplete);
 					}
 				},
 
 				delete: {
-					value (path) {
-						path = path || "";
-						database.ref(path).remove();
+					value (path, onComplete) {
+						path = path || "",
+						onComplete = onComplete || ((error) => {});
+
+						database.ref(path).remove(onComplete);
+					},
+
+					enumerable: true
+				},
+
+				update: {
+					value (path, val, onComplete) {
+						path = path || "",
+						val = val || "",
+						onComplete = onComplete || ((error) => {});
+
+						database.ref(path).update(val, onComplete);
+					},
+
+					enumerable: true
+				},
+
+				transaction: {
+					value (path, onGet, onComplete) {
+						path = path || "",
+						onGet = onGet || ((res) => {}),
+						onComplete = onComplete || ((error) => {});
+
+						database.ref(path).transaction(onGet, onComplete);
 					},
 
 					enumerable: true
@@ -166,7 +188,7 @@ const FirebasePlus = (function () {
 
 		delete: {
 			value () {
-				this.reauth([]).then((res) => {
+				this.reauth([""]).then((res) => {
 					this.Database.delete("users/" + this.user.uid);
 					this.user.delete();
 					
