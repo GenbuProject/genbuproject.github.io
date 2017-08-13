@@ -18,8 +18,15 @@ Root
 		> title: String
 		> overview: String
 		> detail: String
-		> admins
-			> xxxxxxxx: String<Owner || Admin || Observer || ...>
+		> jobs
+			> Owner: Array<UID>
+				> xxxxxxxx
+				> ...
+
+			> Admin: Array<UID>
+				> ...
+
+			> ...
 			
 		> createdTime: DateString
 		> dbName: URLString

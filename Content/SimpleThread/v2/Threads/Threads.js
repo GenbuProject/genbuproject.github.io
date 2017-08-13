@@ -11,4 +11,12 @@ window.addEventListener("DOMContentLoaded", () => {
 		searcher.querySelector("Label.Thread_Searcher_Label").htmlFor = searcher.querySelector("Input.Thread_Searcher_Container_Input").id,
 		searcher.querySelector("Label.Thread_Searcher_Container_Label").htmlFor = searcher.querySelector("Input.Thread_Searcher_Container_Input").id;
 	});
+
+
+
+	let doc = parent.document;
+
+	DOM("#Thread_Admin_Create_Apply").addEventListener("click", () => {
+		doc.querySelector("#Dialogs_Thread_InfoInputer").showModal();
+	});
 });

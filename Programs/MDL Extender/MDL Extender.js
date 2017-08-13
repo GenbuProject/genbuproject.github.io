@@ -114,8 +114,7 @@ window.addEventListener("DOMContentLoaded", () => {
 							events: {
 								"click": () => {
 									let itemUUID = new DOM.Randomizer(DOM.Randomizer.TYPE.LEVEL3).generate(16);
-
-									list.appendChild(DOM("Li", {
+									let item = DOM("Li", {
 										attributes: {
 											"Class": "mdl-list__item",
 											"Data-ItemID": list.children.length - 1
@@ -208,13 +207,11 @@ window.addEventListener("DOMContentLoaded", () => {
 
 														events: {
 															"click": (event) => {
-																let currentList = event.target.parentNode.parentNode.parentNode;
-																
 																list.querySelectorAll("*").forEach((otherList) => {
-																	!(parseInt(currentList.dataset.itemid) < parseInt(otherList.dataset.itemid)) || otherList.dataset.itemid--;
+																	!(parseInt(item.dataset.itemid) < parseInt(otherList.dataset.itemid)) || otherList.dataset.itemid--;
 																});
 
-																currentList.remove();
+																item.remove();
 																list.dataset.listlength--;
 															}
 														}
@@ -222,8 +219,9 @@ window.addEventListener("DOMContentLoaded", () => {
 												]
 											})
 										]
-									}));
+									});
 
+									list.appendChild(item);
 									list.dataset.listlength++;
 								}
 							}

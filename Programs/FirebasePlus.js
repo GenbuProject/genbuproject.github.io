@@ -93,6 +93,15 @@ const FirebasePlus = (function () {
 					enumerable: true
 				},
 
+				push: {
+					value (path, val) {
+						path = path || "",
+						val = val || null;
+
+						database.ref(path).push(val);
+					}
+				},
+
 				delete: {
 					value (path) {
 						path = path || "";

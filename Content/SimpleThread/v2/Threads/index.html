@@ -11,10 +11,10 @@
 		<Script Src = "https://genbuproject.github.io/Programs/MDL Extender/MDL Extender.js"></Script>
 		<Link Rel = "StyleSheet" Href = "https://genbuproject.github.io/Programs/MDL Extender/MDL Extender.css" />
 
-		<Script Src = "https://www.gstatic.com/firebasejs/4.2.0/firebase.js"></Script>
 		<Script Src = "https://genbuproject.github.io/Programs/DOM Extender/DOM Extender v3.0.js"></Script>
-
+		<Script Src = "https://www.gstatic.com/firebasejs/4.2.0/firebase.js"></Script>
 		<Script Src = "https://genbuproject.github.io/Programs/FirebasePlus.js"></Script>
+
 		<Script Src = "https://genbuproject.github.io/Content/SimpleThread/v2/Core.js"></Script>
 		<Link Rel = "StyleSheet" Href = "https://genbuproject.github.io/Content/SimpleThread/v2/Core.css" />
 
@@ -35,81 +35,48 @@
 	
 	<Body>
 		<Div Class = "mdl-grid">
-			<Div ID = "Top" Class = "mdl-cell mdl-cell--2-offset mdl-cell--8-col mdl-shadow--4dp mdl-color--white mdl-color-text--grey-800">
-				<Div ID = "Thread" Class = "mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
-					<Div ID = "Thread_Tab" Class = "mdl-tabs__tab-bar">
-						<A ID = "Thread_Tab_All" Class = "mdl-tabs__tab is-active" Href = "#Thread_All">全てのスレッド</A>
-						<A ID = "Thread_Tab_Member" Class = "mdl-tabs__tab" Href = "#Thread_Member">参加中のスレッド</A>
-						<A ID = "Thread_Tab_Admin" Class = "mdl-tabs__tab" Href = "#Thread_Admin">管理中のスレッド</A>
+			<Div ID = "Thread" Class = "mdl-cell mdl-cell--2-offset mdl-cell--8-col mdl-shadow--4dp mdl-color--white mdl-color-text--grey-800 mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
+				<Div ID = "Thread_Tab" Class = "mdl-tabs__tab-bar">
+					<A ID = "Thread_Tab_Search" Class = "mdl-tabs__tab is-active" Href = "#Thread_Search">スレッド検索</A>
+					<A ID = "Thread_Tab_Admin" Class = "mdl-tabs__tab" Href = "#Thread_Admin">管理中のスレッド</A>
+				</Div>
+
+
+
+				<Div ID = "Thread_Search" Class = "mdl-list mdl-tabs__panel is-active">
+					<Div ID = "Thread_Search_Searcher" Class = "mdl-list__item">
+						<Label ID = "Thread_Search_Searcher" Class = "Thread_Searcher_Label mdl-button mdl-js-button mdl-button--icon" For = "Thread_Search_Searcher_Container_Input">
+							<I Class = "material-icons">search</I>
+						</Label>
+
+						<Div ID = "Thread_Search_Searcher_Container" Class = "mdl-textfield mdl-js-textfield">
+							<Input ID = "Thread_Search_Searcher_Container_Input" Class = "mdl-textfield__input" Type = "Search" />
+							<Label ID = "Thread_Search_Searcher_Container_Label" Class = "mdl-textfield__label" For = "Thread_Search_Searcher_Container_Input">Search...</Label>
+						</Div>
 					</Div>
 
+					<A Class = "mdl-list__item">
+						<Span Class = "mdl-list__item-primary-content">
+							<I Class = "mdl-list__item-avatar material-icons">person</I>
+							<Span>MineCraftについて語りあうスレ</Span>
+						</Span>
+					</A>
+				</Div>
 
+				<Div ID = "Thread_Admin" Class = "mdl-list mdl-tabs__panel">
+					<A ID = "Thread_Admin_Create" Class = "mdl-list__item">
+						<Span Class = "mdl-list__item-primary-content">
+							<I Class = "mdl-list__item-avatar material-icons">add</I>
+							<Span ID = "Thread_Admin_Create_Apply">スレッドを作成</Span>
+						</Span>
+					</A>
 
-					<Div ID = "Thread_All" Class = "mdl-tabs__panel is-active">
-						<UL Class = "mdl-list">
-							<Div Class = "Thread_Searcher mdl-list__item">
-								<Label Class = "Thread_Searcher_Label mdl-button mdl-js-button mdl-button--icon" For = "">
-									<I Class = "material-icons">search</I>
-								</Label>
-
-								<Div Class = "Thread_Searcher_Container mdl-textfield mdl-js-textfield">
-									<Input Class = "Thread_Searcher_Container_Input mdl-textfield__input" Type = "Search" />
-									<Label Class = "Thread_Searcher_Container_Label mdl-textfield__label" For = "">Search...</Label>
-								</Div>
-							</Div>
-
-							<A Class = "mdl-list__item">
-								<Span Class = "mdl-list__item-primary-content">
-									<I Class = "mdl-list__item-avatar material-icons">person</I>
-									<Span>MineCraftについて語りあうスレ</Span>
-								</Span>
-							</A>
-						</UL>
-					</Div>
-
-					<Div ID = "Thread_Member" Class = "mdl-tabs__panel">
-						<UL Class = "mdl-list">
-							<Div Class = "Thread_Searcher mdl-list__item">
-								<Label Class = "Thread_Searcher_Label mdl-button mdl-js-button mdl-button--icon" For = "">
-									<I Class = "material-icons">search</I>
-								</Label>
-
-								<Div Class = "Thread_Searcher_Container mdl-textfield mdl-js-textfield">
-									<Input Class = "Thread_Searcher_Container_Input mdl-textfield__input" Type = "Search" />
-									<Label Class = "Thread_Searcher_Container_Label mdl-textfield__label" For = "">Search...</Label>
-								</Div>
-							</Div>
-
-							<A Class = "mdl-list__item">
-								<Span Class = "mdl-list__item-primary-content">
-									<I Class = "mdl-list__item-avatar material-icons">person</I>
-									<Span>MineCraftについて語りあうスレ</Span>
-								</Span>
-							</A>
-						</UL>
-					</Div>
-
-					<Div ID = "Thread_Admin" Class = "mdl-tabs__panel">
-						<UL Class = "mdl-list">
-							<Div Class = "Thread_Searcher mdl-list__item">
-								<Label Class = "Thread_Searcher_Label mdl-button mdl-js-button mdl-button--icon" For = "">
-									<I Class = "material-icons">search</I>
-								</Label>
-
-								<Div Class = "Thread_Searcher_Container mdl-textfield mdl-js-textfield">
-									<Input Class = "Thread_Searcher_Container_Input mdl-textfield__input" Type = "Search" />
-									<Label Class = "Thread_Searcher_Container_Label mdl-textfield__label" For = "">Search...</Label>
-								</Div>
-							</Div>
-
-							<A Class = "mdl-list__item">
-								<Span Class = "mdl-list__item-primary-content">
-									<I Class = "mdl-list__item-avatar material-icons">person</I>
-									<Span>MineCraftについて語りあうスレ</Span>
-								</Span>
-							</A>
-						</UL>
-					</Div>
+					<A Class = "mdl-list__item">
+						<Span Class = "mdl-list__item-primary-content">
+							<I Class = "mdl-list__item-avatar material-icons">person</I>
+							<Span>MineCraftについて語りあうスレ</Span>
+						</Span>
+					</A>
 				</Div>
 			</Div>
 		</Div>

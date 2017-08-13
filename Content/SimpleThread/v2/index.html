@@ -11,11 +11,10 @@
 		<Script Src = "https://genbuproject.github.io/Programs/MDL Extender/MDL Extender.js"></Script>
 		<Link Rel = "StyleSheet" Href = "https://genbuproject.github.io/Programs/MDL Extender/MDL Extender.css" />
 
-		<Script Src = "https://www.gstatic.com/firebasejs/4.2.0/firebase.js"></Script>
 		<Script Src = "https://genbuproject.github.io/Programs/DOM Extender/DOM Extender v3.0.js"></Script>
-
-
+		<Script Src = "https://www.gstatic.com/firebasejs/4.2.0/firebase.js"></Script>
 		<Script Src = "https://genbuproject.github.io/Programs/FirebasePlus.js"></Script>
+		
 		<Script Src = "https://genbuproject.github.io/Content/SimpleThread/v2/Core.js"></Script>
 		<Link Rel = "StyleSheet" Href = "https://genbuproject.github.io/Content/SimpleThread/v2/Core.css" />
 		
@@ -66,7 +65,6 @@
 
 				<Nav Class = "mdl-navigation">
 					<A Class = "mdl-navigation__link" Href = "Top/">Top</A>
-					<A ID = "Header_SignInOut" Class = "mdl-navigation__link">Sign In</A>
 					<A Class = "mdl-navigation__link" Href = "Threads/">Threads</A>
 				</Nav>
 			</Div>
@@ -122,7 +120,7 @@
 				<Dialog ID = "Dialogs_Profile_ConfirmDelete" Class = "mdl-dialog">
 					<Div ID = "Dialogs_Profile_ConfirmDelete_Content" Class = "mdl-dialog__content">
 						本当にアカウントを削除しますか？<Br />
-						処理を続行するにはパスワードを入力してください。
+						処理を続行するにはメールアドレスを入力してください。
 
 						<Div ID = "Dialogs_Profile_ConfirmDelete_Content_Email" Class = "mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 							<Input ID = "Dialogs_Profile_ConfirmDelete_Content_Email_Input" Class = "mdl-textfield__input" Type = "Email" Value = "" />
@@ -139,21 +137,27 @@
 			</Div>
 
 			<Div ID = "Dialogs_Thread">
-				<Dialog ID = "Dialogs_Profile_ConfirmDelete" Class = "mdl-dialog">
-					<Div ID = "Dialogs_Profile_ConfirmDelete_Content" Class = "mdl-dialog__content">
-						本当にアカウントを削除しますか？<Br />
-						処理を続行するにはパスワードを入力してください。
+				<Dialog ID = "Dialogs_Thread_InfoInputer" Class = "mdl-dialog">
+					<Div ID = "Dialogs_Thread_InfoInputer_Content" Class = "mdl-dialog__content">
+						<Div ID = "Dialogs_Thread_InfoInputer_Content_Name" Class = "mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+							<Input ID = "Dialogs_Thread_InfoInputer_Content_Name_Input" Class = "mdl-textfield__input" Type = "Text" Value = "" />
+							<Label ID = "Dialogs_Thread_InfoInputer_Content_Name_Label" Class = "mdl-textfield__label" For = "Dialogs_Thread_InfoInputer_Content_Name_Input">スレッド名...</Label>
+						</Div>
 
-						<Div ID = "Dialogs_Profile_ConfirmDelete_Content_Email" Class = "mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-							<Input ID = "Dialogs_Profile_ConfirmDelete_Content_Email_Input" Class = "mdl-textfield__input" Type = "Email" Value = "" />
-							<Label ID = "Dialogs_Profile_ConfirmDelete_Content_Email_Label" Class = "mdl-textfield__label" For = "Dialogs_Profile_ConfirmDelete_Content_Email_Input">メールアドレス...</Label>
-							<Span Class = "mdl-textfield__error">無効なメールアドレスです</Span>
+						<Div ID = "Dialogs_Thread_InfoInputer_Content_Overview" Class = "mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+							<Input ID = "Dialogs_Thread_InfoInputer_Content_Overview_Input" Class = "mdl-textfield__input" Type = "Text" Value = "" />
+							<Label ID = "Dialogs_Thread_InfoInputer_Content_Overview_Label" Class = "mdl-textfield__label" For = "Dialogs_Thread_InfoInputer_Content_Overview_Input">概要...</Label>
+						</Div>
+
+						<Div ID = "Dialogs_Thread_InfoInputer_Content_Detail" Class = "mdl-textfield mdl-js-textfield">
+							<Textarea ID = "Dialogs_Thread_InfoInputer_Content_Detail_Input" Class = "mdl-textfield__input" Rows = "10" MaxLength = "500"></Textarea>
+							<Label Class = "mdl-textfield__label" For = "Dialogs_Thread_InfoInputer_Content_Detail_Input">詳細...</Label>
 						</Div>
 					</Div>
 
-					<Div ID = "Dialogs_Profile_ConfirmDelete_Btns" Class = "mdl-dialog__actions">
-						<Button ID = "Dialogs_Profile_ConfirmDelete_Btns_Yes" Class = "mdl-button mdl-js-button mdl-js-ripple-effect" Type = "Button">はい</Button>
-						<Button ID = "Dialogs_Profile_ConfirmDelete_Btns_No" Class = "mdl-button mdl-js-button mdl-js-ripple-effect" Data-Action = "Dialog_Close" Type = "Button">いいえ</Button>
+					<Div ID = "Dialogs_Thread_InfoInputer_Btns" Class = "mdl-dialog__actions">
+						<Button ID = "Dialogs_Thread_InfoInputer_Btns_OK" Class = "mdl-button mdl-js-button mdl-js-ripple-effect" Type = "Button">作成</Button>
+						<Button ID = "Dialogs_Thread_InfoInputer_Btns_Cancel" Class = "mdl-button mdl-js-button mdl-js-ripple-effect" Data-Action = "Dialog_Close" Type = "Button">キャンセル</Button>
 					</Div>
 				</Dialog>
 			</Div>
