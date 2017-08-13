@@ -16,7 +16,18 @@ window.addEventListener("DOMContentLoaded", () => {
 
 	let doc = parent.document;
 
-	DOM("#Thread_Admin_Create_Apply").addEventListener("click", () => {
+	DOM("#Thread_Search_Searcher_Container_Input").addEventListener("input", (event) => {
+		let list = Array.from(DOM("#Thread_Search").children).splice(1);
+			list.forEach((thread) => {
+				if (thread.querySelector("Span:Not(.mdl-list__item-primary-content)").textContent.indexOf(event.target.value) == -1) {
+					thread.style.display = "None";
+				} else {
+					thread.style.display = "";
+				}
+			});
+	});
+
+	DOM("#Thread_Admin_Create").addEventListener("click", () => {
 		doc.querySelector("#Dialogs_Thread_InfoInputer").showModal();
 	});
 });

@@ -27,7 +27,14 @@ window.addEventListener("DOMContentLoaded", () => {
 				detail: DOM("#Dialogs_Thread_InfoInputer_Content_Detail_Input").value,
 
 				jobs: {
-					Owner: [ base.user.uid ]
+					Owner: (() => {
+						let owners = {}; owners[base.user.uid] = "";
+						return owners;
+					})(),
+
+					Admin: {
+
+					}
 				},
 
 				createdTime: new Date().getTime(),
