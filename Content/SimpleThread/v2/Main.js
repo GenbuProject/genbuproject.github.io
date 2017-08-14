@@ -26,17 +26,11 @@ window.addEventListener("DOMContentLoaded", () => {
 				});
 			});
 
-			DOM("#Header_AccountPane-Btn_Manager").textContent = (() => {
-				return new Style({
-					"#Header_AccountPane-Btn": {
-						"Background-Image": ["URL(", user.photoURL, ")"].join('"')
-					}
-				}).textContent;
-			})();
-
 			DOM("#Header_SignInOut").textContent = "Sign Out";
 		} else {
-			DOM("#Header_AccountPane-Btn").setAttribute("SignOut", "");
+			DOM('@A[Data-TagID="AccountBtn"]').forEach((btn) => {
+				btn.setAttribute("SignOut", "");
+			});
 		}
 	});
 

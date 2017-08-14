@@ -4,7 +4,7 @@
  *Copyright (C) 2016-2020 Genbu Project & Genbu Hase All Rights Reversed.
  *#######################################################################
 /*/
-(function () {
+(() => {
 	Object.defineProperties(Object.prototype, {
 		getClassName: {
 			/**
@@ -77,7 +77,7 @@
 			 */
 			value () {
 				let result = this.split("");
-					result = result.filter(function (elem, index, parent) {
+					result = result.filter((elem, index, parent) => {
 						return parent.indexOf(elem) == index;
 					});
 
@@ -109,9 +109,9 @@
 			 */
 			value (url, onLoad) {
 				url = url || "",
-				onLoad = onLoad || function (event) {};
+				onLoad = onLoad || ((event) => {});
 
-				if (!(function () {
+				if (!(() => {
 					let scripts = document.getElementsByTagName("script");
 					
 					for (let i = 0; i < scripts.length; i++) {
@@ -121,7 +121,7 @@
 					let elem = document.createElement("script");
 						elem.src = url;
 
-						elem.addEventListener("load", function (event) {
+						elem.addEventListener("load", (event) => {
 							onLoad(event);
 						});
 
@@ -159,7 +159,7 @@
 
 
 		Script: {
-			value: (function () {
+			value: (() => {
 				/**
 				 * @param {String} url
 				 * @param {object} [option={}]
@@ -181,7 +181,7 @@
 		},
 
 		Style: {
-			value: (function () {
+			value: (() => {
 				/**
 				 * @param {object} data
 				 * @returns {HTMLStyleElement}
@@ -190,7 +190,7 @@
 					data = data || {};
 
 					let elem = document.createElement("style");
-						elem.textContent = (function () {
+						elem.textContent = (() => {
 							let mem = [];
 
 							(function Looper (currentData, currentLevel) {
@@ -217,7 +217,7 @@
 		},
 
 		InlineStyle: {
-			value: (function () {
+			value: (() => {
 				/**
 				 * @param {object} data
 				 */
@@ -236,7 +236,7 @@
 		},
 
 		Canvas: {
-			value: (function () {
+			value: (() => {
 				/**
 				 * @param {Number} [width=0]
 				 * @param {Number} [height=0]
@@ -254,7 +254,7 @@
 		},
 
 		Svg: {
-			value: (function () {
+			value: (() => {
 				/**
 				 * @param {Number} [width=0]
 				 * @param {Number} [height=0]
@@ -271,7 +271,7 @@
 					return elem;
 				}; Object.defineProperties(Svg, {
 					Rect: {
-						value: (function () {
+						value: (() => {
 							/**
 							 * @param {object} [option={}]
 							 * @returns {HTMLElement}
@@ -295,7 +295,7 @@
 					},
 
 					Circle: {
-						value: (function () {
+						value: (() => {
 							/**
 							 * @param {object} [option={}]
 							 * @returns {HTMLElement}
@@ -318,7 +318,7 @@
 					},
 
 					Text: {
-						value: (function () {
+						value: (() => {
 							/**
 							 * @param {object} [option={}]
 							 * @returns {HTMLElement}
@@ -379,25 +379,33 @@
 				option = option || {};
 
 				let elem = document.createElement(tagName);
-					!option.attributes || (function () {
+					!option.attributes || (() => {
 						for (let paramName in option.attributes) {
 							elem.setAttribute(paramName, option.attributes[paramName]);
 						}
 					})();
-					
-					!option.styles || (function () {
-						elem.setAttribute("Style", InlineStyle(option.styles));
-					})();
-					
-					!option.events || (function () {
-						for (let eventName in option.events) {
-							elem.addEventListener(eventName, option.events[eventName]);
+
+					!option.id || (elem.id = option.id);
+
+					!option.classes || (() => {
+						for (let i = 0; i < option.classes.length; i++) {
+							elem.classList.add(option.classes[i]);
 						}
 					})();
 
-					!option.children || (function () {
+					!option.text || (elem.textContent = option.text);
+					
+					!option.styles || elem.setAttribute("Style", InlineStyle(option.styles));
+
+					!option.children || (() => {
 						for (let i = 0; i < option.children.length; i++) {
 							elem.appendChild(option.children[i]);
+						}
+					})();
+					
+					!option.events || (() => {
+						for (let eventName in option.events) {
+							elem.addEventListener(eventName, option.events[eventName]);
 						}
 					})();
 				
@@ -415,25 +423,33 @@
 				option = option || {};
 
 				let elem = document.createElementNS(nameSpace, tagName);
-					!option.attributes || (function () {
+					!option.attributes || (() => {
 						for (let paramName in option.attributes) {
 							elem.setAttribute(paramName, option.attributes[paramName]);
 						}
 					})();
+
+					!option.id || (elem.id = option.id);
 					
-					!option.styles || (function () {
-						elem.setAttribute("Style", InlineStyle(option.styles));
-					})();
-					
-					!option.events || (function () {
-						for (let eventName in option.events) {
-							elem.addEventListener(eventName, option.events[eventName]);
+					!option.classes || (() => {
+						for (let i = 0; i < option.classes.length; i++) {
+							elem.classList.add(option.classes[i]);
 						}
 					})();
 
-					!option.children || (function () {
+					!option.text || (elem.textContent = option.text);
+					
+					!option.styles || elem.setAttribute("Style", InlineStyle(option.styles));
+
+					!option.children || (() => {
 						for (let i = 0; i < option.children.length; i++) {
 							elem.appendChild(option.children[i]);
+						}
+					})();
+					
+					!option.events || (() => {
+						for (let eventName in option.events) {
+							elem.addEventListener(eventName, option.events[eventName]);
 						}
 					})();
 				
@@ -526,7 +542,7 @@
 			 * @param {function (object)} [onLoad=function (res) {}]
 			 */
 			value (onLoad) {
-				onLoad = onLoad || function (res) {};
+				onLoad = onLoad || ((res) => {});
 
 				let iframe = document.createElement("iframe");
 					iframe.style.display = "None";
@@ -569,21 +585,21 @@
 					ip_dups[ip_addr] = true;
 				}
 				
-				pc.onicecandidate = function (ice) {
+				pc.onicecandidate = (ice) => {
 					if (ice.candidate) handleCandidate(ice.candidate.candidate);
 				}
 				
 				pc.createDataChannel("");
 				
-				pc.createOffer(function (result) {
-					pc.setLocalDescription(result, function () {}, function () {});
-				}, function () {
+				pc.createOffer((result) => {
+					pc.setLocalDescription(result, () => {}, () => {});
+				}, () => {
 					
 				});
 				
-				setTimeout(function () {
+				setTimeout(() => {
 					let lines = pc.localDescription.sdp.split('\n');
-						lines.forEach(function (line) {
+						lines.forEach((line) => {
 							if (line.indexOf('a=candidate:') === 0) handleCandidate(line);
 						});
 						
@@ -638,7 +654,7 @@
 
 importScript("https://cdnjs.cloudflare.com/ajax/libs/mobile-detect/1.3.5/mobile-detect.min.js");
 
-const DOM = (function () {
+const DOM = (() => {
 	/**
 	 * セレクタ($1)に応じてDOM要素を返す
 	 * 
@@ -707,7 +723,7 @@ const DOM = (function () {
 				let connector = new XMLHttpRequest();
 					!option.resType || (connector.responseType = option.resType);
 					
-					connector.open(option.type || "GET", (option.url || location.href) + (option.params ? "?" + (function () {
+					connector.open(option.type || "GET", (option.url || location.href) + (option.params ? "?" + (() => {
 						let param = [];
 
 						for (let paramName in option.params) {
@@ -717,13 +733,13 @@ const DOM = (function () {
 						return param.join("&");
 					})() : ""), option.doesSync != undefined ? option.doesSync : true);
 
-					!option.headers || (function () {
+					!option.headers || (() => {
 						for (let headerName in option.headers) {
 							connector.setRequestHeader(headerName, option.headers[headerName]);
 						}
 					})();
 
-					connector.onload = option.onLoad || function (event) {};
+					connector.onload = option.onLoad || ((event) => {});
 					connector.send(option.data);
 
 				return connector;
@@ -741,7 +757,7 @@ const DOM = (function () {
 
 				let param = [];
 
-				!option.params || (function () {
+				!option.params || (() => {
 					for (let paramName in option.params) {
 						param.push(paramName + "=" + option.params[paramName]);
 					}
@@ -750,7 +766,7 @@ const DOM = (function () {
 				let elem = document.createElement("script");
 					elem.src = (option.url || location.href) + (option.params ? "?" + param.join("&") : "");
 					
-					elem.onload = function (event) {
+					elem.onload = (event) => {
 						elem.parentElement.removeChild(elem);
 					}
 					
@@ -761,7 +777,7 @@ const DOM = (function () {
 		},
 		
 		rest: {
-			value: (function () {
+			value: (() => {
 				/**
 				 * @param {object} [option={}]
 				 */
@@ -822,14 +838,14 @@ const DOM = (function () {
 			 * @param {function} [onLoad=function (event)]
 			 */
 			value (url, onLoad) {
-				onLoad = onLoad || function (event) {};
+				onLoad = onLoad || ((event) => {});
 
 				this.xhr({
 					type: "GET",
 					url: url,
 					doesSync: true,
 
-					onLoad: function (event) {
+					onLoad: (event) => {
 						if (event.target.response.match("#{using} DOMExtender")) {
 							eval(event.target.response)(apiInfo);
 							onLoad(event);
@@ -852,7 +868,7 @@ const DOM = (function () {
 		height: { value: window.innerHeight, configurable: true, writable: true, enumerable: true },
 
 		util: {
-			value: (function () {
+			value: (() => {
 				const util = Object.create(Object.prototype, {
 					degToRad: {
 						/**
@@ -921,7 +937,7 @@ const DOM = (function () {
 
 
 		APIInfo: {
-			value: (function () {
+			value: (() => {
 				/**
 				 * @param {String} apiName
 				 * @param {Number} apiVersion
@@ -943,7 +959,7 @@ const DOM = (function () {
 		},
 
 		Watcher: {
-			value: (function () {
+			value: (() => {
 				let watchers = [];
 
 				/**
@@ -954,8 +970,8 @@ const DOM = (function () {
 
 					this.setTarget(option.target || { value: null });
 					this.setWatchTick(option.tick || 1);
-					this.onGet = option.onGet || function () {};
-					this.onChange = option.onChange || function (watcher) {};
+					this.onGet = option.onGet || (() => {});
+					this.onChange = option.onChange || ((watcher) => {});
 				}; Watcher.prototype = Object.create(null, {
 					constructor: { value: Watcher },
 
@@ -964,8 +980,8 @@ const DOM = (function () {
 					target: { value: { value: null }, configurable: true, writable: true, enumerable: true },
 					oldValue: { value: 0, configurable: true, writable: true, enumerable: true },
 					newValue: { value: 0, configurable: true, writable: true, enumerable: true },
-					onGet: { value: function () {}, configurable: true, writable: true, enumerable: true },
-					onChange: { value: function (watcher) {}, configurable: true, writable: true, enumerable: true },
+					onGet: { value: () => {}, configurable: true, writable: true, enumerable: true },
+					onChange: { value: (watcher) => {}, configurable: true, writable: true, enumerable: true },
 
 					setWatchTick: {
 						/**
@@ -986,7 +1002,7 @@ const DOM = (function () {
 						 * @param {Watcher} watcher
 						 */
 						value (watcher) {
-							watcher.watcherID[0] = setInterval(function () {
+							watcher.watcherID[0] = setInterval(() => {
 								watcher.newValue = watcher.target.value;
 								
 								if (watcher.oldValue !== watcher.newValue) {
@@ -1001,7 +1017,7 @@ const DOM = (function () {
 							watchers.push(watcher);
 							watchers[watchers.length - 1].watcherID[1] = watchers.length - 1;
 							
-							watcher.watcherID[810] = setInterval(watcher.onGet || function () {}, watcher.watchTick);
+							watcher.watcherID[810] = setInterval(watcher.onGet || (() => {}), watcher.watchTick);
 							
 							return watcher;
 						},
@@ -1031,7 +1047,7 @@ const DOM = (function () {
 		},
 
 		Randomizer: {
-			value: (function () {
+			value: (() => {
 				/**
 				 * @param {Symbol} [usedType=Symbol]
 				 */
@@ -1127,7 +1143,7 @@ const DOM = (function () {
 					}
 				}); Object.defineProperties(Randomizer, {
 					TYPE: {
-						value: (function () {
+						value: (() => {
 							const TYPE = Object.create(Object.prototype, {
 								LEVEL1: { value: Symbol.for("LEVEL1"), enumerable: true },	//Only Numbers
 								LEVEL2: { value: Symbol.for("LEVEL2"), enumerable: true },	//Only Alphabets
@@ -1153,7 +1169,7 @@ const DOM = (function () {
 					},
 
 					CHARMAP: {
-						value: (function () {
+						value: (() => {
 							const CHARMAP = Object.create(Object.prototype, {
 								LEVEL1: { value: "1234567890".split(""), enumerable: true },
 								LEVEL2: { value: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ".split(""), enumerable: true },
@@ -1181,7 +1197,7 @@ const DOM = (function () {
 
 
 					RamdomizeType: {
-						value: (function () {
+						value: (() => {
 							/**
 							 * @param {String} [name="Untitled Type"]
 							 * @param {String} [usedChars=""]
@@ -1215,7 +1231,7 @@ const DOM = (function () {
 
 
 
-	/*DOM.InvalidSelectorError = (function () {
+	/*DOM.InvalidSelectorError = (() => {
 		function InvalidSelectorError (message) {
 			this.name = "InvalidSelector";
 			this.message = message || "Syntax of selector is invalid";
@@ -1233,7 +1249,7 @@ const DOM = (function () {
 	 */
 	let apiInfo = new DOM.APIInfo("DOM Extender", 3.0);
 
-	window.addEventListener("resize", function (event) {
+	window.addEventListener("resize", (event) => {
 		DOM.width = window.innerWidth;
 		DOM.height = window.innerHeight;
 	});

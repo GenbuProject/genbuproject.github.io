@@ -46,11 +46,9 @@
 					<Div Class = "mdl-layout-spacer"></Div>
 
 					<Nav Class = "mdl-navigation">
-						<Style ID = "Header_AccountPane-Btn_Manager"></Style>
-
 						<A Class = "mdl-navigation__link" Href = "Top/">Top</A>
 						<A ID = "Header_SignInOut" Class = "mdl-navigation__link">Sign In</A>
-						<A ID = "Header_AccountPane-Btn" Class = "mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect" Href = "Profile/"></A>
+						<A Data-TagID = "ProfilePhoto--Btn" Class = "mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect" Href = "Profile/"></A>
 
 						<Div Class = "mdl-tooltip" For = "Header_AccountPane-Btn">See your profile</Div>
 					</Nav>
@@ -60,7 +58,7 @@
 			<Div ID = "Drawer" Class = "mdl-layout__drawer">
 				<Span Class = "mdl-layout-title">
 					Simple Thread
-					<A ID = "Header_AccountPane-Btn" Class = "mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect" Href = "Profile/"></A>
+					<A Data-TagID = "ProfilePhoto--Btn" Class = "mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect" Href = "Profile/"></A>
 				</Span>
 
 				<Nav Class = "mdl-navigation">
@@ -132,6 +130,41 @@
 					<Div ID = "Dialogs_Profile_ConfirmDelete_Btns" Class = "mdl-dialog__actions">
 						<Button ID = "Dialogs_Profile_ConfirmDelete_Btns_Yes" Class = "mdl-button mdl-js-button mdl-js-ripple-effect" Type = "Button">はい</Button>
 						<Button ID = "Dialogs_Profile_ConfirmDelete_Btns_No" Class = "mdl-button mdl-js-button mdl-js-ripple-effect" Data-Action = "Dialog_Close" Type = "Button">いいえ</Button>
+					</Div>
+				</Dialog>
+
+				<Dialog ID = "Dialogs_Profile_InfoViewer" Class = "mdl-dialog">
+					<Div ID = "Dialogs_Profile_InfoViewer_Content" Class = "mdl-dialog__content">
+						<Div ID = "Dialogs_Profile_InfoViewer_Content_Photo" Data-TagID = "ProfilePhoto"></Div>
+
+						<Div ID = "Dialogs_Profile_InfoViewer_Content_Info">
+							<Span ID = "Dialogs_Profile_InfoViewer_Content_Info_Name" Class = "mdl-layout__title">Genbu Hase</Span>
+
+							<Div ID = "Dialogs_Profile_InfoViewer_Content_Info_Detail">
+								Google+で色々やってる暇人です。<Br />
+								一応Simple Threadのオーナーやってます✌('ω')ｽｯ
+							</Div>
+
+							<Span Class = "mdl-layout__title">リンク</Span>
+
+							<Div ID = "Dialogs_Profile_InfoViewer_Content_Info_Link">
+								<Div>
+									<Img Src = "https://plus.google.com/favicon.ico" />
+									<A Href = "https://plus.google.com/106666684430101995501/" Target = "_blank">Google+</A>
+								</Div>
+								
+								<Div>
+									<A Href = "https://github.com/GenbuHase/" Target = "_blank">
+										<Img Src = "https://github.com/favicon.ico" />
+										Github
+									</A>
+								</Div>
+							</Div>
+						</Div>
+					</Div>
+
+					<Div ID = "Dialogs_Profile_InfoViewer_Btns" Class = "mdl-dialog__actions">
+						<Button ID = "Dialogs_Profile_InfoViewer_Btns_OK" Class = "mdl-button mdl-js-button mdl-js-ripple-effect" Data-Action = "Dialog_Close" Type = "Button">閉じる</Button>
 					</Div>
 				</Dialog>
 			</Div>

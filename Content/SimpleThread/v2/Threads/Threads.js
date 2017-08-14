@@ -1,4 +1,37 @@
 window.addEventListener("DOMContentLoaded", () => {
+	base.Database.get(base.Database.ONCE, "threads", (res) => {
+		res = res.filter((thread) => {
+			if (thread !== "System") return true;
+		});
+
+		for (let i = 0; i < res.length; i++) {
+			let thread = DOM("A", {
+				classes: ["mdl-list__item"],
+
+				children: [
+					DOM("Span", {
+						classes: ["mdl-list__item-primary-content"],
+
+						children: [
+							DOM("I", {
+								classes: ["mdl-list__item-avatar", "material-icons"],
+								text: "person"
+							}),
+
+							DOM("Span", {
+								text: res[i].title
+							})
+						]
+					})
+				]
+			});
+
+			DOM("#Thread_Search").appendChild(thread);
+		}
+	});
+
+
+
 	DOM("@Div.Thread_Searcher").forEach((searcher) => {
 		let rnd = new DOM.Randomizer(DOM.Randomizer.TYPE.LEVEL3).generate(16);
 
@@ -12,20 +45,20 @@ window.addEventListener("DOMContentLoaded", () => {
 		searcher.querySelector("Label.Thread_Searcher_Container_Label").htmlFor = searcher.querySelector("Input.Thread_Searcher_Container_Input").id;
 	});
 
-
-
-	let doc = parent.document;
-
 	DOM("#Thread_Search_Searcher_Container_Input").addEventListener("input", (event) => {
 		let list = Array.from(DOM("#Thread_Search").children).splice(1);
 			list.forEach((thread) => {
-				if (thread.querySelector("Span:Not(.mdl-list__item-primary-content)").textContent.indexOf(event.target.value) == -1) {
-					thread.style.display = "None";
+				if (thread.querySelector("Span:Not(.mdl-list__item-primary-content)").textContent.toLowerCase().indexOf(event.target.value.toLowerCase()) == -1) {
+					thread.setAttribute("Disabled", "");
 				} else {
-					thread.style.display = "";
+					thread.removeAttribute("Disabled");
 				}
 			});
 	});
+
+
+
+	let doc = parent.document;
 
 	DOM("#Thread_Admin_Create").addEventListener("click", () => {
 		doc.querySelector("#Dialogs_Thread_InfoInputer").showModal();

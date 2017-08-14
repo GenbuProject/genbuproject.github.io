@@ -14,16 +14,6 @@
 	Width: 20%;
 
 	Margin-Right: 5%;
-
-	Background: Transparent Center / Cover;
-	Border-Radius: 100%;
-}
-
-#Profile_Photo::Before {
-	Content: "";
-
-	Display: Block;
-	Padding-Top: 100%;
 }
 
 #Profile_Info {

@@ -21,15 +21,17 @@ window.addEventListener("DOMContentLoaded", () => {
 
 	DOM("#Dialogs_Thread_InfoInputer_Btns_OK").addEventListener("click", () => {
 		base.Database.transaction("threads", (res) => {
-			res.push({
+			let now = new Date().getTime();
+
+			base.Database.set("threads/" + res.length, {
 				title: DOM("#Dialogs_Thread_InfoInputer_Content_Name_Input").value,
 				overview: DOM("#Dialogs_Thread_InfoInputer_Content_Overview_Input").value,
 				detail: DOM("#Dialogs_Thread_InfoInputer_Content_Detail_Input").value,
 
 				jobs: {
 					Owner: (() => {
-						let owners = {}; owners[base.user.uid] = "";
-						return owners;
+						let owner = {}; owner[base.user.uid] = "";
+						return owner;
 					})(),
 
 					Admin: {
@@ -37,11 +39,16 @@ window.addEventListener("DOMContentLoaded", () => {
 					}
 				},
 
-				createdTime: new Date().getTime(),
-				dbName: ""
+				createdAt: now,
+				
+				data: [
+					{
+						uid: base.user.uid,
+						content: DOM("#Dialogs_Thread_InfoInputer_Content_Name_Input").value,
+						createdAt: now
+					}
+				]
 			});
-
-			return res;
 		});
 	});
 });

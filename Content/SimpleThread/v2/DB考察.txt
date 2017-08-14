@@ -14,7 +14,9 @@ Root
 		> ...
 		
 > threads
-	> 0
+	> 0: "System"
+
+	> 1
 		> title: String
 		> overview: String
 		> detail: String
@@ -28,8 +30,16 @@ Root
 
 			> ...
 			
-		> createdTime: DateString
-		> dbName: URLString
-		
-	> 1
+		> createdAt: DateString
+
+		> data
+			> 0
+				> uid: UID
+				> content: String
+				> createdAt: DateString
+
+			> 1
+				> ...
+			
+	> 2
 		> ...
