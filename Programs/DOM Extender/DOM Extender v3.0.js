@@ -453,6 +453,7 @@
 
 				!option.dataset || (() => {
 					for (let dataName in option.attributes) {
+						this.setAttribute("data-" + dataName, option.dataset[dataName]),
 						this.dataset[dataName.toLowerCase()] = option.dataset[dataName];
 					}
 				})();
