@@ -388,35 +388,7 @@
 				option = option || {};
 
 				let elem = document.createElement(tagName);
-					!option.attributes || (() => {
-						for (let paramName in option.attributes) {
-							elem.setAttribute(paramName, option.attributes[paramName]);
-						}
-					})();
-
-					!option.id || (elem.id = option.id);
-
-					!option.classes || (() => {
-						for (let i = 0; i < option.classes.length; i++) {
-							elem.classList.add(option.classes[i]);
-						}
-					})();
-
-					!option.text || (elem.textContent = option.text);
-					
-					!option.styles || elem.setAttribute("Style", InlineStyle(option.styles));
-
-					!option.children || (() => {
-						for (let i = 0; i < option.children.length; i++) {
-							elem.appendChild(option.children[i]);
-						}
-					})();
-					
-					!option.events || (() => {
-						for (let eventName in option.events) {
-							elem.addEventListener(eventName, option.events[eventName]);
-						}
-					})();
+					elem.applyProperties(option);
 				
 				return elem;
 			}
@@ -432,35 +404,7 @@
 				option = option || {};
 
 				let elem = document.createElementNS(nameSpace, tagName);
-					!option.attributes || (() => {
-						for (let paramName in option.attributes) {
-							elem.setAttribute(paramName, option.attributes[paramName]);
-						}
-					})();
-
-					!option.id || (elem.id = option.id);
-					
-					!option.classes || (() => {
-						for (let i = 0; i < option.classes.length; i++) {
-							elem.classList.add(option.classes[i]);
-						}
-					})();
-
-					!option.text || (elem.textContent = option.text);
-					
-					!option.styles || elem.setAttribute("Style", InlineStyle(option.styles));
-
-					!option.children || (() => {
-						for (let i = 0; i < option.children.length; i++) {
-							elem.appendChild(option.children[i]);
-						}
-					})();
-					
-					!option.events || (() => {
-						for (let eventName in option.events) {
-							elem.addEventListener(eventName, option.events[eventName]);
-						}
-					})();
+					elem.applyProperties(option);
 				
 				return elem;
 			}
@@ -480,6 +424,52 @@
 		dismiss: {
 			value () {
 				this.parentElement.removeChild(this);
+			}
+		}
+	});
+
+	Object.defineProperties(HTMLElement.prototype, {
+		applyProperties: {
+			/**
+			 * @param {object} option
+			 */
+			value (option) {
+				(option.text != false && !option.id) || (this.id = option.id);
+				
+				!option.classes || (() => {
+					for (let i = 0; i < option.classes.length; i++) {
+						this.classList.add(option.classes[i]);
+					}
+				})();
+
+				(option.text != false && !option.text) || (this.textContent = option.text);
+				(option.html != false && !option.html) || (this.innerHTML = option.html);
+
+				!option.attributes || (() => {
+					for (let paramName in option.attributes) {
+						this.setAttribute(paramName, option.attributes[paramName]);
+					}
+				})();
+
+				!option.dataset || (() => {
+					for (let dataName in option.attributes) {
+						this.dataset[dataName] = option.dataset[dataName];
+					}
+				})();
+				
+				!option.styles || this.setAttribute("Style", InlineStyle(option.styles));
+
+				!option.children || (() => {
+					for (let i = 0; i < option.children.length; i++) {
+						this.appendChild(option.children[i]);
+					}
+				})();
+				
+				!option.events || (() => {
+					for (let eventName in option.events) {
+						this.addEventListener(eventName, option.events[eventName]);
+					}
+				})();
 			}
 		}
 	});
