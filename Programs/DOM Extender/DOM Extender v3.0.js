@@ -98,6 +98,15 @@
 				
 				return res;
 			}
+		},
+
+		isUrlString: {
+			/**
+			 * @returns {Boolean}
+			 */
+			value () {
+				return (this.match(/((h?)(ttps?:\/\/[a-zA-Z0-9.\-_@:/~?%&;=+#',()*!]+))/g) ? true : false);
+			}
 		}
 	});
 
