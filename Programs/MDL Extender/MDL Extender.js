@@ -100,8 +100,8 @@ window.addEventListener("DOMContentLoaded", () => {
 									let item = DOM("Li", {
 										classes: ["mdl-list__item"],
 
-										attributes: {
-											"Data-ItemID": list.children.length - 1
+										dataset: {
+											"itemid": list.children.length - 1
 										},
 
 										children: [
@@ -137,8 +137,11 @@ window.addEventListener("DOMContentLoaded", () => {
 																		classes: ["mdl-textfield__input"],
 
 																		attributes: {
-																			"Type": "Text",
-																			"Data-FieldID": i - 1
+																			"Type": "Text"
+																		},
+
+																		dataset: {
+																			"fieldid": i - 1
 																		}
 																	}),
 
