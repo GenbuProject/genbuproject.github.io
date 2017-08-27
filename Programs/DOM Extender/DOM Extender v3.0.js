@@ -618,15 +618,6 @@
 		}
 	});
 
-	Object.defineProperties(URL.prototype, {
-		filter: {
-			value (str) {
-				str = str || "";
-				return str.match(/((h?)(ttps?:\/\/[a-zA-Z0-9.\-_@:/~?%&;=+#',()*!]+))/g);
-			}
-		}
-	});
-
 
 
 	Object.defineProperties(Math, {
@@ -653,6 +644,15 @@
 				}
 
 				return result;
+			}
+		}
+	});
+
+	Object.defineProperties(URL, {
+		filter: {
+			value (str) {
+				str = str || "";
+				return str.match(/((h?)(ttps?:\/\/[a-zA-Z0-9.\-_@:/~?%&;=+#',()*!]+))/g);
 			}
 		}
 	});
