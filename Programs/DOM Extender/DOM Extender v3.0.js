@@ -18,6 +18,7 @@
 		isStrictObject: {
 			/**
 			 * @param {object} obj
+			 * @returns {Boolean}
 			 */
 			value (obj) {
 				if (obj !== undefined) {
@@ -31,6 +32,7 @@
 		isStrictArray: {
 			/**
 			 * @param {object} obj
+			 * @returns {Boolean}
 			 */
 			value (obj) {
 				if (obj !== undefined) {
@@ -45,6 +47,7 @@
 			/**
 			 * @param {String} valueSeparator
 			 * @param {String} paramSeparator
+			 * @returns {String}
 			 */
 			value (valueSeparator, paramSeparator) {
 				valueSeparator = valueSeparator || "=";
@@ -63,6 +66,7 @@
 		toQueryString: {
 			/**
 			 * @param {object} obj
+			 * @returns {String}
 			 */
 			value (obj) {
 				return "?" + Object.prototype.connect.call(obj || this, "=", "&");
@@ -88,6 +92,7 @@
 		replaces: {
 			/**
 			 * @param {Array<String>} replaceStrs
+			 * @returns {String}
 			 */
 			value (replaceStrs) {
 				let res = this;
@@ -142,6 +147,7 @@
 		btoaAsUTF8: {
 			/**
 			 * @param {String} [str=""]
+			 * @returns {String}
 			 */
 			value (str) {
 				return btoa(unescape(encodeURIComponent(str || "")));
@@ -151,6 +157,7 @@
 		atobAsUTF8: {
 			/**
 			 * @param {String} [base64Str=""]
+			 * @returns {String}
 			 */
 			value (base64Str) {
 				return decodeURIComponent(escape(atob(base64Str || "")));
@@ -160,6 +167,7 @@
 		urlSafe: {
 			/**
 			 * @param {String} [url=""]
+			 * @returns {String}
 			 */
 			value (url) {
 				return (url || "").replace(/\+/g, '-').replace(/\//g, '_');
@@ -229,6 +237,7 @@
 			value: (() => {
 				/**
 				 * @param {object} data
+				 * @returns {String}
 				 */
 				function InlineStyle (data) {
 					let mem = [];
@@ -249,6 +258,7 @@
 				/**
 				 * @param {Number} [width=0]
 				 * @param {Number} [height=0]
+				 * @returns {HTMLCanvasElement}
 				 */
 				function Canvas (width, height) {
 					let Elem = document.createElement("canvas");
@@ -267,6 +277,7 @@
 				/**
 				 * @param {Number} [width=0]
 				 * @param {Number} [height=0]
+				 * @returns {SVGSVGElement}
 				 */
 				function Svg (width, height) {
 					let elem = document.createElementNS("http://www.w3.org/2000/svg", "svg");
@@ -283,7 +294,7 @@
 						value: (() => {
 							/**
 							 * @param {object} [option={}]
-							 * @returns {HTMLElement}
+							 * @returns {SVGRectElement}
 							 */
 							function Rect (option) {
 								option = option || {};
@@ -307,7 +318,7 @@
 						value: (() => {
 							/**
 							 * @param {object} [option={}]
-							 * @returns {HTMLElement}
+							 * @returns {SVGCircleElement}
 							 */
 							function Circle (option) {
 								option = option || {};
@@ -330,7 +341,7 @@
 						value: (() => {
 							/**
 							 * @param {object} [option={}]
-							 * @returns {HTMLElement}
+							 * @returns {SVGTextElement}
 							 */
 							function Text (option) {
 								option = option || {};
@@ -354,6 +365,7 @@
 						 * @param {Number} r
 						 * @param {Number} g
 						 * @param {Number} b
+						 * @returns {String}
 						 */
 						value (r, g, b) {
 							return "RGB(" + (r || 0) + ", " + (g || 0) + ", " + (b || 0) + ")";
@@ -366,6 +378,7 @@
 						 * @param {Number} g
 						 * @param {Number} b
 						 * @param {Number} a
+						 * @returns {String}
 						 */
 						value (r, g, b, a) {
 							return "RGBA(" + (r || 0) + ", " + (g || 0) + ", " + (b || 0) + ", " + (a || 0) + ")";
@@ -446,6 +459,7 @@
 			/**
 			 * @param {String} tagName
 			 * @param {object} [option={}]
+			 * @returns {HTMLElement}
 			 */
 			value (tagName, option) {
 				option = option || {};
@@ -462,6 +476,7 @@
 			 * @param {String} nameSpace
 			 * @param {String} tagName
 			 * @param {object} [option={}]
+			 * @returns {HTMLElement}
 			 */
 			value (nameSpace, tagName, option) {
 				option = option || {};
@@ -525,6 +540,9 @@
 
 	Object.defineProperties(Location.prototype, {
 		querySort: {
+			/**
+			 * @returns {object}
+			 */
 			value () {
 				let querys = {};
 				
@@ -610,6 +628,9 @@
 
 	Object.defineProperties(Navigator.prototype, {
 		isMobile: {
+			/**
+			 * @returns {Boolean}
+			 */
 			value () {
 				let checker = new MobileDetect(window.navigator.userAgent);
 
@@ -625,6 +646,7 @@
 			/**
 			 * @param {Number} base
 			 * @param {Number} exponent
+			 * @returns {Number}
 			 */
 			value (base, exponent) {
 				return Math.pow(base, 1 / exponent);
@@ -634,6 +656,9 @@
 
 	Object.defineProperties(Math.random, {
 		randomInt: {
+			/**
+			 * @returns {Number}
+			 */
 			value () {
 				let result = 0;
 
@@ -650,6 +675,10 @@
 
 	Object.defineProperties(URL, {
 		filter: {
+			/**
+			 * @param {String} str
+			 * @returns {Array<String>}
+			 */
 			value (str) {
 				str = str || "";
 				return str.match(/((h?)(ttps?:\/\/[a-zA-Z0-9.\-_@:/~?%&;=+#',()*!]+))/g);
@@ -677,6 +706,7 @@ const DOM = (() => {
 	 * 
 	 * @param {String} selectorStr
 	 * @param {object} [option={}]
+	 * @returns {HTMLElement}
 	 */
 	const DOM = function (selectorStr, option) {
 		selectorStr = selectorStr || "",
@@ -724,6 +754,7 @@ const DOM = (() => {
 		xhr: {
 			/**
 			 * @param {object} [option={}]
+			 * @returns {XMLHttpRequest}
 			 */
 			value (option) {
 				option = option || {};
@@ -788,6 +819,7 @@ const DOM = (() => {
 			value: (() => {
 				/**
 				 * @param {object} [option={}]
+				 * @returns {XMLHttpRequest}
 				 */
 				function rest (option) {
 					option = option || {};
@@ -809,6 +841,7 @@ const DOM = (() => {
 					calcResources: {
 						/**
 						 * @param {ProgressEvent} eventObj
+						 * @returns {Location}
 						 */
 						value (eventObj) {
 							/**
@@ -881,6 +914,7 @@ const DOM = (() => {
 					degToRad: {
 						/**
 						 * @param {Number} degree
+						 * @returns {Number}
 						 */
 						value (degree) {
 							return degree * Math.PI / 180;
@@ -892,6 +926,7 @@ const DOM = (() => {
 					radToDeg: {
 						/**
 						 * @param {Number} radian
+						 * @returns {Number}
 						 */
 						value (radian) {
 							return radian * 180 / Math.PI;
@@ -904,6 +939,7 @@ const DOM = (() => {
 						/**
 						 * @param {any} obj
 						 * @param {any} initValue
+						 * @returns {any}
 						 */
 						value (obj, initValue) {
 							return (obj != false && !obj) ? initValue : obj;
@@ -918,6 +954,7 @@ const DOM = (() => {
 						 * @param {Number} [height=0]
 						 * @param {Number} [basisWidth=window.outerWidth]
 						 * @param {Number} [basisHeight=window.outerHeight]
+						 * @returns {ClientRect}
 						 */
 						value (width, height, basisWidth, basisHeight) {
 							width = width || 0,
@@ -1008,6 +1045,7 @@ const DOM = (() => {
 					addWatcher: {
 						/**
 						 * @param {Watcher} watcher
+						 * @returns {Watcher}
 						 */
 						value (watcher) {
 							watcher.watcherID[0] = setInterval(() => {
@@ -1128,6 +1166,7 @@ const DOM = (() => {
 					generate: {
 						/**
 						 * @param {Number} [strLength=8]
+						 * @returns {String}
 						 */
 						value (strLength) {
 							let result = "";
