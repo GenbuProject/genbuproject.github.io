@@ -687,7 +687,7 @@
 						return parent.indexOf(elem) == index;
 					}));
 
-				return res;
+				return res || {};
 			}
 		}
 	});
