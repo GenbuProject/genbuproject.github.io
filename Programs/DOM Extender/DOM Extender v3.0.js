@@ -378,39 +378,6 @@
 		}
 	});
 
-	Object.defineProperties(Document.prototype, {
-		createElementWithParam: {
-			/**
-			 * @param {String} tagName
-			 * @param {object} [option={}]
-			 */
-			value (tagName, option) {
-				option = option || {};
-
-				let elem = document.createElement(tagName);
-					elem.applyProperties(option);
-				
-				return elem;
-			}
-		},
-
-		createElementNSWithParam: {
-			/**
-			 * @param {String} nameSpace
-			 * @param {String} tagName
-			 * @param {object} [option={}]
-			 */
-			value (nameSpace, tagName, option) {
-				option = option || {};
-
-				let elem = document.createElementNS(nameSpace, tagName);
-					elem.applyProperties(option);
-				
-				return elem;
-			}
-		}
-	});
-
 	Object.defineProperties(Node.prototype, {
 		appendTo: {
 			/**
@@ -470,6 +437,39 @@
 						this.addEventListener(eventName, option.events[eventName]);
 					}
 				})();
+			}
+		}
+	});
+
+	Object.defineProperties(Document.prototype, {
+		createElementWithParam: {
+			/**
+			 * @param {String} tagName
+			 * @param {object} [option={}]
+			 */
+			value (tagName, option) {
+				option = option || {};
+
+				let elem = document.createElement(tagName);
+					elem.applyProperties(option);
+				
+				return elem;
+			}
+		},
+
+		createElementNSWithParam: {
+			/**
+			 * @param {String} nameSpace
+			 * @param {String} tagName
+			 * @param {object} [option={}]
+			 */
+			value (nameSpace, tagName, option) {
+				option = option || {};
+
+				let elem = document.createElementNS(nameSpace, tagName);
+					elem.applyProperties(option);
+				
+				return elem;
 			}
 		}
 	});
@@ -614,6 +614,15 @@
 				let checker = new MobileDetect(window.navigator.userAgent);
 
 				return (checker.mobile() || checker.phone() || checker.tablet()) ? true : false;
+			}
+		}
+	});
+
+	Object.defineProperties(URL.prototype, {
+		filter: {
+			value (str) {
+				str = str || "";
+				return str.match(/((h?)(ttps?:\/\/[a-zA-Z0-9.\-_@:/~?%&;=+#',()*!]+))/g);
 			}
 		}
 	});
