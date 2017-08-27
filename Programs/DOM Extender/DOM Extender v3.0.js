@@ -681,7 +681,13 @@
 			 */
 			value (str) {
 				str = str || "";
-				return str.match(/((h?)(ttps?:\/\/[a-zA-Z0-9.\-_@:/~?%&;=+#',()*!]+))/g);
+
+				let res = str.match(/((h?)(ttps?:\/\/[a-zA-Z0-9.\-_@:/~?%&;=+#',()*!]+))/g);
+					!res || (res = res.filter((elem, index, parent) => {
+						return parent.indexOf(elem) == index;
+					}));
+
+				return res;
 			}
 		}
 	});
