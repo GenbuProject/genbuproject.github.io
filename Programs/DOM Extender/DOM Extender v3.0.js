@@ -91,7 +91,7 @@
 
 		replaces: {
 			/**
-			 * @param {Array<String>} replaceStrs
+			 * @param {Array<Array<String>>} replaceStrs
 			 * @returns {String}
 			 */
 			value (replaceStrs) {
