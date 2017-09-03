@@ -17,7 +17,7 @@
 
 		isStrictObject: {
 			/**
-			 * @param {object} obj
+			 * @param {Object} [obj=]
 			 * @returns {Boolean}
 			 */
 			value (obj) {
@@ -31,7 +31,7 @@
 
 		isStrictArray: {
 			/**
-			 * @param {object} obj
+			 * @param {Object} [obj=]
 			 * @returns {Boolean}
 			 */
 			value (obj) {
@@ -45,8 +45,9 @@
 
 		connect: {
 			/**
-			 * @param {String} valueSeparator
-			 * @param {String} paramSeparator
+			 * @param {String} [valueSeparator="="]
+			 * @param {String} [paramSeparator="&"]
+			 * 
 			 * @returns {String}
 			 */
 			value (valueSeparator, paramSeparator) {
@@ -65,7 +66,7 @@
 
 		toQueryString: {
 			/**
-			 * @param {object} obj
+			 * @param {Object} [obj=]
 			 * @returns {String}
 			 */
 			value (obj) {
@@ -91,7 +92,7 @@
 
 		replaces: {
 			/**
-			 * @param {Array<Array<String>>} replaceStrs
+			 * @param {String[][]} replaceStrs
 			 * @returns {String}
 			 */
 			value (replaceStrs) {
@@ -105,7 +106,7 @@
 			}
 		},
 
-		isUrlString: {
+		hasUrlString: {
 			/**
 			 * @returns {Boolean}
 			 */
@@ -178,11 +179,16 @@
 		Script: {
 			value: (() => {
 				/**
-				 * @param {String} url
-				 * @param {object} [option={}]
+				 * @param {String} [url=""]
+				 * @param {Object} [option={}]
+				 * @param {Boolean} option.async
+				 * @param {Boolean} option.defer
+				 * 
 				 * @returns {HTMLScriptElement}
 				 */
 				function Script (url, option) {
+					if (this.constructor.name != arguments.callee.prototype.constructor.name) throw new TypeError("Please use the 'new' operator, it can't be called as a function.");
+					
 					option = option || {};
 
 					let elem = document.createElement("script");
@@ -200,10 +206,12 @@
 		Style: {
 			value: (() => {
 				/**
-				 * @param {object} data
+				 * @param {Object} [data={}]
 				 * @returns {HTMLStyleElement}
 				 */
 				function Style (data) {
+					if (this.constructor.name != arguments.callee.prototype.constructor.name) throw new TypeError("Please use the 'new' operator, it can't be called as a function.");
+
 					data = data || {};
 
 					let elem = document.createElement("style");
@@ -236,10 +244,12 @@
 		InlineStyle: {
 			value: (() => {
 				/**
-				 * @param {object} data
+				 * @param {Object} data
 				 * @returns {String}
 				 */
 				function InlineStyle (data) {
+					if (this.constructor.name == arguments.callee.prototype.constructor.name) throw new TypeError("it is not a constructor");
+					
 					let mem = [];
 					
 					for (let styleName in data) {
@@ -258,9 +268,12 @@
 				/**
 				 * @param {Number} [width=0]
 				 * @param {Number} [height=0]
+				 * 
 				 * @returns {HTMLCanvasElement}
 				 */
 				function Canvas (width, height) {
+					if (this.constructor.name != arguments.callee.prototype.constructor.name) throw new TypeError("Please use the 'new' operator, it can't be called as a function.");
+					
 					let Elem = document.createElement("canvas");
 						Elem.width = width || 0;
 						Elem.height = height || 0;
@@ -277,9 +290,12 @@
 				/**
 				 * @param {Number} [width=0]
 				 * @param {Number} [height=0]
+				 * 
 				 * @returns {SVGSVGElement}
 				 */
 				function Svg (width, height) {
+					if (this.constructor.name != arguments.callee.prototype.constructor.name) throw new TypeError("Please use the 'new' operator, it can't be called as a function.");
+					
 					let elem = document.createElementNS("http://www.w3.org/2000/svg", "svg");
 						elem.setAttribute("version", "1.1");
 						elem.setAttribute("xmlns", "http://www.w3.org/2000/svg");
@@ -293,10 +309,19 @@
 					Rect: {
 						value: (() => {
 							/**
-							 * @param {object} [option={}]
+							 * @param {Object} [option={}]
+							 * @param {Number} option.x
+							 * @param {Number} option.y
+							 * @param {Number} option.width
+							 * @param {Number} option.height
+							 * @param {String} option.fill
+							 * @param {Object} option.params
+							 * 
 							 * @returns {SVGRectElement}
 							 */
 							function Rect (option) {
+								if (this.constructor.name != arguments.callee.prototype.constructor.name) throw new TypeError("Please use the 'new' operator, it can't be called as a function.");
+								
 								option = option || {};
 
 								let elem = document.createElementNSWithParam("http://www.w3.org/2000/svg", "rect", option.params);
@@ -317,10 +342,18 @@
 					Circle: {
 						value: (() => {
 							/**
-							 * @param {object} [option={}]
+							 * @param {Object} [option={}]
+							 * @param {Number} option.x
+							 * @param {Number} option.y
+							 * @param {Number} option.radius
+							 * @param {String} option.fill
+							 * @param {Object} option.params
+							 * 
 							 * @returns {SVGCircleElement}
 							 */
 							function Circle (option) {
+								if (this.constructor.name != arguments.callee.prototype.constructor.name) throw new TypeError("Please use the 'new' operator, it can't be called as a function.");
+								
 								option = option || {};
 
 								let elem = document.createElementNSWithParam("http://www.w3.org/2000/svg", "circle", option.params);
@@ -340,10 +373,18 @@
 					Text: {
 						value: (() => {
 							/**
-							 * @param {object} [option={}]
+							 * @param {Object} [option={}]
+							 * @param {Number} option.x
+							 * @param {Number} option.y
+							 * @param {Number} option.rotate
+							 * @param {String} option.value
+							 * @param {Object} option.params
+							 * 
 							 * @returns {SVGTextElement}
 							 */
 							function Text (option) {
+								if (this.constructor.name != arguments.callee.prototype.constructor.name) throw new TypeError("Please use the 'new' operator, it can't be called as a function.");
+								
 								option = option || {};
 
 								let elem = document.createElementNSWithParam("http://www.w3.org/2000/svg", "text", option.params);
@@ -365,6 +406,7 @@
 						 * @param {Number} r
 						 * @param {Number} g
 						 * @param {Number} b
+						 * 
 						 * @returns {String}
 						 */
 						value (r, g, b) {
@@ -378,6 +420,7 @@
 						 * @param {Number} g
 						 * @param {Number} b
 						 * @param {Number} a
+						 * 
 						 * @returns {String}
 						 */
 						value (r, g, b, a) {
@@ -394,7 +437,7 @@
 	Object.defineProperties(Node.prototype, {
 		appendTo: {
 			/**
-			 * @param {HTMLElement} [parent=document.body]
+			 * @param {Node} [parent=document.body]
 			 */
 			value (parent) {
 				(parent || document.body).appendChild(this);
@@ -408,13 +451,22 @@
 		}
 	});
 
-	Object.defineProperties(HTMLElement.prototype, {
+	Object.defineProperties(Element.prototype, {
 		applyProperties: {
 			/**
-			 * @param {object} option
+			 * @param {Object} option
+			 * @param {String} option.id
+			 * @param {Option} option.classes
+			 * @param {String} option.text
+			 * @param {String} option.html
+			 * @param {Object} option.attributes
+			 * @param {Object} option.dataset
+			 * @param {Object} option.styles
+			 * @param {Node[]} option.children
+			 * @param {Object} option.events
 			 */
 			value (option) {
-				(option.text != false && !option.id) || (this.id = option.id);
+				(option.id != false && !option.id) || (this.id = option.id);
 				
 				!option.classes || (() => {
 					for (let i = 0; i < option.classes.length; i++) {
@@ -451,6 +503,19 @@
 					}
 				})();
 			}
+		},
+
+		anime: {
+			/**
+			 * @param {Object} [params={}]
+			 * @param {Number} [duration=0]
+			 * @param {Number} [delay=0]
+			 * @param {String} [timing="Linear"]
+			 * @param {function (HTMLElement)} [onEnded=function (HTMLElement) {}]
+			 */
+			value (params, duration, delay, timing, onEnded) {
+				
+			}
 		}
 	});
 
@@ -458,7 +523,8 @@
 		createElementWithParam: {
 			/**
 			 * @param {String} tagName
-			 * @param {object} [option={}]
+			 * @param {Object} [option={}]
+			 * 
 			 * @returns {HTMLElement}
 			 */
 			value (tagName, option) {
@@ -475,7 +541,8 @@
 			/**
 			 * @param {String} nameSpace
 			 * @param {String} tagName
-			 * @param {object} [option={}]
+			 * @param {Object} [option={}]
+			 * 
 			 * @returns {HTMLElement}
 			 */
 			value (nameSpace, tagName, option) {
@@ -541,7 +608,7 @@
 	Object.defineProperties(Location.prototype, {
 		querySort: {
 			/**
-			 * @returns {object}
+			 * @returns {Object}
 			 */
 			value () {
 				let querys = {};
@@ -556,7 +623,7 @@
 
 		getIPs: {
 			/**
-			 * @param {function (object)} [onLoad=function (res) {}]
+			 * @param {function (Object)} [onLoad=function (res) {}]
 			 */
 			value (onLoad) {
 				onLoad = onLoad || ((res) => {});
@@ -646,6 +713,7 @@
 			/**
 			 * @param {Number} base
 			 * @param {Number} exponent
+			 * 
 			 * @returns {Number}
 			 */
 			value (base, exponent) {
@@ -677,7 +745,7 @@
 		filter: {
 			/**
 			 * @param {String} str
-			 * @returns {Array<String>}
+			 * @returns {String[] | []}
 			 */
 			value (str) {
 				str = str || "";
@@ -711,10 +779,13 @@ const DOM = (() => {
 	 * => @{:elemName} … elemNameセレクタの要素を返す
 	 * 
 	 * @param {String} selectorStr
-	 * @param {object} [option={}]
+	 * @param {Object} [option={}]
+	 * 
 	 * @returns {HTMLElement}
 	 */
 	const DOM = function (selectorStr, option) {
+		if (this.constructor.name == arguments.callee.prototype.constructor.name) throw new TypeError("it is not a constructor");
+		
 		selectorStr = selectorStr || "",
 		option = option || {};
 
@@ -759,7 +830,16 @@ const DOM = (() => {
 	}; Object.defineProperties(DOM, {
 		xhr: {
 			/**
-			 * @param {object} [option={}]
+			 * @param {Object} [option={}]
+			 * @param {String} option.type
+			 * @param {String} option.url
+			 * @param {Boolean} option.doesSync
+			 * @param {String} option.resType
+			 * @param {Object} option.headers
+			 * @param {Object} option.params
+			 * @param {Object} option.data
+			 * @param {function (ProgressEvent)} option.onLoad
+			 * 
 			 * @returns {XMLHttpRequest}
 			 */
 			value (option) {
@@ -795,7 +875,10 @@ const DOM = (() => {
 
 		jsonp: {
 			/**
-			 * @param {object} [option={}]
+			 * @param {Object} [option={}]
+			 * @param {String} option.url
+			 * @param {Object} option.params
+			 * @param {function (ProgressEvent)} option.onLoad
 			 */
 			value (option) {
 				option = option || {};
@@ -824,10 +907,12 @@ const DOM = (() => {
 		rest: {
 			value: (() => {
 				/**
-				 * @param {object} [option={}]
+				 * @param {Object} [option={}]
 				 * @returns {XMLHttpRequest}
 				 */
 				function rest (option) {
+					if (this.constructor.name == arguments.callee.prototype.constructor.name) throw new TypeError("it is not a constructor");
+					
 					option = option || {};
 
 					return this.xhr({
@@ -945,6 +1030,7 @@ const DOM = (() => {
 						/**
 						 * @param {any} obj
 						 * @param {any} initValue
+						 * 
 						 * @returns {any}
 						 */
 						value (obj, initValue) {
@@ -960,6 +1046,7 @@ const DOM = (() => {
 						 * @param {Number} [height=0]
 						 * @param {Number} [basisWidth=window.outerWidth]
 						 * @param {Number} [basisHeight=window.outerHeight]
+						 * 
 						 * @returns {ClientRect}
 						 */
 						value (width, height, basisWidth, basisHeight) {
@@ -994,6 +1081,8 @@ const DOM = (() => {
 				 * @param {Number} apiVersion
 				 */
 				function APIInfo (apiName, apiVersion) {
+					if (this.constructor.name != arguments.callee.prototype.constructor.name) throw new TypeError("Please use the 'new' operator, it can't be called as a function.");
+					
 					this.name = apiName || "Untitled API";
 					this.version = apiVersion || 1.0;
 				}; APIInfo.prototype = Object.create(null, {
@@ -1014,9 +1103,15 @@ const DOM = (() => {
 				let watchers = [];
 
 				/**
-				 * @param {object} [option={}]
+				 * @param {Object} [option={}]
+				 * @param {{ value: Object }} option.target
+				 * @param {Number} option.tick
+				 * @param {function ()} option.onGet
+				 * @param {function (watcher)} option.onChange
 				 */
 				function Watcher (option) {
+					if (this.constructor.name != arguments.callee.prototype.constructor.name) throw new TypeError("Please use the 'new' operator, it can't be called as a function.");
+					
 					option = option || {};
 
 					this.setTarget(option.target || { value: null });
@@ -1043,7 +1138,7 @@ const DOM = (() => {
 
 					setTarget: {
 						/**
-						 * @param {object} target
+						 * @param {{ value: Object }} target
 						 */
 						value (target) { this.target = target }, enumerable: true
 					}
@@ -1104,6 +1199,8 @@ const DOM = (() => {
 				 * @param {Symbol} [usedType=Symbol]
 				 */
 				function Randomizer (usedType) {
+					if (this.constructor.name != arguments.callee.prototype.constructor.name) throw new TypeError("Please use the 'new' operator, it can't be called as a function.");
+					
 					this.TYPE = Randomizer.TYPE,
 					this.CHARMAP = Randomizer.CHARMAP;
 					
@@ -1188,11 +1285,7 @@ const DOM = (() => {
 							}
 
 							return result;
-						},
-
-						writable: false,
-						configurable: false,
-						enumerable: false
+						}
 					}
 				}); Object.defineProperties(Randomizer, {
 					TYPE: {
@@ -1256,6 +1349,8 @@ const DOM = (() => {
 							 * @param {String} [usedChars=""]
 							 */
 							function RandomizeType (name, usedChars) {
+								if (this.constructor.name != arguments.callee.prototype.constructor.name) throw new TypeError("Please use the 'new' operator, it can't be called as a function.");
+								
 								!name || (this.name = name);
 								!usedChars || (this.charMap = usedChars.removeOverlay().split(""));
 
