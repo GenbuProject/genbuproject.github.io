@@ -5,29 +5,17 @@
 		<Meta Charset = "UTF-8" />
 		<Meta Name = "KeyWords" Content = "JavaScript, デバッガ, ブラウザ上" />
 		<Meta Name = "Description" Content = "ブラウザ上で動作するJavaScriptコンソールです。" />
+		<Meta Name = "Viewport" Content = "Width=Device-Width, Initial-Scale=1, User-Scalable=No" />
 
 		<Title>JavaScript Debugger</Title>
-
-		<Meta Name = "Viewport" Content = "Width=Device-Width, Initial-Scale=1, User-Scalable=No" />
 		
-		<Script Src = "https://genbuproject.github.io/Programs/DOM Extender/DOM Extender v2.2.js"></Script>
-
+		<Script Src = "https://genbuproject.github.io/Programs/DOM Extender/DOM Extender v3.0.js"></Script>
+		<Script Src = "/genbuproject.github.io/Programs/JSConsole For All Devices/JSConsole For All Devices v1.3.js"></Script>
 		<Script Src = "Script/JsDecoder.js"></Script>
 		<Script Src = "Script/JsColorizer.js"></Script>
-		
+
 		<Script>
-			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-			})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-			
-			ga('create', 'UA-88656260-1', 'auto');
-			ga('require', 'linkid', 'linkid.js');
-			ga('send', 'pageview');
-		</Script>
-		
-		<Script>
-			DOM.importAPI("https://genbuproject.github.io/Programs/JSConsole For All Devices/JSConsole For All Devices v1.3.js", function () {
+			window.addEventListener("DOMContentLoaded", () => {
 				window.debug = new JSCFAD({
 					console: DOM("#Logger")
 				});
@@ -135,7 +123,7 @@
 					eval([
 						"(function () {",
 						"	" + DOM("#Editor").value,
-						"}).bind(JSCFAD.self).debug();"
+						"}).bind(JSCFAD.currentSelf).debug();"
 					].join("\r\n"));
 				});
 			});
@@ -170,7 +158,7 @@
 			#Console, #Logger {
 				Outline: Thin Solid LightGray;
 
-				Overflow: Overlay;
+				Overflow: Auto;
 				White-Space: Pre;
 			}
 
@@ -194,7 +182,7 @@
 				Padding: 0.5em;
 
 				Outline: Thin Solid Gray;
-				Overflow: Overlay;
+				Overflow: Auto;
 
 				Font-Family: Monospace;
 			}
@@ -260,6 +248,17 @@
 				BackGround: LightGray;
 			}
 		</Style>
+
+		<Script>
+			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+			})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+			
+			ga('create', 'UA-88656260-1', 'auto');
+			ga('require', 'linkid', 'linkid.js');
+			ga('send', 'pageview');
+		</Script>
 	</Head>
 	
 	<Body>

@@ -6,50 +6,141 @@
 /*/
 const JSCFAD = (function () {
 	function JSCFAD (param) {
-		JSCFAD.self = this;
+		JSCFAD.currentSelf = this;
 
 		this.console = param.console || document.body;
-		this.style = param.style || JSCFAD.HighlightStyle.DEFAULT;
+		this.style = param.style || JSCFAD.HighlightStyle.DEFAULT,
+		this.uuid = new DOM.Randomizer(DOM.Randomizer.TYPE.LEVEL3).generate(16);
+
+		let commonStyle = new Style((() => {
+			let style = {};
+				style[`.JSCFAD_Log.${this.uuid}`] = {
+					"Display": "Block",
+					"Min-Height": "Calc(1rem + 4px)",
+
+					"Background": this.style.Background.Log,
+					"Border-Top": `Thin Solid Transparent`,
+					"Border-Bottom": `Thin Solid Transparent`,
+					"Border-Color": this.style.Border.Log,
+
+					"White-Space": "Pre"
+				}
+
+				style[`.JSCFAD_Log--String.${this.uuid}`] = {
+					"Color": this.style.String
+				}
+
+				style[`.JSCFAD_Log--Number.${this.uuid}`] = {
+					"Color": this.style.Number
+				}
+
+				style[`.JSCFAD_Log--Array.${this.uuid}`] = {
+					"Color": this.style.Array
+				}
+
+				style[`.JSCFAD_Log--Object.${this.uuid}`] = {
+					"Color": this.style.Object
+				}
+
+				style[`.JSCFAD_Log--Error.${this.uuid}`] = {
+					"Color": this.style.Error,
+
+					"Background": this.style.Background.Error,
+					"Border-Color": this.style.Border.Error
+				}
+
+				style[`.JSCFAD_Log--Arrow.${this.uuid}`] = {
+					"Color": this.style.Arrow
+				}
+			
+			return style;
+		})()); commonStyle.setAttribute("UUID", this.uuid); document.head.appendChild(commonStyle);
 	}; JSCFAD.prototype = Object.create(null, {
 		log: { 
 			value (Obj) {
 				let Info = DOM("Div", {
-					Styles: {
-						"Display": "Block",
-						"White-Space": "Pre"
-					}
+					classes: ["JSCFAD_Log", this.uuid]
 				});
 
-				if (Obj.getClassName() == "String") { //String型
-					Info.innerHTML = "<Span Style = '" + InlineStyle({"Color": this.style.String}) + "'>" + Obj + "</Span>";
+				if ((Obj != false && !Obj)) {
+					Info.textContent = Obj;
+					Info.classList.add("JSCFAD_Log--Object");
+				} else if (Obj.getClassName() == "String") { //String型
+					Info.textContent = Obj;
+					Info.classList.add("JSCFAD_Log--String");
 				} else if (Obj.getClassName() == "Number") { //Number型
-					Info.innerHTML = "<Span Style = '" + InlineStyle({"Color": this.style.Number}) + "'>" + Obj + "</Span>";
+					Info.textContent = Obj;
+					Info.classList.add("JSCFAD_Log--Number");
 				} else if (Obj.getClassName() == "Array") { //Array型
-					let Result = ["<Span Style = '" + InlineStyle({"Color": this.style.Array}) + "'>" + Obj + "</Span>"];
+					Info.applyProperties({
+						classes: ["JSCFAD_Log--Array"],
+
+						children: [
+							DOM("Div", {
+								text: Obj
+							})
+						]
+					});
 					
 					for (var i = 0; i < Obj.length; i++) {
-						Result.push([
-							"<Span Style = '" + InlineStyle({"Color": this.style.Arrow}) + "'>==></Span>",
-							"<Span Style = '" + (typeof Obj[i] == "string" ? InlineStyle({"Color": this.style.String}) : typeof Obj[i] == "number" ? InlineStyle({"Color": this.style.Number}) : (Obj[i] instanceof Array && Array.isArray(Obj[i])) ? InlineStyle({"Color": this.style.Array}) : Obj[i] instanceof Error ? InlineStyle({"Color": this.style.Error}) : (Obj[i] instanceof Object && !Array.isArray(Obj[i])) ? InlineStyle({"Color": this.style.Object}) : InlineStyle({"Color": this.style.Object})) + "'>" + Obj[i] + "</Span>"
-						].join("\t"));
+						Info.appendChild(
+							DOM("Div", {
+								children: [
+									DOM("Span", {
+										classes: ["JSCFAD_Log--Arrow", this.uuid],
+										text: "==>"
+									}),
+
+									DOM("Span", {
+										classes: [
+											Obj[i].getClassName() == "String" || "Number" || "Array" || "Error" ? `JSCFAD_Log--${Obj[i].getClassName()}` : "JSCFAD_Log--Object",
+											this.uuid
+										],
+
+										text: Obj[i]
+									})
+								]
+							})
+						);
 					}
-					
-					Info.innerHTML = Result.join("\n");
 				} else if (Obj instanceof Error) { //Error型
-					Info.innerHTML = "<Span Style = '" + InlineStyle({"Color": this.style.Error}) + "'>" + Obj + "</Span>";
+					Info.textContent = Obj;
+					Info.classList.add("JSCFAD_Log--Error");
 				} else if (Obj.getClassName() == "Object") { //Object型
-					let Result = ["<Span Style = '" + InlineStyle({"Color": this.style.Object}) + "'>" + Obj + "</Span>"];
+					Info.applyProperties({
+						classes: ["JSCFAD_Log--Object"],
+						
+						children: [
+							DOM("Div", {
+								text: Obj
+							})
+						]
+					});
 					
 					for (var Key in Obj) {
-						Result.push([
-							"<Span Style = '" + InlineStyle({"Color": this.style.Arrow}) + "'>==></Span>",
-							"<Span Style = '" + InlineStyle({"Color": this.style.String}) + "'>" + Key + "</Span>"
-						].join("\t"));
+						Info.appendChild(
+							DOM("Div", {
+								children: [
+									DOM("Span", {
+										classes: ["JSCFAD_Log--Arrow", this.uuid],
+										text: "==>"
+									}),
+
+									DOM("Span", {
+										classes: [
+											Obj[Key].getClassName() == "String" || "Number" || "Array" || "Error" ? `JSCFAD_Log--${Obj[Key].getClassName()}` : "JSCFAD_Log--Object",
+											this.uuid
+										],
+
+										text: `${Key} = ${Obj[Key]}`
+									})
+								]
+							})
+						);
 					}
-					
-					Info.innerHTML = Result.join("\n");
 				} else { //その他
-					Info.innerHTML = "<Span Style = '" + InlineStyle({"Color": this.style.Object}) + "'>" + Obj + "</Span>";
+					Info.textContent = Obj;
+					Info.classList.add("JSCFAD_Log--Object");
 				}
 
 				this.console.appendChild(Info);
@@ -67,7 +158,10 @@ const JSCFAD = (function () {
 			params.Array ? this.Array = params.Array : null,
 			params.Object ? this.Object = params.Object : null,
 			params.Error ? this.Error = params.Error : null,
-			params.Arrow ? this.Arrow = params.Arrow : null;
+			params.Arrow ? this.Arrow = params.Arrow : null,
+
+			params.Background ? this.Background = params.Background : null,
+			params.Border ? this.Border = params.Border : null;
 		}; HighlightStyleElement.prototype = Object.create(Object.prototype, {
 			constructor: { value: HighlightStyleElement },
 
@@ -76,7 +170,25 @@ const JSCFAD = (function () {
 			Array: { value: "", configurable: true, writable: true, enumerable: true },
 			Object: { value: "", configurable: true, writable: true, enumerable: true },
 			Error: { value: "", configurable: true, writable: true, enumerable: true },
-			Arrow: { value: "", configurable: true, writable: true, enumerable: true }
+			Arrow: { value: "", configurable: true, writable: true, enumerable: true },
+
+			Background: {
+				value: {
+					Log: "",
+					Error: ""
+				},
+				
+				configurable: true, writable: true, enumerable: true
+			},
+
+			Border: {
+				value: {
+					Log: "",
+					Error: ""
+				},
+				
+				configurable: true, writable: true, enumerable: true
+			}
 		});
 
 
@@ -86,17 +198,27 @@ const JSCFAD = (function () {
 
 
 
-	JSCFAD.self = null;
+	JSCFAD.currentSelf = null;
 
 	JSCFAD.HighlightStyle = {
 		DEFAULT: new JSCFAD.HighlightStyleElement({
 			String: "Orange",
 			Number: "Blue",
-			Array: "LightGreen",
+			Array: "DarkGreen",
 			Object: "LightSeaGreen",
 			Error: "Red",
 			
-			Arrow: "LightCoral"
+			Arrow: "LightCoral",
+
+			Background: {
+				Log: "White",
+				Error: "Pink"
+			},
+
+			Border: {
+				Log: "LightGray",
+				Error: "HotPink"
+			}
 		})
 	};
 
@@ -111,13 +233,8 @@ window.Function.prototype.debug = function (args) {
 	try {
 		this.apply(this, args);
 	} catch (Error) {
-		let Info = DOM("Span", {
-			Styles: {
-				"Display": "Block",
-				"White-Space": "Pre",
-				
-				"Color": JSCFAD.self.style.Error
-			}
+		let Info = DOM("Div", {
+			classes: ["JSCFAD_Log", "JSCFAD_Log--Error", JSCFAD.currentSelf.uuid]
 		});
 		
 		Info.innerHTML = Error.stack.replaces([
@@ -126,9 +243,11 @@ window.Function.prototype.debug = function (args) {
 			[/    /g, "\t"]
 		]);
 		
-		JSCFAD.self.console.appendChild(Info);
-		JSCFAD.self.console.scrollTo(0, JSCFAD.self.console.children[JSCFAD.self.console.children.length - 1].offsetTop);
+		JSCFAD.currentSelf.console.appendChild(Info);
+		JSCFAD.currentSelf.console.scrollTo(0, JSCFAD.currentSelf.console.children[JSCFAD.currentSelf.console.children.length - 1].offsetTop);
+
+		console.error(Error);
 	}
 }
 
-"use DOMExtender";
+"#{using} DOMExtender";
