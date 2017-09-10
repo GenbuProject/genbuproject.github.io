@@ -503,19 +503,6 @@
 					}
 				})();
 			}
-		},
-
-		anime: {
-			/**
-			 * @param {Object} [params={}]
-			 * @param {Number} [duration=0]
-			 * @param {Number} [delay=0]
-			 * @param {String} [timing="Linear"]
-			 * @param {function (HTMLElement)} [onEnded=function (HTMLElement) {}]
-			 */
-			value (params, duration, delay, timing, onEnded) {
-				
-			}
 		}
 	});
 
