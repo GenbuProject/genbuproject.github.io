@@ -143,6 +143,10 @@
 			window.addEventListener("input", function () {
 				scope.format();
 			});
+
+			window.addEventListener("keydown", (event) => {
+				if (event.ctrlKey && event.keyCode == 13) DOM("#Run").click();
+			});
 		</Script>
 
 		<Style>
