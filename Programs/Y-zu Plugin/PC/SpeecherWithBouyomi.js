@@ -1,9 +1,9 @@
 /*/
  *####################################################################################################
- * Plugin for Yづドン ～読み上げちゃん連携～ Ver.2
+ * Plugin for Yづドン ～トゥート読み上げ With 棒読みちゃん～ v1
  * 
  * Author: Genbu Hase
- * Last Updated: 2017/10/21
+ * Last Updated: 2017/08/09
  * 
  * Details:
  * このプラグインは棒読みちゃんの起動が必須になります。
@@ -52,18 +52,10 @@ let bouyomi = new Bouyomi(50002);
 
 window.addEventListener("DOMContentLoaded", () => {
 	document.querySelector('Div[Role="feed"]').addEventListener("DOMNodeInserted", (event) => {
-		let post = event.target;
+		let content = event.target;
 
-		if (post.nodeName === "ARTICLE" && post.parentNode.nodeName !== "HEAD") {
-			let content = post.querySelector("Div.status__content");
-			let text = "";
-			
-			if (content.classList.contains("status__content--with-spoiler")) {
-				text = `${post.querySelector("Strong.display-name__html").innerText}さん ${content.querySelector("P > Span").innerText} ${content.querySelector("Div.status__content__text").innerText}`;
-			} else {
-				text = `${post.querySelector("Strong.display-name__html").innerText}さん ${content.innerText}`;
-			}
-
+		if (content.nodeName === "ARTICLE" && content.parentNode.nodeName !== "HEAD") {
+			let text = `${content.querySelector("Strong.display-name__html").textContent}さん ${content.querySelector("Div.status__content").getAttribute("Aria-Label")}`;
 			bouyomi.speak(-1, -1, -1, 0, text);
 		}
 	});
