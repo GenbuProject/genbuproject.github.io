@@ -770,7 +770,7 @@ const DOM = (() => {
 	 * 
 	 * @returns {HTMLElement}
 	 */
-	const DOM = function (selectorStr, option) {
+	function DOM (selectorStr, option) {
 		if (this.constructor.name == arguments.callee.prototype.constructor.name) throw new TypeError("it is not a constructor");
 		
 		selectorStr = selectorStr || "",
