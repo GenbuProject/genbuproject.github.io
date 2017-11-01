@@ -4,9 +4,7 @@ const FirebasePlus = (function () {
 		database = null,
 		storage = null;
 
-	function FirebasePlus (option, onLoad) {
-		onLoad = onLoad || ((user) => {});
-
+	function FirebasePlus (option = {}, onLoad = (user) => {}) {
 		project = firebase.initializeApp(option);
 		auth = project.auth(),
 		database = project.database(),
@@ -17,10 +15,6 @@ const FirebasePlus = (function () {
 		});
 	}; FirebasePlus.prototype = Object.create(Function.prototype, {
 		constructor: { value: FirebasePlus },
-
-		user: { get () { return auth.currentUser } },
-
-
 
 		Database: {
 			value: Object.create(Object.prototype, {
@@ -37,11 +31,7 @@ const FirebasePlus = (function () {
 
 
 				getInfo: {
-					value (mode, path, onGet) {
-						mode = mode || this.ONCE,
-						path = path || "",
-						onGet = onGet || ((res) => {});
-
+					value (mode = this.ONCE, path = "", onGet = (res) => {}) {
 						if (mode === this.ONCE) {
 							database.ref(path).once("value").then((res) => {
 								onGet(res);
@@ -57,11 +47,7 @@ const FirebasePlus = (function () {
 				},
 
 				get: {
-					value (mode, path, onGet) {
-						mode = mode || this.ONCE,
-						path = path || "",
-						onGet = onGet || ((res) => {});
-
+					value (mode = this.ONCE, path = "", onGet = (res) => {}) {
 						if (mode === this.ONCE) {
 							database.ref(path).once("value").then((res) => {
 								onGet(res.val());
@@ -77,11 +63,7 @@ const FirebasePlus = (function () {
 				},
 
 				set: {
-					value (path, val, onComplete) {
-						path = path || "",
-						val = val || "",
-						onComplete = onComplete || ((error) => {});
-
+					value (path = "", val = "", onComplete = (error) => {}) {
 						database.ref(path).set(val, onComplete);
 					},
 
@@ -89,20 +71,13 @@ const FirebasePlus = (function () {
 				},
 
 				push: {
-					value (path, val, onComplete) {
-						path = path || "",
-						val = val || null,
-						onComplete = onComplete || ((error) => {});
-
+					value (path = "", val = "", onComplete = (error) => {}) {
 						database.ref(path).push(val, onComplete);
 					}
 				},
 
 				delete: {
-					value (path, onComplete) {
-						path = path || "",
-						onComplete = onComplete || ((error) => {});
-
+					value (path = "", onComplete = (error) => {}) {
 						database.ref(path).remove(onComplete);
 					},
 
@@ -110,11 +85,7 @@ const FirebasePlus = (function () {
 				},
 
 				update: {
-					value (path, val, onComplete) {
-						path = path || "",
-						val = val || "",
-						onComplete = onComplete || ((error) => {});
-
+					value (path = "", val = "", onComplete = (error) => {}) {
 						database.ref(path).update(val, onComplete);
 					},
 
@@ -122,16 +93,48 @@ const FirebasePlus = (function () {
 				},
 
 				transaction: {
-					value (path, onGet, onComplete) {
-						path = path || "",
-						onGet = onGet || ((res) => {}),
-						onComplete = onComplete || ((error) => {});
-
+					value (path = "", onGet = (res) => {}, onComplete = (error) => {}) {
 						database.ref(path).transaction(onGet, onComplete);
 					},
 
 					enumerable: true
-				}
+				},
+
+				sortByChild: {
+					value (path = "", childKey = "", onGet = (res) => {}, sortOption = new FirebasePlus.SortManager()) {
+						let query = sortOption.apply(database.ref(path).orderByChild(childKey));
+							query.once("child_added", (res) => {
+								onGet(res);
+							});
+					}
+				},
+
+				sortByKey: {
+					value (path = "", onGet = (res) => {}, sortOption = new FirebasePlus.SortManager()) {
+						let query = sortOption.apply(database.ref(path).orderByKey());
+							query.once("child_added", (res) => {
+								onGet(res);
+							});
+					}
+				},
+
+				sortByValue: {
+					value (path = "", onGet = (res) => {}, sortOption = new FirebasePlus.SortManager()) {
+						let query = sortOption.apply(database.ref(path).orderByValue());
+							query.once("child_added", (res) => {
+								onGet(res);
+							});
+					}
+				},
+
+				sortByPriority: {
+					value (path = "", onGet = (res) => {}, sortOption = new FirebasePlus.SortManager()) {
+						let query = sortOption.apply(database.ref(path).orderByPriority());
+							query.once("child_added", (res) => {
+								onGet(res);
+							});
+					}
+				},
 			}),
 
 			enumerable: true
@@ -146,6 +149,8 @@ const FirebasePlus = (function () {
 		},
 
 
+
+		user: { get () { return auth.currentUser } },
 
 		signInWithGoogle: {
 			value (scope) {
@@ -190,6 +195,58 @@ const FirebasePlus = (function () {
 
 				return this.user.reauthenticateWithPopup(provider);
 			},
+
+			enumerable: true
+		}
+	}); Object.defineProperties(FirebasePlus, {
+		SortManager: {
+			value: (() => {
+				function SortManager (option) {
+					if (option instanceof String) {
+						this.value = option;
+					} else if (option instanceof SortManager.Range) {
+						this.range = option;
+					}
+				}; SortManager.prototype = Object.create(null, {
+					constructor: { value: SortManager },
+
+					value: { value: "", configurable: true, writable: true, enumerable: true },
+					range: { value: null, configurable: true, writable: true, enumerable: true },
+
+					apply: {
+						value (query) {
+							if (this.value) {
+								query = query.equalTo(option.value);
+							} else if (this.range) {
+								!this.range[0] || (query = query.startAt(this.range[0]));
+								!this.range[1] || (query = query.endAt(this.range[1]));
+							}
+
+							return query;
+						}
+					}
+				}); Object.defineProperties(SortManager, {
+					Range: {
+						value: (() => {
+							function Range (start, end) {
+								let self = Reflect.construct(Array, [], Range);
+									!start || (self[0] = start);
+									!end || (self[1] = end);
+
+								return self;
+							}; Range.prototype = Object.create({
+								constructor: { value: Range }
+							});
+
+							return Range;
+						})(),
+
+						enumerable: true
+					}
+				});
+
+				return SortManager;
+			})(),
 
 			enumerable: true
 		}
