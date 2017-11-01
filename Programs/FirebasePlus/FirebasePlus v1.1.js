@@ -102,7 +102,7 @@ const FirebasePlus = (function () {
 
 				sortByChild: {
 					value (path = "", childKey = "", onGet = (res) => {}, sortOption = new FirebasePlus.SortManager()) {
-						let query = sortOption.apply(database.ref(path).orderByChild(childKey));
+						let query = sortOption.select(database.ref(path).orderByChild(childKey));
 							query.once("child_added", (res) => {
 								onGet(res);
 							});
@@ -111,7 +111,7 @@ const FirebasePlus = (function () {
 
 				sortByKey: {
 					value (path = "", onGet = (res) => {}, sortOption = new FirebasePlus.SortManager()) {
-						let query = sortOption.apply(database.ref(path).orderByKey());
+						let query = sortOption.select(database.ref(path).orderByKey());
 							query.once("child_added", (res) => {
 								onGet(res);
 							});
@@ -120,7 +120,7 @@ const FirebasePlus = (function () {
 
 				sortByValue: {
 					value (path = "", onGet = (res) => {}, sortOption = new FirebasePlus.SortManager()) {
-						let query = sortOption.apply(database.ref(path).orderByValue());
+						let query = sortOption.select(database.ref(path).orderByValue());
 							query.once("child_added", (res) => {
 								onGet(res);
 							});
@@ -129,7 +129,7 @@ const FirebasePlus = (function () {
 
 				sortByPriority: {
 					value (path = "", onGet = (res) => {}, sortOption = new FirebasePlus.SortManager()) {
-						let query = sortOption.apply(database.ref(path).orderByPriority());
+						let query = sortOption.select(database.ref(path).orderByPriority());
 							query.once("child_added", (res) => {
 								onGet(res);
 							});
@@ -213,7 +213,7 @@ const FirebasePlus = (function () {
 					value: { value: "", configurable: true, writable: true, enumerable: true },
 					range: { value: null, configurable: true, writable: true, enumerable: true },
 
-					apply: {
+					select: {
 						value (query) {
 							if (this.value) {
 								query = query.equalTo(option.value);
