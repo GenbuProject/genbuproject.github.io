@@ -1239,13 +1239,8 @@ class DOM {
 
 
 
-	/**
-	 * @type {DOM.APIInfo}
-	 */
+	
 	static get apiInfo () { return new DOM.APIInfo("DOM Extender", 3.1) }
+	static get width () { return window.innerWidth }
+	static get height () { return window.innerHeight }
 }
-
-window.addEventListener("resize", (event) => {
-	DOM.width = window.innerWidth;
-	DOM.height = window.innerHeight;
-});
