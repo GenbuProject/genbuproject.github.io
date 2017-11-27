@@ -1240,7 +1240,7 @@ class DOM {
 
 
 	
-	static get apiInfo () { return new DOM.APIInfo("DOM Extender", 3.1) }
+	static get apiInfo () { return new DOM.APIInfo("DOM Extender", 3.2) }
 	static get width () { return window.innerWidth }
 	static get height () { return window.innerHeight }
 }
