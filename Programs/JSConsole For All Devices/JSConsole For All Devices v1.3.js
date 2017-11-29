@@ -1,7 +1,7 @@
 /*/
  *#######################################################################
  *JSConsole For All Devices v1.3
- *Copyright (C) 2016-2020 Genbu Project & Genbu Hase All Rights Reversed.
+ *Copyright (C) 2016-2020 Genbu Project All Rights Reversed.
  *#######################################################################
 /*/
 const JSCFAD = (function () {
