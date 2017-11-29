@@ -1034,6 +1034,8 @@ class DOM {
 			 * @param {function (watcher)} option.onChange
 			 */
 			constructor (option = {}) {
+				this.watcherID = [];
+				
 				this.setTarget(option.target || { value: null });
 				this.setWatchTick(option.tick || 1);
 				this.onGet = option.onGet || (() => {});
