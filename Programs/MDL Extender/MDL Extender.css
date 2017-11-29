@@ -1,3 +1,11 @@
+/*/
+ *#######################################################################
+ * MDL Extender
+ * Copyright (C) 2017 Genbu Project All Rights Reversed.
+ * 
+ * <Based on DOM Extender v3.3>
+ *#######################################################################
+/*/
 *.mdl-select > Input.mdl-textfield__input {
 	Cursor: Pointer;
 }

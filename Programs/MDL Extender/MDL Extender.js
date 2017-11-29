@@ -1,5 +1,13 @@
+/*/
+ *#######################################################################
+ * MDL Extender
+ * Copyright (C) 2017 Genbu Project All Rights Reversed.
+ * 
+ * <Based on DOM Extender v3.3>
+ *#######################################################################
+/*/
 window.addEventListener("DOMContentLoaded", () => {
-	DOM('@*.mdl-extender__mdl-select').forEach((select) => {
+	new DOM('@*.mdl-extender__mdl-select').forEach((select) => {
 		select.classList.add("mdl-textfield"),
 		select.classList.add("mdl-js-textfield"),
 		select.classList.add("mdl-textfield--floating-label");
@@ -19,7 +27,7 @@ window.addEventListener("DOMContentLoaded", () => {
 			});
 
 		select.appendChild(
-			DOM("Input", {
+			new DOM("Input", {
 				id: uuid,
 				classes: ["mdl-textfield__input"],
 
@@ -31,14 +39,14 @@ window.addEventListener("DOMContentLoaded", () => {
 		);
 
 		select.appendChild(
-			DOM("Label", {
+			new DOM("Label", {
 				classes: ["mdl-textfield__label"],
 				text: select.dataset.label || ""
 			})
 		);
 
 		select.appendChild(
-			DOM("UL", {
+			new DOM("UL", {
 				classes: ["mdl-menu", "mdl-js-menu", "mdl-js-ripple-effect", "mdl-menu--bottom-left"],
 
 				attributes: {
@@ -50,7 +58,7 @@ window.addEventListener("DOMContentLoaded", () => {
 		);
 	});
 
-	DOM("@*.mdl-extender__mdl-list--editable").forEach((list) => {
+	new DOM("@*.mdl-extender__mdl-list--editable").forEach((list) => {
 		let listUUID = list.id || new DOM.Randomizer(DOM.Randomizer.TYPE.LEVEL3).generate(16),
 			fieldQuantity = 0,
 			items = list.querySelectorAll("Li");
@@ -70,25 +78,25 @@ window.addEventListener("DOMContentLoaded", () => {
 		list.id = listUUID;
 		list.dataset.listlength = 0;
 
-		list.insertBefore(DOM("Li", {
+		list.insertBefore(new DOM("Li", {
 			classes: ["mdl-list__item"],
 
 			children: [
-				DOM("Span", {
+				new DOM("Span", {
 					classes: ["mdl-list__item-primary-content"],
 					text: list.dataset.label || ""
 				}),
 
-				DOM("Span", {
+				new DOM("Span", {
 					classes: ["mdl-list__item-secondary-action"],
 
 					children: [
-						DOM("Button", {
+						new DOM("Button", {
 							id: [listUUID, "Add"].join("_"),
 							classes: ["mdl-button", "mdl-js-button", "mdl-button--icon", "mdl-js--ripple-effect"],
 
 							children: [
-								DOM("I", {
+								new DOM("I", {
 									classes: ["material-icons"],
 									text: "add"
 								})
@@ -97,7 +105,7 @@ window.addEventListener("DOMContentLoaded", () => {
 							events: {
 								"click": () => {
 									let itemUUID = new DOM.Randomizer(DOM.Randomizer.TYPE.LEVEL3).generate(16);
-									let item = DOM("Li", {
+									let item = new DOM("Li", {
 										classes: ["mdl-list__item"],
 
 										dataset: {
@@ -105,7 +113,7 @@ window.addEventListener("DOMContentLoaded", () => {
 										},
 
 										children: [
-											DOM("Span", {
+											new DOM("Span", {
 												classes: ["mdl-list__item-primary-content"],
 
 												children: (() => {
@@ -127,12 +135,12 @@ window.addEventListener("DOMContentLoaded", () => {
 														let fieldUUID = new DOM.Randomizer(DOM.Randomizer.TYPE.LEVEL3).generate(16);
 
 														items.push((() => {
-															let field = DOM("Div", {
+															let field = new DOM("Div", {
 																id: [listUUID, itemUUID, fieldUUID].join("_"),
 																classes: ["mdl-textfield", "mdl-js-textfield", "mdl-textfield--floating-label"],
 
 																children: [
-																	DOM("Input", {
+																	new DOM("Input", {
 																		id: [listUUID, itemUUID, fieldUUID, "Input"].join("_"),
 																		classes: ["mdl-textfield__input"],
 
@@ -145,7 +153,7 @@ window.addEventListener("DOMContentLoaded", () => {
 																		}
 																	}),
 
-																	DOM("Label", {
+																	new DOM("Label", {
 																		id: [listUUID, itemUUID, fieldUUID, "Label"].join("_"),
 																		classes: ["mdl-textfield__label"],
 
@@ -166,16 +174,16 @@ window.addEventListener("DOMContentLoaded", () => {
 												})()
 											}),
 
-											DOM("Span", {
+											new DOM("Span", {
 												classes: ["mdl-list__item-secondary-action"],
 
 												children: [
-													DOM("Button", {
+													new DOM("Button", {
 														id: [listUUID, itemUUID, "Remove"].join("_"),
 														classes: ["mdl-button", "mdl-js-button", "mdl-button--icon", "mdl-js--ripple-effect"],
 
 														children: [
-															DOM("I", {
+															new DOM("I", {
 																classes: ["material-icons"],
 																text: "remove"
 															})
