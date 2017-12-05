@@ -1,0 +1,67 @@
+/*/
+ *============================================================
+ *【Too Many Tags v2.0】(Last Updated:2016/12/15 [Thu])
+ *	Copyright (C) 2016 Genbu Hase All Rights Reversed.
+ *============================================================
+/*/
+
+/*基本タグ*/
+ContentTitle {
+	Color: Yellow;
+	Font-Size: Large;
+	Font-Weight: Bold;
+}
+
+#OverView > Div {
+	Border: Thin Solid Cyan;
+}
+
+#Detail > Div {
+	Border: Thin Solid Yellow;
+}
+
+/*Boldタグ*/
+Bold {
+	Color: DarkOrange;
+	BackGround: Green;
+	Font-Weight: Bold;
+	Border: Solid Thin LightGreen;
+	Border-Radius: 50px;
+}
+
+/*Fileタグ及びFolderタグ*/
+File, Folder {
+	BackGround: Linear-Gradient(LightGray, Gray);
+}
+
+File > Img, Folder > Img {
+	Width: Auto;
+	Vertical-Align: Middle;
+	Padding: 2.5px;
+}
+
+/*Collapsibleタグ*/
+Collapsible > Div {
+	Position: Relative;
+	Left: 20px;
+	
+	Border: Thin Solid LightGray;
+	Box-Sizing: Border-Box;
+}
+
+Collapsible > .Collapsible-Button {
+	Border: Thin Solid White;
+	Font-Family: MonoSpace;
+	Cursor: Pointer;
+}
+
+/*Copyrightタグ*/
+Copyright {
+	Color: LightGray;
+	Font-Size: XX-Small;
+}
+
+/*その他*/
+.userarea Img {
+	Width: Auto;
+}
