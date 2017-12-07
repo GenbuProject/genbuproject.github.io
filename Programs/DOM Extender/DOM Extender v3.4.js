@@ -1,6 +1,6 @@
 /*/
  *#######################################################################
- *DOM Extender v3.3
+ *DOM Extender v3.4
  *Copyright (C) 2016 Genbu Project All Rights Reversed.
  *#######################################################################
 /*/
@@ -17,10 +17,10 @@
 
 		isStrictObject: {
 			/**
-			 * @param {Object} [obj=]
+			 * @param {Object} [obj=undefined]
 			 * @returns {Boolean}
 			 */
-			value (obj) {
+			value (obj = undefined) {
 				if (obj !== undefined) {
 					return (obj.getClassName() !== "String" && obj.getClassName() !== "Number" && obj instanceof Object && !Array.isArray(obj));
 				} else {
@@ -31,10 +31,10 @@
 
 		isStrictArray: {
 			/**
-			 * @param {Object} [obj=]
+			 * @param {Object} [obj=undefined]
 			 * @returns {Boolean}
 			 */
-			value (obj) {
+			value (obj = undefined) {
 				if (obj !== undefined) {
 					return (obj.getClassName() !== "String" && obj.getClassName() !== "Number" && obj instanceof Array && Array.isArray(obj));
 				} else {
@@ -50,10 +50,7 @@
 			 * 
 			 * @returns {String}
 			 */
-			value (valueSeparator, paramSeparator) {
-				valueSeparator = valueSeparator || "=";
-				paramSeparator = paramSeparator || "&";
-
+			value (valueSeparator = "=", paramSeparator = "$") {
 				let result = [];
 
 				for (let i = 0; i < Object.entries(this).length; i++) {
@@ -66,10 +63,10 @@
 
 		toQueryString: {
 			/**
-			 * @param {Object} [obj=]
+			 * @param {Object} [obj=undefined]
 			 * @returns {String}
 			 */
-			value (obj) {
+			value (obj = undefined) {
 				return "?" + Object.prototype.connect.call(obj || this, "=", "&");
 			}
 		}
@@ -122,10 +119,7 @@
 			 * @param {String} [url=""]
 			 * @param {function (Event)} [onLoad=function (event) {}]
 			 */
-			value (url, onLoad) {
-				url = url || "",
-				onLoad = onLoad || ((event) => {});
-
+			value (url = "", onLoad = (event) => {}) {
 				if (!(() => {
 					let scripts = document.getElementsByTagName("script");
 					
@@ -150,8 +144,8 @@
 			 * @param {String} [str=""]
 			 * @returns {String}
 			 */
-			value (str) {
-				return btoa(unescape(encodeURIComponent(str || "")));
+			value (str = "") {
+				return btoa(unescape(encodeURIComponent(str)));
 			}
 		},
 
@@ -160,8 +154,8 @@
 			 * @param {String} [base64Str=""]
 			 * @returns {String}
 			 */
-			value (base64Str) {
-				return decodeURIComponent(escape(atob(base64Str || "")));
+			value (base64Str = "") {
+				return decodeURIComponent(escape(atob(base64Str)));
 			}
 		},
 
@@ -170,59 +164,50 @@
 			 * @param {String} [url=""]
 			 * @returns {String}
 			 */
-			value (url) {
-				return (url || "").replace(/\+/g, '-').replace(/\//g, '_');
+			value (url = "") {
+				return url.replace(/\+/g, '-').replace(/\//g, '_');
 			}
 		},
 
 
+
 		Script: {
-			value: (() => {
+			value: class Script {
 				/**
-				 * @param {String} [url=""]
+				 * @param {String} [url=undefined]
 				 * @param {Object} [option={}]
-				 * @param {Boolean} option.async
-				 * @param {Boolean} option.defer
+				 * @param {Boolean} [option.async=false]
+				 * @param {Boolean} [option.defer=false]
 				 * 
 				 * @returns {HTMLScriptElement}
 				 */
-				function Script (url, option) {
-					if (this.constructor.name != arguments.callee.prototype.constructor.name) throw new TypeError("Please use the 'new' operator, it can't be called as a function.");
-					
-					option = option || {};
-
+				constructor (url = undefined, option = { async: false, defer: false }) {
 					let elem = document.createElement("script");
 						!url || (elem.src = url);
-						elem.async = option.async || false;
-						elem.defer = option.defer || false;
+						elem.async = option.async;
+						elem.defer = option.defer;
 						
 					return elem;
-				};
-
-				return Script;
-			})()
+				}
+			}
 		},
 
 		Style: {
-			value: (() => {
+			value: class Style {
 				/**
 				 * @param {Object} [data={}]
 				 * @returns {HTMLStyleElement}
 				 */
-				function Style (data) {
-					if (this.constructor.name != arguments.callee.prototype.constructor.name) throw new TypeError("Please use the 'new' operator, it can't be called as a function.");
-
-					data = data || {};
-
+				constructor (data = {}) {
 					let elem = document.createElement("style");
 						elem.textContent = (() => {
 							let mem = [];
 
-							(function Looper (currentData, currentLevel) {
+							(function looper (currentData, currentLevel) {
 								for (let elemName in currentData) {
 									if (currentData[elemName].isStrictObject()) {
 										mem.push("\t".repeat(currentLevel) + elemName + " {");
-										Looper(currentData[elemName], currentLevel + 1);
+										looper(currentData[elemName], currentLevel + 1);
 										mem.push("\t".repeat(currentLevel) + "}");
 										mem.push("\t".repeat(currentLevel) + "");
 									} else {
@@ -235,10 +220,8 @@
 						})();
 
 					return elem;
-				};
-
-				return Style;
-			})()
+				}
+			}
 		},
 
 		InlineStyle: {
@@ -264,173 +247,143 @@
 		},
 
 		Canvas: {
-			value: (() => {
+			value: class Canvas {
 				/**
 				* @param {Number} [width=0]
 				* @param {Number} [height=0]
 				* 
 				* @returns {HTMLCanvasElement}
 				*/
-				function Canvas (width, height) {
-					if (this.constructor.name != arguments.callee.prototype.constructor.name) throw new TypeError("Please use the 'new' operator, it can't be called as a function.");
-					
-					let Elem = document.createElement("canvas");
-						Elem.width = width || 0;
-						Elem.height = height || 0;
+				constructor (width = 0, height = 0) {
+					let elem = document.createElement("canvas");
+						elem.width = width;
+						elem.height = height;
 
-					return Elem;
-				};
-
-				return Canvas;
-			})()
+					return elem;
+				}
+			}
 		},
 
 		Svg: {
-			value: (() => {
+			value: class Svg {
 				/**
 				* @param {Number} [width=0]
 				* @param {Number} [height=0]
 				* 
 				* @returns {SVGSVGElement}
 				*/
-				function Svg (width, height) {
-					if (this.constructor.name != arguments.callee.prototype.constructor.name) throw new TypeError("Please use the 'new' operator, it can't be called as a function.");
-					
+				constructor (width = 0, height = 0) {
 					let elem = document.createElementNS("http://www.w3.org/2000/svg", "svg");
 						elem.setAttribute("version", "1.1");
 						elem.setAttribute("xmlns", "http://www.w3.org/2000/svg");
 						
-						elem.setAttribute("width", width || 0);
-						elem.setAttribute("height", height || 0);
-						elem.setAttribute("viewBox", "0 0 " + (width || 0) + " " + (height || 0));
+						elem.setAttribute("width", width);
+						elem.setAttribute("height", height);
+						elem.setAttribute("viewBox", `0 0 ${width} ${height}`);
 						
 					return elem;
-				}; Object.defineProperties(Svg, {
-					Rect: {
-						value: (() => {
-							/**
-							* @param {Object} [option={}]
-							* @param {Number} option.x
-							* @param {Number} option.y
-							* @param {Number} option.width
-							* @param {Number} option.height
-							* @param {String} option.fill
-							* @param {Object} option.params
-							* 
-							* @returns {SVGRectElement}
-							*/
-							function Rect (option) {
-								if (this.constructor.name != arguments.callee.prototype.constructor.name) throw new TypeError("Please use the 'new' operator, it can't be called as a function.");
-								
-								option = option || {};
+				}
 
-								let elem = document.createElementNSWithParam("http://www.w3.org/2000/svg", "rect", option.params);
-									elem.setAttribute("x", option.x || 0);
-									elem.setAttribute("y", option.y || 0);
-									
-									elem.setAttribute("width", option.width || 0);
-									elem.setAttribute("height", option.height || 0);
-									elem.setAttribute("fill", option.fill || "#000000");
-									
-								return elem;
-							};
-
-							return Rect;
-						})()
-					},
-
-					Circle: {
-						value: (() => {
-							/**
-							* @param {Object} [option={}]
-							* @param {Number} option.x
-							* @param {Number} option.y
-							* @param {Number} option.radius
-							* @param {String} option.fill
-							* @param {Object} option.params
-							* 
-							* @returns {SVGCircleElement}
-							*/
-							function Circle (option) {
-								if (this.constructor.name != arguments.callee.prototype.constructor.name) throw new TypeError("Please use the 'new' operator, it can't be called as a function.");
-								
-								option = option || {};
-
-								let elem = document.createElementNSWithParam("http://www.w3.org/2000/svg", "circle", option.params);
-									elem.setAttribute("cx", option.x || 0);
-									elem.setAttribute("cy", option.y || 0);
-									elem.setAttribute("r", option.radius || 0);
-
-									elem.setAttribute("fill", option.fill || "#000000");
-									
-								return elem;
-							};
-
-							return Circle;
-						})()
-					},
-
-					Text: {
-						value: (() => {
-							/**
-							* @param {Object} [option={}]
-							* @param {Number} option.x
-							* @param {Number} option.y
-							* @param {Number} option.rotate
-							* @param {String} option.value
-							* @param {Object} option.params
-							* 
-							* @returns {SVGTextElement}
-							*/
-							function Text (option) {
-								if (this.constructor.name != arguments.callee.prototype.constructor.name) throw new TypeError("Please use the 'new' operator, it can't be called as a function.");
-								
-								option = option || {};
-
-								let elem = document.createElementNSWithParam("http://www.w3.org/2000/svg", "text", option.params);
-									elem.textContent = option.value || "";
-									
-									elem.setAttribute("x", option.x || 0);
-									elem.setAttribute("y", option.y || 0);
-									elem.setAttribute("rotate", option.rotate || 0);
-									
-								return elem;
-							};
-
-							return Text;
-						})()
-					},
-
-					RGB: {
+				static get Rect () {
+					return class Rect {
 						/**
-						* @param {Number} r
-						* @param {Number} g
-						* @param {Number} b
+						* @param {Object} [option={}]
+						* @param {Number} [option.x=0]
+						* @param {Number} [option.y=0]
+						* @param {Number} [option.width=0]
+						* @param {Number} [option.height=0]
+						* @param {String} [option.fill="#000000"]
+						* @param {Object} option.params
 						* 
-						* @returns {String}
+						* @returns {SVGRectElement}
 						*/
-						value (r, g, b) {
-							return "RGB(" + (r || 0) + ", " + (g || 0) + ", " + (b || 0) + ")";
-						}
-					},
-
-					RGBA: {
-						/**
-						* @param {Number} r
-						* @param {Number} g
-						* @param {Number} b
-						* @param {Number} a
-						* 
-						* @returns {String}
-						*/
-						value (r, g, b, a) {
-							return "RGBA(" + (r || 0) + ", " + (g || 0) + ", " + (b || 0) + ", " + (a || 0) + ")";
+						constructor (option = { x: 0, y: 0, width: 0, height: 0, fill: "#000000" }) {
+							let elem = document.createElementNSWithParam("http://www.w3.org/2000/svg", "rect", option.params);
+								elem.setAttribute("x", option.x);
+								elem.setAttribute("y", option.y);
+								
+								elem.setAttribute("width", option.width);
+								elem.setAttribute("height", option.height);
+								elem.setAttribute("fill", option.fill);
+								
+							return elem;
 						}
 					}
-				});
+				}
 
-				return Svg;
-			})()
+				static get Circle () {
+					return class Circle {
+						/**
+						* @param {Object} [option={}]
+						* @param {Number} [option.x=0]
+						* @param {Number} [option.y=0]
+						* @param {Number} [option.radius=0]
+						* @param {String} [option.fill="#000000"]
+						* @param {Object} option.params
+						* 
+						* @returns {SVGCircleElement}
+						*/
+						constructor (option = { x: 0, y: 0, radius: 0, fill: "#000000" }) {
+							let elem = document.createElementNSWithParam("http://www.w3.org/2000/svg", "circle", option.params);
+								elem.setAttribute("cx", option.x);
+								elem.setAttribute("cy", option.y);
+								elem.setAttribute("r", option.radius);
+
+								elem.setAttribute("fill", option.fill);
+								
+							return elem;
+						}
+					}
+				}
+
+				static get Text () {
+					return class Text {
+						/**
+						* @param {Object} [option={}]
+						* @param {Number} [option.x=0]
+						* @param {Number} [option.y=0]
+						* @param {Number} [option.rotate=0]
+						* @param {String} [option.value=""]
+						* @param {Object} option.params
+						* 
+						* @returns {SVGTextElement}
+						*/
+						constructor (option = { x: 0, y: 0, rotate: 0, value: "" }) {
+							let elem = document.createElementNSWithParam("http://www.w3.org/2000/svg", "text", option.params);
+								elem.textContent = option.value;
+								
+								elem.setAttribute("x", option.x);
+								elem.setAttribute("y", option.y);
+								elem.setAttribute("rotate", option.rotate);
+								
+							return elem;
+						}
+					}
+				}
+
+				/**
+				* @param {Number} [r=0]
+				* @param {Number} [g=0]
+				* @param {Number} [b=0]
+				* 
+				* @returns {String}
+				*/
+				static RGB (r = 0, g = 0, b = 0) {
+					return `RGB(${r}, ${g}, ${b})`;
+				}
+
+				/**
+				* @param {Number} [r=0]
+				* @param {Number} [g=0]
+				* @param {Number} [b=0]
+				* @param {Number} [a=1]
+				* 
+				* @returns {String}
+				*/
+				static RGBA (r = 0, g = 0, b = 0, a = 1) {
+					return `RGBA(${r}, ${g}, ${b}, ${a})`;
+				}
+			}
 		}
 	});
 
@@ -439,8 +392,8 @@
 			/**
 			* @param {Node} [parent=document.body]
 			*/
-			value (parent) {
-				(parent || document.body).appendChild(this);
+			value (parent = document.body) {
+				parent.appendChild(this);
 			}
 		},
 
@@ -454,9 +407,9 @@
 	Object.defineProperties(Element.prototype, {
 		applyProperties: {
 			/**
-			* @param {Object} option
+			* @param {Object} [option={}]
 			* @param {String} option.id
-			* @param {Option} option.classes
+			* @param {Object} option.classes
 			* @param {String} option.text
 			* @param {String} option.html
 			* @param {Object} option.attributes
@@ -465,7 +418,7 @@
 			* @param {Node[]} option.children
 			* @param {Object} option.events
 			*/
-			value (option) {
+			value (option = {}) {
 				(option.id != false && !option.id) || (this.id = option.id);
 				
 				!option.classes || (() => {
@@ -514,9 +467,7 @@
 			* 
 			* @returns {HTMLElement}
 			*/
-			value (tagName, option) {
-				option = option || {};
-
+			value (tagName, option = {}) {
 				let elem = document.createElement(tagName);
 					elem.applyProperties(option);
 				
@@ -532,9 +483,7 @@
 			* 
 			* @returns {HTMLElement}
 			*/
-			value (nameSpace, tagName, option) {
-				option = option || {};
-
+			value (nameSpace, tagName, option = {}) {
 				let elem = document.createElementNS(nameSpace, tagName);
 					elem.applyProperties(option);
 				
@@ -612,9 +561,7 @@
 			/**
 			* @param {function (Object)} [onLoad=function (res) {}]
 			*/
-			value (onLoad) {
-				onLoad = onLoad || ((res) => {});
-
+			value (onLoad = (res) => {}) {
 				let iframe = document.createElement("iframe");
 					iframe.style.display = "None";
 					
@@ -731,12 +678,10 @@
 	Object.defineProperties(URL, {
 		filter: {
 			/**
-			* @param {String} str
+			* @param {String} [str=""]
 			* @returns {String[] | []}
 			*/
-			value (str) {
-				str = str || "";
-
+			value (str = "") {
 				let res = str.match(/((h?)(ttps?:\/\/[a-zA-Z0-9.\-_@:/~?%&;=+#',()*!]+))/g);
 					!res || (res = res.filter((elem, index, parent) => {
 						return parent.indexOf(elem) == index;
@@ -764,8 +709,18 @@ class DOM {
 	 * => ${:elemName} … elemNameセレクタの1要素を返す
 	 * => @{:elemName} … elemNameセレクタの要素を返す
 	 * 
-	 * @param {String} selectorStr
+	 * @param {String} [selectorStr=""]
+	 * 
 	 * @param {Object} [option={}]
+	 * @param {String} option.id
+	 * @param {Object} option.classes
+	 * @param {String} option.text
+	 * @param {String} option.html
+	 * @param {Object} option.attributes
+	 * @param {Object} option.dataset
+	 * @param {Object} option.styles
+	 * @param {Node[]} option.children
+	 * @param {Object} option.events
 	 * 
 	 * @returns {HTMLElement}
 	 */
@@ -818,22 +773,22 @@ class DOM {
 
 	/**
 	 * @param {Object} [option={}]
-	 * @param {String} option.type
-	 * @param {String} option.url
-	 * @param {Boolean} option.doesSync
+	 * @param {String} [option.type="GET"]
+	 * @param {String} [option.url=location.href]
+	 * @param {Boolean} [option.doesSync=false]
 	 * @param {String} option.resType
 	 * @param {Object} option.headers
 	 * @param {Object} option.params
 	 * @param {Object} option.data
-	 * @param {function (ProgressEvent)} option.onLoad
+	 * @param {function (ProgressEvent)} [option.onLoad=function (event) {}]
 	 * 
 	 * @returns {XMLHttpRequest}
 	 */
-	static xhr (option = {}) {
+	static xhr (option = { type: "GET", url: location.href, doesSync: false, onLoad: (event) => {} }) {
 		let connector = new XMLHttpRequest();
 			!option.resType || (connector.responseType = option.resType);
 			
-			connector.open(option.type || "GET", (option.url || location.href) + (option.params ? "?" + (() => {
+			connector.open(option.type, option.url + (option.params ? "?" + (() => {
 				let param = [];
 
 				for (let paramName in option.params) {
@@ -841,7 +796,7 @@ class DOM {
 				}
 
 				return param.join("&");
-			})() : ""), option.doesSync != undefined ? option.doesSync : true);
+			})() : ""), option.doesSync);
 
 			!option.headers || (() => {
 				for (let headerName in option.headers) {
@@ -849,7 +804,7 @@ class DOM {
 				}
 			})();
 
-			connector.onload = option.onLoad || ((event) => {});
+			connector.onload = option.onLoad;
 			connector.send(option.data);
 
 		return connector;
@@ -857,11 +812,10 @@ class DOM {
 
 	/**
 	 * @param {Object} [option={}]
-	 * @param {String} option.url
+	 * @param {String} [option.url=location.href]
 	 * @param {Object} option.params
-	 * @param {function (ProgressEvent)} option.onLoad
 	 */
-	static jsonp (option = {}) {
+	static jsonp (option = { url: location.href }) {
 		let param = [];
 
 		!option.params || (() => {
@@ -871,7 +825,7 @@ class DOM {
 		})();
 
 		let elem = document.createElement("script");
-			elem.src = (option.url || location.href) + (option.params ? "?" + param.join("&") : "");
+			elem.src = option.url + (option.params ? "?" + param.join("&") : "");
 			
 			elem.onload = (event) => {
 				elem.parentElement.removeChild(elem);
@@ -887,10 +841,6 @@ class DOM {
 			 * @returns {XMLHttpRequest}
 			 */
 			constructor (option = {}) {
-				if (this.constructor.name == arguments.callee.prototype.constructor.name) throw new TypeError("it is not a constructor");
-				
-				option = option || {};
-
 				return this.xhr({
 					type: option.type,
 					url: option.url,
@@ -935,10 +885,10 @@ class DOM {
 	}
 
 	/**
-	 * @param {String} url
-	 * @param {function (ProgressEvent)} [onLoad=function (event) => {}]
+	 * @param {String} [url=""]
+	 * @param {function (ProgressEvent)} [onLoad=function (event) {}]
 	 */
-	static import (url, onLoad = (event) => {}) {
+	static import (url = "", onLoad = (event) => {}) {
 		this.xhr({
 			type: "GET",
 			url: url,
@@ -1012,8 +962,8 @@ class DOM {
 	static get APIInfo () {
 		return class APIInfo {
 			/**
-			 * @param {String} apiName
-			 * @param {Number} apiVersion
+			 * @param {String} [apiName="Untitled API"]
+			 * @param {Number} [apiVersion=1.0]
 			 */
 			constructor (apiName = "Untitled API", apiVersion = 1.0) {
 				this.name = apiName,
@@ -1028,18 +978,18 @@ class DOM {
 		return class Watcher {
 			/**
 			 * @param {Object} [option={}]
-			 * @param {{ value: Object }} option.target
-			 * @param {Number} option.tick
-			 * @param {function ()} option.onGet
-			 * @param {function (watcher)} option.onChange
+			 * @param {{ value: Object }} [option.target={ value: null }]
+			 * @param {Number} [option.tick=1]
+			 * @param {function ()} [option.onGet=function () {}]
+			 * @param {function (Watcher)} [option.onChange=function (watcher) {}]
 			 */
-			constructor (option = {}) {
+			constructor (option = { target: { value: null }, tick: 1, onGet: () => {}, onChange: (watcher) => {} }) {
 				this.watcherID = [];
 				
-				this.setTarget(option.target || { value: null });
-				this.setWatchTick(option.tick || 1);
-				this.onGet = option.onGet || (() => {});
-				this.onChange = option.onChange || ((watcher) => {});
+				this.setTarget(option.target);
+				this.setWatchTick(option.tick);
+				this.onGet = option.onGet;
+				this.onChange = option.onChange;
 			}
 
 			/**
@@ -1226,6 +1176,81 @@ class DOM {
 		}
 	}
 
+	static get AudioPlayer () {
+		return class AudioPlayer extends AudioContext {
+			/**
+			 * @param {String} [url=""]
+			 */
+			constructor (url = "") {
+				super();
+
+				this.src = url;
+			}
+
+			get src () { return this._src }
+
+			set src (val = "") {
+				this._src = val;
+
+				if (this._src) {
+					DOM.xhr({
+						type: "GET",
+						url: this._src,
+						doesSync: true,
+						resType: "arraybuffer",
+
+						onLoad: (event) => {
+							this.decodeAudioData(event.target.response, (audioBuffer) => {
+								this.buffer = audioBuffer;
+							});
+						}
+					});
+				}
+			}
+
+			play () {
+				let source = this.createBufferSource();
+					source.buffer = this.buffer;
+					source.connect(this.destination);
+
+					source.start(0);
+			}
+		}
+	}
+
+	static get ComponentLoader () {
+		return class ComponentLoader {
+			/**
+			 * ComponentLoaderを生成
+			 * @param {String} [documentUrl=location.href] テンプレートHTMLのURL
+			 */
+			constructor (documentUrl = location.href) {
+				let doc = this.doc = new DOM("HTML");
+					doc.innerHTML = DOM.xhr({
+						type: "GET",
+						url: documentUrl,
+						doesSync: false
+					}).response;
+			}
+
+			/**
+			 * セレクターからコンポーネントを取得
+			 * 
+			 * @param {String} [componentSelector=""]
+			 * @returns {HTMLElement}
+			 */
+			load (componentSelector = "") {
+				let component = this.doc.querySelector(componentSelector);
+
+				if (!component) {
+					throw new Error("The selector is invalid or the component isn't exist");
+				}
+
+				return component;
+			}
+		}
+	}
+
 
 
 	/*DOM.InvalidSelectorError = (() => {
@@ -1242,7 +1267,7 @@ class DOM {
 
 
 	
-	static get apiInfo () { return new DOM.APIInfo("DOM Extender", 3.3) }
+	static get apiInfo () { return new DOM.APIInfo("DOM Extender", 3.4) }
 	static get width () { return window.innerWidth }
 	static get height () { return window.innerHeight }
 	static get vw () { return window.innerWidth / 100 }
