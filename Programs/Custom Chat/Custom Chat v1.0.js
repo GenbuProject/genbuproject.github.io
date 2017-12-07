@@ -1,7 +1,7 @@
 /*/
  *#######################################################################
  *Custom Chat v1.0
- *Copyright (C) 2017-2020 Genbu Project All Rights Reversed.
+ *Copyright (C) 2017 Genbu Project All Rights Reversed.
  *#######################################################################
 /*/
 let APIInfo = ["Custom Chat", "v1.0"];

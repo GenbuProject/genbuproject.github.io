@@ -1,7 +1,7 @@
 /*/
  *#=================================================================================================
  *#Sync Helper v1.0
- *#Copyright (C) 2016-2020 Genbu Project All Rights Reversed.
+ *#Copyright (C) 2016 Genbu Project All Rights Reversed.
  *#=================================================================================================
 /*/
 var GitAPI = function (Token) {
