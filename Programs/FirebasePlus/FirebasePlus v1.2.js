@@ -152,7 +152,7 @@ class FirebasePlus {
 		localStorage.setItem("com.GenbuProject.FirebasePlus.signInType", Symbol.keyFor(signInType)),
 		localStorage.setItem("com.GenbuProject.FirebasePlus.signInScope", scope.toString());
 		
-		auth.signInWithRedirect(provider);
+		this.auth.signInWithRedirect(provider);
 	}
 	
 	signInWithPopup (signInType = this.SIGNINTYPE.GOOGLE, scope = [""], onLoad = (user) => {}) {
@@ -177,7 +177,7 @@ class FirebasePlus {
 		localStorage.setItem("com.GenbuProject.FirebasePlus.signInType", Symbol.keyFor(signInType)),
 		localStorage.setItem("com.GenbuProject.FirebasePlus.signInScope", scope.toString());
 		
-		auth.signInWithPopup(provider).then(res => {
+		this.auth.signInWithPopup(provider).then(res => {
 			onLoad(res.user);
 		});
 	}
@@ -186,7 +186,7 @@ class FirebasePlus {
 		localStorage.setItem("com.GenbuProject.FirebasePlus.signInType", "Anonymous"),
 		localStorage.setItem("com.GenbuProject.FirebasePlus.signInScope", "[]");
 
-		auth.signInAnonymously();
+		this.auth.signInAnonymously();
 	}
 
 	reauth (scope = [""]) {
@@ -206,7 +206,7 @@ class FirebasePlus {
 	}
 
 	signOut () {
-		auth.signOut();
+		this.auth.signOut();
 		location.reload();
 	}
 }
