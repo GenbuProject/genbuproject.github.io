@@ -35,6 +35,13 @@ class FirebasePlus {
 			database = this.database = this.project.database(),
 			storage = this.storage = this.project.storage();
 
+		auth.getRedirectResult().then(res => {
+			if (res.credential) {
+				this.accessToken = res.credential.accessToken,
+				this.idToken = res.credential.idToken;
+			}
+		});
+
 		auth.onAuthStateChanged(onLoad);
 	}
 
@@ -155,7 +162,7 @@ class FirebasePlus {
 		this.auth.signInWithRedirect(provider);
 	}
 	
-	signInWithPopup (signInType = this.SIGNINTYPE.GOOGLE, scope = [""], onLoad = (user) => {}) {
+	signInWithPopup (signInType = this.SIGNINTYPE.GOOGLE, scope = [""], onLoad = res => {}) {
 		let provider = null;
 
 		switch (signInType) {
@@ -177,9 +184,7 @@ class FirebasePlus {
 		localStorage.setItem("com.GenbuProject.FirebasePlus.signInType", Symbol.keyFor(signInType)),
 		localStorage.setItem("com.GenbuProject.FirebasePlus.signInScope", scope.toString());
 		
-		this.auth.signInWithPopup(provider).then(res => {
-			onLoad(res.user);
-		});
+		this.auth.signInWithPopup(provider).then(onLoad);
 	}
 	
 	signInWithAnonymous () {
