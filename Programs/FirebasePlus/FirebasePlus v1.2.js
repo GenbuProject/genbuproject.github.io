@@ -246,6 +246,11 @@ class FirebasePlus {
 	}
 
 	signOut () {
+		this.accessToken = "",
+		this.idToken = "",
+		this.signInType = "",
+		this.signInScope = [];
+		
 		this.auth.signOut();
 		location.reload();
 	}
