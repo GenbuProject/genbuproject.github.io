@@ -159,7 +159,7 @@ class FirebasePlus {
 		});
 
 		localStorage.setItem("com.GenbuProject.FirebasePlus.signInType", Symbol.keyFor(signInType)),
-		localStorage.setItem("com.GenbuProject.FirebasePlus.signInScope", scope.toString());
+		localStorage.setItem("com.GenbuProject.FirebasePlus.signInScope", JSON.stringify(scope));
 		
 		this.auth.signInWithRedirect(provider);
 	}
@@ -184,7 +184,7 @@ class FirebasePlus {
 		});
 
 		localStorage.setItem("com.GenbuProject.FirebasePlus.signInType", Symbol.keyFor(signInType)),
-		localStorage.setItem("com.GenbuProject.FirebasePlus.signInScope", scope.toString());
+		localStorage.setItem("com.GenbuProject.FirebasePlus.signInScope", JSON.stringify(scope));
 		
 		this.auth.signInWithPopup(provider).then(onLoad);
 	}
