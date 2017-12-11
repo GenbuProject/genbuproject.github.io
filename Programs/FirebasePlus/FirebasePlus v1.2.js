@@ -163,6 +163,12 @@ class FirebasePlus {
 	get idToken () { return localStorage.getItem(FirebasePlus.PATHS.idToken) }
 	set idToken (token = "") { localStorage.setItem(FirebasePlus.PATHS.idToken, token) }
 
+	get signInType () { return localStorage.getItem(FirebasePlus.PATHS.signInType) }
+	set signInType (type = "") { localStorage.setItem(FirebasePlus.PATHS.signInType, type) }
+
+	get signInScope () { return JSON.parse(localStorage.getItem(FirebasePlus.PATHS.signInScope)) }
+	set signInScope (scope = []) { localStorage.setItem(FirebasePlus.PATHS.signInScope, JSON.stringify(scope)) }
+
 
 	
 	signInWithRedirect (signInType = this.SIGNINTYPE.GOOGLE, scope = [""]) {
@@ -184,8 +190,8 @@ class FirebasePlus {
 			provider.addScope(value);
 		});
 
-		localStorage.setItem("com.GenbuProject.FirebasePlus.signInType", Symbol.keyFor(signInType)),
-		localStorage.setItem("com.GenbuProject.FirebasePlus.signInScope", JSON.stringify(scope));
+		this.signInType = Symbol.keyFor(signInType),
+		this.signInScope = scope;
 		
 		this.auth.signInWithRedirect(provider);
 	}
@@ -209,24 +215,24 @@ class FirebasePlus {
 			provider.addScope(value);
 		});
 
-		localStorage.setItem("com.GenbuProject.FirebasePlus.signInType", Symbol.keyFor(signInType)),
-		localStorage.setItem("com.GenbuProject.FirebasePlus.signInScope", JSON.stringify(scope));
+		this.signInType = Symbol.keyFor(signInType),
+		this.signInScope = scope;
 		
 		this.auth.signInWithPopup(provider).then(onLoad);
 	}
 	
 	signInWithAnonymous () {
-		localStorage.setItem("com.GenbuProject.FirebasePlus.signInType", "Anonymous"),
-		localStorage.setItem("com.GenbuProject.FirebasePlus.signInScope", "[]");
+		this.signInType = "Anonymous",
+		this.signInScope = [];
 
 		this.auth.signInAnonymously();
 	}
 
 	reauth () {
-		let scope = JSON.parse(localStorage.getItem("com.GenbuProject.FirebasePlus.signInScope")),
+		let scope = this.signInScope,
 			provider = null;
 
-		switch (localStorage.getItem("com.GenbuProject.FirebasePlus.signInType")) {
+		switch (localStorage.getItem(FirebasePlus.PATHS.signInType)) {
 			case Symbol.keyFor(this.SIGNINTYPE.GOOGLE):
 				provider = new firebase.auth.GoogleAuthProvider();
 				break;
