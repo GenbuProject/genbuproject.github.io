@@ -5,6 +5,15 @@
  *#######################################################################
 /*/
 class FirebasePlus {
+	static get PATHS () {
+		return {
+			accessToken: "com.GenbuProject.FirebasePlus.accessToken",
+			idToken: "com.GenbuProject.FirebasePlus.idToken",
+			signInType: "com.GenbuProject.FirebasePlus.signInType",
+			signInScope: "com.GenbuProject.FirebasePlus.signInScope"
+		}
+	}
+
 	static get SortManager () {
 		return class SortManager {
 			static filter (query, option = {}) {
@@ -39,7 +48,9 @@ class FirebasePlus {
 			if (res.credential) {
 				this.accessToken = res.credential.accessToken,
 				this.idToken = res.credential.idToken;
-			} else {
+			}
+
+			if (!this.accessToken || !this.idToken) {
 				this.reauth().then(res => {
 					if (res.credential) {
 						this.accessToken = res.credential.accessToken,
@@ -142,7 +153,17 @@ class FirebasePlus {
 		return {}
 	}
 
+
+
 	get user () { return this.auth.currentUser }
+	
+	get accessToken () { return localStorage.getItem(FirebasePlus.PATHS.accessToken) }
+	set accessToken (token = "") { localStorage.setItem(FirebasePlus.PATHS.accessToken, token) }
+
+	get idToken () { return localStorage.getItem(FirebasePlus.PATHS.idToken) }
+	set idToken (token = "") { localStorage.setItem(FirebasePlus.PATHS.idToken, token) }
+
+
 	
 	signInWithRedirect (signInType = this.SIGNINTYPE.GOOGLE, scope = [""]) {
 		let provider = null;
