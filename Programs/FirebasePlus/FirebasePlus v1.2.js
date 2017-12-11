@@ -39,6 +39,8 @@ class FirebasePlus {
 			if (res.credential) {
 				this.accessToken = res.credential.accessToken,
 				this.idToken = res.credential.idToken;
+			} else {
+				this.reauth();
 			}
 		});
 
@@ -194,9 +196,10 @@ class FirebasePlus {
 		this.auth.signInAnonymously();
 	}
 
-	reauth (scope = [""]) {
-		let provider = null;
-		
+	reauth () {
+		let scope = JSON.parse(localStorage.getItem("com.GenbuProject.FirebasePlus.signInScope")),
+			provider = null;
+
 		switch (localStorage.getItem("com.GenbuProject.FirebasePlus.signInType")) {
 			case Symbol.keyFor(this.SIGNINTYPE.GOOGLE):
 				provider = new firebase.auth.GoogleAuthProvider();
