@@ -40,7 +40,12 @@ class FirebasePlus {
 				this.accessToken = res.credential.accessToken,
 				this.idToken = res.credential.idToken;
 			} else {
-				this.reauth();
+				this.reauth().then(res => {
+					if (res.credential) {
+						this.accessToken = res.credential.accessToken,
+						this.idToken = res.credential.idToken;
+					}
+				});
 			}
 		});
 
