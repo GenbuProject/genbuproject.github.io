@@ -1,7 +1,7 @@
 /*/
  *#######################################################################
  *FirebasePlus v1.2
- *Copyright (C) 2016 Genbu Project All Rights Reversed.
+ *Copyright (C) 2017 Genbu Project All Rights Reversed.
  *#######################################################################
 /*/
 class FirebasePlus {
