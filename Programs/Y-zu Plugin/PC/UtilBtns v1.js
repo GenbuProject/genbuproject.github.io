@@ -15,17 +15,17 @@ window.addEventListener("DOMContentLoaded", () => {
 
 		_scriptElem.addEventListener("load", () => {
 			const IDS = {
-				CONTAINER: "btn-extender",
+				CONTAINER: "util-btn",
 
 				BUTTONS: {
-					GOJI: "btn-extender__button--goji",
-					HARUKIN: "btn-extender__button--harukin",
-					TOOTRATE: "btn-extender__button--toot-rate"
+					GOJI: "util-btn__button--goji",
+					HARUKIN: "util-btn__button--harukin",
+					TOOTRATE: "util-btn__button--toot-rate"
 				}
 			}
 
 			const CLASSES = {
-				BUTTON: "btn-extender__button"
+				BUTTON: "util-btn__button"
 			}
 
 
