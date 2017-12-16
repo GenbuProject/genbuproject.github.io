@@ -1,0 +1,50 @@
+<!DocType HTML>
+
+<HTML>
+	<Head>
+		<Meta Charset = "UTF-8" />
+		<Title>UtilBtns 認証所</Title>
+		
+		<Script Src = "https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></Script>
+		<Link Rel = "StyleSheet" Href = "https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" />
+
+		<Script Src = "https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></Script>
+		<Script Src = "mastodon.js"></Script>
+		<Script Src = "https://genbuproject.github.io/Programs/DOM Extender/DOM Extender v3.4.js"></Script>
+		
+		<Script Src = "main.js"></Script>
+		<Link Rel = "StyleSheet" Href = "main.css" />
+
+		<Script>
+			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+			})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+			
+			ga('create', 'UA-88656260-1', 'auto');
+			ga('require', 'linkid', 'linkid.js');
+			ga('send', 'pageview');
+		</Script>
+	</Head>
+
+	<Body>
+		<Header Class = "mdc-toolbar mdc-toolbar--fixed mdc-toolbar--waterfall mdc-elevation--z4">
+			<Div Class = "mdc-toolbar__row">
+				<Section Class = "mdc-toolbar__section mdc-toolbar__section--align-start">
+					<Span Class = "mdc-toolbar__title">UtilBtns 認証所</Span>
+				</Section>
+			</Div>
+		</Header>
+
+		<Main Class = "mdc-typography mdc-toolbar-fixed-adjust">
+			あなたのアクセストークンは<Input ID = "accessToken" Type = "Text" Readonly = "Readonly" />です！
+			これをYづドンの【投稿タブ】に設置された【アクセストークン】欄に貼りつけて下さい！
+
+			《PCの場合》
+			<Img Src = "assets/images/Form001.png" Width = "256" />
+
+			《スマートフォンの場合》
+			<Img Src = "assets/images/Form002.png" Width = "256" />
+		</Main>
+	</Body>
+</HTML>
