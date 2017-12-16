@@ -1,7 +1,7 @@
 ## UtilBtns for Yづドン
 
 ### 1. 概要
-> このプラグインは、Yづドンに数々の便利なボタンを追加します。
+> このプラグインは、[Yづドン](https://mstdn.y-zu.org/)に数々の便利なボタンを追加します。
 
 ### 2. How to Use
 > ご利用の前に、[こちら](https://genbuproject.github.io/Programs/Y-zuPlugin/UtilBtns/)より認証作業を行って下さい。
