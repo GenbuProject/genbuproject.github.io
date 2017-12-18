@@ -18,7 +18,7 @@ window.addEventListener("DOMContentLoaded", () => {
 		_scriptElem.src = "https://genbuproject.github.io/Programs/DOM Extender/DOM Extender v3.4.js";
 
 		_scriptElem.addEventListener("load", () => {
-			const VERSION = "v2";
+			const VERSION = "v3";
 
 			const IDS = {
 				CONTAINER: "utilBtn",

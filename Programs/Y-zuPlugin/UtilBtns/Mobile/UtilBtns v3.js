@@ -18,7 +18,7 @@ let _scriptElem = document.createElement("script");
 
 	_scriptElem.addEventListener("load", () => {
 		window.initUtilBtns = () => {
-			const VERSION = "v2";
+			const VERSION = "v3";
 
 			const IDS = {
 				CONTAINER: "utilBtn",
