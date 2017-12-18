@@ -13,6 +13,7 @@
 ### 3. Changelogs
 > |Version|Released Date|Details|
 > |:-----:|:-----------:|:------|
+> |v3     |2017/12/18   |`Mastodon v2.1.0`に対応|
 > |v2     |2017/12/16   |`アクセストークン`欄追加|
 > |       |             |`UtilBtns 認証所`の設置|
 > |v1     |2017/12/15   |`誤字盛`ボタン追加|
@@ -21,18 +22,22 @@
 
 ### 4. Downloads
 > #### ◢ PC用 ◤
+>> * [v3](https://genbuproject.github.io/Programs/Y-zuPlugin/UtilBtns/PC/UtilBtns%20v3.js)
 >> * [v2](https://genbuproject.github.io/Programs/Y-zuPlugin/UtilBtns/PC/UtilBtns%20v2.js)
 >> * [v1](https://genbuproject.github.io/Programs/Y-zuPlugin/UtilBtns/PC/UtilBtns%20v1.js)
 >> 
 > #### ◢ スマートフォン用 ◤
+>> * [v3](https://genbuproject.github.io/Programs/Y-zuPlugin/UtilBtns/Mobile/UtilBtns%20v3.js)
 >> * [v2](https://genbuproject.github.io/Programs/Y-zuPlugin/UtilBtns/Mobile/UtilBtns%20v2.js)
 >> * [v1](https://genbuproject.github.io/Programs/Y-zuPlugin/UtilBtns/Mobile/UtilBtns%20v1.js)
 
 ### 5. Bookmarklets
 > #### ◢ PC用 ◤
+>> * [v3](https://genbuproject.github.io/Programs/Y-zuPlugin/UtilBtns/PC/UtilBtns%20v3(Bookmarklet).js)
 >> * [v2](https://genbuproject.github.io/Programs/Y-zuPlugin/UtilBtns/PC/UtilBtns%20v2(Bookmarklet).js)
 >> * [v1](https://genbuproject.github.io/Programs/Y-zuPlugin/UtilBtns/PC/UtilBtns%20v1(Bookmarklet).js)
 >> 
 > #### ◢ スマートフォン用 ◤
+>> * [v3](https://genbuproject.github.io/Programs/Y-zuPlugin/UtilBtns/Mobile/UtilBtns%20v3(Bookmarklet).js)
 >> * [v2](https://genbuproject.github.io/Programs/Y-zuPlugin/UtilBtns/Mobile/UtilBtns%20v2(Bookmarklet).js)
 >> * [v1](https://genbuproject.github.io/Programs/Y-zuPlugin/UtilBtns/Mobile/UtilBtns%20v1(Bookmarklet).js)
