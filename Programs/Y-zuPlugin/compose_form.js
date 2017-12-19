@@ -138,7 +138,7 @@ export default class ComposeForm extends ImmutablePureComponent {
 				"《トゥート率》",
 				`@${userInfo.username} さんの`,
 				`トゥート率は${(userToots / serverToots * 100).toFixed(2)}%です！`,
-				`(Tooted from UtilBtns ${this.VERSION})`
+				`(Tooted from UtilBtns ${UtilBtns.VERSION})`
 			].join("\r\n");
 		}
 	};
