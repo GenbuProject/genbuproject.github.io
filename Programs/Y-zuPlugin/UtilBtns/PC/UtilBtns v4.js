@@ -190,8 +190,8 @@ window.addEventListener("DOMContentLoaded", () => {
 
 					onclick: (contents, submitBtn) => {
 						contents.value = [
-							"@Yohei_Zuho",
-							"【問題】JS ＝ ？"
+							"づほ",
+							"「JS ＝ ？」"
 						].join("\r\n");
 
 						submitBtn.click();
