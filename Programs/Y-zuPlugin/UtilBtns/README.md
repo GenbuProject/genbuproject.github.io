@@ -24,26 +24,26 @@
 
 ### 4. Downloads
 > #### ◢ PC用 ◤
->> * [v3](https://genbuproject.github.io/Programs/Y-zuPlugin/UtilBtns/PC/UtilBtns%20v4.js)
+>> * [v4](https://genbuproject.github.io/Programs/Y-zuPlugin/UtilBtns/PC/UtilBtns%20v4.js)
 >> * [v3](https://genbuproject.github.io/Programs/Y-zuPlugin/UtilBtns/PC/UtilBtns%20v3.js)
 >> * [v2](https://genbuproject.github.io/Programs/Y-zuPlugin/UtilBtns/PC/UtilBtns%20v2.js)
 >> * [v1](https://genbuproject.github.io/Programs/Y-zuPlugin/UtilBtns/PC/UtilBtns%20v1.js)
 >> 
 > #### ◢ スマートフォン用 ◤
->> * [v3](https://genbuproject.github.io/Programs/Y-zuPlugin/UtilBtns/Mobile/UtilBtns%20v4.js)
+>> * [v4](https://genbuproject.github.io/Programs/Y-zuPlugin/UtilBtns/Mobile/UtilBtns%20v4.js)
 >> * [v3](https://genbuproject.github.io/Programs/Y-zuPlugin/UtilBtns/Mobile/UtilBtns%20v3.js)
 >> * [v2](https://genbuproject.github.io/Programs/Y-zuPlugin/UtilBtns/Mobile/UtilBtns%20v2.js)
 >> * [v1](https://genbuproject.github.io/Programs/Y-zuPlugin/UtilBtns/Mobile/UtilBtns%20v1.js)
 
 ### 5. Bookmarklets
 > #### ◢ PC用 ◤
->> * [v3](https://genbuproject.github.io/Programs/Y-zuPlugin/UtilBtns/PC/UtilBtns%20v4(Bookmarklet).js)
+>> * [v4](https://genbuproject.github.io/Programs/Y-zuPlugin/UtilBtns/PC/UtilBtns%20v4(Bookmarklet).js)
 >> * [v3](https://genbuproject.github.io/Programs/Y-zuPlugin/UtilBtns/PC/UtilBtns%20v3(Bookmarklet).js)
 >> * [v2](https://genbuproject.github.io/Programs/Y-zuPlugin/UtilBtns/PC/UtilBtns%20v2(Bookmarklet).js)
 >> * [v1](https://genbuproject.github.io/Programs/Y-zuPlugin/UtilBtns/PC/UtilBtns%20v1(Bookmarklet).js)
 >> 
 > #### ◢ スマートフォン用 ◤
->> * [v3](https://genbuproject.github.io/Programs/Y-zuPlugin/UtilBtns/Mobile/UtilBtns%20v4(Bookmarklet).js)
+>> * [v4](https://genbuproject.github.io/Programs/Y-zuPlugin/UtilBtns/Mobile/UtilBtns%20v4(Bookmarklet).js)
 >> * [v3](https://genbuproject.github.io/Programs/Y-zuPlugin/UtilBtns/Mobile/UtilBtns%20v3(Bookmarklet).js)
 >> * [v2](https://genbuproject.github.io/Programs/Y-zuPlugin/UtilBtns/Mobile/UtilBtns%20v2(Bookmarklet).js)
 >> * [v1](https://genbuproject.github.io/Programs/Y-zuPlugin/UtilBtns/Mobile/UtilBtns%20v1(Bookmarklet).js)
