@@ -4,7 +4,7 @@
  * 
  * Based: Mastodon 2.1.0
  * Author: Genbu Hase
- * Last Updated: 2017/12/21
+ * Last Updated: 2017/12/23
  * 
  * Details:
  * このプラグインは色々と便利なボタンを追加します。
@@ -34,8 +34,7 @@ let _scriptElem = document.createElement("script");
 					GOJI: "utilBtn__button--goji",
 					HARUKIN: "utilBtn__button--harukin",
 					TOOTRATE: "utilBtn__button--tootRate",
-					RISA: "utilBtn__button--risa",
-					ZUHO: "utilBtn__button--zuho"
+					RISA: "utilBtn__button--risa"
 				}
 			}
 
@@ -128,9 +127,24 @@ let _scriptElem = document.createElement("script");
 					text: "はるきん焼却",
 
 					onclick: (contents, submitBtn) => {
+						let quantity = Math.random.randomInt(1, 6),
+							type = Math.random.randomInt(1, 2);
+
+						let harukin = "";
+
+						switch (type) {
+							case 1:
+								harukin = ":harukin: ";
+								break;
+
+							case 2:
+								harukin = ":harukin_old: ";
+								break;
+						}
+
 						contents.value = [
-							":harukin: :harukin: :harukin: :harukin: :harukin: :harukin:",
-							"🔥 🔥 🔥 🔥 🔥 🔥"
+							harukin.repeat(quantity),
+							"🔥 ".repeat(quantity)
 						].join("\r\n");
 
 						submitBtn.click();
@@ -181,22 +195,10 @@ let _scriptElem = document.createElement("script");
 							"@RISA",
 							""
 						].join("\r\n");
+
+						contents.focus();
 					}
-				},
-
-				{
-					id: IDS.BUTTONS.ZUHO,
-					text: "づ　　ほ",
-
-					onclick: (contents, submitBtn) => {
-						contents.value = [
-							"づほ",
-							"「JS ＝ ？」"
-						].join("\r\n");
-
-						submitBtn.click();
-					}
-				},
+				}
 			];	btns.forEach(btnInfo => {
 				let contents = new DOM("$Textarea.autosuggest-textarea__textarea"),
 					submitBtn = new DOM(`$.compose-form__publish-button-wrapper:Not([ID="${IDS.CONTAINER}"]) > Button`);
