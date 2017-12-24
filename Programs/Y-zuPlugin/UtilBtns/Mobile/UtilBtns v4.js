@@ -4,7 +4,7 @@
  * 
  * Based: Mastodon 2.1.0
  * Author: Genbu Hase
- * Last Updated: 2017/12/23
+ * Last Updated: 2017/12/24
  * 
  * Details:
  * このプラグインは色々と便利なボタンを追加します。
@@ -192,8 +192,7 @@ let _scriptElem = document.createElement("script");
 
 					onclick: (contents, submitBtn) => {
 						contents.value = [
-							"@RISA",
-							""
+							"@RISA "
 						].join("\r\n");
 
 						contents.focus();
