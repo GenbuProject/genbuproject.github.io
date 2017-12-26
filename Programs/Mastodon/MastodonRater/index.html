@@ -38,24 +38,26 @@
 		</Header>
 
 		<Main Class = "mdc-typography mdc-typography--body2 mdc-toolbar-fixed-adjust">
-			<Section Class = "mstdnRater_panel">
+			<Section ID = "authPanel" Class = "mstdnRater_panel">
 				<Content Class = "mstdnRater_panel_content">
 					当サービスをご利用頂く前に、アカウントの認証をお願い致します。
 				</Content>
 
-				<Div ID = "authForm">
-					<Div ID = "authForm_instanceUrl" Class = "mdc-text-field mdc-text-field--upgraded" Data-mdc-auto-init = "MDCTextField">
-						<Input ID = "authForm_instanceUrl-input" Class = "mdc-text-field__input" Type = "URL" Required = "Required" />
-						<Label Class = "mdc-text-field__label mdc-text-field__label--float-above" For = "instanceUrl">インスタンスのURL</Label>
+				<Div ID = "authPanel_authForm">
+					<Div ID = "authPanel_authForm_instanceUrl" Class = "mdc-text-field mdc-text-field--upgraded" Data-mdc-auto-init = "MDCTextField">
+						<Input ID = "authPanel_authForm_instanceUrl-input" Class = "mdc-text-field__input" Type = "URL" Required = "Required" />
+						<Label Class = "mdc-text-field__label mdc-text-field__label--float-above" For = "authPanel_authForm_instanceUrl-input">インスタンスのURL</Label>
 						<Div Class = "mdc-text-field__bottom-line"></Div>
 					</Div>
 
-					<Button ID = "authForm_auth" Class = "mdc-button mdc-button--raised">認証</Button>
+					<Button ID = "authPanel_authForm_submit" Class = "mdc-button mdc-button--raised">認証</Button>
 				</Div>
 			</Section>
 
-			<Section Class = "mstdnRater_panel">
-
+			<Section ID = "controlPanel" Class = "mstdnRater_panel">
+				<Content>
+					
+				</Content>
 			</Section>
 		</Main>
 	</Body>

@@ -16,13 +16,13 @@ Main .mstdnRater_panel_content {
 
 
 
-#authForm {
+#authPanel_authForm {
 	Display: Flex;
 	Flex-Direction: Row;
 	Align-Items: Baseline;
 }
 
-#authForm_instanceUrl {
+#authPanel_authForm_instanceUrl {
 	Flex: 1;
 	Margin-Right: 0.5em;
 }

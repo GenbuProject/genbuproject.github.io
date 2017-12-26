@@ -1,26 +1,113 @@
 class AppInfo {
-	constructor () {}
+	static get Instances () {
+		return class Instances extends Array {
+			constructor () {
+				super();
+
+				if (!sessionStorage.getItem(KEYS.INSTANCES)) this.save();
+				this.load();
+			}
+
+			add (instance = "") {
+				if (!this.exist(instance)) {
+					this.push(instance);
+					this.save();
+				}
+			}
+
+			remove (instance = "") {
+				this.forEach((item, index) => {
+					if (instance == item) this.splice(index, 1);
+				});
+
+				this.save();
+			}
+
+			clear () {
+				while (this.length) this.splice(0, 1);
+			}
+
+			exist (instance = "") {
+				let hasInstance = false;
+
+				this.forEach(item => {
+					if (instance == item) hasInstance = true;
+				});
+
+				return hasInstance;
+			}
+
+			save (val) { sessionStorage.setItem(KEYS.INSTANCES, JSON.stringify(val || this || [])) }
+
+			load () {
+				this.clear();
+
+				let items = JSON.parse(sessionStorage.getItem(KEYS.INSTANCES));
+					items.forEach(instance => this.push(instance));
+			}
+		}
+	}
+
+	static get instances () { return new AppInfo.Instances() }
+
+
+
+	constructor () {
+		if (!AppInfo.instances) AppInfo.instances.add("");
+	}
 	
 	//.name(String)
 	//.website(String)
 	//.scopes(Array)
 	//.redirectUrl(String)
 
-	get instanceUrl () { return localStorage.getItem("com.GenbuProject.MastodonRater.currentInstance") }
-	set instanceUrl (url = "") { localStorage.setItem("com.GenbuProject.MastodonRater.currentInstance", url) }
+	get instance () { return sessionStorage.getItem(KEYS.INSTANCE) }
+	set instance (url = "") { sessionStorage.setItem(KEYS.INSTANCE, url) }
 
-	get clientId () { return localStorage.getItem(`com.GenbuProject.MastodonRater.clientId?${this.instanceUrl}`) }
-	set clientId (clientId = "") { localStorage.setItem(`com.GenbuProject.MastodonRater.clientId?${this.instanceUrl}`, clientId) }
+	get clientId () { return sessionStorage.getItem(`${KEYS.CLIENTID}?${this.instance}`) }
+	set clientId (clientId = "") { sessionStorage.setItem(`${KEYS.CLIENTID}?${this.instance}`, clientId) }
 
-	get secretId () { return localStorage.getItem(`com.GenbuProject.MastodonRater.secretId?${this.instanceUrl}`) }
-	set secretId (secretId = "") { localStorage.setItem(`com.GenbuProject.MastodonRater.secretId?${this.instanceUrl}`, secretId) }
+	get secretId () { return sessionStorage.getItem(`${KEYS.SECRETID}?${this.instance}`) }
+	set secretId (secretId = "") { sessionStorage.setItem(`${KEYS.SECRETID}?${this.instance}`, secretId) }
+
+	get accessToken () { return sessionStorage.getItem(`${KEYS.ACCESSTOKEN}?${this.instance}`) }
+	set accessToken (token = "") { sessionStorage.setItem(`${KEYS.ACCESSTOKEN}?${this.instance}`, token) }
 }
 
 
 
+const IDS = {
+	AUTH: {
+		ROOT: "authPanel",
+
+		FORM: {
+			ROOT: "authPanel_authForm",
+
+			INSTANCE: "authPanel_authForm_instanceUrl-input",
+			SUBMIT: "authPanel_authForm_submit"
+		}
+	},
+
+	CONTROL: {
+		ROOT: "controlPanel"
+	}
+}
+
+const KEYS = {
+	INSTANCE: "com.GenbuProject.MastodonRater.currentInstance",
+	CLIENTID: "com.GenbuProject.MastodonRater.clientId",
+	SECRETID: "com.GenbuProject.MastodonRater.secretId",
+	ACCESSTOKEN: "com.GenbuProject.MastodonRater.accessToken",
+	INSTANCES: "com.GenbuProject.MastodonRater.instances"
+}
+
 const DEFAULT = "https://mstdn.y-zu.org";
 
-let appInfo = new AppInfo();
+
+
+let app = null,
+	appInfo = new AppInfo();
+
 	appInfo.name = "MastodonRater";
 	appInfo.website = "https://genbuproject.github.io/Programs/Mastodon/MastodonRater/";
 	appInfo.scopes = ["read", "write"];
@@ -32,8 +119,6 @@ let appInfo = new AppInfo();
 		return url.href;
 	})();
 
-let app = null;
-
 
 
 window.addEventListener("DOMContentLoaded", () => {
@@ -41,14 +126,14 @@ window.addEventListener("DOMContentLoaded", () => {
 
 
 
-	let authForm = new DOM("#authForm");
-	let instanceUrl = authForm.querySelector("#authForm_instanceUrl-input");
+	let authForm = document.getElementById(IDS.AUTH.FORM.ROOT);
+	let instanceUrl = document.getElementById(IDS.AUTH.FORM.INSTANCE);
 
-	let authBtn = authForm.querySelector("#authForm_auth");
+	let authBtn = authForm.querySelector(`#${IDS.AUTH.FORM.SUBMIT}`);
 		authBtn.addEventListener("click", () => {
 			if (instanceUrl.checkValidity()) {
-				appInfo.instanceUrl = instanceUrl.value;
-				app = new MastodonAPI({ instance: appInfo.instanceUrl, api_user_token: "" });
+				appInfo.instance = instanceUrl.value;
+				app = new MastodonAPI({ instance: appInfo.instance, api_user_token: "" });
 
 				app.registerApplication(appInfo.name, appInfo.redirectUrl, appInfo.scopes, appInfo.website, res => {
 					console.log(res);
@@ -64,17 +149,21 @@ window.addEventListener("DOMContentLoaded", () => {
 
 		
 	let query = location.querySort();
-
-	if (query.CODE) {
-		app = new MastodonAPI({ instance: appInfo.instanceUrl });
+	
+	if (appInfo.accessToken) {
+		app = new MastodonAPI({ instance: appInfo.instance, api_user_token: appInfo.accessToken });
+	} else if (query.CODE) {
+		app = new MastodonAPI({ instance: appInfo.instance });
 
 		app.getAccessTokenFromAuthCode(appInfo.clientId, appInfo.secretId, appInfo.redirectUrl, query.CODE, res => {
 			console.log(res);
 
-			localStorage.setItem(`com.GenbuProject.MastodonRater.accessToken?${appInfo.instanceUrl}`, res.access_token);
+			AppInfo.instances.add(appInfo.instance);
+			appInfo.accessToken = res.access_token;
+			app.setConfig("api_user_token", appInfo.accessToken);
 		});
 	} else {
-		instanceUrl.value = appInfo.instanceUrl = DEFAULT;
+		instanceUrl.value = appInfo.instance = DEFAULT;
 	}
 });
 
@@ -91,7 +180,7 @@ let userInfo = JSON.parse(
 		type: "GET",
 		url: "/api/v1/accounts/verify_credentials",
 
-		params: { "access_token": localStorage.getItem("com.GenbuProject.MastodonRater.accessToken") }
+		params: { "access_token": sessionStorage.getItem("com.GenbuProject.MastodonRater.accessToken") }
 	}).response
 );
 
