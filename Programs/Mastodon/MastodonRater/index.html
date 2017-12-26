@@ -3,7 +3,7 @@
 <HTML>
 	<Head>
 		<Meta Charset = "UTF-8" />
-		<Title>UtilBtns 認証所</Title>
+		<Title>MastodonRater</Title>
 		
 		<Script Src = "https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></Script>
 		<Link Rel = "StyleSheet" Href = "https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" />
@@ -12,7 +12,7 @@
 		<Script Src = "mastodon.js"></Script>
 		<Script Src = "https://genbuproject.github.io/Programs/DOM Extender/DOM Extender v3.4.js"></Script>
 		
-		<Script Src = "main.js"></Script>
+		<Script Src = "main.js" Defer = "Defer"></Script>
 		<Link Rel = "StyleSheet" Href = "main.css" />
 
 		<Script>
@@ -31,23 +31,25 @@
 		<Header Class = "mdc-toolbar mdc-toolbar--fixed mdc-toolbar--waterfall mdc-elevation--z4">
 			<Div Class = "mdc-toolbar__row">
 				<Section Class = "mdc-toolbar__section mdc-toolbar__section--align-start">
-					<Span Class = "mdc-toolbar__title">UtilBtns 認証所</Span>
+					<Span Class = "mdc-toolbar__title">MastodonRater</Span>
 				</Section>
 			</Div>
 		</Header>
 
-		<Main Class = "mdc-typography mdc-toolbar-fixed-adjust">
-			あなたのアクセストークンは<Input ID = "accessToken" Type = "Text" Readonly = "Readonly" />です！
-			これをYづドンの【投稿】タブに設置された【アクセストークン】欄に貼りつけて、
-			【認証】ボタンを押してからご利用下さい！
+		<Main Class = "mdc-typography mdc-typography--body2 mdc-toolbar-fixed-adjust">
+			<Content>
+				まず最初にログイン認証をお願い致します。
+			</Content>
 
-			※反映されない場合は、リロードで改善される場合があります。
+			<Div Class = "mdc-text-field" Data-mdc-auto-init = "MDCTextField">
+				<Input ID = "instanceUrl" Class = "mdc-text-field__input" Type = "URL" Required = "Required" Aria-Controls = "instanceUrl-help" />
+				<Label Class = "mdc-text-field__label" For = "instanceUrl">インスタンスのURL</Label>
+				<Div Class = "mdc-text-field__bottom-line"></Div>
+			</Div>
 
-			《PCの場合》
-			<Img Src = "assets/images/Form001.png" Width = "256" />
-
-			《スマートフォンの場合》
-			<Img Src = "assets/images/Form002.png" Width = "256" />
+			<P ID = "instanceUrl-help" Class = "mdc-text-field-helper-text mdc-text-field-helper-text--validation-msg" Aria-Hidden = "true">
+				無効なURL形式
+			</P>
 		</Main>
 	</Body>
 </HTML>
