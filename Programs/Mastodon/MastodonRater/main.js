@@ -1,23 +1,80 @@
-let app = new MastodonAPI({ instance: "https://mstdn.y-zu.org", api_user_token: localStorage.getItem("com.GenbuProject.MastodonRater.accessToken") });
-	app.clientId = "27f8012bbcfe4ee9120c1b86d4610fa420a83a57ab634963c176441c1957781d";
-	app.secretId = "bca2239b592f98ba8e195497ec35f99499e2dfd94ed16f29a6848a293a5eb3cc";
+class AppInfo {
+	constructor () {}
+	
+	//.name(String)
+	//.website(String)
+	//.scopes(Array)
+	//.redirectUrl(String)
+
+	get instanceUrl () { return localStorage.getItem("com.GenbuProject.MastodonRater.currentInstance") }
+	set instanceUrl (url = "") { localStorage.setItem("com.GenbuProject.MastodonRater.currentInstance", url) }
+
+	get clientId () { return localStorage.getItem(`com.GenbuProject.MastodonRater.clientId?${this.instanceUrl}`) }
+	set clientId (clientId = "") { localStorage.setItem(`com.GenbuProject.MastodonRater.clientId?${this.instanceUrl}`, clientId) }
+
+	get secretId () { return localStorage.getItem(`com.GenbuProject.MastodonRater.secretId?${this.instanceUrl}`) }
+	set secretId (secretId = "") { localStorage.setItem(`com.GenbuProject.MastodonRater.secretId?${this.instanceUrl}`, secretId) }
+}
+
+
+
+const DEFAULT = "https://mstdn.y-zu.org";
+
+let appInfo = new AppInfo();
+	appInfo.name = "MastodonRater";
+	appInfo.website = "https://genbuproject.github.io/Programs/Mastodon/MastodonRater/";
+	appInfo.scopes = ["read", "write"];
+
+	appInfo.redirectUrl = (() => {
+		let url = new URL(location.href);
+			url.search = "";
+
+		return url.href;
+	})();
+
+let app = null;
+
+
 
 window.addEventListener("DOMContentLoaded", () => {
 	window.mdc.autoInit();
-	new mdc.toolbar.MDCToolbar(new DOM('$Header'));
 
 
-	
+
+	let authForm = new DOM("#authForm");
+	let instanceUrl = authForm.querySelector("#authForm_instanceUrl-input");
+
+	let authBtn = authForm.querySelector("#authForm_auth");
+		authBtn.addEventListener("click", () => {
+			if (instanceUrl.checkValidity()) {
+				appInfo.instanceUrl = instanceUrl.value;
+				app = new MastodonAPI({ instance: appInfo.instanceUrl, api_user_token: "" });
+
+				app.registerApplication(appInfo.name, appInfo.redirectUrl, appInfo.scopes, appInfo.website, res => {
+					console.log(res);
+
+					appInfo.clientId = res.client_id,
+					appInfo.secretId = res.client_secret;
+
+					location.href = app.generateAuthLink(appInfo.clientId, appInfo.redirectUrl, "code", appInfo.scopes);
+				});
+			}
+		});
+
+
+		
 	let query = location.querySort();
 
-	if (!query.CODE) {
-		//location.href = app.generateAuthLink(app.clientId, location.href, "code", ["read"]);
-	} else {
-		app.getAccessTokenFromAuthCode(app.clientId, app.secretId, location.href.replace(`?code=${query.CODE}`, ""), query.CODE, res => {
+	if (query.CODE) {
+		app = new MastodonAPI({ instance: appInfo.instanceUrl });
+
+		app.getAccessTokenFromAuthCode(appInfo.clientId, appInfo.secretId, appInfo.redirectUrl, query.CODE, res => {
 			console.log(res);
 
-			localStorage.setItem("com.GenbuProject.MastodonRater.accessToken", res.access_token);
+			localStorage.setItem(`com.GenbuProject.MastodonRater.accessToken?${appInfo.instanceUrl}`, res.access_token);
 		});
+	} else {
+		instanceUrl.value = appInfo.instanceUrl = DEFAULT;
 	}
 });
 

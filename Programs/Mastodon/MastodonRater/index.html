@@ -3,6 +3,7 @@
 <HTML>
 	<Head>
 		<Meta Charset = "UTF-8" />
+		<Meta Name = "Viewport" Content = "Width=Device-Width, Initial-Scale=1, User-Scalable=No" />
 		<Title>MastodonRater</Title>
 		
 		<Script Src = "https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></Script>
@@ -28,7 +29,7 @@
 	</Head>
 
 	<Body>
-		<Header Class = "mdc-toolbar mdc-toolbar--fixed mdc-toolbar--waterfall mdc-elevation--z4">
+		<Header Class = "mdc-toolbar mdc-toolbar--fixed mdc-toolbar--waterfall mdc-elevation--z4" Data-mdc-auto-init = "MDCToolbar">
 			<Div Class = "mdc-toolbar__row">
 				<Section Class = "mdc-toolbar__section mdc-toolbar__section--align-start">
 					<Span Class = "mdc-toolbar__title">MastodonRater</Span>
@@ -37,19 +38,25 @@
 		</Header>
 
 		<Main Class = "mdc-typography mdc-typography--body2 mdc-toolbar-fixed-adjust">
-			<Content>
-				まず最初にログイン認証をお願い致します。
-			</Content>
+			<Section Class = "mstdnRater_panel">
+				<Content Class = "mstdnRater_panel_content">
+					当サービスをご利用頂く前に、アカウントの認証をお願い致します。
+				</Content>
 
-			<Div Class = "mdc-text-field" Data-mdc-auto-init = "MDCTextField">
-				<Input ID = "instanceUrl" Class = "mdc-text-field__input" Type = "URL" Required = "Required" Aria-Controls = "instanceUrl-help" />
-				<Label Class = "mdc-text-field__label" For = "instanceUrl">インスタンスのURL</Label>
-				<Div Class = "mdc-text-field__bottom-line"></Div>
-			</Div>
+				<Div ID = "authForm">
+					<Div ID = "authForm_instanceUrl" Class = "mdc-text-field mdc-text-field--upgraded" Data-mdc-auto-init = "MDCTextField">
+						<Input ID = "authForm_instanceUrl-input" Class = "mdc-text-field__input" Type = "URL" Required = "Required" />
+						<Label Class = "mdc-text-field__label mdc-text-field__label--float-above" For = "instanceUrl">インスタンスのURL</Label>
+						<Div Class = "mdc-text-field__bottom-line"></Div>
+					</Div>
 
-			<P ID = "instanceUrl-help" Class = "mdc-text-field-helper-text mdc-text-field-helper-text--validation-msg" Aria-Hidden = "true">
-				無効なURL形式
-			</P>
+					<Button ID = "authForm_auth" Class = "mdc-button mdc-button--raised">認証</Button>
+				</Div>
+			</Section>
+
+			<Section Class = "mstdnRater_panel">
+
+			</Section>
 		</Main>
 	</Body>
 </HTML>

@@ -6,6 +6,23 @@ Main {
 	Padding: 0 1em;
 }
 
-Main Content {
+Main > .mstdnRater_panel.disabled {
+	Display: None;
+}
+
+Main .mstdnRater_panel_content {
 	White-Space: Pre-Line;
+}
+
+
+
+#authForm {
+	Display: Flex;
+	Flex-Direction: Row;
+	Align-Items: Baseline;
+}
+
+#authForm_instanceUrl {
+	Flex: 1;
+	Margin-Right: 0.5em;
 }
