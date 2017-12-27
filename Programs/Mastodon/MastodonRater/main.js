@@ -33,6 +33,7 @@ const IDS = {
 
 	CONTROL: {
 		ROOT: "controlPanel",
+		SIGNOUT: "controlPanel_signOut",
 
 		APPS: {
 			ROOT: "controlPanel_apps",
@@ -114,6 +115,14 @@ window.addEventListener("DOMContentLoaded", () => {
 			}
 		});
 
+	let controlPanel = document.getElementById(IDS.CONTROL.ROOT);
+		controlPanel.querySelector(`#${IDS.CONTROL.SIGNOUT}`).addEventListener("click", () => {
+			appInfo.accessToken = "",
+			appInfo.instance = "";
+
+			location.reload();
+		});
+
 	let apps = document.getElementById(IDS.CONTROL.APPS.ROOT);
 		apps.querySelector(`#${IDS.CONTROL.APPS.TOOTRATER}`).addEventListener("click", (event) => {
 			event.preventDefault();
@@ -125,7 +134,7 @@ window.addEventListener("DOMContentLoaded", () => {
 					app.get("accounts/verify_credentials").then(res => userInfo = res).then(res => {
 						let serverToots = serverInfo.stats.status_count,
 							userToots = userInfo.statuses_count;
-							
+
 						app.post("statuses", {
 							status: [
 								"#トゥート率",

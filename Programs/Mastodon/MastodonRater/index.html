@@ -54,7 +54,7 @@
 						<Div Class = "mdc-select__bottom-line"></Div>
 					</Div>
 
-					<Button ID = "authPanel_authForm_submit" Class = "mdc-button mdc-button--raised">認証</Button>
+					<Button ID = "authPanel_authForm_submit" Class = "mdc-button mdc-button--raised" Data-MDC-Auto-Init = "MDCRipple">認証</Button>
 				</Div>
 			</Section>
 
@@ -62,6 +62,8 @@
 				<Content Class = "mstdnRater_panel_content">
 					MastodonRaterへようこそ。
 					以下よりご利用になるサービスをお選び下さい。
+
+					<Button ID = "controlPanel_signOut" Class = "mdc-button mdc-button--raised" Data-MDC-Auto-Init = "MDCRipple">ログアウト</Button>
 				</Content>
 
 				<UL ID = "controlPanel_apps" Class = "mdc-list mdc-elevation--z5">
@@ -78,6 +80,13 @@
 					</Li>
 				</UL>
 			</Section>
+			
+			<Div Class = "mdc-snackbar" Aria-Hidden = "true">
+				<Div Class = "mdc-snackbar__text"></Div>
+				<Div Class = "mdc-snackbar__action-wrapper">
+					<Button Class = "mdc-snackbar__action-button"></Button>
+				</Div>
+			</Div>
 		</Main>
 	</Body>
 </HTML>

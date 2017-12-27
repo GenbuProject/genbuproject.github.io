@@ -15,6 +15,7 @@
 ### 3. Changelogs
 > |Version|Released Date|Details|
 > |:-----:|:-----------:|:------|
+> |v6     |2017/12/27   |`りさ姉ご指名`ボタンの再配置|
 > |v5     |2017/12/26   |`はるきん焼却`ボタンの改良|
 > |       |             |`アクセストークン`欄削除|
 > |       |             |`トゥート率投稿`ボタン削除|
@@ -29,6 +30,7 @@
 
 ### 4. Downloads
 > #### ◢ PC用 ◤
+>> * [v6](https://genbuproject.github.io/Programs/Y-zuPlugin/UtilBtns/PC/UtilBtns%20v6.js)
 >> * [v5](https://genbuproject.github.io/Programs/Y-zuPlugin/UtilBtns/PC/UtilBtns%20v5.js)
 >> * [v4](https://genbuproject.github.io/Programs/Y-zuPlugin/UtilBtns/PC/UtilBtns%20v4.js)
 >> * [v3](https://genbuproject.github.io/Programs/Y-zuPlugin/UtilBtns/PC/UtilBtns%20v3.js)
@@ -36,6 +38,7 @@
 >> * [v1](https://genbuproject.github.io/Programs/Y-zuPlugin/UtilBtns/PC/UtilBtns%20v1.js)
 >> 
 > #### ◢ スマートフォン用 ◤
+>> * [v6](https://genbuproject.github.io/Programs/Y-zuPlugin/UtilBtns/Mobile/UtilBtns%20v6.js)
 >> * [v5](https://genbuproject.github.io/Programs/Y-zuPlugin/UtilBtns/Mobile/UtilBtns%20v5.js)
 >> * [v4](https://genbuproject.github.io/Programs/Y-zuPlugin/UtilBtns/Mobile/UtilBtns%20v4.js)
 >> * [v3](https://genbuproject.github.io/Programs/Y-zuPlugin/UtilBtns/Mobile/UtilBtns%20v3.js)
@@ -44,6 +47,8 @@
 
 ### 5. Bookmarklets
 > #### ◢ PC用 ◤
+>> * [v6+](https://genbuproject.github.io/Programs/Y-zuPlugin/UtilBtns/PC/UtilBtns%20v6(Bookmarklet%20Plus).js)
+>> * [v6](https://genbuproject.github.io/Programs/Y-zuPlugin/UtilBtns/PC/UtilBtns%20v6(Bookmarklet).js)
 >> * [v5+](https://genbuproject.github.io/Programs/Y-zuPlugin/UtilBtns/PC/UtilBtns%20v5(Bookmarklet%20Plus).js)
 >> * [v5](https://genbuproject.github.io/Programs/Y-zuPlugin/UtilBtns/PC/UtilBtns%20v5(Bookmarklet).js)
 >> * [v4](https://genbuproject.github.io/Programs/Y-zuPlugin/UtilBtns/PC/UtilBtns%20v4(Bookmarklet).js)
@@ -52,6 +57,8 @@
 >> * [v1](https://genbuproject.github.io/Programs/Y-zuPlugin/UtilBtns/PC/UtilBtns%20v1(Bookmarklet).js)
 >> 
 > #### ◢ スマートフォン用 ◤
+>> * [v6+](https://genbuproject.github.io/Programs/Y-zuPlugin/UtilBtns/Mobile/UtilBtns%20v6(Bookmarklet%20Plus).js)
+>> * [v6](https://genbuproject.github.io/Programs/Y-zuPlugin/UtilBtns/Mobile/UtilBtns%20v6(Bookmarklet).js)
 >> * [v5+](https://genbuproject.github.io/Programs/Y-zuPlugin/UtilBtns/Mobile/UtilBtns%20v5(Bookmarklet%20Plus).js)
 >> * [v5](https://genbuproject.github.io/Programs/Y-zuPlugin/UtilBtns/Mobile/UtilBtns%20v5(Bookmarklet).js)
 >> * [v4](https://genbuproject.github.io/Programs/Y-zuPlugin/UtilBtns/Mobile/UtilBtns%20v4(Bookmarklet).js)
