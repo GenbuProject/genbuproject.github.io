@@ -39,6 +39,7 @@ const IDS = {
 			ROOT: "controlPanel_apps",
 
 			TOOTRATER: "controlPanel_apps_app-tootRater",
+			TPD: "controlPanel_apps_app-tpd",
 			REVELANCE: "controlPanel_apps_app-relevanceAnalyzer"
 		}
 	}
@@ -145,6 +146,23 @@ window.addEventListener("DOMContentLoaded", () => {
 						});
 					});
 				});
+		});
+
+		apps.querySelector(`#${IDS.CONTROL.APPS.TPD}`).addEventListener("click", (event) => {
+			event.preventDefault();
+
+			app.get("accounts/verify_credentials").then(res => {
+				let createdAt = new Date(res.created_at).toLocaleString();
+
+				app.post("statuses", {
+					status: [
+						"#TPD",
+						`@${res.username} さんの`,
+						`アカウント作成日：${createdAt}`,
+						`TPD：`
+					].join("\r\n")
+				});
+			});
 		});
 
 	
