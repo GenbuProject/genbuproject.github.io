@@ -2,15 +2,22 @@ Body {
 	Margin: 0;
 }
 
+A.material-icons {
+	Text-Decoration: None;
+}
+
 Main {
 	Padding: 0 1em;
 }
 
-Main > .mstdnRater_panel.disabled {
+Main > .mstdnRater_panel.mstdnRater_panel-disabled {
 	Display: None;
 }
 
 Main .mstdnRater_panel_content {
+	Display: Block;
+
+	Margin-Bottom: 2em;
 	White-Space: Pre-Line;
 }
 

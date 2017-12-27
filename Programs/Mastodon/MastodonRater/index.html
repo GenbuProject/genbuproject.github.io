@@ -8,6 +8,7 @@
 		
 		<Script Src = "https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></Script>
 		<Link Rel = "StyleSheet" Href = "https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" />
+		<Link Rel = "StyleSheet" Href = "https://fonts.googleapis.com/icon?family=Material+Icons" />
 
 		<Script Src = "https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></Script>
 		<Script Src = "mastodon.js"></Script>
@@ -44,20 +45,38 @@
 				</Content>
 
 				<Div ID = "authPanel_authForm">
-					<Div ID = "authPanel_authForm_instanceUrl" Class = "mdc-text-field mdc-text-field--upgraded" Data-mdc-auto-init = "MDCTextField">
-						<Input ID = "authPanel_authForm_instanceUrl-input" Class = "mdc-text-field__input" Type = "URL" Required = "Required" />
-						<Label Class = "mdc-text-field__label mdc-text-field__label--float-above" For = "authPanel_authForm_instanceUrl-input">インスタンスのURL</Label>
-						<Div Class = "mdc-text-field__bottom-line"></Div>
+					<Div ID = "authPanel_authForm_instanceUrl" Class = "mdc-select">
+						<Select ID = "authPanel_authForm_instanceUrl_items" Class = "mdc-select__surface mdc-select__selected-text">
+							
+						</Select>
+
+						<Div Class = "mdc-select__label mdc-select__label--float-above">インスタンスのURL</Div>
+						<Div Class = "mdc-select__bottom-line"></Div>
 					</Div>
 
 					<Button ID = "authPanel_authForm_submit" Class = "mdc-button mdc-button--raised">認証</Button>
 				</Div>
 			</Section>
 
-			<Section ID = "controlPanel" Class = "mstdnRater_panel">
-				<Content>
-					
+			<Section ID = "controlPanel" Class = "mstdnRater_panel mstdnRater_panel-disabled">
+				<Content Class = "mstdnRater_panel_content">
+					MastodonRaterへようこそ。
+					以下よりご利用になるサービスをお選び下さい。
 				</Content>
+
+				<UL ID = "controlPanel_apps" Class = "mdc-list mdc-elevation--z5">
+					<Li Class = "mdc-list-item">
+						<I Class = "mdc-list-item__start-detail material-icons" Aria-Hidden = "true">chat</I>
+						Toot Rater
+						<A ID = "controlPanel_apps_app-tootRater" Class = "mdc-list-item__end-detail material-icons" Href = "#">launch</A>
+					</Li>
+
+					<Li Class = "mdc-list-item">
+						<I Class = "mdc-list-item__start-detail material-icons" Aria-Hidden = "true">people</I>
+						Relevance Analyzer
+						<A ID = "controlPanel_apps_app-tootRater" Class = "mdc-list-item__end-detail material-icons" Href = "#">launch</A>
+					</Li>
+				</UL>
 			</Section>
 		</Main>
 	</Body>
