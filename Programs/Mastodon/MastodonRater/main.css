@@ -6,6 +6,8 @@ A.material-icons {
 	Text-Decoration: None;
 }
 
+
+
 Main {
 	Padding: 0 1em;
 }
@@ -21,15 +23,17 @@ Main .mstdnRater_panel_content {
 	White-Space: Pre-Line;
 }
 
-
+#toolbar-copyright {
+	Margin-Right: 1em;
+}
 
 #authPanel_authForm {
 	Display: Flex;
 	Flex-Direction: Row;
-	Align-Items: Baseline;
+	Align-Items: Flex-End;
 }
 
-#authPanel_authForm_instanceUrl {
+#authPanel_authForm_instance {
 	Flex: 1;
 	Margin-Right: 0.5em;
 }

@@ -32,24 +32,28 @@
 		</Script>
 	</Head>
 
-	<Body>
-		<Header Class = "mdc-toolbar mdc-toolbar--fixed mdc-toolbar--waterfall mdc-elevation--z4" Data-mdc-auto-init = "MDCToolbar">
+	<Body Class = "mdc-typography mdc-typography--body2">
+		<Header ID = "toolbar" Class = "mdc-toolbar mdc-toolbar--fixed mdc-toolbar--waterfall mdc-elevation--z4" Data-mdc-auto-init = "MDCToolbar">
 			<Div Class = "mdc-toolbar__row">
 				<Section Class = "mdc-toolbar__section mdc-toolbar__section--align-start">
 					<Span Class = "mdc-toolbar__title">MastodonRater</Span>
 				</Section>
+
+				<Section Class = "mdc-toolbar__section mdc-toolbar__section--align-end mdc-toolbar__section--shrink-to-fit">
+					<Span ID = "toolbar-copyright" Class = "mdc-typography--caption">(C) 2017 Genbu Project</Span>
+				</Section>
 			</Div>
 		</Header>
 
-		<Main Class = "mdc-typography mdc-typography--body2 mdc-toolbar-fixed-adjust">
+		<Main Class = "mdc-toolbar-fixed-adjust">
 			<Section ID = "authPanel" Class = "mstdnRater_panel">
 				<Content Class = "mstdnRater_panel_content">
 					当サービスをご利用頂く前に、アカウントの認証をお願い致します。
 				</Content>
 
 				<Div ID = "authPanel_authForm">
-					<Div ID = "authPanel_authForm_instanceUrl" Class = "mdc-select">
-						<Select ID = "authPanel_authForm_instanceUrl_items" Class = "mdc-select__surface mdc-select__selected-text">
+					<Div ID = "authPanel_authForm_instance" Class = "mdc-select">
+						<Select ID = "authPanel_authForm_instance_items" Class = "mdc-select__surface mdc-select__selected-text">
 							
 						</Select>
 
@@ -65,6 +69,8 @@
 				<Content Class = "mstdnRater_panel_content">
 					MastodonRaterへようこそ。
 					以下よりご利用になるサービスをお選び下さい。
+
+					現在のインスタンス：<Span ID = "controlPanel_instance"></Span>
 
 					<Button ID = "controlPanel_signOut" Class = "mdc-button mdc-button--raised" Data-MDC-Auto-Init = "MDCRipple">ログアウト</Button>
 				</Content>
@@ -92,16 +98,19 @@
 
 			<Section ID = "contactPanel" Class = "mstdnRater_panel">
 				<Content Class = "mstdnRater_panel_content">
-					
+					ご利用のインスタンスが対応されていない場合は、
+					管理者の方より<A Href = "mailto:genbuproject@gmail.com">こちら</A>へとご連絡下さい。
+
+					確認及び話し合いの後、早急に対応致します。
 				</Content>
 			</Section>
-
-			<Div ID = "notify" Class = "mdc-snackbar" Aria-Hidden = "true">
-				<Div Class = "mdc-snackbar__text">投稿が反映されました</Div>
-				<Div Class = "mdc-snackbar__action-wrapper">
-					<Button Class = "mdc-snackbar__action-button">閉じる</Button>
-				</Div>
-			</Div>
 		</Main>
+
+		<Div ID = "notify" Class = "mdc-snackbar" Aria-Hidden = "true">
+			<Div Class = "mdc-snackbar__text">投稿が反映されました</Div>
+			<Div Class = "mdc-snackbar__action-wrapper">
+				<Button Class = "mdc-snackbar__action-button">閉じる</Button>
+			</Div>
+		</Div>
 	</Body>
 </HTML>

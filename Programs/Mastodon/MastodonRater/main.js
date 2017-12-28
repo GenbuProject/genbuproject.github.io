@@ -1,17 +1,25 @@
 const IDS = {
+	TOOLBAR: {
+		ROOT: "toolbar",
+
+		COPYRIGHT: "toolbar-copyright"
+	},
+
 	AUTH: {
 		ROOT: "authPanel",
 
 		FORM: {
 			ROOT: "authPanel_authForm",
 
-			INSTANCE: "authPanel_authForm_instanceUrl_items",
+			INSTANCE: "authPanel_authForm_instance_items",
 			SUBMIT: "authPanel_authForm_submit"
 		}
 	},
 
 	CONTROL: {
 		ROOT: "controlPanel",
+
+		INSTANCE: "controlPanel_instance",
 		SIGNOUT: "controlPanel_signOut",
 
 		APPS: {
@@ -98,6 +106,7 @@ window.addEventListener("DOMContentLoaded", () => {
 		});
 
 	let controlPanel = document.getElementById(IDS.CONTROL.ROOT);
+		controlPanel.querySelector(`#${IDS.CONTROL.INSTANCE}`).textContent = appInfo.instance;
 		controlPanel.querySelector(`#${IDS.CONTROL.SIGNOUT}`).addEventListener("click", () => {
 			appInfo.accessToken = "",
 			appInfo.instance = "";
@@ -105,9 +114,12 @@ window.addEventListener("DOMContentLoaded", () => {
 			location.reload();
 		});
 
+
+
 	let apps = document.getElementById(IDS.CONTROL.APPS.ROOT);
 		apps.querySelector(`#${IDS.CONTROL.APPS.TOOTRATER}`).addEventListener("click", (event) => {
 			event.preventDefault();
+			notify.begin()
 
 			let serverInfo = {},
 				userInfo = {};
@@ -124,13 +136,14 @@ window.addEventListener("DOMContentLoaded", () => {
 								"",
 								"(Tooted from #MastodonRater)"
 							].join("\r\n")
-						}).then(() => notify.show());
+						}).then(() => notify.finish());
 					});
 				});
 		});
 
 		apps.querySelector(`#${IDS.CONTROL.APPS.TPD}`).addEventListener("click", (event) => {
 			event.preventDefault();
+			notify.begin();
 
 			app.get("accounts/verify_credentials").then(res => {
 				let nowTime = new Date().getTime(),
@@ -145,7 +158,7 @@ window.addEventListener("DOMContentLoaded", () => {
 						"",
 						"(Tooted from #MastodonRater)"
 					].join("\r\n")
-				}).then(() => notify.show());
+				}).then(() => notify.finish());
 			});
 		});
 
