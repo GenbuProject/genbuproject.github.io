@@ -51,6 +51,10 @@ const CLASSES = {
 	PANEL: {
 		ROOT: "mstdnRater_panel",
 		DISABLED: "mstdnRater_panel-disabled"
+	},
+
+	APPS: {
+		RUNNING: "mstdnRater_app-running"
 	}
 }
 
@@ -138,7 +142,9 @@ window.addEventListener("DOMContentLoaded", () => {
 	let apps = document.getElementById(IDS.CONTROL.APPS.ROOT);
 		apps.querySelector(`#${IDS.CONTROL.APPS.TOOTRATER}`).addEventListener("click", (event) => {
 			event.preventDefault();
-			notify.begin()
+
+			notify.begin();
+			event.target.classList.add(CLASSES.APPS.RUNNING);
 
 			let serverInfo = {},
 				userInfo = {};
@@ -157,14 +163,19 @@ window.addEventListener("DOMContentLoaded", () => {
 							].join("\r\n"),
 
 							visibility: appInfo.tootArea
-						}).then(() => notify.finish());
+						}).then(() => {
+							notify.finish();
+							event.target.classList.add(CLASSES.APPS.RUNNING);
+						});
 					});
 				});
 		});
 
 		apps.querySelector(`#${IDS.CONTROL.APPS.TPD}`).addEventListener("click", (event) => {
 			event.preventDefault();
+
 			notify.begin();
+			event.target.classList.add(CLASSES.APPS.RUNNING);
 
 			app.get("accounts/verify_credentials").then(res => {
 				let nowTime = new Date().getTime(),
@@ -181,13 +192,18 @@ window.addEventListener("DOMContentLoaded", () => {
 					].join("\r\n"),
 
 					visibility: appInfo.tootArea
-				}).then(() => notify.finish());
+				}).then(() => {
+					notify.finish();
+					event.target.classList.add(CLASSES.APPS.RUNNING);
+				});
 			});
 		});
 
 		apps.querySelector(`#${IDS.CONTROL.APPS.REVELANCE}`).addEventListener("click", (event) => {
 			event.preventDefault();
+
 			notify.begin();
+			event.target.classList.add(CLASSES.APPS.RUNNING);
 
 			let myself = {};
 				app.get("accounts/verify_credentials").then(res => myself = res).then(() => {
@@ -231,7 +247,10 @@ window.addEventListener("DOMContentLoaded", () => {
 										].join("\r\n"),
 
 										visibility: appInfo.tootArea
-									}).then(() => notify.finish());
+									}).then(() => {
+										notify.finish();
+										event.target.classList.remove(CLASSES.APPS.RUNNING);
+									});
 
 									console.log(scores);
 								});
