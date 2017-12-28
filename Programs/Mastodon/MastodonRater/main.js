@@ -159,7 +159,8 @@ window.addEventListener("DOMContentLoaded", () => {
 								`@${userInfo.username} さんの`,
 								`#トゥート率 は${(userToots / serverToots * 100).toFixed(2)}%です！`,
 								"",
-								"(Tooted from #MastodonRater)"
+								"(Tooted from #MastodonRater)",
+								"https://genbuproject.github.io/Programs/Mastodon/MastodonRater/"
 							].join("\r\n"),
 
 							visibility: appInfo.tootArea
@@ -188,7 +189,8 @@ window.addEventListener("DOMContentLoaded", () => {
 						`@${res.username} さんの`,
 						`#TPD は${Math.floor(res.statuses_count / countDays)}です！`,
 						"",
-						"(Tooted from #MastodonRater)"
+						"(Tooted from #MastodonRater)",
+						"https://genbuproject.github.io/Programs/Mastodon/MastodonRater/"
 					].join("\r\n"),
 
 					visibility: appInfo.tootArea
@@ -243,7 +245,8 @@ window.addEventListener("DOMContentLoaded", () => {
 											"",
 											"の方々です！！",
 											"",
-											"(Tooted from #MastodonRater)"
+											"(Tooted from #MastodonRater)",
+											"https://genbuproject.github.io/Programs/Mastodon/MastodonRater/"
 										].join("\r\n"),
 
 										visibility: appInfo.tootArea
