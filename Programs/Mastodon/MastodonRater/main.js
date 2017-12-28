@@ -1,24 +1,3 @@
-class AppInfo {
-	static get KEYS () {
-		return {
-			INSTANCE: "com.GenbuProject.MastodonRater.currentInstance",
-			ACCESSTOKEN: "com.GenbuProject.MastodonRater.accessToken"
-		}
-	}
-
-
-
-	constructor () {}
-
-	get instance () { return sessionStorage.getItem(AppInfo.KEYS.INSTANCE) }
-	set instance (url = "") { sessionStorage.setItem(AppInfo.KEYS.INSTANCE, url) }
-
-	get accessToken () { return sessionStorage.getItem(`${AppInfo.KEYS.ACCESSTOKEN}?${this.instance}`) }
-	set accessToken (token = "") { sessionStorage.setItem(`${AppInfo.KEYS.ACCESSTOKEN}?${this.instance}`, token) }
-}
-
-
-
 const IDS = {
 	AUTH: {
 		ROOT: "authPanel",
@@ -42,7 +21,9 @@ const IDS = {
 			TPD: "controlPanel_apps_app-tpd",
 			REVELANCE: "controlPanel_apps_app-relevanceAnalyzer"
 		}
-	}
+	},
+
+	NOTIFY: "notify"
 }
 
 const CLASSES = {
@@ -138,12 +119,12 @@ window.addEventListener("DOMContentLoaded", () => {
 
 						app.post("statuses", {
 							status: [
-								"#トゥート率",
 								`@${userInfo.username} さんの`,
-								`トゥート率は${(userToots / serverToots * 100).toFixed(2)}%です！`,
+								`#トゥート率 は${(userToots / serverToots * 100).toFixed(2)}%です！`,
+								"",
 								"(Tooted from MastodonRater)"
 							].join("\r\n")
-						});
+						}).then(() => notify.show());
 					});
 				});
 		});
@@ -152,18 +133,24 @@ window.addEventListener("DOMContentLoaded", () => {
 			event.preventDefault();
 
 			app.get("accounts/verify_credentials").then(res => {
-				let createdAt = new Date(res.created_at).toLocaleString();
+				let nowTime = new Date().getTime(),
+					createdAt = new Date(res.created_at).getTime();
+
+				let countDays = Math.floor((nowTime - createdAt) / (1000 * 60 * 60 * 24));
 
 				app.post("statuses", {
 					status: [
-						"#TPD",
 						`@${res.username} さんの`,
-						`アカウント作成日：${createdAt}`,
-						`TPD：`
+						`#TPD は${Math.floor(res.statuses_count / countDays)}です！`,
+						"",
+						"(Tooted from MastodonRater)"
 					].join("\r\n")
-				});
+				}).then(() => notify.show());
 			});
 		});
+
+	let notify = new Notify(document.getElementById(IDS.NOTIFY));
+
 
 	
 	let query = location.querySort();

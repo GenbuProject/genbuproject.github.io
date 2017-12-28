@@ -13,6 +13,9 @@
 		<Script Src = "https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></Script>
 		<Script Src = "mastodon.js"></Script>
 		<Script Src = "https://genbuproject.github.io/Programs/DOM Extender/DOM Extender v3.4.js"></Script>
+
+		<Script Src = "classes/AppInfo.js"></Script>
+		<Script Src = "classes/Notify.js"></Script>
 		
 		<Script Src = "main.js" Defer = "Defer"></Script>
 		<Link Rel = "StyleSheet" Href = "main.css" />
@@ -87,10 +90,10 @@
 				</UL>
 			</Section>
 
-			<Div Class = "mdc-snackbar" Aria-Hidden = "true">
-				<Div Class = "mdc-snackbar__text"></Div>
+			<Div ID = "notify" Class = "mdc-snackbar" Aria-Hidden = "true">
+				<Div Class = "mdc-snackbar__text">投稿が反映されました</Div>
 				<Div Class = "mdc-snackbar__action-wrapper">
-					<Button Class = "mdc-snackbar__action-button"></Button>
+					<Button Class = "mdc-snackbar__action-button">閉じる</Button>
 				</Div>
 			</Div>
 		</Main>
