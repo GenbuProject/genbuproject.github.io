@@ -107,7 +107,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
 window.addEventListener("DOMContentLoaded", () => {
 	let notify = new Notify(document.getElementById(IDS.NOTIFY));
-	
+
 	let authForm = document.getElementById(IDS.AUTH.FORM.ROOT);
 		authForm.querySelector(`#${IDS.AUTH.FORM.SUBMIT}`).addEventListener("click", () => {
 			let instanceUrl = new mdc.select.MDCSelect(authForm.querySelector(`#${IDS.AUTH.FORM.INSTANCE.ROOT}`));
@@ -187,10 +187,56 @@ window.addEventListener("DOMContentLoaded", () => {
 
 		apps.querySelector(`#${IDS.CONTROL.APPS.REVELANCE}`).addEventListener("click", (event) => {
 			event.preventDefault();
+			notify.begin();
 
-			let user = {};
-				app.get("accounts/verify_credentials").then(res => user = res).then(() => {
-					
+			let myself = {};
+				app.get("accounts/verify_credentials").then(res => myself = res).then(() => {
+					let friends = [];
+						Revelance.getFriends(myself.id).then(res => friends = res).then(() => {
+							Revelance.getBoostsAndMentions(myself.id, friends).then(res => friends = res).then(() => {
+								Revelance.getStars(friends).then(res => friends = res).then(() => {
+									let scores = [];
+									
+									for (let friend of friends) {
+										if (friend) {
+											scores.push([friend.acct, friend.star * Revelance.STAR + friend.boost * Revelance.BOOST + friend.mention * Revelance.MENTION]);
+										}
+									}
+
+									scores.sort((score1, score2) => {
+										if (score1[1] > score2[1]) return -1;
+										if (score1[1] < score2[1]) return 1;
+
+										return 0;
+									});
+
+									app.post("statuses", {
+										status: [
+											"#RevelanceAnalyzer",
+											"#統計さん",
+											"",
+											`@${myself.username} さんと`,
+											`仲良しのユーザーは`,
+											"",
+											(rank => {
+												let ranking = [];
+												for (let i = 0; i < rank; i++) ranking.push(`${i + 1}位：@${scores[i][0]}(Score ${scores[i][1]})`);
+
+												return ranking.join("\r\n");
+											})(3),
+											"",
+											"の方々です！！",
+											"",
+											"(Tooted from #MastodonRater)"
+										].join("\r\n"),
+
+										visibility: appInfo.tootArea
+									}).then(() => notify.finish());
+
+									console.log(scores);
+								});
+							});
+						});
 				});
 		});
 

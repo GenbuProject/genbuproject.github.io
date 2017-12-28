@@ -5,15 +5,13 @@ class Notify {
 
 	begin () {
 		this.self.show({
-			message: "処理を実行しています...",
-			timeout: 1000
+			message: "処理を実行しています..."
 		});
 	}
 
 	finish () {
 		this.self.show({
-			message: "投稿が反映されました",
-			timeout: 1500
+			message: "投稿が反映されました"
 		});
 	}
 }
