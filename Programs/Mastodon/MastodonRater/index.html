@@ -52,13 +52,18 @@
 				</Content>
 
 				<Div ID = "authPanel_authForm">
-					<Div ID = "authPanel_authForm_instance" Class = "mdc-select">
-						<Select ID = "authPanel_authForm_instance_items" Class = "mdc-select__surface mdc-select__selected-text">
-							
-						</Select>
+					<Div ID = "authPanel_authForm_instance" Class = "mdc-select" Role = "Listbox" Data-MDC-Auto-Init = "MDCSelect">
+						<Div Class = "mdc-select__surface">
+							<Div Class = "mdc-select__label">インスタンスのURL</Div>
+							<Div Class = "mdc-select__selected-text"></Div>
+							<Div Class = "mdc-select__bottom-line"></Div>
+						</Div>
 
-						<Div Class = "mdc-select__label mdc-select__label--float-above">インスタンスのURL</Div>
-						<Div Class = "mdc-select__bottom-line"></Div>
+						<Div Class = "mdc-select__menu mdc-simple-menu">
+							<UL ID = "authPanel_authForm_instance-items" Class = "mdc-simple-menu__items mdc-list">
+
+							</UL>
+						</Div>
 					</Div>
 
 					<Button ID = "authPanel_authForm_submit" Class = "mdc-button mdc-button--raised" Data-MDC-Auto-Init = "MDCRipple">認証</Button>

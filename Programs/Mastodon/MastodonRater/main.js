@@ -11,7 +11,11 @@ const IDS = {
 		FORM: {
 			ROOT: "authPanel_authForm",
 
-			INSTANCE: "authPanel_authForm_instance_items",
+			INSTANCE: {
+				ROOT: "authPanel_authForm_instance",
+				SELECTOR: "authPanel_authForm_instance-items"
+			},
+
 			SUBMIT: "authPanel_authForm_submit"
 		}
 	},
@@ -95,9 +99,9 @@ window.addEventListener("DOMContentLoaded", () => {
 window.addEventListener("DOMContentLoaded", () => {
 	let authForm = document.getElementById(IDS.AUTH.FORM.ROOT);
 		authForm.querySelector(`#${IDS.AUTH.FORM.SUBMIT}`).addEventListener("click", () => {
-			let instanceUrl = authForm.querySelector(`#${IDS.AUTH.FORM.INSTANCE}`);
+			let instanceUrl = new mdc.select.MDCSelect(authForm.querySelector(`#${IDS.AUTH.FORM.INSTANCE.ROOT}`));
 			
-			if (instanceUrl.checkValidity()) {
+			if (instanceUrl.value) {
 				appInfo.instance = instanceUrl.value;
 				app = new MastodonAPI({ instance: appInfo.instance });
 
@@ -169,10 +173,17 @@ window.addEventListener("DOMContentLoaded", () => {
 	let query = location.querySort();
 	
 	if (!appInfo.accessToken && !query.CODE) {
-		let instances = authForm.querySelector(`#${IDS.AUTH.FORM.INSTANCE}`);
+		let instances = authForm.querySelector(`#${IDS.AUTH.FORM.INSTANCE.SELECTOR}`);
 
 		for (let server in SERVERS) {
-			instances.add(new Option(server, server));
+			instances.appendChild(new DOM("Li", {
+				text: server,
+				classes: ["mdc-list-item"],
+
+				attributes: {
+					Role: "Option"
+				}
+			}));
 		}
 	}
 });
