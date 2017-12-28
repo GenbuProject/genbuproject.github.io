@@ -165,7 +165,7 @@ window.addEventListener("DOMContentLoaded", () => {
 							visibility: appInfo.tootArea
 						}).then(() => {
 							notify.finish();
-							event.target.classList.add(CLASSES.APPS.RUNNING);
+							event.target.classList.remove(CLASSES.APPS.RUNNING);
 						});
 					});
 				});
@@ -194,7 +194,7 @@ window.addEventListener("DOMContentLoaded", () => {
 					visibility: appInfo.tootArea
 				}).then(() => {
 					notify.finish();
-					event.target.classList.add(CLASSES.APPS.RUNNING);
+					event.target.classList.remove(CLASSES.APPS.RUNNING);
 				});
 			});
 		});

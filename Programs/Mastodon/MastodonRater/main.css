@@ -42,7 +42,7 @@ Main .mstdnRater_panel_content {
 	Background: Transparent;
 }
 
-#controlPanel_apps A[ID^="controlPanel_apps_app"].running {
+#controlPanel_apps A[ID^="controlPanel_apps_app"].mstdnRater_app-running {
 	Opacity: 0.5;
 	Pointer-Events: None;
 }
