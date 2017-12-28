@@ -10,9 +10,9 @@ class AppInfo {
 
 	constructor () {}
 
-	get instance () { return sessionStorage.getItem(AppInfo.KEYS.INSTANCE) }
-	set instance (url = "") { sessionStorage.setItem(AppInfo.KEYS.INSTANCE, url) }
+	get instance () { return localStorage.getItem(AppInfo.KEYS.INSTANCE) }
+	set instance (url = "") { localStorage.setItem(AppInfo.KEYS.INSTANCE, url) }
 
-	get accessToken () { return sessionStorage.getItem(`${AppInfo.KEYS.ACCESSTOKEN}?${this.instance}`) }
-	set accessToken (token = "") { sessionStorage.setItem(`${AppInfo.KEYS.ACCESSTOKEN}?${this.instance}`, token) }
+	get accessToken () { return localStorage.getItem(`${AppInfo.KEYS.ACCESSTOKEN}?${this.instance}`) }
+	set accessToken (token = "") { localStorage.setItem(`${AppInfo.KEYS.ACCESSTOKEN}?${this.instance}`, token) }
 }
