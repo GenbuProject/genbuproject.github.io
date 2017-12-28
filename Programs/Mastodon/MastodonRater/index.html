@@ -16,6 +16,7 @@
 
 		<Script Src = "classes/AppInfo.js"></Script>
 		<Script Src = "classes/Notify.js"></Script>
+		<Script Src = "classes/Revelance.js"></Script>
 		
 		<Script Src = "main.js" Defer = "Defer"></Script>
 		<Link Rel = "StyleSheet" Href = "main.css" />
@@ -76,11 +77,30 @@
 					以下よりご利用になるサービスをお選び下さい。
 
 					現在のインスタンス：<Span ID = "controlPanel_instance"></Span>
-
+					
 					<Button ID = "controlPanel_signOut" Class = "mdc-button mdc-button--raised" Data-MDC-Auto-Init = "MDCRipple">ログアウト</Button>
 				</Content>
 
 				<UL ID = "controlPanel_apps" Class = "mdc-list mdc-elevation--z5">
+					<Li Class = "mdc-list-item">
+						<Div ID = "controlPanel_tootArea" Class = "mdc-select" Role = "Listbox" Data-MDC-Auto-Init = "MDCSelect">
+							<Div Class = "mdc-select__surface">
+								<Div Class = "mdc-select__label">公開範囲</Div>
+								<Div Class = "mdc-select__selected-text"></Div>
+								<Div Class = "mdc-select__bottom-line"></Div>
+							</Div>
+
+							<Div Class = "mdc-select__menu mdc-simple-menu">
+								<UL Class = "mdc-simple-menu__items mdc-list">
+									<Li ID = "controlPanel_tootArea-public" Class = "mdc-list-item" Role = "ListItem">公開</Li>
+									<Li ID = "controlPanel_tootArea-unlisted" Class = "mdc-list-item" Role = "ListItem">未収載</Li>
+									<Li ID = "controlPanel_tootArea-private" Class = "mdc-list-item" Role = "ListItem">非公開</Li>
+									<Li ID = "controlPanel_tootArea-direct" Class = "mdc-list-item" Role = "ListItem">ダイレクト</Li>
+								</UL>
+							</Div>
+						</Div>
+					</Li>
+
 					<Li Class = "mdc-list-item">
 						<I Class = "mdc-list-item__start-detail material-icons" Aria-Hidden = "true">chat</I>
 						Toot Rater

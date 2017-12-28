@@ -37,3 +37,7 @@ Main .mstdnRater_panel_content {
 	Flex: 1;
 	Margin-Right: 0.5em;
 }
+
+#controlPanel_tootArea > .mdc-select__surface {
+	Background: Transparent;
+}

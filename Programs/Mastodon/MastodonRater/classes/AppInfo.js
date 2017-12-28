@@ -2,7 +2,8 @@ class AppInfo {
 	static get KEYS () {
 		return {
 			INSTANCE: "com.GenbuProject.MastodonRater.currentInstance",
-			ACCESSTOKEN: "com.GenbuProject.MastodonRater.accessToken"
+			ACCESSTOKEN: "com.GenbuProject.MastodonRater.accessToken",
+			TOOTAREA: "com.GenbuProject.MastodonRater.tootArea"
 		}
 	}
 
@@ -15,4 +16,7 @@ class AppInfo {
 
 	get accessToken () { return localStorage.getItem(`${AppInfo.KEYS.ACCESSTOKEN}?${this.instance}`) }
 	set accessToken (token = "") { localStorage.setItem(`${AppInfo.KEYS.ACCESSTOKEN}?${this.instance}`, token) }
+
+	get tootArea () { return localStorage.getItem(`${AppInfo.KEYS.TOOTAREA}?${this.instance}`) }
+	set tootArea (area = "") { localStorage.setItem(`${AppInfo.KEYS.TOOTAREA}?${this.instance}`, area) }
 }

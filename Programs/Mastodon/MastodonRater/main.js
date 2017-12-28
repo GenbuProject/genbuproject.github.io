@@ -26,6 +26,15 @@ const IDS = {
 		INSTANCE: "controlPanel_instance",
 		SIGNOUT: "controlPanel_signOut",
 
+		TOOTAREA: {
+			ROOT: "controlPanel_tootArea",
+
+			PUBLIC: "controlPanel_tootArea-public",
+			UNLISTED: "controlPanel_tootArea-unlisted",
+			PRIVATE: "controlPanel_tootArea-private",
+			DIRECT: "controlPanel_tootArea-direct"
+		},
+
 		APPS: {
 			ROOT: "controlPanel_apps",
 
@@ -97,6 +106,8 @@ window.addEventListener("DOMContentLoaded", () => {
 });
 
 window.addEventListener("DOMContentLoaded", () => {
+	let notify = new Notify(document.getElementById(IDS.NOTIFY));
+	
 	let authForm = document.getElementById(IDS.AUTH.FORM.ROOT);
 		authForm.querySelector(`#${IDS.AUTH.FORM.SUBMIT}`).addEventListener("click", () => {
 			let instanceUrl = new mdc.select.MDCSelect(authForm.querySelector(`#${IDS.AUTH.FORM.INSTANCE.ROOT}`));
@@ -111,12 +122,16 @@ window.addEventListener("DOMContentLoaded", () => {
 
 	let controlPanel = document.getElementById(IDS.CONTROL.ROOT);
 		controlPanel.querySelector(`#${IDS.CONTROL.INSTANCE}`).textContent = appInfo.instance;
+
 		controlPanel.querySelector(`#${IDS.CONTROL.SIGNOUT}`).addEventListener("click", () => {
+			appInfo.tootArea = "",
 			appInfo.accessToken = "",
 			appInfo.instance = "";
 
 			location.reload();
 		});
+
+		new mdc.select.MDCSelect(controlPanel.querySelector(`#${IDS.CONTROL.TOOTAREA.ROOT}`)).listen("MDCSelect:change", res => appInfo.tootArea = res.detail.value.replace(`${IDS.CONTROL.TOOTAREA.ROOT}-`, ""));
 
 
 
@@ -139,7 +154,9 @@ window.addEventListener("DOMContentLoaded", () => {
 								`#トゥート率 は${(userToots / serverToots * 100).toFixed(2)}%です！`,
 								"",
 								"(Tooted from #MastodonRater)"
-							].join("\r\n")
+							].join("\r\n"),
+
+							visibility: appInfo.tootArea
 						}).then(() => notify.finish());
 					});
 				});
@@ -161,12 +178,21 @@ window.addEventListener("DOMContentLoaded", () => {
 						`#TPD は${Math.floor(res.statuses_count / countDays)}です！`,
 						"",
 						"(Tooted from #MastodonRater)"
-					].join("\r\n")
+					].join("\r\n"),
+
+					visibility: appInfo.tootArea
 				}).then(() => notify.finish());
 			});
 		});
 
-	let notify = new Notify(document.getElementById(IDS.NOTIFY));
+		apps.querySelector(`#${IDS.CONTROL.APPS.REVELANCE}`).addEventListener("click", (event) => {
+			event.preventDefault();
+
+			let user = {};
+				app.get("accounts/verify_credentials").then(res => user = res).then(() => {
+					
+				});
+		});
 
 
 	
