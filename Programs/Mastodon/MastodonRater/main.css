@@ -6,6 +6,15 @@ A.material-icons {
 	Text-Decoration: None;
 }
 
+.mdc-list-item > .mdc-list-item__text {
+	Margin-Right: 32px;
+}
+
+.mdc-list-item > .mdc-list-item__text, .mdc-list-item > .mdc-list-item__text > .mdc-list-item__secondary-text {
+	Overflow: Hidden;
+	Text-Overflow: Ellipsis;
+}
+
 
 
 Main {
