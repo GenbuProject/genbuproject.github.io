@@ -101,9 +101,9 @@ window.addEventListener("DOMContentLoaded", () => {
 		app = new MastodonAPI({ instance: appInfo.instance });
 
 		app.getAccessTokenFromAuthCode(SERVERS[appInfo.instance].CLIENTID, SERVERS[appInfo.instance].SECRETID, appInfo.redirectUrl, query.CODE, res => {
-			console.log(res);
-
+			appInfo.tootArea = "public",
 			appInfo.accessToken = res.access_token;
+			
 			location.href = appInfo.redirectUrl;
 		});
 	}
