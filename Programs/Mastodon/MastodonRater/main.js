@@ -187,6 +187,7 @@ window.addEventListener("DOMContentLoaded", () => {
 				app.post("statuses", {
 					status: [
 						`@${res.username} さんの`,
+						`経過日数は${countDays}日`,
 						`#TPD は${Math.floor(res.statuses_count / countDays)}です！`,
 						"",
 						"(Tooted from #MastodonRater)",
