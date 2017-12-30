@@ -15,6 +15,10 @@ A.material-icons {
 	Text-Overflow: Ellipsis;
 }
 
+.mdc-dialog .mdc-dialog__body {
+	White-Space: Pre-Line;
+}
+
 
 
 Main {

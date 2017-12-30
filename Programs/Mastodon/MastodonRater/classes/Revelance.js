@@ -52,7 +52,7 @@ class Revelance {
 				let getter = app.get(`favourites`, { limit: 40, max_id: nextToken });
 					getter.then(res => {
 						for (let post of res) {
-							if (date.toLocaleDateString() == new Date(post.created_at).toLocaleDateString()) {
+							if (date.getTime() <= new Date(post.created_at).getTime()) {
 								if (friends[post.account.id]) friends[post.account.id].star++;
 							} else {
 								resolve(friends);
@@ -81,7 +81,7 @@ class Revelance {
 				let getter = app.get(`accounts/${id}/statuses`, { limit: 40, max_id: nextToken });
 					getter.then(res => {
 						for (let post of res) {
-							if (date.toLocaleDateString() == new Date(post.created_at).toLocaleDateString()) {
+							if (date.getTime() <= new Date(post.created_at).getTime()) {
 								if (post.reblog) {
 									if (friends[post.reblog.account.id]) friends[post.reblog.account.id].boost++;
 								}

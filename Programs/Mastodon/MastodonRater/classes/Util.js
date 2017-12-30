@@ -9,4 +9,8 @@ class Util {
 			return links;
 		}
 	}
+
+	static getTheday (date = new Date()) {
+		return new Date(date.getFullYear(), date.getMonth(), date.getDate());
+	}
 }

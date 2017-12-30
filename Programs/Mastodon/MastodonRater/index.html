@@ -133,6 +133,46 @@
 						</Span>
 						
 						<A ID = "controlPanel_apps_app-relevanceAnalyzer" Class = "mdc-list-item__end-detail material-icons" Href = "#">launch</A>
+
+						
+
+						<Aside ID = "controlPanel_dialogs-relevanceAnalyzer-dateArea" Class = "mdc-dialog" Role = "AlertDialog">
+							<Div Class = "mdc-dialog__surface">
+								<Header Class = "mdc-dialog__header">
+									<H2 Class = "mdc-dialog__header__title">
+										Relevance Analyzer
+									</H2>
+								</Header>
+
+								<Section Class = "mdc-dialog__body">
+									取得範囲を選択して下さい。
+									※注意：取得範囲が長いほど処理に時間が掛かります！！！
+
+									<Div Class = "mdc-select">
+										<Select ID = "controlPanel_dialogs-relevanceAnalyzer-dateArea_date" Class = "mdc-select__surface mdc-select__selected-text">
+											<Option Value = "0" Selected = "Selected">本日分のみ</Option>
+											<Option Value = "1">1日前まで</Option>
+											<Option Value = "2">2日前まで</Option>
+											<Option Value = "3">3日前まで</Option>
+											<Option Value = "4">4日前まで</Option>
+											<Option Value = "5">5日前まで</Option>
+											<Option Value = "6">6日前まで</Option>
+											<Option Value = "7">7日前まで</Option>
+										</Select>
+
+										<Div Class = "mdc-select__label mdc-select__label--float-above">取得範囲</Div>
+										<Div Class = "mdc-select__bottom-line"></Div>
+									</Div>
+								</Section>
+
+								<Footer Class = "mdc-dialog__footer">
+									<Button Class = "mdc-button mdc-dialog__footer__button mdc-dialog__footer__button--cancel">キャンセル</Button>
+									<Button Class = "mdc-button mdc-dialog__action mdc-dialog__footer__button mdc-dialog__footer__button--accept">実行</Button>
+								</Footer>
+							</Div>
+
+							<Div Class = "mdc-dialog__backdrop"></Div>
+						</Aside>
 					</Li>
 				</UL>
 			</Section>

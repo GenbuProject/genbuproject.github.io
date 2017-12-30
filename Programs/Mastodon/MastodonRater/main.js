@@ -40,7 +40,17 @@ const IDS = {
 
 			TOOTRATER: "controlPanel_apps_app-tootRater",
 			TPD: "controlPanel_apps_app-tpd",
-			REVELANCE: "controlPanel_apps_app-relevanceAnalyzer"
+
+			REVELANCE: {
+				ROOT: "controlPanel_apps_app-relevanceAnalyzer",
+
+				DIALOGS: {
+					DATEAREA: {
+						ROOT: "controlPanel_dialogs-relevanceAnalyzer-dateArea",
+						DATE: "controlPanel_dialogs-relevanceAnalyzer-dateArea_date"
+					}
+				}
+			}
 		}
 	},
 
@@ -202,65 +212,72 @@ window.addEventListener("DOMContentLoaded", () => {
 			});
 		});
 
-		apps.querySelector(`#${IDS.CONTROL.APPS.REVELANCE}`).addEventListener("click", (event) => {
+		apps.querySelector(`#${IDS.CONTROL.APPS.REVELANCE.ROOT}`).addEventListener("click", (event) => {
 			event.preventDefault();
 
-			notify.begin();
-			event.target.classList.add(CLASSES.APPS.RUNNING);
+			let dateAreaDialog = new mdc.dialog.MDCDialog(event.target.parentNode.querySelector(`#${IDS.CONTROL.APPS.REVELANCE.DIALOGS.DATEAREA.ROOT}`));
+				dateAreaDialog.listen("MDCDialog:accept", () => {
+					notify.begin();
+					event.target.classList.add(CLASSES.APPS.RUNNING);
 
-			let myself = {};
-				app.get("accounts/verify_credentials").then(res => myself = res).then(() => {
-					let friends = [];
-						Revelance.getFriends(myself.id).then(res => friends = res).then(() => {
-							Revelance.getBoostsAndMentions(myself.id, friends).then(res => friends = res).then(() => {
-								Revelance.getStars(friends).then(res => friends = res).then(() => {
-									let scores = [];
-									
-									for (let friend of friends) {
-										if (friend) {
-											scores.push([friend.acct, friend.star * Revelance.STAR + friend.boost * Revelance.BOOST + friend.mention * Revelance.MENTION]);
-										}
-									}
+					let date = Util.getTheday(new Date(Date.now() - 1000 * 60 * 60 * 24 * event.target.parentNode.querySelector(`#${IDS.CONTROL.APPS.REVELANCE.DIALOGS.DATEAREA.DATE}`).value));
 
-									scores.sort((score1, score2) => {
-										if (score1[1] > score2[1]) return -1;
-										if (score1[1] < score2[1]) return 1;
+					let myself = {};
+						app.get("accounts/verify_credentials").then(res => myself = res).then(() => {
+							let friends = [];
+								Revelance.getFriends(myself.id).then(res => friends = res).then(() => {
+									Revelance.getBoostsAndMentions(myself.id, friends, date).then(res => friends = res).then(() => {
+										Revelance.getStars(friends, date).then(res => friends = res).then(() => {
+											let scores = [];
+											
+											for (let friend of friends) {
+												if (friend) {
+													scores.push([friend.acct, friend.star * Revelance.STAR + friend.boost * Revelance.BOOST + friend.mention * Revelance.MENTION]);
+												}
+											}
 
-										return 0;
+											scores.sort((score1, score2) => {
+												if (score1[1] > score2[1]) return -1;
+												if (score1[1] < score2[1]) return 1;
+
+												return 0;
+											});
+
+											app.post("statuses", {
+												status: [
+													"#RevelanceAnalyzer",
+													"#統計さん",
+													"",
+													`@${myself.username} さんと`,
+													`仲良しのユーザーは`,
+													"",
+													(rank => {
+														let ranking = [];
+														for (let i = 0; i < rank; i++) ranking.push(`${i + 1}位：@${scores[i][0]}(Score ${scores[i][1]})`);
+
+														return ranking.join("\r\n");
+													})(3),
+													"",
+													"の方々です！！",
+													"",
+													"(Tooted from #MastodonRater)",
+													"https://genbuproject.github.io/Programs/Mastodon/MastodonRater/"
+												].join("\r\n"),
+
+												visibility: appInfo.tootArea
+											}).then(() => {
+												notify.finish();
+												event.target.classList.remove(CLASSES.APPS.RUNNING);
+											});
+
+											console.log(scores);
+										});
 									});
-
-									app.post("statuses", {
-										status: [
-											"#RevelanceAnalyzer",
-											"#統計さん",
-											"",
-											`@${myself.username} さんと`,
-											`仲良しのユーザーは`,
-											"",
-											(rank => {
-												let ranking = [];
-												for (let i = 0; i < rank; i++) ranking.push(`${i + 1}位：@${scores[i][0]}(Score ${scores[i][1]})`);
-
-												return ranking.join("\r\n");
-											})(3),
-											"",
-											"の方々です！！",
-											"",
-											"(Tooted from #MastodonRater)",
-											"https://genbuproject.github.io/Programs/Mastodon/MastodonRater/"
-										].join("\r\n"),
-
-										visibility: appInfo.tootArea
-									}).then(() => {
-										notify.finish();
-										event.target.classList.remove(CLASSES.APPS.RUNNING);
-									});
-
-									console.log(scores);
 								});
-							});
 						});
 				});
+
+				dateAreaDialog.show();
 		});
 
 
